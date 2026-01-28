@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Medborgarstöd</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header id="h">
+            <h1 id="title">Medborgarstöd</h1>
+        </header>
+
+        <main id="m">
+            <section id="login-view" class="view">
+                <div class="card">
+                    <h2>Välkommen</h2>
+                    <p>Logga in säkert för att börja hjälpa dina medborgare.</p>
+                    <button id="btn-login" class="primary-btn">Logga in med BankID</button>
+                </div>
+            </section>
+
+            <section id="feed-view" class="view hidden">
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="all">Alla</button>
+                    <button class="filter-btn" data-filter="help">Behöver hjälp</button>
+                    <button class="filter-btn" data-filter="offer">Erbjuder hjälp</button>
+                </div>
+                <div id="posts-container"></div>
+                <button id="btn-create" class="fab">+</button>
+            </section>
+
+            <section id="create-view" class="view hidden">
+                <div class="card">
+                    <h2>Skapa inlägg</h2>
+                    <textarea id="post-text" placeholder="Vad vill du dela?"></textarea>
+                    <div class="actions">
+                        <button id="btn-cancel" class="sec-btn">Avbryt</button>
+                        <button id="btn-post" class="primary-btn">Posta</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <nav id="n" class="hidden">
+            <button id="nav-home" class="nav-item">🏠</button>
+            <button id="nav-profile" class="nav-item">👤</button>
+        </nav>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

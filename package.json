@@ -1,0 +1,18 @@
+{
+  "name": "medborgarstod",
+  "version": "1.0.0",
+  "description": "Ett medborgarinitiativ för grannsamverkan",
+  "main": "app/index.html",
+  "scripts": {
+    "start": "npx serve app",
+    "dev": "npx serve app",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "keywords": [
+    "opensource",
+    "community",
+    "bankid"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}
