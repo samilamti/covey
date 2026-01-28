@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Medborgarstöd</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="app">
         <header id="h">
@@ -24,8 +26,9 @@
             <section id="feed-view" class="view hidden">
                 <div class="filter-bar">
                     <button class="filter-btn active" data-filter="all">Alla</button>
-                    <button class="filter-btn" data-filter="help">Behöver hjälp</button>
-                    <button class="filter-btn" data-filter="offer">Erbjuder hjälp</button>
+                    <button class="filter-btn" data-filter="help">Hjälp</button>
+                    <button class="filter-btn" data-filter="offer">Erbjud</button>
+                    <button class="filter-btn" data-filter="walk">Gå</button>
                 </div>
                 <div id="posts-container"></div>
                 <button id="btn-create" class="fab">+</button>
@@ -33,8 +36,24 @@
 
             <section id="create-view" class="view hidden">
                 <div class="card">
-                    <h2>Skapa inlägg</h2>
-                    <textarea id="post-text" placeholder="Vad vill du dela?"></textarea>
+                    <h2 id="create-title">Skapa inlägg</h2>
+                    <div id="walk-fields" class="hidden">
+                        <input type="text" id="walk-from" placeholder="Från (t.ex. Festen)">
+                        <input type="text" id="walk-to" placeholder="Till (t.ex. Hem)">
+                    </div>
+                    <textarea id="post-text" placeholder="Berätta mer..."></textarea>
+
+                    <div id="privacy-section" class="hidden">
+                        <label>Vem ska se detta?</label>
+                        <select id="privacy-select">
+                            <option value="all">Alla verifierade</option>
+                            <option value="friends">Vänner och bekanta</option>
+                            <option value="boys">Pojkar i min ålder</option>
+                            <option value="girls">Flickor i min ålder</option>
+                            <option value="trusted">Verifierat trygga personer</option>
+                        </select>
+                    </div>
+
                     <div class="actions">
                         <button id="btn-cancel" class="sec-btn">Avbryt</button>
                         <button id="btn-post" class="primary-btn">Posta</button>
@@ -45,9 +64,11 @@
 
         <nav id="n" class="hidden">
             <button id="nav-home" class="nav-item">🏠</button>
+            <button id="nav-walk" class="nav-item">🚶</button>
             <button id="nav-profile" class="nav-item">👤</button>
         </nav>
     </div>
     <script src="app.js"></script>
 </body>
+
 </html>
