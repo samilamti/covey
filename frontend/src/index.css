@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent text size adjust on orientation change (old Android/iOS) */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Smooth tap response on iOS */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
