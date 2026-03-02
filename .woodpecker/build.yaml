@@ -1,0 +1,11 @@
+when:
+  event: [push]
+  branch: main
+
+steps:
+  - name: docker-build
+    image: docker
+    commands:
+      - docker compose build
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
