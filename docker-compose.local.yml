@@ -1,0 +1,38 @@
+# Local development overlay — self-signed TLS + Traefik dashboard
+# Usage: docker compose -f docker-compose.yml -f docker-compose.local.yml up
+#
+# Set DOMAIN=localhost in your .env to use this overlay.
+# Your browser will warn about the self-signed certificate — accept it to proceed.
+
+services:
+  frontend:
+    volumes:
+      - .:/frontend/src
+    labels:
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls=true"
+
+  backend:
+    volumes:
+      - .:/backend/src
+    environment:
+      CORS_ORIGIN: https://localhost
+      STUB_SAFETY_SCORES: ${STUB_SAFETY_SCORES:-}
+    labels:
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls=true"
+
+  traefik:
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"

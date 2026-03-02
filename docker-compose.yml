@@ -1,0 +1,93 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      target: production
+      args:
+        VITE_VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.docker.network=tillsammans_web"
+    networks:
+      - web
+      - internal
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGIN: https://${DOMAIN}
+      AUTH_PROVIDER: ${AUTH_PROVIDER}
+      FEATURE_BANKID_AUTH: ${FEATURE_BANKID_AUTH:-false}
+      FEATURE_PUSH_NOTIFICATIONS: ${FEATURE_PUSH_NOTIFICATIONS:-false}
+      FEATURE_GEOLOCATION: ${FEATURE_GEOLOCATION:-false}
+      FEATURE_COMMUNITIES: ${FEATURE_COMMUNITIES:-false}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_CONTACT: ${VAPID_CONTACT:-mailto:sentinel@covey.se}
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/socket.io`))"
+      - "traefik.http.routers.backend.entrypoints=web"
+      - "traefik.http.routers.backend.priority=100"
+      - "traefik.docker.network=tillsammans_web"
+      # Required for Socket.io sticky sessions
+      - "traefik.http.services.backend.loadbalancer.sticky.cookie=true"
+    networks:
+      - internal
+      - web
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+
+  traefik:
+    image: traefik:v3.2
+    restart: unless-stopped
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - web
+
+volumes:
+  db_data:
+
+networks:
+  web:
+    external: false
+  internal:
+    external: false
