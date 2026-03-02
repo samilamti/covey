@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c build.bat)",
+      "Bash(./build.bat)",
+      "Bash(docker ps:*)",
+      "Bash(docker exec:*)",
+      "Bash(MSYS_NO_PATHCONV=1 docker exec:*)",
+      "Bash(python:*)",
+      "Bash(npm test:*)",
+      "Bash(docker compose:*)",
+      "Bash(npm run build:*)",
+      "Bash(for f in en.json nb.json da.json fi.json ar.json is.json pl.json fo.json kl.json se.json)",
+      "Bash(do echo -n \"$f: \")",
+      "Bash(node -e \"JSON.parse\\(require\\(''fs''\\).readFileSync\\(''$f'',''utf8''\\)\\); console.log\\(''valid''\\);\")",
+      "Bash(done)",
+      "Bash(npx vitest run:*)",
+      "Bash(do node -e \"JSON.parse\\(require\\(''fs''\\).readFileSync\\(''$f'',''utf8''\\)\\); console.log\\(''$f: valid JSON''\\)\")",
+      "Bash(wc:*)",
+      "Bash(curl:*)",
+      "Bash(node:*)",
+      "Skill(claude-md-management:revise-claude-md)",
+      "Skill(claude-md-management:revise-claude-md:*)",
+      "Bash(npx --yes sharp-cli:*)",
+      "Bash(npx:*)",
+      "Bash(npm install:*)",
+      "Bash(sharp:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
