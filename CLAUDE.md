@@ -18,7 +18,7 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 
 - **Frontend**: Preact 10 + Vite 7 + Tailwind CSS 3 + i18next + Socket.io client + Leaflet
 - **Backend**: Node 22 + Express 5 + Socket.io v4 + PostgreSQL 16 + jose (JWT) + web-push
-- **Infrastructure**: Docker Compose + Traefik v3.2 + nginx (frontend serving)
+- **Infrastructure**: Docker Compose + Traefik v3.6 + nginx (frontend serving)
 - **Testing**: node:test (backend, 52 tests), vitest + @testing-library/preact (frontend, 48 tests)
 
 ## Key constraints
@@ -44,7 +44,9 @@ All 7 implementation phases are complete. The application is feature-complete fo
 
 - **Beta prep**: Production hardening, real web-push, VAPID wiring, deployment guide ✅
 
-**Not yet done**: Real BankID RP agreement, production deployment on GleSYS, branding, accessibility audit. See `docs/roadmap.md` "Future" section.
+- **Production**: Live at covey.se on GleSYS VPS with Let's Encrypt TLS ✅
+
+**Not yet done**: Real BankID RP agreement, branding, accessibility audit. See `docs/roadmap.md` "Future" section.
 
 ### Claude Code skills
 
@@ -191,6 +193,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - Real web-push provider implemented; VAPID keys wired through `docker-compose.yml` + `frontend/Dockerfile` build arg (generate keys with `npx web-push generate-vapid-keys`)
 - Socket broadcasts (`request:new`) go to all room members without eligibility pre-filtering — ineligible requests may briefly flash before the next API refresh filters them out. Push notifications, however, ARE eligibility-filtered (SQL query in `findEligibleForRequest()`)
 - Stub safety score overrides are in-memory only — lost on container restart (re-populated on next login)
+- Traefik v3.6 required for Docker Engine 29+ compatibility (v3.2 hardcodes Docker API v1.24, Engine 29 requires v1.44+). Production uses HTTP-01 ACME challenge (more reliable than TLS-ALPN-01)
 
 ## Development notes
 
