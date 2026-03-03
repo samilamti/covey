@@ -13,8 +13,6 @@ services:
       - "traefik.http.routers.backend.tls.certresolver=letsencrypt"
 
   traefik:
-    environment:
-      - DOCKER_API_VERSION=1.44
     command:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
