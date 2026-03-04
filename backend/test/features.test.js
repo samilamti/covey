@@ -22,7 +22,6 @@ describe('Feature flags', () => {
         FEATURE_BANKID_AUTH: undefined,
         FEATURE_PUSH_NOTIFICATIONS: undefined,
         FEATURE_GEOLOCATION: undefined,
-        FEATURE_COMMUNITIES: undefined,
       })
 
       // We need to delete the cached env vars and re-import
@@ -35,7 +34,6 @@ describe('Feature flags', () => {
       assert.ok('BANKID_AUTH' in flags, 'BANKID_AUTH flag exists')
       assert.ok('PUSH_NOTIFICATIONS' in flags, 'PUSH_NOTIFICATIONS flag exists')
       assert.ok('GEOLOCATION' in flags, 'GEOLOCATION flag exists')
-      assert.ok('COMMUNITIES' in flags, 'COMMUNITIES flag exists')
 
       cleanup()
     })
@@ -85,7 +83,7 @@ describe('getAllFlags() shape', () => {
   it('should return an object with the expected flag keys', async () => {
     const mod = await import(`../src/features.js?t=${Date.now() + 5}`)
     const flags = mod.getAllFlags()
-    const expectedKeys = ['BANKID_AUTH', 'PUSH_NOTIFICATIONS', 'GEOLOCATION', 'COMMUNITIES']
+    const expectedKeys = ['BANKID_AUTH', 'PUSH_NOTIFICATIONS', 'GEOLOCATION']
     for (const key of expectedKeys) {
       assert.ok(key in flags, `Flag ${key} should exist`)
       assert.equal(typeof flags[key], 'boolean', `Flag ${key} should be boolean`)
