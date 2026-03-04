@@ -26,14 +26,14 @@ describe('LanguageSelector', () => {
     expect(button.textContent).toContain('Svenska')
   })
 
-  it('shows dropdown with all 11 languages on click', async () => {
+  it('shows dropdown with all 12 languages on click', async () => {
     const { getByRole, getAllByRole } = render(<LanguageSelector />)
     const toggle = getByRole('button', { expanded: false })
 
     await fireEvent.click(toggle)
 
     const menuItems = getAllByRole('menuitem')
-    expect(menuItems).toHaveLength(11)
+    expect(menuItems).toHaveLength(12)
   })
 
   it('displays all language labels', async () => {
@@ -47,7 +47,7 @@ describe('LanguageSelector', () => {
     const expectedLabels = [
       'Svenska', 'Norsk', 'Dansk', 'Suomi', 'العربية',
       'Íslenska', 'Polski', 'Føroyskt', 'Kalaallisut',
-      'Davvisámegiella', 'English',
+      'Davvisámegiella', 'Українська', 'English',
     ]
     for (const label of expectedLabels) {
       expect(allText).toContain(label)

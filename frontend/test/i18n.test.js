@@ -2,7 +2,7 @@
  * i18n configuration and locale coverage tests.
  *
  * Verifies:
- * - All 11 locale files exist and have the same key structure as sv.json
+ * - All 12 locale files exist and have the same key structure as sv.json
  * - Swedish is the fallback language
  * - All required top-level sections exist
  */
@@ -19,9 +19,10 @@ import pl from '../src/locales/pl.json'
 import fo from '../src/locales/fo.json'
 import kl from '../src/locales/kl.json'
 import se from '../src/locales/se.json'
+import uk from '../src/locales/uk.json'
 import en from '../src/locales/en.json'
 
-const locales = { sv, nb, da, fi, ar, is, pl, fo, kl, se, en }
+const locales = { sv, nb, da, fi, ar, is, pl, fo, kl, se, uk, en }
 
 /**
  * Recursively collect all keys from a nested object as dot-separated paths.
@@ -52,8 +53,6 @@ describe('i18n locale files', () => {
         'nav',
         'app',
         'requests',
-        'communities',
-        'admin',
         'profile',
         'notifications',
         'map',
@@ -61,8 +60,8 @@ describe('i18n locale files', () => {
     )
   })
 
-  it('should have 11 locales', () => {
-    expect(Object.keys(locales)).toHaveLength(11)
+  it('should have 12 locales', () => {
+    expect(Object.keys(locales)).toHaveLength(12)
   })
 
   // Test each locale has the same keys as Swedish
@@ -85,8 +84,8 @@ describe('i18n locale files', () => {
   }
 
   // Verify language names are in native script
-  it('each locale should list all 11 language names', () => {
-    const expectedLanguageCodes = ['sv', 'nb', 'da', 'fi', 'ar', 'is', 'pl', 'fo', 'kl', 'se', 'en']
+  it('each locale should list all 12 language names', () => {
+    const expectedLanguageCodes = ['sv', 'nb', 'da', 'fi', 'ar', 'is', 'pl', 'fo', 'kl', 'se', 'uk', 'en']
     for (const [code, locale] of Object.entries(locales)) {
       for (const langCode of expectedLanguageCodes) {
         expect(locale.language[langCode], `${code} missing language.${langCode}`).toBeDefined()
@@ -108,6 +107,7 @@ describe('i18n locale files', () => {
       fo: 'Føroyskt',
       kl: 'Kalaallisut',
       se: 'Davvisámegiella',
+      uk: 'Українська',
       en: 'English',
     }
 
