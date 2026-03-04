@@ -23,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -76,7 +77,8 @@
     "activeSession": "Aktiv session i gang",
     "tapToView": "Tryk for at se kortet",
     "types": {
-      "walk": "Følgeskab hjem"
+      "walk": "Følgeskab hjem",
+      "wait": "Vent med mig"
     },
     "eligibility": "Hvem må hjælpe dig?",
     "tiers": {
@@ -151,14 +153,14 @@
     "locationPermission": "Tillad adgang til placering for at se kortet.",
     "recenter": "Centrér på min position"
   },
-  "beta": {
-    "notice": "Dette er en betaversion. Login bruger testoplysninger, ikke rigtig BankID."
-  },
   "location": {
     "denied": "Adgang til position blev nægtet. Aktivér i browserens indstillinger.",
     "unavailable": "Kunne ikke hente din position.",
     "retry": "Prøv igen",
     "requesting": "Henter position…",
     "sessionWarning": "Din position deles ikke. Den anden person kan ikke se, hvor du er."
+  },
+  "beta": {
+    "notice": "Dette er en betaversion. Login bruger testoplysninger, ikke rigtig BankID."
   }
 }

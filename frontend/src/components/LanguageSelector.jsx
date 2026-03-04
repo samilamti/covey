@@ -4,7 +4,7 @@ import { Globe } from 'lucide-preact'
 import {
   SwedenFlag, NorwayFlag, DenmarkFlag, FinlandFlag,
   ArabicFlag, IcelandFlag, PolandFlag, FaroeFlag,
-  GreenlandFlag, SamiFlag, UKFlag,
+  GreenlandFlag, SamiFlag, UkraineFlag, UKFlag,
 } from './flags'
 
 /**
@@ -22,6 +22,7 @@ const languages = [
   { code: 'fo', label: 'Føroyskt', flag: FaroeFlag },
   { code: 'kl', label: 'Kalaallisut', flag: GreenlandFlag },
   { code: 'se', label: 'Davvisámegiella', flag: SamiFlag },
+  { code: 'uk', label: 'Українська', flag: UkraineFlag },
   { code: 'en', label: 'English', flag: UKFlag },
 ]
 

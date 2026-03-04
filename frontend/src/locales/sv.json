@@ -23,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -76,7 +77,8 @@
     "activeSession": "Aktiv session pågår",
     "tapToView": "Tryck för att visa kartan",
     "types": {
-      "walk": "Sällskap hem"
+      "walk": "Sällskap hem",
+      "wait": "Vänta med mig"
     },
     "eligibility": "Vem får hjälpa dig?",
     "tiers": {
@@ -151,14 +153,14 @@
     "locationPermission": "Tillåt platsåtkomst för att se kartan.",
     "recenter": "Centrera på min position"
   },
-  "beta": {
-    "notice": "Det här är en betaversion. Inloggning sker med testuppgifter, inte riktigt BankID."
-  },
   "location": {
     "denied": "Platsåtkomst nekades. Aktivera i webbläsarens inställningar.",
     "unavailable": "Kunde inte hämta din position.",
     "retry": "Försök igen",
     "requesting": "Hämtar position…",
     "sessionWarning": "Din position delas inte. Den andra personen kan inte se var du är."
+  },
+  "beta": {
+    "notice": "Det här är en betaversion. Inloggning sker med testuppgifter, inte riktigt BankID."
   }
 }

@@ -23,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -76,7 +77,8 @@
     "activeSession": "Virk lota í gangi",
     "tapToView": "Ýttu til að skoða kortið",
     "types": {
-      "walk": "Fylgd heim"
+      "walk": "Fylgd heim",
+      "wait": "Bíddu með mér"
     },
     "eligibility": "Hver má hjálpa þér?",
     "tiers": {
@@ -151,14 +153,14 @@
     "locationPermission": "Leyfðu staðsetningaraðgang til að sjá kortið.",
     "recenter": "Miðja á staðsetningu minni"
   },
-  "beta": {
-    "notice": "Þetta er betaútgáfa. Innskráning notar prófunargögn, ekki raunverulegt BankID."
-  },
   "location": {
     "denied": "Staðsetningaraðgangi var hafnað. Virkjaðu í stillingum vafrans.",
     "unavailable": "Ekki tókst að sækja staðsetningu þína.",
     "retry": "Reyna aftur",
     "requesting": "Sæki staðsetningu…",
     "sessionWarning": "Staðsetning þín er ekki deild. Hinn aðilinn getur ekki séð hvar þú ert."
+  },
+  "beta": {
+    "notice": "Þetta er betaútgáfa. Innskráning notar prófunargögn, ekki raunverulegt BankID."
   }
 }

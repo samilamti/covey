@@ -23,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -76,7 +77,8 @@
     "activeSession": "Virkin seta í gongd",
     "tapToView": "Trýst fyri at síggja kortið",
     "types": {
-      "walk": "Fylgi heim"
+      "walk": "Fylgi heim",
+      "wait": "Bíða við meg"
     },
     "eligibility": "Hvør fær at hjálpa tær?",
     "tiers": {
@@ -151,14 +153,14 @@
     "locationPermission": "Loyv staðfestingaratgongd fyri at síggja kortið.",
     "recenter": "Miðja á mín støðu"
   },
-  "beta": {
-    "notice": "Hetta er eitt betaútgáva. Innriting nýtir royndargøgn, ikki veruligt BankID."
-  },
   "location": {
     "denied": "Atgongd til støðu varð noktað. Virkja í stillingum hjá kaganum.",
     "unavailable": "Fann ikki støðu tína.",
     "retry": "Royn aftur",
     "requesting": "Heintir støðu…",
     "sessionWarning": "Støðan tín verður ikki deild. Hin persónurin kann ikki síggja, hvar tú ert."
+  },
+  "beta": {
+    "notice": "Hetta er eitt betaútgáva. Innriting nýtir royndargøgn, ikki veruligt BankID."
   }
 }

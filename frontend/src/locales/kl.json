@@ -23,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -76,7 +77,8 @@
     "activeSession": "Suliassaqarpoq sulinermini",
     "tapToView": "Nunap assinga takukkumavdlugo tooruk",
     "types": {
-      "walk": "Angerlarsimassutit ilaginiarlunga"
+      "walk": "Angerlarsimassutit ilaginiarlunga",
+      "wait": "Utaqqigit"
     },
     "eligibility": "Kina ikiorsinnaavat?",
     "tiers": {
@@ -151,14 +153,14 @@
     "locationPermission": "Najugaq atorsinnaanera akuersigit nunap assinga takukkumavdlugo.",
     "recenter": "Najugara qitiunneqarli"
   },
-  "beta": {
-    "notice": "Una betaversioni-uvoq. Iserfissaq misilitseriaatsinik atorpoq, BankID-imik pisinnaanngillat."
-  },
   "location": {
     "denied": "Najugaq pillugu akuersissuteqanngitsoq. Qarasaasiap atuinermut allannguutigisinnaavatit.",
     "unavailable": "Najugaq nassaarisinnaanngippara.",
     "retry": "Misileqqigit",
     "requesting": "Najugaq nassaarineqarpoq…",
     "sessionWarning": "Najugaq avataanniissimanavianngilaq. Ikinngutit takusinnaanngilaat sumiunniiffinnik."
+  },
+  "beta": {
+    "notice": "Una betaversioni-uvoq. Iserfissaq misilitseriaatsinik atorpoq, BankID-imik pisinnaanngillat."
   }
 }

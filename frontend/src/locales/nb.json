@@ -23,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -76,7 +77,8 @@
     "activeSession": "Aktiv økt pågår",
     "tapToView": "Trykk for å vise kartet",
     "types": {
-      "walk": "Følge hjem"
+      "walk": "Følge hjem",
+      "wait": "Vent med meg"
     },
     "eligibility": "Hvem kan hjelpe deg?",
     "tiers": {
@@ -151,14 +153,14 @@
     "locationPermission": "Tillat posisjonstilgang for å se kartet.",
     "recenter": "Sentrer på min posisjon"
   },
-  "beta": {
-    "notice": "Dette er en betaversjon. Innlogging bruker testopplysninger, ikke ekte BankID."
-  },
   "location": {
     "denied": "Tilgang til posisjon ble nektet. Aktiver i nettleserens innstillinger.",
     "unavailable": "Kunne ikke hente posisjonen din.",
     "retry": "Prøv igjen",
     "requesting": "Henter posisjon…",
     "sessionWarning": "Posisjonen din deles ikke. Den andre personen kan ikke se hvor du er."
+  },
+  "beta": {
+    "notice": "Dette er en betaversjon. Innlogging bruker testopplysninger, ikke ekte BankID."
   }
 }

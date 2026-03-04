@@ -23,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -76,7 +77,8 @@
     "activeSession": "Aktiivvalaš čoahkkin joatkkemin",
     "tapToView": "Deatte geahččat kártta",
     "types": {
-      "walk": "Mielde ruoktot"
+      "walk": "Mielde ruoktot",
+      "wait": "Vuordde mu mielde"
     },
     "eligibility": "Gii sáhttá veahkehit du?",
     "tiers": {
@@ -151,14 +153,14 @@
     "locationPermission": "Lohpe báikedieđuid geahččat kártta.",
     "recenter": "Guovddážii mu báikái"
   },
-  "beta": {
-    "notice": "Dát lea betaversiovdna. Sisačállin geavaha geahččalandieđuid, ii duohta BankID."
-  },
   "location": {
     "denied": "Báikedieđuid oažžun hilgojuvvui. Ođas dan neahttabláđđeheaddji heivehusat bokte.",
     "unavailable": "Ii sáhttán gávdnat du báikki.",
     "retry": "Geahččal ođđasit",
     "requesting": "Ohcamin báikki…",
     "sessionWarning": "Du báiki ii juogaduvvo. Nubbi olmmoš ii oainne gos don leat."
+  },
+  "beta": {
+    "notice": "Dát lea betaversiovdna. Sisačállin geavaha geahččalandieđuid, ii duohta BankID."
   }
 }

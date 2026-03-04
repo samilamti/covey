@@ -23,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -76,7 +77,8 @@
     "activeSession": "Active session in progress",
     "tapToView": "Tap to view the map",
     "types": {
-      "walk": "Walk home"
+      "walk": "Walk home",
+      "wait": "Wait with me"
     },
     "eligibility": "Who can help you?",
     "tiers": {
@@ -151,14 +153,14 @@
     "locationPermission": "Allow location access to see the map.",
     "recenter": "Center on my location"
   },
-  "beta": {
-    "notice": "This is a beta version. Login uses test credentials, not real BankID."
-  },
   "location": {
     "denied": "Location access was denied. Enable it in your browser settings.",
     "unavailable": "Could not get your location.",
     "retry": "Try again",
     "requesting": "Getting location…",
     "sessionWarning": "Your location is not being shared. The other person cannot see where you are."
+  },
+  "beta": {
+    "notice": "This is a beta version. Login uses test credentials, not real BankID."
   }
 }

@@ -23,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -76,7 +77,8 @@
     "activeSession": "Aktywna sesja w toku",
     "tapToView": "Dotknij, aby zobaczyć mapę",
     "types": {
-      "walk": "Towarzystwo do domu"
+      "walk": "Towarzystwo do domu",
+      "wait": "Poczekaj ze mną"
     },
     "eligibility": "Kto może ci pomóc?",
     "tiers": {
@@ -151,14 +153,14 @@
     "locationPermission": "Zezwól na dostęp do lokalizacji, aby zobaczyć mapę.",
     "recenter": "Wyśrodkuj na mojej lokalizacji"
   },
-  "beta": {
-    "notice": "To jest wersja beta. Logowanie używa danych testowych, nie prawdziwego BankID."
-  },
   "location": {
     "denied": "Odmówiono dostępu do lokalizacji. Włącz w ustawieniach przeglądarki.",
     "unavailable": "Nie udało się pobrać Twojej lokalizacji.",
     "retry": "Spróbuj ponownie",
     "requesting": "Pobieranie lokalizacji…",
     "sessionWarning": "Twoja lokalizacja nie jest udostępniana. Druga osoba nie widzi, gdzie jesteś."
+  },
+  "beta": {
+    "notice": "To jest wersja beta. Logowanie używa danych testowych, nie prawdziwego BankID."
   }
 }

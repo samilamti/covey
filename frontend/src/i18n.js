@@ -12,6 +12,7 @@ import pl from './locales/pl.json'
 import fo from './locales/fo.json'
 import kl from './locales/kl.json'
 import se from './locales/se.json'
+import uk from './locales/uk.json'
 import en from './locales/en.json'
 
 /**
@@ -57,6 +58,7 @@ i18n
       fo: { translation: fo },
       kl: { translation: kl },
       se: { translation: se },
+      uk: { translation: uk },
       en: { translation: en },
     },
     fallbackLng: 'sv',
