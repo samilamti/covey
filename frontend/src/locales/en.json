@@ -1,8 +1,9 @@
 {
   "landing": {
-    "title": "Welcome to Tillsammans",
-    "subtitle": "Safer together",
-    "description": "Tillsammans helps you and your neighbours look out for each other. Need company walking home one evening? Find someone here who'll walk with you.",
+    "title": "Welcome to Covey",
+    "subtitle": "Help each other home – walk together! 🫶",
+    "nameMeaning": "Covey – a small group of people (or a small flock of birds 🕊️, but let's focus on the people)",
+    "description": "Don't walk home alone. Find safe company nearby – when you need it the most.",
     "loginButton": "Log in with BankID",
     "bankidPending": "Open the BankID app on your phone…",
     "bankidUserSign": "Enter your security code in BankID…",

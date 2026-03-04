@@ -1,8 +1,9 @@
 {
   "landing": {
-    "title": "Tikilluarit Tillsammans-imut",
-    "subtitle": "Ataatsimut pillutit nalinginnarnersumik",
-    "description": "Tillsammans illit innuttaasallu ilinnut qanittumiittut ilinniarlugu assilersorniarsinnaavaat. Unnukkut angerlarsimassutit ikiuteqarfigisinnaavatit.",
+    "title": "Tikilluarit Covey-mut",
+    "subtitle": "Ataatsimut ikiutigisigit angerlarlutit – katillutit pisigit! 🫶",
+    "nameMeaning": "Covey – inuit ikittuinnaat (imaluunniit timmissat ikittuinnaat 🕊️, kisiannili inunnut isumaginninnerulta)",
+    "description": "Kisimi angerlarniaqqutit. Qanittumiittut ikiuteqarfigisinnaavatit – pisinnarissamut aamma pitsaanerpaamik.",
     "loginButton": "BankID-ikkut iserfigisinnaavatit",
     "bankidPending": "Oqarasuaatinni BankID-app ammaruk…",
     "bankidUserSign": "BankID-imi naqitassiat allaguk…",

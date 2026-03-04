@@ -26,7 +26,7 @@ export function MainLayout({ user, onLogout }) {
       <BetaBanner />
       {/* Top bar */}
       <header class="bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center sticky top-0 z-[1001]">
-        <h1 class="text-lg font-bold text-gray-900">Tillsammans</h1>
+        <h1 class="text-lg font-bold text-gray-900">Covey</h1>
         <div class="flex items-center gap-2">
           <LanguageSelector />
         </div>

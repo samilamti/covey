@@ -102,6 +102,7 @@ const NOTIFY_BODY = {
   fo: 'Onkur tørvar hjálp! Kanst tú ganga saman?',
   kl: 'Inuit ikinngunnaarpusi! Katillutit pisinnaaviuk?',
   se: 'Muhtun dárbbaša veahki! Sáhtátgo vázzit ovttas?',
+  uk: 'Комусь потрібна допомога! Чи можете ви піти разом?',
 }
 
 /**
@@ -114,7 +115,6 @@ export async function notifyNewRequest(request) {
   try {
     const subscriptions = await pushRepo.findEligibleForRequest({
       requesterId: request.requester_id,
-      communityId: request.community_id,
       eligibilityTier: request.eligibility_tier,
     })
 
@@ -124,7 +124,7 @@ export async function notifyNewRequest(request) {
       subscriptions.map((sub) => {
         const lang = sub.preferred_lang || 'sv'
         const payload = {
-          title: 'Tillsammans',
+          title: 'Covey',
           body: NOTIFY_BODY[lang] || NOTIFY_BODY.sv,
           url: '/requests',
           requestId: request.id,

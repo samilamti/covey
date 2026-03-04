@@ -65,7 +65,7 @@ notificationRouter.post('/test', async (req, res) => {
       return res.json({ sent: 0, message: 'No subscriptions found' })
     }
 
-    const payload = { title: 'Tillsammans', body: 'Test notification!' }
+    const payload = { title: 'Covey', body: 'Test notification!' }
     for (const sub of subs) {
       await sendNotification(sub, payload)
     }

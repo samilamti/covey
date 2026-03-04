@@ -98,8 +98,12 @@ export function LandingPage({ onLogin }) {
             {t('landing.title')}
           </h1>
 
-          <p class="text-lg text-indigo-600 font-medium mb-6">
+          <p class="text-lg text-indigo-600 font-medium mb-4">
             {t('landing.subtitle')}
+          </p>
+
+          <p class="text-sm text-gray-500 italic mb-6">
+            {t('landing.nameMeaning')}
           </p>
 
           <p class="text-gray-600 mb-8 leading-relaxed">
@@ -150,7 +154,7 @@ export function LandingPage({ onLogin }) {
       </main>
 
       <footer class="p-4 text-center text-gray-400 text-sm">
-        &copy; {new Date().getFullYear()} Tillsammans
+        &copy; {new Date().getFullYear()} Covey
       </footer>
     </div>
   )

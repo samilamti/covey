@@ -1,7 +1,7 @@
 {
-  "name": "Tillsammans",
-  "short_name": "Tillsammans",
-  "description": "Safer together — citizen safety coordination",
+  "name": "Covey",
+  "short_name": "Covey",
+  "description": "Slipp gå hem ensam. Hitta tryggt sällskap i din närhet.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1e293b",

@@ -1,8 +1,9 @@
 {
   "landing": {
-    "title": "Vælkomin til Tillsammans",
-    "subtitle": "Tryggari saman",
-    "description": "Tillsammans hjálpir tær og grannum tínum at halda eyga við hvørjum øðrum. Tørvar tú fylgi heim ein kvøld? Her finnur tú onkran, ið gongur við tær.",
+    "title": "Vælkomin til Covey",
+    "subtitle": "Hjálpist heim – gangið saman! 🫶",
+    "nameMeaning": "Covey – ein lítil bólkur av fólki (ella ein lítil flokkur av fuglum 🕊️, men lat okkum leggja dent á fólkið)",
+    "description": "Slep at ganga heim einsamøll(ur). Finn tryggt fylgi í nærumhvørvinum – tá ið tú mest tørvar.",
     "loginButton": "Rita inn við BankID",
     "bankidPending": "Opna BankID-appina á telefonini…",
     "bankidUserSign": "Skriva trygdarkotuna í BankID…",

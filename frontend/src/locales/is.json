@@ -1,8 +1,9 @@
 {
   "landing": {
-    "title": "Velkomin í Tillsammans",
-    "subtitle": "Öruggari saman",
-    "description": "Tillsammans hjálpar þér og nágrönnum þínum að passa upp á hvort annað. Þarftu félagsskap heim eitt kvöld? Hér finnur þú einhvern sem gengur með þér.",
+    "title": "Velkomin í Covey",
+    "subtitle": "Hjálpist að heim – gangið saman! 🫶",
+    "nameMeaning": "Covey – lítill hópur fólks (eða lítill flokkur fugla 🕊️, en einblínum á fólkið)",
+    "description": "Þú þarft ekki að ganga heim ein(n). Finndu öruggt félagsskap í nágrenninu – þegar þú þarft mest á því að halda.",
     "loginButton": "Skrá inn með BankID",
     "bankidPending": "Opnaðu BankID appið í símanum þínum…",
     "bankidUserSign": "Sláðu inn öryggiskóðann þinn í BankID…",

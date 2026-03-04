@@ -1,10 +1,10 @@
 /**
- * Tillsammans Service Worker.
+ * Covey Service Worker.
  *
  * Handles push notifications and offline caching of the app shell.
  */
 
-const CACHE_NAME = 'tillsammans-v2'
+const CACHE_NAME = 'covey-v1'
 const MAX_CACHE_ENTRIES = 100
 const APP_SHELL = [
   '/',
@@ -75,7 +75,7 @@ self.addEventListener('fetch', (event) => {
 
 // --- Push notification handler ---
 self.addEventListener('push', (event) => {
-  let data = { title: 'Tillsammans', body: 'New notification' }
+  let data = { title: 'Covey', body: 'New notification' }
 
   try {
     if (event.data) {

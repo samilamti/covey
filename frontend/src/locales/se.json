@@ -1,8 +1,9 @@
 {
   "landing": {
-    "title": "Bures boahtin Tillsammans:ii",
-    "subtitle": "Oadjebasat ovttas",
-    "description": "Tillsammans veahkeha du ja du ránnjáid geahččat guhtet guimmiideaset. Dárbbašat go sierraolbmo mátkái ruoktot eahketbeaivve? Dáppe gávdnat olbmo gii vázzá duinna.",
+    "title": "Bures boahtin Covey:ii",
+    "subtitle": "Veahkehehket guhtet guimmiideaset ruoktot – vázzet ovttas! 🫶",
+    "nameMeaning": "Covey – unna joavku olbmuin (dahje unna eallu lottiin 🕊️, muhto geahččat olbmuide)",
+    "description": "Ale váze ruoktot okto. Gávnna oadjebas searaid lagamus guovllus – go dárbbašat dan eanemusat.",
     "loginButton": "Čálit sisa BankID:in",
     "bankidPending": "Raba BankID-appa du telefovnnas…",
     "bankidUserSign": "Čále sisa du dorvokoda BankID:ii…",

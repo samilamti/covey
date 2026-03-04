@@ -1,8 +1,9 @@
 {
   "landing": {
-    "title": "Velkommen til Tillsammans",
-    "subtitle": "Tryggere sammen",
-    "description": "Tillsammans hjælper dig og dine naboer med at holde øje med hinanden. Har du brug for følgeskab hjem en aften? Her finder du nogen, der går med dig.",
+    "title": "Velkommen til Covey",
+    "subtitle": "Hjælp hinanden hjem – gå sammen! 🫶",
+    "nameMeaning": "Covey – en lille gruppe mennesker (eller en lille flok fugle 🕊️, men lad os fokusere på menneskene)",
+    "description": "Slip for at gå hjem alene. Find trygt følgeskab i nærheden – når du har mest brug for det.",
     "loginButton": "Log ind med BankID",
     "bankidPending": "Åbn BankID-appen på din telefon…",
     "bankidUserSign": "Indtast din sikkerhedskode i BankID…",

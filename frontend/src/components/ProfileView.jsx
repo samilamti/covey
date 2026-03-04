@@ -41,7 +41,7 @@ export function ProfileView({ user, onLogout }) {
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = 'tillsammans-data.json'
+      a.download = 'covey-data.json'
       a.click()
       URL.revokeObjectURL(url)
     } catch {
