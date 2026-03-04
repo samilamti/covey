@@ -20,7 +20,7 @@ Við tökum persónuvernd notenda afar alvarlega og seljum aldrei gögn.
 ### Notkunarskilmálar og reglur
 
 - Gerðu skýra og sanngjarna notkunarskilmála sem vernda bæði vettvanginn og einstaklinginn.
-- Móta sjálfbærar lagalegar reglur fyrir samfélagið.
+- Móta sjálfbærar lagalegar reglur fyrir vettvanginn.
 
 ### Skipulagsform og leyfi
 

@@ -60,9 +60,7 @@ Kodrepot hostas på Codeberg med Woodpecker CI för automatiserade tester och by
 ## Säkerhetsbeslut
 
 - **JWT med HS256** — Stateless autentisering med 24 timmars utgångstid.
-- **Administratörsgodkänt medlemskap** — Communitymedlemskap kräver manuellt godkännande.
 - **Pseudonyma namn** — BankID-namn visas aldrig automatiskt.
-- **Områdesnamn istället för koordinater** — Communities visar "Södermalm", inte exakta GPS-koordinater.
 - **Haversine istället för PostGIS** — Enklare, lättare och tillräckligt för stadsskala.
 - **Minnesbaserad hastighetsbegränsning** — Ingen Redis behövs för ett enda serverdistribution.
 

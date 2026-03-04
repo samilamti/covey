@@ -20,7 +20,7 @@ Vi tar användarnas integritet på största allvar och säljer aldrig data.
 ### Användaravtal och regler
 
 - Ta fram tydliga och rättvisa användarvillkor som skyddar både plattformen och individen.
-- Formulera hållbara juridiska regler för communityn.
+- Formulera hållbara juridiska regler för plattformen.
 
 ### Organisationsform och licensiering
 

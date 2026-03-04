@@ -60,9 +60,7 @@ Kóðageymsluhúsið er hýst á Codeberg með Woodpecker CI fyrir sjálfvirk pr
 ## Öryggisákvarðanir
 
 - **JWT með HS256** -- Stöðulaus sannvottun með 24 klukkustunda gildistíma.
-- **Aðild samþykkt af stjórnanda** -- Samfélagsaðild krefst handvirks samþykkis.
 - **Dulnefni** -- BankID-nöfn eru aldrei sýnd sjálfkrafa.
-- **Svæðisnöfn í stað hnita** -- Samfélög sýna "Södermalm", ekki nákvæm GPS-hnit.
 - **Haversine í stað PostGIS** -- Einfaldara, léttara og nóg fyrir borgarmælikvarða.
 - **Minnisgrunnuð hraðatakmörkun** -- Enginn Redis þarf fyrir eins þjóns uppsetningu.
 

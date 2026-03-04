@@ -10,7 +10,7 @@ description: Útskýringar á mikilvægum hugtökum sem notuð eru í Covey.
 
 ### Aðstoðarbeiðni
 
-Tímabundin beiðni um öryggisstuðning í raunveruleikanum -- til dæmis "Ég þarf einhvern til að ganga heim með mér." Hún er búin til af **beiðanda** og framkvæmd af **aðstoðarmanni**. Getur verið **sjálfstæð** (án samfélags) eða **samfélagsbundin**.
+Tímabundin beiðni um öryggisstuðning í raunveruleikanum -- til dæmis "Ég þarf einhvern til að ganga heim með mér." Hún er búin til af **beiðanda** og framkvæmd af **aðstoðarmanni**.
 
 ### Beiðandi
 
@@ -24,14 +24,6 @@ Sá sem samþykkir og framkvæmir aðstoðarbeiðni. Verður að uppfylla hæfni
 
 Virki áfangi aðstoðarbeiðni, frá samþykki til loka. Á fundi geta beiðandi og aðstoðarmaður skipst á skilaboðum og deilt staðsetningu.
 
-### Samfélag
-
-Hópur notenda sem deila sameiginlegu samhengi, til dæmis hverfi, vinnustaður eða háskóli. Samfélög nota samþykkta aðild og dulnefni sem birtingarnöfn.
-
-### Sjálfstæð beiðni
-
-Aðstoðarbeiðni sem er búin til án samfélags. Sýnileg öllum staðfestum notendum.
-
 ## Hæfni og öryggi
 
 ### Hæfnistig
@@ -41,16 +33,16 @@ Stjórnar því hver getur séð og samþykkt beiðni. Þrjú stig eru til:
 | Stig | Regla | Lýsing |
 |------|-------|--------|
 | **Svipaðir og ég** | Sama kyn OG fæðingarár ±5 | Sjálfgefið. Passar saman fólk af svipuðum aldri og kyni. |
-| **Staðfestir verðir** | Lýðfræðileg samsvörun EÐA öryggiseinkunn >=5 | Opnar fyrir reynda aðstoðarmenn. |
+| **Hæfir fylgdarmenn** | Lýðfræðileg samsvörun EÐA öryggiseinkunn >=5 | Opnar fyrir reynda aðstoðarmenn. |
 | **Allir meðlimir** | Engar takmarkanir | Allir staðfestir notendur geta samþykkt. |
 
 ### Öryggiseinkunn
 
-Uppsöfnuð einkunn byggð á umsögnum eftir lokna fundi. Nýir notendur byrja á 0. Einkunn 5 eða hærri veitir stöðu **staðfests verðar**.
+Uppsöfnuð einkunn byggð á umsögnum eftir lokna fundi. Nýir notendur byrja á 0. Einkunn 5 eða hærri veitir stöðu **hæfs fylgdarmanns**.
 
-### Staðfestur verður
+### Hæfur fylgdarmaður
 
-Notandi sem hefur náð öryggiseinkunn yfir viðmiðunarmörkum (nú 5). Getur samþykkt beiðnir á stigi "Staðfestir verðir" án lýðfræðilegrar samsvörunar.
+Notandi sem hefur náð öryggiseinkunn yfir viðmiðunarmörkum (nú 5). Getur samþykkt beiðnir á stigi "Hæfir fylgdarmenn" án lýðfræðilegrar samsvörunar.
 
 ## Auðkenni og sannvottun
 

@@ -10,7 +10,7 @@ description: Frágreiðing av týðandi hugtøkum brúkt í Covey.
 
 ### Hjálparbøn
 
-Ein tíðarmarkað bøn um trygdarhjálp í veruligum heimi -- til dømis "Eg tørvi einhvørjum at ganga heim við." Stovnað av einum **biðjara** og framd av einum **hjálpara**. Kann vera **frístandandi** (uttan samfelag) ella **samfelagsbundin**.
+Ein tíðarmarkað bøn um trygdarhjálp í veruligum heimi -- til dømis "Eg tørvi einhvørjum at ganga heim við." Stovnað av einum **biðjara** og framd av einum **hjálpara**.
 
 ### Biðjari
 
@@ -24,14 +24,6 @@ Sá, ið góðtikur og framur eina hjálparbøn. Má uppfylla atkomutreytur áð
 
 Virka fásin av eini hjálparbøn, frá góðkenning til enda. Undir eini setu kunnu biðjari og hjálpari skipta boð og deylt staðseting.
 
-### Samfelag
-
-Ein bólkur av brúkarum við einum felagsum samanhanginum, til dømis eitt bústaðarøki, ein arbeiðsstaður ella eitt universitet. Samfeløg brúka góðkend limaskap og dulnevnd vísningarnøvn.
-
-### Frístandandi bøn
-
-Ein hjálparbøn stovnað uttan samfelag. Sjónlig hjá øllum staðfestum brúkarum.
-
 ## Atkomurættur og trygd
 
 ### Atkomustig
@@ -41,16 +33,16 @@ Stýrir, hvør kann síggja og góðtaka eina bøn. Trý stig eru tøk:
 | Stig | Regla | Lýsing |
 |------|-------|--------|
 | **Líkur sum eg** | Sama kyn OG føðingarár ±5 | Standard. Samsvarar fólk við líkari aldri og kyni. |
-| **Staðfestir varðhaldarar** | Fólkayvirlit ELLA tryggingarstig ≥ 5 | Opnar fyri royndum hjálparum. |
+| **Kvalifiseraðir fylgdarar** | Fólkayvirlit ELLA tryggingarstig ≥ 5 | Opnar fyri royndum hjálparum. |
 | **Allir limir** | Ongar avgersingar | Allir staðfestir brúkarar kunnu góðtaka. |
 
 ### Tryggingarstig
 
-Eitt uppsavnað stig grundað á ummælum eftir liðugar setur. Nýggir brúkarar byrja á 0. Eitt stig á 5 ella hægri røkkur sum **staðfestur varðhaldari**.
+Eitt uppsavnað stig grundað á ummælum eftir liðugar setur. Nýggir brúkarar byrja á 0. Eitt stig á 5 ella hægri røkkur sum **kvalifiseraður fylgdari**.
 
-### Staðfestur varðhaldari
+### Kvalifiseraður fylgdari
 
-Ein brúkari, sum tryggingarstigið hjá røkkur trøskildinum (í løtu 5). Kann góðtaka bønir á "Staðfestir varðhaldarar"-stiginum uttan fólkayvirlit.
+Ein brúkari, sum tryggingarstigið hjá røkkur trøskildinum (í løtu 5). Kann góðtaka bønir á "Kvalifiseraðir fylgdarar"-stiginum uttan fólkayvirlit.
 
 ## Samleiki og samgilding
 

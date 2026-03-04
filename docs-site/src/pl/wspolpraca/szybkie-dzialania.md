@@ -16,6 +16,6 @@ Nawet z ograniczonym czasem możesz zrobić dużą różnicę. Oto działania, k
 
 3. **Opowiedz znajomemu** — Następnym razem przy kawie wspomnij o projekcie komuś, kto może być zainteresowany.
 
-4. **Dołącz do społeczności** — Wejdź i się przywitaj. To pokazuje, że jest zainteresowanie i wspiera projekt.
+4. **Przywitaj się** — Wejdź i się przywitaj. To pokazuje, że jest zainteresowanie i wspiera projekt.
 
 Dziękujemy za Twój czas — każda minuta się liczy!

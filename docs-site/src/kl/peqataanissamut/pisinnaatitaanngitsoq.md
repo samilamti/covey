@@ -16,9 +16,8 @@ Koodimik ilisimanngilatit kisiannili assigiinngitsumik ikiorsinnaavutit. Isumali
 - Buggit imaluunniit ajornartut oqaaseqarsinnaallutit.
 - Sunaassaq tørvut -- isumaliutit pitsaanerpaapput nunameersunik tørvunut.
 
-### Peqatigiiffiit aamma moderering
+### Binninnaq aamma ikiorsinnaanneq
 
-- Najugaqarfinni assigalugit.
 - Atuisoqarsinnaanngitsut nutaat binninnaq oqaaseqarsinnaallutit.
 - Ajunngitsunik imaluunniit ajortumik oqaaseqarsinnaallutit.
 

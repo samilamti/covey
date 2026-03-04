@@ -21,7 +21,7 @@ Aningaasarsiornissamut aaqqissuussaanngitsugut, kisiannili rekstrunut aamma menn
 
 - Qanoq Svøríkimut tamarmut?
 - Kommuninut, inuiaqatigiinnut aamma allat.
-- Vørumerki aaqqiissutaasumik aamma peqatigiinnermi.
+- Vørumerki aaqqiissutaasumik aamma attaveqarfimmi.
 
 ### Organisatión aamma stýring
 

@@ -32,7 +32,6 @@ BankID-navnet ditt vises ikke for andre brukere. I stedet velger du selv et visn
 
 Du kan eksportere all din data via **Profil -> Eksporter data**. Eksporten inneholder:
 - Din profil
-- Dine fellesskapsmedlemskap
 - Dine hjelpeforesporsler
 - Oktmeldinger
 - Vurderinger og tilbakemeldinger
@@ -48,13 +47,10 @@ Du kan slette kontoen din via **Profil -> Slett konto**. Prosessen:
 
 ## Sikkerhetsmodell
 
-### Fellesskapssikkerhet
+### Personvern og sikkerhet
 
 | Trussel | Beskyttelsestiltak |
 |---------|-------------------|
-| Kartlegge medlemmer | Medlemslister synlige bare for medlemmer |
-| Kartlegge fellesskapsposisjoner | Bare omradenavn vises, aldri eksakte koordinater |
-| Bli med for a overvake | Medlemskap krever godkjenning av administrator |
 | Identifisere virkelige navn | Pseudonyme visningsnavn |
 | Kryssreferere brukere | Profilen viser bare visningsnavn og verifiseringsstatus |
 | Akseptere foresporsler for a naerme seg mal | Verifiseringsspor knytter BankID-verifiserte identiteter til hver okt |

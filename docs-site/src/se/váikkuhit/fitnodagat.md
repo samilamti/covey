@@ -21,7 +21,7 @@ Mii eat leat dietnasulmmoš, muhto mii dárbbašit resurssaid doaibmanbijuid ja 
 
 - Movt oažžut olles Ruoŧa beaktilis vuogiin?
 - Veahkehehttet min gávdnat oktavuođaid gielddaiguin, siviillaservodatorganisašuvnnaiguin ja eará guoimmihaiguin.
-- Hukset merkanama oadjebasvuođa ja searvevuođa birra.
+- Hukset merkanama oadjebasvuođa ja lávdadaga birra.
 
 ### Organisašuvdna ja stivrren
 

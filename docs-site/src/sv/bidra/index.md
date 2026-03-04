@@ -15,7 +15,7 @@ Covey drivs av frivilliga och öppen källkod. Oavsett din bakgrund finns det s�
 - **[Studenter](/sv/bidra/student/)** — Examensarbeten, universitetskontakter och dokumentation.
 - **[Entreprenörer](/sv/bidra/entreprenor/)** — Finansiering, partnerskap och organisationsbygge.
 - **[Ekonomiskt](/sv/bidra/ekonomiskt/)** — Donera till drift och utveckling.
-- **[Icke-teknisk](/sv/bidra/icke-teknisk/)** — Betatestning, community-moderering och mun-till-mun.
+- **[Icke-teknisk](/sv/bidra/icke-teknisk/)** — Betatestning och mun-till-mun.
 - **[Snabba insatser](/sv/bidra/snabba-insatser/)** — Fem minuter? Gör stor skillnad ändå.
 
 ## Varför bidra?

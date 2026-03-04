@@ -16,7 +16,7 @@ Nógvir kenna seg ótryggar, tá teir skulu ganga heim einir seint um kvøldið,
 2. **Lýs leiðina tína** -- Skriva, hvaðani tú byrjar og hagar tú ætlar.
 3. **Vel, hvør sær bønina** -- Fyri auka trygd kanst tú avmarka sjónleikan:
    - **Líkur sum eg** -- Bara fólk av sama kyni og líkari aldri (±5 ár).
-   - **Staðfestir varðhaldarar** -- Omanfyri pluss fólk við háum tryggingarstigum.
+   - **Kvalifiseraðir fylgdarar** -- Omanfyri pluss fólk við háum tryggingarstigum.
    - **Allir limir** -- Allir staðfestir brúkarar kunnu síggja bønina.
 
 ### Dømi
@@ -35,11 +35,4 @@ Tá onkur samtykkir bønini, byrjar ein **virkin seta**:
 ## Fyrimunir
 
 - **Staðfest samleiki** -- Allir hava loggað inn við BankID. Ongir dulnevndir brúkarar.
-- **Staðbundið felagsskapur** -- Hjálpið hvørjum øðrum í nærøkinum.
 - **Privatlívsvernd** -- Neyvan staðseting tín verður bara deyld við tann, ið hjálpir tær, og verður sjálvvirknað strikað, tá setan endar.
-
-## Samfeløg
-
-Tú kanst eisini gerast limur í staðbundnum **trygdarsamfeløgum** -- bólkum fyri bústaðarøki títt, arbeiðsstað ella skúla. Bønir, stovnaðar innan eitt samfelag, verða bert sjónligar hjá limum tess.
-
-At gerast limur í einum samfelagi krevur góðkenning frá umsitara, sum skapar eitt eyka lag av trygd.

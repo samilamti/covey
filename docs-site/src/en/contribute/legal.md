@@ -20,7 +20,7 @@ We take user privacy very seriously and never sell data.
 ### User agreements and rules
 
 - Draft clear and fair terms of service that protect both the platform and the individual.
-- Formulate sustainable legal rules for the community.
+- Formulate sustainable legal rules for the platform.
 
 ### Organisational form and licensing
 

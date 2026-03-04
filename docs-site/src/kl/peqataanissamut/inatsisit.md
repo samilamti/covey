@@ -20,7 +20,7 @@ Atuisoqarsinnaanngitsut namminersorneritik pingaarutilerpput aamma daatat tunisi
 ### Atuisoqarsinnaanngitsut avtalit aamma inatsisit
 
 - Nalinginnaasumik aamma ajunngilluinnarsumik atuisoqarsinnaanngitsut avtalit pilersitsinerlugit.
-- Peqatigiiffinnut inatsisit.
+- Attaveqarfinnut inatsisit.
 
 ### Organisatión aamma lisensineq
 

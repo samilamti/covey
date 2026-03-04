@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Reglur og leiðbeiningar um þátttöku í Covey-verkefninu.
 ---
 
-Til að skapa velkomið og skilvirkt umhverfi gilda eftirfarandi reglur fyrir alla sem taka þátt í Covey-verkefninu og samfélagi þess:
+Til að skapa velkomið og skilvirkt umhverfi gilda eftirfarandi reglur fyrir alla sem taka þátt í Covey-verkefninu:
 
 ## 1. Virðing
 

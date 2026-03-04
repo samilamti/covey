@@ -16,7 +16,7 @@ Many people feel unsafe walking home alone late at night, for example after a pa
 2. **Describe your route** -- Enter where you are starting from and where you are heading.
 3. **Choose who can see the request** -- For added safety, you can limit visibility:
    - **Similar to me** -- Only people of the same sex and similar age (within 5 years).
-   - **Verified guardians** -- The above plus people with a high safety score.
+   - **Qualified companions** -- The above plus people with a high safety score.
    - **All members** -- All verified users can see your request.
 
 ### Example
@@ -35,11 +35,4 @@ When someone accepts your request, an **active session** begins:
 ## Benefits
 
 - **Verified identity** -- Everyone has logged in with BankID. No anonymous users.
-- **Local community** -- Help each other in your neighbourhood.
 - **Privacy protection** -- Your exact location is only shared with the person helping you, and is automatically deleted when the session ends.
-
-## Communities
-
-You can also join local **safety communities** -- groups for your residential area, workplace or school. Requests created within a community are only visible to its members.
-
-Joining a community requires approval from an administrator, which creates an additional layer of safety.

@@ -16,6 +16,6 @@ Maiddái gáržžes áigemearis sáhtát dahkat stuorra erohusa. Dás leat dahku
 
 3. **Muital ustibiidda** -- Boahtte háve go juhkaba gáfe, namut prošeavtta muhtin geasa gii sáhttá leat beroštan.
 
-4. **Searvva searvvái** -- Boađe sisa ja cealkit bures. Dat čájeha ahte beroštupmi gávdno ja doarjju prošeavtta.
+4. **Cealkit bures** -- Boađe sisa ja cealkit bures. Dat čájeha ahte beroštupmi gávdno ja doarjju prošeavtta.
 
 Giitu du áiggi ovddas -- juohke minuhtta lohkkaha!

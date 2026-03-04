@@ -21,7 +21,7 @@ Vit eru ikki-vinningsdrivandi, men tørva úrslitir til rekstur og menning.
 
 - Hvussu nøkka vit út til alt Svøríki á einum virksaman hátt?
 - Hjálp okkum at kveðja samband við kommunur, borgarasamtøk og aðrar partar.
-- Bygg vørumerki runt trygd og felagsskap.
+- Bygg vørumerki runt trygd og skipan.
 
 ### Felagsskipan og stýring
 

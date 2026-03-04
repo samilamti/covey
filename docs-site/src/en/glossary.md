@@ -10,7 +10,7 @@ description: Explanation of key terms used in Covey.
 
 ### Assistance request
 
-A time-limited request for real-world safety support -- for example "I need someone to walk home with." Created by a **requester** and carried out by a **helper**. Can be **freestanding** (without a community) or **community-scoped**.
+A time-limited request for real-world safety support -- for example "I need someone to walk home with." Created by a **requester** and carried out by a **helper**.
 
 ### Requester
 
@@ -24,14 +24,6 @@ The person who accepts and carries out an assistance request. Must meet eligibil
 
 The active phase of an assistance request, from acceptance to completion. During a session, the requester and helper can exchange messages and share their location.
 
-### Community
-
-A group of users with a shared context, such as a residential area, a workplace or a university. Communities use approved memberships and pseudonymous display names.
-
-### Freestanding request
-
-An assistance request created without a community. Visible to all verified users.
-
 ## Eligibility and safety
 
 ### Eligibility tier
@@ -41,16 +33,16 @@ Controls who can see and accept a request. Three tiers are available:
 | Tier | Rule | Description |
 |------|------|-------------|
 | **Similar to me** | Same sex AND birth year within 5 years | Default. Matches people of similar age and sex. |
-| **Verified guardians** | Demographic match OR safety score of 5 or above | Opens up to experienced helpers. |
+| **Qualified companions** | Demographic match OR safety score of 5 or above | Opens up to experienced helpers. |
 | **All members** | No restrictions | All verified users can accept. |
 
 ### Safety score
 
-An accumulated score based on reviews after completed sessions. New users start at 0. A score of 5 or above qualifies as a **verified guardian**.
+An accumulated score based on reviews after completed sessions. New users start at 0. A score of 5 or above qualifies as a **qualified companion**.
 
-### Verified guardian
+### Qualified companion
 
-A user whose safety score reaches the threshold (currently 5). Can accept requests at the "Verified guardians" tier even without a demographic match.
+A user whose safety score reaches the threshold (currently 5). Can accept requests at the "Qualified companions" tier even without a demographic match.
 
 ## Identity and authentication
 

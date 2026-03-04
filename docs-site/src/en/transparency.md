@@ -60,9 +60,7 @@ The code repository is hosted on Codeberg with Woodpecker CI for automated tests
 ## Security decisions
 
 - **JWT with HS256** -- Stateless authentication with a 24-hour expiry.
-- **Administrator-approved membership** -- Community membership requires manual approval.
 - **Pseudonymous names** -- BankID names are never shown automatically.
-- **Area names instead of coordinates** -- Communities show "Sodermalm", not exact GPS coordinates.
 - **Haversine instead of PostGIS** -- Simpler, lighter and sufficient for city-scale distances.
 - **In-memory rate limiting** -- No Redis needed for a single-server deployment.
 

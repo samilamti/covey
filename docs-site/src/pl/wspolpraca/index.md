@@ -15,7 +15,7 @@ Covey jest prowadzone przez wolontariuszy i otwarty kod źródłowy. Niezależni
 - **[Studenci](/pl/wspolpraca/studenci/)** — Prace dyplomowe, kontakty akademickie i dokumentacja.
 - **[Przedsiębiorcy](/pl/wspolpraca/przedsiebiorcy/)** — Finansowanie, partnerstwa i budowanie organizacji.
 - **[Finansowo](/pl/wspolpraca/finansowo/)** — Wesprzyj utrzymanie i rozwój.
-- **[Nietechniczny](/pl/wspolpraca/nietechniczny/)** — Betatesty, moderacja społeczności i marketing szeptany.
+- **[Nietechniczny](/pl/wspolpraca/nietechniczny/)** — Betatesty i marketing szeptany.
 - **[Szybkie działania](/pl/wspolpraca/szybkie-dzialania/)** — Masz pięć minut? I tak możesz zrobić dużą różnicę.
 
 ## Dlaczego warto współpracować?

@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Regler og retningslinjer for deltagelse i Covey-projektet.
 ---
 
-For at skabe et imodekommende og effektivt miljo gaelder folgende regler for alle, der deltager i Covey-projektet og dets faellesskab:
+For at skabe et imodekommende og effektivt miljo gaelder folgende regler for alle, der deltager i Covey-projektet:
 
 ## 1. Respekt
 

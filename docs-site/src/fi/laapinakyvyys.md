@@ -60,9 +60,8 @@ Koodirepo sijaitsee Codebergissa ja käyttää Woodpecker CI:tä automatisoituih
 ## Turvallisuuspäätökset
 
 - **JWT ja HS256** -- Tilaton tunnistautuminen 24 tunnin vanhenemisajalla.
-- **Ylläpitäjän hyväksymä jäsenyys** -- Yhteisöjäsenyys edellyttää manuaalista hyväksyntää.
 - **Pseudonyymit nimet** -- BankID-nimiä ei koskaan näytetä automaattisesti.
-- **Aluenimet koordinaattien sijaan** -- Yhteisöt näyttävät "Södermalm", eivät tarkkoja GPS-koordinaatteja.
+- **Aluenimet koordinaattien sijaan** -- Vain aluenimet näytetään, ei tarkkoja GPS-koordinaatteja.
 - **Haversine PostGIS:n sijaan** -- Yksinkertaisempi, kevyempi ja riittävä kaupunkimittakaavaan.
 - **Muistipohjainen nopeusrajoitus** -- Redis-palvelinta ei tarvita yksittäisen palvelimen käyttöönotossa.
 

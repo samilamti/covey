@@ -32,7 +32,6 @@ Twoje imię i nazwisko z BankID nie jest wyświetlane innym użytkownikom. Zamia
 
 Możesz wyeksportować wszystkie swoje dane przez **Profil → Eksport danych**. Eksport zawiera:
 - Twój profil
-- Twoje członkostwa w społecznościach
 - Twoje prośby o pomoc
 - Wiadomości z sesji
 - Oceny i recenzje
@@ -47,17 +46,6 @@ Możesz usunąć swoje konto przez **Profil → Usuń konto**. Proces wygląda n
 3. Po 30 dniach wszystkie dane są trwale usuwane przez automatyczny proces w tle.
 
 ## Model bezpieczeństwa
-
-### Bezpieczeństwo społeczności
-
-| Zagrożenie | Środek ochronny |
-|------------|----------------|
-| Mapowanie członków | Listy członków widoczne tylko dla członków |
-| Mapowanie lokalizacji społeczności | Wyświetlane są tylko nazwy obszarów, nigdy dokładne współrzędne |
-| Dołączanie w celu inwigilacji | Członkostwo wymaga zatwierdzenia przez administratora |
-| Identyfikacja prawdziwych imion | Pseudonimowe nazwy wyświetlane |
-| Krzyżowe referencje użytkowników | Profil pokazuje tylko nazwę wyświetlaną i status weryfikacji |
-| Akceptowanie próśb w celu zbliżenia się do celu | Ślad weryfikacji wiąże tożsamości zweryfikowane przez BankID z każdą sesją |
 
 ### Zabezpieczenia techniczne
 

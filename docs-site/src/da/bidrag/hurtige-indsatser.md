@@ -16,6 +16,6 @@ Selv med begreanset tid kan du gore stor forskel. Her er indsatser, der hjaelper
 
 3. **Fortael en ven** -- Naeste gang du drikker kaffe, naevn projektet for nogen, der kunne vaere interesseret.
 
-4. **Deltag i faellesskabet** -- Hop ind og sig hej. Det viser, at der er interesse, og stotter projektet.
+4. **Sig hej** -- Hop ind og sig hej pa Codeberg. Det viser, at der er interesse, og stotter projektet.
 
 Tak for din tid -- hvert minut taeller!

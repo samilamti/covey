@@ -32,7 +32,6 @@ Dit BankID-navn vises ikke for andre brugere. I stedet vaelger du selv et visnin
 
 Du kan eksportere alle dine data via **Profil -> Eksporter data**. Eksporten indeholder:
 - Din profil
-- Dine faellesskabsmedlemskaber
 - Dine hjaelpeanmodninger
 - Sessionsbeskeder
 - Vurderinger og anmeldelser
@@ -48,13 +47,10 @@ Du kan slette din konto via **Profil -> Slet konto**. Processen:
 
 ## Sikkerhedsmodel
 
-### Faellesskabssikkerhed
+### Privatliv og sikkerhed
 
 | Trussel | Beskyttelsesforanstaltning |
 |---------|---------------------------|
-| Kortlaegge medlemmer | Medlemslister kun synlige for medlemmer |
-| Kortlaegge faellesskabspositioner | Kun omradenavne vises, aldrig praecise koordinater |
-| Deltage for at overvage | Medlemskab kraever godkendelse af administrator |
 | Identificere rigtige navne | Pseudonyme visningsnavne |
 | Krydsreferere brugere | Profilen viser kun visningsnavn og verificeringsstatus |
 | Acceptere anmodninger for at naerme sig mal | Verificeringsspor knytter BankID-verificerede identiteter til hver session |

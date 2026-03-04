@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Reglur og leiðbeiningar fyri luttøku í Covey-verkætlanini.
 ---
 
-Fyri at skapa eitt vælkomið og virksamt umhvørvi, gilda hesar reglurnar fyri øll, sum luttaka í Covey-verkætlanini og samfelagnum:
+Fyri at skapa eitt vælkomið og virksamt umhvørvi, gilda hesar reglurnar fyri øll, sum luttaka í Covey-verkætlanini:
 
 ## 1. Virðing
 

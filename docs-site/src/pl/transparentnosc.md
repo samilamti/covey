@@ -60,9 +60,7 @@ Repozytorium kodu jest hostowane na Codeberg z Woodpecker CI do automatycznych t
 ## Decyzje bezpieczeństwa
 
 - **JWT z HS256** — Bezstanowe uwierzytelnianie z 24-godzinnym czasem wygaśnięcia.
-- **Członkostwo zatwierdzane przez administratora** — Członkostwo w społeczności wymaga ręcznego zatwierdzenia.
 - **Pseudonimowe nazwy** — Nazwy z BankID nigdy nie są automatycznie wyświetlane.
-- **Nazwy obszarów zamiast współrzędnych** — Społeczności wyświetlają "Södermalm", a nie dokładne współrzędne GPS.
 - **Haversine zamiast PostGIS** — Prostsze, lżejsze i wystarczające w skali miejskiej.
 - **Ograniczanie częstotliwości w pamięci** — Nie potrzeba Redis dla wdrożenia na jednym serwerze.
 

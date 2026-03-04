@@ -32,7 +32,6 @@ Ditt BankID-namn visas inte för andra användare. Istället väljer du själv e
 
 Du kan exportera all din data via **Profil → Exportera data**. Exporten innehåller:
 - Din profil
-- Dina communitymedlemskap
 - Dina hjälpförfrågningar
 - Sessionsmeddelanden
 - Betyg och omdömen
@@ -48,13 +47,8 @@ Du kan radera ditt konto via **Profil → Radera konto**. Processen:
 
 ## Säkerhetsmodell
 
-### Communitysäkerhet
-
 | Hot | Skyddsåtgärd |
 |-----|-------------|
-| Kartlägga medlemmar | Medlemslistor synliga bara för medlemmar |
-| Kartlägga communitypositioner | Bara områdesnamn visas, aldrig exakta koordinater |
-| Gå med för att övervaka | Medlemskap kräver godkännande av administratör |
 | Identifiera riktiga namn | Pseudonyma visningsnamn |
 | Korsreferera användare | Profilen visar bara visningsnamn och verifieringsstatus |
 | Acceptera förfrågningar för att närma sig mål | Verifieringsspår knyter BankID-verifierade identiteter till varje session |

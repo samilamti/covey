@@ -20,7 +20,7 @@ Otamme käyttäjien yksityisyyden erittäin vakavasti emmekä koskaan myy tietoj
 ### Käyttöehdot ja säännöt
 
 - Laadi selkeät ja oikeudenmukaiset käyttöehdot, jotka suojaavat sekä alustaa että yksilöä.
-- Muotoile kestäviä juridisia sääntöjä yhteisölle.
+- Muotoile kestäviä juridisia sääntöjä alustalle.
 
 ### Organisaatiomuoto ja lisensointi
 

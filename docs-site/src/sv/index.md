@@ -34,9 +34,8 @@ Covey ägs inte av riskkapitalister. Vi styrs av våra användare och vårt syft
 
 - **Verifierad inloggning** — Integration med BankID för säker identifiering.
 - **Hjälpförfrågningar** — Be om hjälp med vardagssäkerhet, som att gå hem på kvällen.
-- **Trygghetscommunities** — Lokala grupper för samverkan i ditt område.
 - **Realtidskoordinering** — Dela position och chatta under pågående session.
-- **Trygghetsvärdering** — Bygg tillit genom gemenskapens omdömen.
+- **Trygghetsvärdering** — Bygg tillit genom omdömen efter avslutade sessioner.
 
 ## Mål
 

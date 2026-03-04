@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Zasady i wytyczne dotyczące udziału w projekcie Covey.
 ---
 
-Aby stworzyć przyjazne i efektywne środowisko, poniższe zasady obowiązują wszystkich uczestników projektu Covey i jego społeczności:
+Aby stworzyć przyjazne i efektywne środowisko, poniższe zasady obowiązują wszystkich uczestników projektu Covey:
 
 ## 1. Szacunek
 

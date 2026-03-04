@@ -15,7 +15,7 @@ Covey is powered by volunteers and open source. Regardless of your background, t
 - **[Students](/en/contribute/students/)** -- Theses, university contacts and documentation.
 - **[Entrepreneurs](/en/contribute/entrepreneurs/)** -- Funding, partnerships and organisational development.
 - **[Financially](/en/contribute/financially/)** -- Donate to operations and development.
-- **[Non-technical](/en/contribute/non-technical/)** -- Beta testing, community moderation and word of mouth.
+- **[Non-technical](/en/contribute/non-technical/)** -- Beta testing and word of mouth.
 - **[Quick actions](/en/contribute/quick-actions/)** -- Only got five minutes? You can still make a big difference.
 
 ## Why contribute?

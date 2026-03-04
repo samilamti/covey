@@ -10,7 +10,7 @@ description: Forklaring av viktige begreper som brukes i Covey.
 
 ### Hjelpeforesporsels
 
-En tidsbegrenset foresporsels om sikkerhetsstotte i virkeligheten -- for eksempel "Jeg trenger noen a ga hjem med." Opprettes av en **foresporsler** og utfores av en **hjelper**. Kan vaere **fristaende** (uten fellesskap) eller **fellesskapsknyttet**.
+En tidsbegrenset foresporsels om sikkerhetsstotte i virkeligheten -- for eksempel "Jeg trenger noen a ga hjem med." Opprettes av en **foresporsler** og utfores av en **hjelper**.
 
 ### Foresporsler
 
@@ -24,14 +24,6 @@ Den som aksepterer og utforer en hjelpeforesporsels. Ma oppfylle kvalifikasjonsk
 
 Den aktive fasen av en hjelpeforesporsels, fra godkjenning til avslutning. Under en okt kan foresporsler og hjelper utveksle meldinger og dele posisjon.
 
-### Fellesskap
-
-En gruppe brukere med en felles kontekst, for eksempel et boligomrade, en arbeidsplass eller et universitet. Fellesskap bruker godkjente medlemskap og pseudonyme visningsnavn.
-
-### Fristaende foresporsels
-
-En hjelpeforesporsels opprettet uten fellesskap. Synlig for alle verifiserte brukere.
-
 ## Kvalifikasjon og trygghet
 
 ### Kvalifikasjonsniva
@@ -41,16 +33,16 @@ Styrer hvem som kan se og akseptere en foresporsels. Tre nivaer finnes:
 | Niva | Regel | Beskrivelse |
 |------|-------|-------------|
 | **Lignende som meg** | Samme kjonn OG fodselsar +-5 | Standard. Matcher personer av lignende alder og kjonn. |
-| **Verifiserte voktere** | Demografisk matching ELLER trygghetspoengsum >= 5 | Apner for erfarne hjelpere. |
+| **Kvalifiserte ledsagere** | Demografisk matching ELLER trygghetspoengsum >= 5 | Apner for erfarne hjelpere. |
 | **Alle medlemmer** | Ingen begrensninger | Alle verifiserte brukere kan akseptere. |
 
 ### Trygghetspoengsum
 
-En akkumulert poengsum basert pa vurderinger etter avsluttede okter. Nye brukere starter pa 0. En poengsum pa 5 eller hoyere kvalifiserer som **verifisert vokter**.
+En akkumulert poengsum basert pa vurderinger etter avsluttede okter. Nye brukere starter pa 0. En poengsum pa 5 eller hoyere kvalifiserer som **kvalifisert ledsager**.
 
-### Verifisert vokter
+### Kvalifisert ledsager
 
-En bruker hvis trygghetspoengsum nar terskelverdien (for oyeblikket 5). Kan akseptere foresporsler pa nivaet "Verifiserte voktere" selv uten demografisk matching.
+En bruker hvis trygghetspoengsum nar terskelverdien (for oyeblikket 5). Kan akseptere foresporsler pa nivaet "Kvalifiserte ledsagere" selv uten demografisk matching.
 
 ## Identitet og autentisering
 

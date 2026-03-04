@@ -16,7 +16,7 @@ Mange foler sig utrygge, nar de skal ga hjem alene sent om aftenen, for eksempel
 2. **Beskriv din rute** -- Angiv hvor du starter, og hvor du skal hen.
 3. **Vaelg hvem der ser anmodningen** -- For oget tryghed kan du begraense synligheden:
    - **Lignende som mig** -- Kun personer af samme kon og lignende alder (+-5 ar).
-   - **Verificerede vogtere** -- Desuden personer med hoj tryghedscore.
+   - **Kvalificerede ledsagere** -- Desuden personer med hoj tryghedscore.
    - **Alle medlemmer** -- Alle verificerede brugere kan se din anmodning.
 
 ### Eksempel
@@ -35,11 +35,4 @@ Nar nogen accepterer din anmodning, starter en **aktiv session**:
 ## Fordele
 
 - **Verificeret identitet** -- Alle har logget ind med BankID. Ingen anonyme brugere.
-- **Lokalt faellesskab** -- Hjaelp hinanden i naerområdet.
 - **Privatlivsbeskyttelse** -- Din praecise position deles kun med den, der hjaelper dig, og slettes automatisk, nar sessionen afsluttes.
-
-## Faellesskaber
-
-Du kan ogsa deltage i lokale **tryghedsfaellesskaber** -- grupper for dit boligomrade, din arbejdsplads eller skole. Anmodninger oprettet inden for et faellesskab er kun synlige for dets medlemmer.
-
-At deltage i et faellesskab kraever godkendelse af en administrator, hvilket skaber et ekstra lag af tryghed.

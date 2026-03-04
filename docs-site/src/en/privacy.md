@@ -32,7 +32,6 @@ Your BankID name is not shown to other users. Instead, you choose your own displ
 
 You can export all your data via **Profile -> Export data**. The export includes:
 - Your profile
-- Your community memberships
 - Your assistance requests
 - Session messages
 - Ratings and reviews
@@ -48,13 +47,8 @@ You can delete your account via **Profile -> Delete account**. The process:
 
 ## Security model
 
-### Community security
-
 | Threat | Countermeasure |
 |--------|----------------|
-| Mapping members | Member lists are only visible to members |
-| Mapping community locations | Only area names are shown, never exact coordinates |
-| Joining to surveil | Membership requires administrator approval |
 | Identifying real names | Pseudonymous display names |
 | Cross-referencing users | Profiles only show display name and verification status |
 | Accepting requests to approach targets | Verification trails link BankID-verified identities to every session |

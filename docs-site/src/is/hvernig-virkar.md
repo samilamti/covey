@@ -16,7 +16,7 @@ Margir finna til óöryggis þegar þeir eiga að ganga heim einir seint á kvö
 2. **Lýstu leiðinni** -- Segðu til um hvaðan þú byrjar og hvert þú ætlar.
 3. **Veldu hver sér beiðnina** -- Til að auka öryggi getur þú takmarkað sýnileika:
    - **Svipaðir og ég** -- Aðeins fólk af sama kyni og á svipuðum aldri (±5 ár).
-   - **Staðfestir verðir** -- Ofangreint auk fólks með háa öryggiseinkunn.
+   - **Hæfir fylgdarmenn** -- Ofangreint auk fólks með háa öryggiseinkunn.
    - **Allir meðlimir** -- Allir staðfestir notendur geta séð beiðnina þína.
 
 ### Dæmi
@@ -35,11 +35,4 @@ Emma er 19 ára og á eftir að ganga heim úr veislu. Hún opnar Covey, býr ti
 ## Kostir
 
 - **Staðfest auðkenni** -- Allir hafa skráð sig inn með BankID. Engir nafnlausir notendur.
-- **Staðbundið samfélag** -- Hjálpið hvort öðru á nærsvæðinu.
 - **Persónuvernd** -- Nákvæmri staðsetningu þinni er aðeins deilt með þeim sem aðstoðar þig og henni er sjálfkrafa eytt þegar fundinum lýkur.
-
-## Samfélög
-
-Þú getur einnig gengið í staðbundin **öryggissamfélög** -- hópa fyrir þitt hverfið, vinnustað eða skóla. Beiðnir sem búnar eru til innan samfélags sjást aðeins af meðlimum þess.
-
-Til að ganga í samfélag þarf samþykki stjórnanda, sem skapar aukalög öryggis.

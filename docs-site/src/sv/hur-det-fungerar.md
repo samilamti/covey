@@ -16,7 +16,7 @@ Många känner sig otrygga när de ska gå hem ensamma sent på kvällen, till e
 2. **Beskriv din rutt** — Ange varifrån du startar och vart du ska.
 3. **Välj vem som ser förfrågan** — För ökad trygghet kan du begränsa synligheten:
    - **Liknande som jag** — Bara personer av samma kön och liknande ålder (±5 år).
-   - **Verifierade väktare** — Ovan plus personer med hög trygghetspoäng.
+   - **Kvalificerade ledsagare** — Ovan plus personer med hög trygghetspoäng.
    - **Alla medlemmar** — Alla verifierade användare kan se din förfrågan.
 
 ### Exempel
@@ -35,11 +35,4 @@ När någon accepterar din förfrågan startar en **aktiv session**:
 ## Fördelar
 
 - **Verifierad identitet** — Alla har loggat in med BankID. Inga anonyma användare.
-- **Lokal gemenskap** — Hjälp varandra i närområdet.
 - **Integritetsskydd** — Din exakta position delas bara med den som hjälper dig, och raderas automatiskt när sessionen avslutas.
-
-## Communities
-
-Du kan också gå med i lokala **trygghetscommunities** — grupper för ditt bostadsområde, arbetsplats eller skola. Förfrågningar som skapas inom ett community syns bara för dess medlemmar.
-
-Att gå med i ett community kräver godkännande av en administratör, vilket skapar ett extra lager av trygghet.

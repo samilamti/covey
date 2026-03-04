@@ -16,10 +16,9 @@ Du trenger ikke a kunne kode for a gjore en forskjell. Din tilbakemelding er avg
 - Rapporter feil eller ting som er vanskelige a forsta.
 - Fortell hva du savner -- de beste ideene kommer fra virkelige behov.
 
-### Fellesskap og moderering
+### Moderering og tilbakemelding
 
-- Vaer et godt forbilde i dine lokale grupper.
-- Hjelp til a onske nye brukere velkommen.
+- Vaer et godt forbilde og hjelp til a onske nye brukere velkommen.
 - Rapporter upassende innhold for a holde plattformen trygg.
 
 ### Spre budskapet

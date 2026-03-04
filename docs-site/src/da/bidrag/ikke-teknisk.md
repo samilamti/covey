@@ -16,10 +16,9 @@ Du behover ikke at kunne kode for at gore en forskel. Din feedback er afgorende 
 - Rapporter fejl eller ting, der er svaere at forsta.
 - Fortael, hvad du savner -- de bedste ideer kommer fra virkelige behov.
 
-### Faellesskab og moderering
+### Moderering og feedback
 
-- Vaer et godt forbillede i dine lokale grupper.
-- Hjaelp med at byde nye brugere velkommen.
+- Vaer et godt forbillede og hjaelp med at byde nye brugere velkommen.
 - Rapporter upassende indhold for at holde platformen tryg.
 
 ### Spred budskabet

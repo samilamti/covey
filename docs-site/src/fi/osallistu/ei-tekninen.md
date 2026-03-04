@@ -16,10 +16,9 @@ Sinun ei tarvitse osata koodata tehdäksesi eron. Panoksesi on ratkaisevan tärk
 - Ilmoita virheistä tai asioista, jotka ovat vaikeita ymmärtää.
 - Kerro, mitä kaipaat -- parhaat ideat syntyvät todellisista tarpeista.
 
-### Yhteisö ja moderointi
+### Moderointi ja palaute
 
-- Ole hyvä esikuva paikallisissa ryhmissäsi.
-- Auta toivottamaan uudet käyttäjät tervetulleiksi.
+- Ole hyvä esikuva ja auta toivottamaan uudet käyttäjät tervetulleiksi.
 - Ilmoita sopimattomasta sisällöstä pitääksesi alustan turvallisena.
 
 ### Levitä sanaa

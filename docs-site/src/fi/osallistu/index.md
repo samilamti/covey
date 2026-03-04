@@ -15,7 +15,7 @@ Coveyta ylläpitävät vapaaehtoiset ja avoin lähdekoodi. Taustastasi riippumat
 - **[Opiskelijat](/fi/osallistu/opiskelijat/)** -- Opinnäytetyöt, yliopistokontaktit ja dokumentaatio.
 - **[Yrittäjät](/fi/osallistu/yrittajat/)** -- Rahoitus, kumppanuudet ja organisaation rakentaminen.
 - **[Taloudellisesti](/fi/osallistu/taloudellisesti/)** -- Lahjoita käyttöön ja kehitykseen.
-- **[Ei-tekninen](/fi/osallistu/ei-tekninen/)** -- Betatestaus, yhteisömoderointi ja suusta suuhun.
+- **[Ei-tekninen](/fi/osallistu/ei-tekninen/)** -- Betatestaus ja suusta suuhun.
 - **[Nopeat teot](/fi/osallistu/nopeat-teot/)** -- Viisi minuuttia? Tee silti suuri ero.
 
 ## Miksi osallistua?

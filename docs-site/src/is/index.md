@@ -34,9 +34,8 @@ Covey er ekki í eigu áhættufjárfesta. Okkur stýra notendur okkar og tilgang
 
 - **Staðfest innskráning** -- Samþætting við BankID fyrir örugga auðkenningu.
 - **Aðstoðarbeiðnir** -- Biddu um aðstoð við daglegt öryggi, eins og að ganga heim á kvöldin.
-- **Öryggissamfélög** -- Staðbundnir hópar fyrir samvinnu á þínu svæði.
 - **Rauntímasamhæfing** -- Deildu staðsetningu þinni og spjallaðu á virku fundi.
-- **Öryggiseinkunn** -- Byggðu traust með umsögnum samfélagsins.
+- **Öryggiseinkunn** -- Byggðu traust með umsögnum eftir fundi.
 
 ## Markmið
 

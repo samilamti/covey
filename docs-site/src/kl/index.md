@@ -34,9 +34,8 @@ Covey piginneqanngillaq aningaasanik nassitseqartumit. Atuisoqarsinnaanngitsumit
 
 - **Nalunaarsortaasut uppernarsarneqarsimasut** -- BankID-imi iserfissaq.
 - **Ikiorsinnaassutinut qinnuteqaat** -- Ullormut tamanut aaqqiissutaasinnaallutit, soorlu unnukkut angerlarsinnaamik.
-- **Aaqqiissutaasut peqatigiiffiit** -- Najugaqarfinnit inuiaqatigiinni ilaasortariaqarpit.
 - **Kisitsisinnaasoq kiisalu ataatsimut suliniuteqaqqissallutik** -- Sumiinnissap nalunaarsorneqarnissaa aamma oqaloqateqarneq atortussaq.
-- **Aaqqiissutaasut naliliineq** -- Upperisarneq peqatigiinni naliliinertigut.
+- **Aaqqiissutaasut naliliineq** -- Upperisarneq sessionit naammassimanerit kingornit naliliinertigut.
 
 ## Siunertaq
 

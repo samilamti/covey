@@ -16,6 +16,6 @@ Sjálvt við takmarkaðari tíð kanst tú gera stóran munin. Her eru íkast, s
 
 3. **Sig einum vini frá** -- Næstu ferð tú drekur kaffi, nevn verkætlanina fyri einhvørjum, sum kundi hava áhuga.
 
-4. **Ger limur í samfelagnum** -- Stikk inn og seg hey. Tað vísir, at trupulleiki er, og stuðlar verkætlanina.
+4. **Seg hey** -- Stikk inn og seg hey. Tað vísir, at trupulleiki er, og stuðlar verkætlanina.
 
 Takk fyri tíðina -- hvørt minutt telur!

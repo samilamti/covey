@@ -16,7 +16,7 @@ Monet tuntevat olonsa turvattomaksi kävellessään yksin kotiin myöhään illa
 2. **Kuvaile reittisi** -- Kerro, mistä lähdet ja minne olet menossa.
 3. **Valitse, kuka näkee pyyntösi** -- Turvallisuuden lisäämiseksi voit rajata näkyvyyttä:
    - **Samankaltaiset kuin minä** -- Vain samaa sukupuolta ja samaa ikäluokkaa (±5 vuotta) olevat henkilöt.
-   - **Varmennetut vartijat** -- Edellisten lisäksi henkilöt, joilla on korkea turvallisuuspistemäärä.
+   - **Pätevät saattajat** -- Edellisten lisäksi henkilöt, joilla on korkea turvallisuuspistemäärä.
    - **Kaikki jäsenet** -- Kaikki varmennetut käyttäjät voivat nähdä pyyntösi.
 
 ### Esimerkki
@@ -35,11 +35,4 @@ Kun joku hyväksyy pyyntösi, alkaa **aktiivinen sessio**:
 ## Edut
 
 - **Varmennettu henkilöllisyys** -- Kaikki ovat kirjautuneet BankID:llä. Ei anonyymejä käyttäjiä.
-- **Paikallinen yhteisö** -- Auttakaa toisianne lähialueella.
 - **Yksityisyyden suoja** -- Tarkka sijaintisi jaetaan vain sinua auttavan henkilön kanssa ja poistetaan automaattisesti session päättyessä.
-
-## Yhteisöt
-
-Voit myös liittyä paikallisiin **turvallisuusyhteisöihin** -- ryhmiin asuinalueellasi, työpaikallasi tai koulussasi. Yhteisön sisällä luodut avunpyynnöt näkyvät vain sen jäsenille.
-
-Yhteisöön liittyminen edellyttää ylläpitäjän hyväksyntää, mikä luo lisäkerroksen turvallisuutta.

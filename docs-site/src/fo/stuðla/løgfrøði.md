@@ -20,7 +20,7 @@ Vit taka privatlívið hjá brúkarum møstu álvarligan og selja aldrin dáta.
 ### Brúkaraavtalur og reglur
 
 - Ger greiðar og rættvísar brúkaravilkár, sum verja bæði skipanina og einstaklingin.
-- Sníða varandiligt løgfrøðiligt regelverkið fyri samfelagið.
+- Sníða varandiligt løgfrøðiligt regelverkið fyri skipanina.
 
 ### Felagsskipan og lisensering
 

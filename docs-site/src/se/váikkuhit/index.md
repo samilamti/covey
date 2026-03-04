@@ -15,7 +15,7 @@ Covey doaimmahuvvo eaktodáhtolaš bargiin ja rabas gálduin. Beroškeahttá du 
 - **[Studeanttat](/se/váikkuhit/studeanttat/)** -- Loahppabarggumat, universitehtaoktavuođat ja dokumentašuvdna.
 - **[Fitnodagat](/se/váikkuhit/fitnodagat/)** -- Ruhtadeapmi, ovttasbargu ja organisašuvdnahuksen.
 - **[Ekonomalaččat](/se/váikkuhit/ekonomalaččat/)** -- Adde attáldaga doaibmanbijuid ja ovddideapmái.
-- **[Ii-teknihkalaš](/se/váikkuhit/ii-teknihkalaš/)** -- Betatesten, searvemodereren ja njálmmálaš sáttabargu.
+- **[Ii-teknihkalaš](/se/váikkuhit/ii-teknihkalaš/)** -- Betatesten, máhcahat ja njálmmálaš sáttabargu.
 - **[Jođánis dahkut](/se/váikkuhit/jođánis-dahkut/)** -- Vihtta minuhta? Dagat stuorra erohusa goitge.
 
 ## Manin váikkuhit?

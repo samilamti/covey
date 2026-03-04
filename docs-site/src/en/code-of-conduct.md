@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Rules and guidelines for participating in the Covey project.
 ---
 
-To create a welcoming and effective environment, the following rules apply to everyone who participates in the Covey project and its community:
+To create a welcoming and effective environment, the following rules apply to everyone who participates in the Covey project:
 
 ## 1. Respect
 

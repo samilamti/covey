@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Regler og retningslinjer for deltakelse i Covey-prosjektet.
 ---
 
-For a skape et velkomnende og effektivt miljo gjelder folgende regler for alle som deltar i Covey-prosjektet og fellesskapet:
+For a skape et velkomnende og effektivt miljo gjelder folgende regler for alle som deltar i Covey-prosjektet:
 
 ## 1. Respekt
 

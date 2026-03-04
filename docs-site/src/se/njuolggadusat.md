@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Njuolggadusat ja rávvagat oassálastimii Covey-prošeaktas.
 ---
 
-Vuođđudit buresboahtin ja beaktilis birrasa, čuovvovaš njuolggadusat gustojit buohkaide geat oassálastet Covey-prošeaktas ja dan searvvis:
+Vuođđudit buresboahtin ja beaktilis birrasa, čuovvovaš njuolggadusat gustojit buohkaide geat oassálastet Covey-prošeaktas:
 
 ## 1. Gudnejahttojupmi
 

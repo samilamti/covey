@@ -20,7 +20,7 @@ Traktujemy prywatność użytkowników niezwykle poważnie i nigdy nie sprzedaje
 ### Regulaminy i zasady
 
 - Opracuj jasne i uczciwe warunki korzystania, które chronią zarówno platformę, jak i jednostkę.
-- Sformułuj trwałe zasady prawne dla społeczności.
+- Sformułuj trwałe zasady prawne dla platformy.
 
 ### Forma organizacyjna i licencjonowanie
 

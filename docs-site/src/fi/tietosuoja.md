@@ -32,7 +32,6 @@ BankID-nimeäsi ei näytetä muille käyttäjille. Sen sijaan valitset itse näy
 
 Voit viedä kaikki tietosi kohdasta **Profiili --> Vie tiedot**. Vienti sisältää:
 - Profiilisi
-- Yhteisöjäsenyytesi
 - Avunpyyntösi
 - Sessioviestit
 - Arvioinnit ja arvostelut
@@ -48,13 +47,10 @@ Voit poistaa tilisi kohdasta **Profiili --> Poista tili**. Prosessi:
 
 ## Turvallisuusmalli
 
-### Yhteisöturvallisuus
+### Yksityisyys ja turvallisuus
 
 | Uhka | Suojakeino |
 |------|-----------|
-| Jäsenten kartoitus | Jäsenluettelot näkyvät vain jäsenille |
-| Yhteisöjen sijaintien kartoitus | Vain aluenimet näytetään, ei tarkkoja koordinaatteja |
-| Liittyminen valvontaa varten | Jäsenyys edellyttää ylläpitäjän hyväksyntää |
 | Oikeiden nimien tunnistaminen | Pseudonyymit näyttönimet |
 | Käyttäjien ristiinviittaus | Profiili näyttää vain näyttönimen ja varmennustilan |
 | Pyyntöjen hyväksyminen lähestymiseksi | Varmennuspolku yhdistää BankID-varmennetut henkilöllisyydet jokaiseen sessioon |

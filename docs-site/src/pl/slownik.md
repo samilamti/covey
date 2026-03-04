@@ -10,7 +10,7 @@ description: Objaśnienie ważnych pojęć używanych w Covey.
 
 ### Prośba o pomoc
 
-Ograniczona czasowo prośba o wsparcie bezpieczeństwa w rzeczywistości — na przykład "Potrzebuję kogoś, kto pójdzie ze mną do domu." Tworzona przez **wnioskodawcę** i realizowana przez **pomocnika**. Może być **niezależna** (bez społeczności) lub **powiązana ze społecznością**.
+Ograniczona czasowo prośba o wsparcie bezpieczeństwa w rzeczywistości — na przykład "Potrzebuję kogoś, kto pójdzie ze mną do domu." Tworzona przez **wnioskodawcę** i realizowana przez **pomocnika**.
 
 ### Wnioskodawca
 
@@ -24,14 +24,6 @@ Osoba, która akceptuje i realizuje prośbę o pomoc. Musi spełniać wymagania 
 
 Aktywna faza prośby o pomoc, od zatwierdzenia do zakończenia. Podczas sesji wnioskodawca i pomocnik mogą wymieniać wiadomości i udostępniać swoją pozycję.
 
-### Społeczność
-
-Grupa użytkowników ze wspólnym kontekstem, na przykład osiedle, miejsce pracy lub uczelnia. Społeczności używają zatwierdzonych członkostw i pseudonimowych nazw wyświetlanych.
-
-### Niezależna prośba
-
-Prośba o pomoc utworzona bez społeczności. Widoczna dla wszystkich zweryfikowanych użytkowników.
-
 ## Kwalifikacja i bezpieczeństwo
 
 ### Poziom kwalifikacji
@@ -41,16 +33,16 @@ Określa, kto może zobaczyć i zaakceptować prośbę. Dostępne są trzy pozio
 | Poziom | Zasada | Opis |
 |--------|--------|------|
 | **Podobni do mnie** | Ta sama płeć ORAZ rok urodzenia ±5 | Domyślny. Dopasowuje osoby o podobnym wieku i płci. |
-| **Zweryfikowani opiekunowie** | Dopasowanie demograficzne LUB ocena bezpieczeństwa ≥ 5 | Otwiera dla doświadczonych pomocników. |
+| **Kwalifikowani towarzysze** | Dopasowanie demograficzne LUB ocena bezpieczeństwa ≥ 5 | Otwiera dla doświadczonych pomocników. |
 | **Wszyscy członkowie** | Brak ograniczeń | Wszyscy zweryfikowani użytkownicy mogą zaakceptować. |
 
 ### Ocena bezpieczeństwa
 
-Skumulowana ocena oparta na recenzjach po zakończonych sesjach. Nowi użytkownicy zaczynają od 0. Ocena 5 lub wyższa kwalifikuje jako **zweryfikowany opiekun**.
+Skumulowana ocena oparta na recenzjach po zakończonych sesjach. Nowi użytkownicy zaczynają od 0. Ocena 5 lub wyższa kwalifikuje jako **kwalifikowany towarzysz**.
 
-### Zweryfikowany opiekun
+### Kwalifikowany towarzysz
 
-Użytkownik, którego ocena bezpieczeństwa osiąga wartość progową (obecnie 5). Może akceptować prośby na poziomie "Zweryfikowani opiekunowie" nawet bez dopasowania demograficznego.
+Użytkownik, którego ocena bezpieczeństwa osiąga wartość progową (obecnie 5). Może akceptować prośby na poziomie "Kwalifikowani towarzysze" nawet bez dopasowania demograficznego.
 
 ## Tożsamość i uwierzytelnianie
 

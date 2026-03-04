@@ -16,6 +16,6 @@ Jafnvel með takmarkaðan tíma getur þú skipt miklu máli. Hér eru aðgerði
 
 3. **Segðu vini** -- Næst þegar þú ert á kaffi, nefndu verkefnið fyrir einhverjum sem gæti haft áhuga.
 
-4. **Skráðu þig í samfélagið** -- Komdu inn og segðu hæ. Það sýnir áhuga og styður verkefnið.
+4. **Segðu hæ** -- Komdu inn og segðu hæ. Það sýnir áhuga og styður verkefnið.
 
 Takk fyrir tíma þinn -- hver mínúta skiptir máli!

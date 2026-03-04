@@ -34,9 +34,8 @@ Coveyta eivät omista riskisijoittajat. Meitä ohjaavat käyttäjämme ja tarkoi
 
 - **Varmennettu kirjautuminen** -- BankID-integraatio turvallista tunnistautumista varten.
 - **Avunpyynnöt** -- Pyydä apua arjen turvallisuuteen, kuten kotimatkan kulkemiseen illalla.
-- **Turvallisuusyhteisöt** -- Paikallisia ryhmiä yhteistyöhön omalla alueellasi.
 - **Reaaliaikainen koordinointi** -- Jaa sijaintisi ja keskustele aktiivisen session aikana.
-- **Turvallisuusarvio** -- Rakenna luottamusta yhteisön arvioiden kautta.
+- **Turvallisuusarvio** -- Rakenna luottamusta päättyneiden sessioiden arvioiden kautta.
 
 ## Tavoitteet
 

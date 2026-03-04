@@ -32,7 +32,6 @@ Du BankID-namma ii čájehuvvo eará geavaheddjiidie. Baicca don válljet ieš �
 
 Don sáhtát olggosvieđat buot du dieđuid **Profila → Olggosvieđat dieđuid** bokte. Olggosviedjan sisttisdoallá:
 - Du profila
-- Du searvvalahtuid
 - Du veahkkegáibádusaid
 - Sesšuvdnadiehtu
 - Árvvoštallamiid ja guorahallam
@@ -48,13 +47,8 @@ Don sáhtát sihkkut du konto **Profila → Sihko konto** bokte. Proseassa:
 
 ## Oadjebasmodella
 
-### Searvvi oadjebasvuohta
-
 | Áitta | Eastadeapmi |
 |-------|-------------|
-| Kárttet lahtuid | Lahtolisttut oidnojit dušše lahttuide |
-| Kárttet searvvisajádagaid | Dušše guovlunamat čájehuvvojit, eai goassege dárkilis koordináhtat |
-| Searvat čuovvut dihte | Lahttovuohta gáibida dohkkeheami hálddahusas |
 | Dovddastit duohta namaid | Suolálaš čájáhusnamat |
 | Ristageahčastit geavaheddjiin | Profiilat čájehit dušše čájáhusnama ja duohtastanstáhtusa |
 | Dohkkehit gáibádusaid lahkanoahtti dihte | Duohtastandáhpáhusat čatnet BankID-duohtaduvvon identitehtaid juohke sesšuvdnii |

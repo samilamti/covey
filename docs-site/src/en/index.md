@@ -34,9 +34,8 @@ Covey is not owned by venture capitalists. We are governed by our users and our 
 
 - **Verified login** -- Integration with BankID for secure identification.
 - **Assistance requests** -- Ask for help with everyday safety, such as walking home at night.
-- **Safety communities** -- Local groups for cooperation in your area.
 - **Real-time coordination** -- Share your location and chat during an active session.
-- **Safety rating** -- Build trust through community reviews.
+- **Safety rating** -- Build trust through reviews after completed sessions.
 
 ## Goals
 

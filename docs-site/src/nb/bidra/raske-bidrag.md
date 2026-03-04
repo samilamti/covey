@@ -16,6 +16,6 @@ Selv med begrenset tid kan du gjore stor forskjell. Her er bidrag som hjelper pr
 
 3. **Fortell en venn** -- Neste gang du tar en kaffe, nevn prosjektet for noen som kan vaere interessert.
 
-4. **Bli med i fellesskapet** -- Hopp inn og si hei. Det viser at det finnes interesse og stotter prosjektet.
+4. **Si hei** -- Hopp inn og si hei pa Codeberg. Det viser at det finnes interesse og stotter prosjektet.
 
 Takk for tiden din -- hvert minutt teller!

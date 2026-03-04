@@ -15,7 +15,7 @@ Covey verður drivin av sjálvboðnum og opinni keldu. Uttan mun til bakgrunn t�
 - **[Lesandi](/fo/stuðla/lesandi/)** -- Útbúgvingaruppgávur, universitetssamband og skjalavinna.
 - **[Framiløga](/fo/stuðla/framiløga/)** -- Fígging, samstarv og felagsskipan.
 - **[Fíggjarliga](/fo/stuðla/fíggjarliga/)** -- Gev gávu til rekstur og menning.
-- **[Ikki-tekniskt](/fo/stuðla/ikki-tekniskt/)** -- Betaroyndir, samfelagsstjóring og munn-til-munn.
+- **[Ikki-tekniskt](/fo/stuðla/ikki-tekniskt/)** -- Betaroyndir, tilbakameldingar og munn-til-munn.
 - **[Skjót íkast](/fo/stuðla/skjót-íkast/)** -- Fimm minuttir? Ger stóra munin samavæl.
 
 ## Hví stuðla?

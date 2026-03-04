@@ -15,7 +15,7 @@ Covey drives af frivillige og aben kildekode. Uanset din baggrund er der mader a
 - **[Studerende](/da/bidrag/studerende/)** -- Specialer, universitetskontakter og dokumentation.
 - **[Ivaerksaettere](/da/bidrag/ivaerksaetter/)** -- Finansiering, partnerskaber og organisationsopbygning.
 - **[Okonomisk](/da/bidrag/okonomisk/)** -- Doner til drift og udvikling.
-- **[Ikke-teknisk](/da/bidrag/ikke-teknisk/)** -- Betatestning, faellesskabsmoderering og mund-til-mund.
+- **[Ikke-teknisk](/da/bidrag/ikke-teknisk/)** -- Betatestning og mund-til-mund.
 - **[Hurtige indsatser](/da/bidrag/hurtige-indsatser/)** -- Fem minutter? Gor alligevel stor forskel.
 
 ## Hvorfor bidrage?

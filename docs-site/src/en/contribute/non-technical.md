@@ -16,9 +16,8 @@ You do not need to know how to code to make a difference. Your input is crucial 
 - Report bugs or things that are confusing.
 - Tell us what you are missing -- the best ideas come from real needs.
 
-### Community and moderation
+### Welcome and support
 
-- Be a good role model in your local groups.
 - Help welcome new users.
 - Report inappropriate content to keep the platform safe.
 

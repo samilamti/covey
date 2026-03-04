@@ -10,7 +10,7 @@ description: Coveyssa käytettyjen tärkeiden käsitteiden selitykset.
 
 ### Avunpyyntö
 
-Aikarajoitettu pyyntö turvallisuustuesta todellisuudessa -- esimerkiksi "Tarvitsen jonkun kävelemään kanssani kotiin." Sen luo **pyytäjä** ja sen toteuttaa **auttaja**. Voi olla **itsenäinen** (ilman yhteisöä) tai **yhteisöön sidottu**.
+Aikarajoitettu pyyntö turvallisuustuesta todellisuudessa -- esimerkiksi "Tarvitsen jonkun kävelemään kanssani kotiin." Sen luo **pyytäjä** ja sen toteuttaa **auttaja**.
 
 ### Pyytäjä
 
@@ -24,14 +24,6 @@ Henkilö, joka hyväksyy ja toteuttaa avunpyynnön. Hänen on täytettävä kelp
 
 Avunpyynnön aktiivinen vaihe hyväksynnästä päättymiseen. Session aikana pyytäjä ja auttaja voivat vaihtaa viestejä ja jakaa sijaintiaan.
 
-### Yhteisö
-
-Käyttäjäryhmä, jolla on yhteinen konteksti, esimerkiksi asuinalue, työpaikka tai yliopisto. Yhteisöt käyttävät hyväksyttyjä jäsenyyksiä ja pseudonyymejä näyttönimiä.
-
-### Itsenäinen pyyntö
-
-Avunpyyntö, joka on luotu ilman yhteisöä. Näkyy kaikille varmennetuille käyttäjille.
-
 ## Kelpoisuus ja turvallisuus
 
 ### Kelpoisuustaso
@@ -41,16 +33,16 @@ Ohjaa sitä, kuka voi nähdä ja hyväksyä pyynnön. Kolme tasoa on olemassa:
 | Taso | Sääntö | Kuvaus |
 |------|--------|--------|
 | **Samankaltaiset kuin minä** | Sama sukupuoli JA syntymävuosi ±5 | Oletus. Yhdistää samanikäiset ja samaa sukupuolta olevat. |
-| **Varmennetut vartijat** | Demografinen vastaavuus TAI turvallisuuspistemäärä >=5 | Avaa mahdollisuuden kokeneille auttajille. |
+| **Pätevät saattajat** | Demografinen vastaavuus TAI turvallisuuspistemäärä >=5 | Avaa mahdollisuuden kokeneille auttajille. |
 | **Kaikki jäsenet** | Ei rajoituksia | Kaikki varmennetut käyttäjät voivat hyväksyä. |
 
 ### Turvallisuuspistemäärä
 
-Kertynyt pistemäärä, joka perustuu arviointeihin päättyneiden sessioiden jälkeen. Uudet käyttäjät aloittavat nollasta. Pistemäärä 5 tai korkeampi oikeuttaa **varmennetun vartijan** asemaan.
+Kertynyt pistemäärä, joka perustuu arviointeihin päättyneiden sessioiden jälkeen. Uudet käyttäjät aloittavat nollasta. Pistemäärä 5 tai korkeampi oikeuttaa **pätevän saattajan** asemaan.
 
-### Varmennettu vartija
+### Pätevä saattaja
 
-Käyttäjä, jonka turvallisuuspistemäärä saavuttaa kynnysarvon (tällä hetkellä 5). Voi hyväksyä pyyntöjä "Varmennetut vartijat" -tasolla ilman demografista vastaavuutta.
+Käyttäjä, jonka turvallisuuspistemäärä saavuttaa kynnysarvon (tällä hetkellä 5). Voi hyväksyä pyyntöjä "Pätevät saattajat" -tasolla ilman demografista vastaavuutta.
 
 ## Henkilöllisyys ja tunnistautuminen
 

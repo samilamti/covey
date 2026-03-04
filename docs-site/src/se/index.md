@@ -34,9 +34,8 @@ Covey ii leat oamastuvvon riskkakapitálisttain. Min stivrrejit min geavaheddjii
 
 - **Duohtaduvvon sisačáliheapmi** -- BankID oktavuohta oadjebas dovddaldahttimii.
 - **Veahkkegáibádusat** -- Bivdde veahki árgabeaivvi oadjebasvuođain, nugo vázzit ruoktot eahkedis.
-- **Oadjebassearvvit** -- Báikkálaš joavkkut ovttasbargui du guovllus.
 - **Áigeguovdilis koordineren** -- Juogat sajádaga ja ságasta aktiivva sesšuvnna áigge.
-- **Oadjebasárvvoštallan** -- Hukse luohttámuša searvevuođa árvvoštallamiiguin.
+- **Oadjebasárvvoštallan** -- Hukse luohttámuša árvvoštallamiiguin loahpahuvvon sesšuvnnaid maŋŋil.
 
 ## Mihttut
 

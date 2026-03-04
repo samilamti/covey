@@ -60,9 +60,7 @@ Kodarepo leat Codeberg:s Woodpecker CI:in automáhtalaš testemiiguin ja huksemi
 ## Oadjebasmearrádusat
 
 - **JWT HS256:in** -- Stáhtuskeahtes duohtasteapmi 24 diimmu áigemeariin.
-- **Hálddahusa dohkkehan lahttovuohta** -- Searvvilahttovuohta gáibida manuála dohkkeheami.
 - **Suolálaš namat** -- BankID-namat eai goassege automáhtalaččat čájehuvvo.
-- **Guovlunamat koordináhtaid sajis** -- Searvvit čájehit "Södermalm", eai dárkilis GPS-koordináhtaid.
 - **Haversine PostGIS sajis** -- Álkit, geahnohut ja doarvái gávpotlávdadii.
 - **Muittuvuođđuduvvon dássioainnusteapmi** -- Ii Redis dárbbaš ovtta servera distribušuvdnii.
 

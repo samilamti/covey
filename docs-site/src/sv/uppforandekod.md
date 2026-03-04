@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Regler och riktlinjer för att delta i Covey-projektet.
 ---
 
-För att skapa en välkomnande och effektiv miljö gäller följande regler för alla som deltar i Covey-projektet och dess community:
+För att skapa en välkomnande och effektiv miljö gäller följande regler för alla som deltar i Covey-projektet:
 
 ## 1. Respekt
 

@@ -16,9 +16,8 @@ description: Hvernig þú getur hjálpað Covey án tæknilegrar þekkingar.
 - Tilkynntu villur eða hluti sem er erfitt að skilja.
 - Segðu okkur hvað vantar -- bestu hugmyndirnar koma frá raunverulegum þörfum.
 
-### Samfélag og umsjón
+### Bjóddu velkomið
 
-- Vertu gott fordæmi í staðbundnum hópum þínum.
 - Hjálpaðu til við að bjóða nýja notendur velkomna.
 - Tilkynntu óviðeigandi efni til að halda vettvangnum öruggum.
 

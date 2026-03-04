@@ -16,9 +16,8 @@ Don it dárbbaš máhttit kodejit dahkat erohusa. Du oasálastin lea mearrideadd
 - Dieđit bearráin dahje áššiin mat leat váttit ipmirdit.
 - Muital maid don váillahit -- buoremus jurdagat bohtet duohta dárbbuin.
 
-### Searvi ja modereren
+### Buresboahtin ja doarjja
 
-- Leat buorre ovdamearka du báikkálaš joavkkuin.
 - Veahkehehttet buresboahtin ođđa geavaheddjiiid.
 - Dieđit heajos sisdoalus vai lávdadat bissu oadjebassan.
 

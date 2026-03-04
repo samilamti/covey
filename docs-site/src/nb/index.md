@@ -34,9 +34,8 @@ Covey eies ikke av risikokapitalister. Vi styres av brukerne vare og formalet va
 
 - **Verifisert innlogging** -- Integrasjon med BankID for sikker identifisering.
 - **Hjelpeforesporsler** -- Be om hjelp med hverdagssikkerhet, som a ga hjem om kvelden.
-- **Trygghetsfellesskap** -- Lokale grupper for samarbeid i ditt omrade.
 - **Sanntidskoordinering** -- Del posisjon og chat under en aktiv okt.
-- **Trygghetsvurdering** -- Bygg tillit gjennom fellesskapets vurderinger.
+- **Trygghetsvurdering** -- Bygg tillit gjennom vurderinger etter avsluttede okter.
 
 ## Mal
 

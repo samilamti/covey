@@ -16,7 +16,7 @@ Inuit amerlasut unnukkut kisimik angerlarsimallutik eqqortutsillutik, soorlu fes
 2. **Aqqutissaq nassuiaruk** -- Sumiissuit aamma sumut aallartinnissaq allaguk.
 3. **Kikkut takusinnaasut qinnuteqaatimik toqqarit** -- Aaqqiissutaasumut ilanngullugu, takusinnaasut killeqquneqarsinnaapput:
    - **Uanga assigalugu** -- Suiaassuseqartut aamma inuunerup ukiui assigisut (±5 ukiut).
-   - **Uppernarsarneqarsimasut** -- Utoqqatserpiaasut aamma inuit naliliineq qaffasissusia 5-imiipput.
+   - **Pisinnaatitaasut ilaasortat** -- Utoqqatserpiaasut aamma inuit naliliineq qaffasissusia 5-imiipput.
    - **Ilaasortaq tamarmik** -- Nalunaarsortaasut tamarmik takusinnaapput qinnuteqaatimik.
 
 ### Assersuut
@@ -35,11 +35,4 @@ Kinaassaaq qinnuteqaatimik akuersilluni, **atuineq** aallartippoq:
 ## Iluaqutaanersuut
 
 - **Nalunaarsortaasut uppernarsarneqarsimasut** -- Tamarmik BankID-imik isersimapput. Kinaanngitsut sumiinngilaq.
-- **Inuiaqatigiinnit** -- Najugaqarfinnit akornanni ikiorsinnaassuteqarneq.
 - **Namminersornermi illersorneq** -- Sumiinnissaq qitiusumik ikiorteqartuminnaq nassaarneqarpoq, aammalu session-ip naammassimanerisa kingorna peerneqassalluni.
-
-## Peqatigiiffiit
-
-Aamma ilaasortarisinnaavutit najugaqarfinni **aaqqiissutaasut peqatigiiffinnut** -- najugaqarfinnit, suliffinnut imaluunniit ilinniarfinnut. Peqatigiiffimmi pilersitsisoqartoq qinnuteqaatit ilaasortaninnaq takusinnaapput.
-
-Peqatigiiffimmi ilaasortanissaq angajoqqaarmit akuersissuteqartariaqarpoq, taamaalilluni aaqqiissutaasumik nutaamik qaleriartitsisoqarluni.

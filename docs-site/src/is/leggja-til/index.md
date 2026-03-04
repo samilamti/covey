@@ -15,7 +15,7 @@ Covey er rekið af sjálfboðaliðum og opnum hugbúnaði. Óháð bakgrunni þ�
 - **[Nemendur](/is/leggja-til/nemendur/)** -- Lokaverkefni, háskólatengiliðir og skjölun.
 - **[Frumkvöðlar](/is/leggja-til/frumkvodlar/)** -- Fjármögnun, samstarf og skipulagsuppbygging.
 - **[Fjárhagslegt](/is/leggja-til/fjarhagslegur/)** -- Styrktu rekstur og þróun.
-- **[Ótæknilegt](/is/leggja-til/otaeknilegt/)** -- Beta-prófanir, samfélagsumsjón og munnleg kynning.
+- **[Ótæknilegt](/is/leggja-til/otaeknilegt/)** -- Beta-prófanir og munnleg kynning.
 - **[Fljótleg framlag](/is/leggja-til/fljotleg-framlog/)** -- Fimm mínútur? Skipta þær engu að síður miklu máli.
 
 ## Af hverju að leggja til?

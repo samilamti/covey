@@ -16,7 +16,7 @@ Wiele osób czuje się niebezpiecznie, wracając do domu samotnie późno w nocy
 2. **Opisz swoją trasę** — Podaj, skąd wyruszasz i dokąd zmierzasz.
 3. **Wybierz, kto widzi prośbę** — Dla większego bezpieczeństwa możesz ograniczyć widoczność:
    - **Podobni do mnie** — Tylko osoby tej samej płci i podobnym wieku (±5 lat).
-   - **Zweryfikowani opiekunowie** — Powyższe plus osoby z wysoką oceną bezpieczeństwa.
+   - **Kwalifikowani towarzysze** — Powyższe plus osoby z wysoką oceną bezpieczeństwa.
    - **Wszyscy członkowie** — Wszyscy zweryfikowani użytkownicy mogą zobaczyć Twoją prośbę.
 
 ### Przykład
@@ -35,11 +35,4 @@ Gdy ktoś zaakceptuje Twoją prośbę, rozpoczyna się **aktywna sesja**:
 ## Korzyści
 
 - **Zweryfikowana tożsamość** — Każdy zalogował się przez BankID. Brak anonimowych użytkowników.
-- **Lokalna społeczność** — Pomagajcie sobie nawzajem w sąsiedztwie.
 - **Ochrona prywatności** — Twoja dokładna lokalizacja jest udostępniana tylko osobie, która Ci pomaga, i jest automatycznie usuwana po zakończeniu sesji.
-
-## Społeczności
-
-Możesz także dołączyć do lokalnych **społeczności bezpieczeństwa** — grup dla Twojego osiedla, miejsca pracy lub szkoły. Prośby utworzone w ramach społeczności są widoczne tylko dla jej członków.
-
-Dołączenie do społeczności wymaga zatwierdzenia przez administratora, co tworzy dodatkową warstwę bezpieczeństwa.

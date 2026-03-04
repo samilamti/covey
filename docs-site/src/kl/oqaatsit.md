@@ -10,7 +10,7 @@ description: Oqaatsit pingaarnerit Covey-mi atuineqartut nassuiarneqarput.
 
 ### Ikiorsinnaassutinut qinnuteqaat
 
-Qinnuteqaat piffissalik aaqqiissutaasumik ikiorsinnaanermut nunameersunik -- soorlu "Angerlarsimassinnaalissaanga nassaataasumik." Pilersitsisoqartoq **qinnuteqaatiliortumit** aammalu framlugit **ikiortemit**. **Nammineq** (peqatigiiffinngitsoq) imaluunniit **peqatigiiffimmi**.
+Qinnuteqaat piffissalik aaqqiissutaasumik ikiorsinnaanermut nunameersunik -- soorlu "Angerlarsimassinnaalissaanga nassaataasumik." Pilersitsisoqartoq **qinnuteqaatiliortumit** aammalu framlugit **ikiortemit**.
 
 ### Qinnuteqaatiliortut
 
@@ -24,14 +24,6 @@ Inuk qinnuteqaatimik akuersilluni framlugu. Atugassarsioriartariaqarpoq akuersis
 
 Qinnuteqaatip atortup piffissaa, akuersinermit naammassinnissaanut. Session-imi, qinnuteqaatiliortut aamma ikiorteq oqaloqateqarsinnaapput aammalu sumiinnissap nassaarneqarsinnaanera.
 
-### Peqatigiiffiit
-
-Inuit ilaasortaasoqartoq ataatsimiinnissaraqartoq, soorlu najugaqarfiit, suliffiit imaluunniit ilinniarfiit. Peqatigiiffiit akuersissuteqartoq aamma attaviusut ateqarnerit atuipput.
-
-### Nammineq qinnuteqaat
-
-Ikiorsinnaassutinut qinnuteqaat peqatigiiffinngitsoq. Nalunaarsortaasut tamarmik takusinnaapput.
-
 ## Atugassarsiornissamut aamma aaqqiissutaasumut
 
 ### Atugassarsiornissap qaleriaritaa
@@ -41,16 +33,16 @@ Kikkut takusinnaasut aamma akuersisinnaasut. Pingasut qaleriaritaat tøkilerpput
 | Qaleriaritaq | Inatsisit | Nassuiarneq |
 |--------------|-----------|-------------|
 | **Uanga assigalugu** | Suiaassuseq AAMMA inuunerup ukiui ±5 | Tunngavissaq. Inuunerup ukiui aamma suiaassuseq assigisunik. |
-| **Uppernarsarneqarsimasut** | Inuiaqatigiinnut IMALUUNNIIT aaqqiissutaasumik stig ≥ 5 | Ikiorsinnaasut maani. |
+| **Pisinnaatitaasut ilaasortat** | Inuiaqatigiinnut IMALUUNNIIT aaqqiissutaasumik stig ≥ 5 | Ikiorsinnaasut maani. |
 | **Ilaasortaq tamarmik** | Killeqquneqanngillat | Nalunaarsortaasut tamarmik akuersisinnaapput. |
 
 ### Aaqqiissutaasumik stig
 
-Naliliinerit session-it naammassimanerit kingornit. Atuisoqarsinnaanngitsut nutaat 0-mit aallartipput. 5-imiigilaaq imaluunniit qaffasissut **uppernarsarneqarsimasoq** nalunaarsortaasulersippaat.
+Naliliinerit session-it naammassimanerit kingornit. Atuisoqarsinnaanngitsut nutaat 0-mit aallartipput. 5-imiigilaaq imaluunniit qaffasissut **pisinnaatitaasoq ilaasortat** nalunaarsortaasulersippaat.
 
-### Uppernarsarneqarsimasoq
+### Pisinnaatitaasoq ilaasortat
 
-Inuk aaqqiissutaasumik stigi killingimut naammassisimasoq (maanna 5). Qinnuteqaatinik "Uppernarsarneqarsimasut" qaleriaritaani akuersisinnaasut inuiaqatigiinnut assigisinnaanatik.
+Inuk aaqqiissutaasumik stigi killingimut naammassisimasoq (maanna 5). Qinnuteqaatinik "Pisinnaatitaasut ilaasortat" qaleriaritaani akuersisinnaasut inuiaqatigiinnut assigisinnaanatik.
 
 ## Nalunaarsortaasutinut
 

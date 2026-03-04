@@ -60,9 +60,8 @@ Koderepoen hostes pa Codeberg med Woodpecker CI til automatiserede tests og buil
 ## Sikkerhedsbeslutninger
 
 - **JWT med HS256** -- Tilstandslos autentificering med 24 timers udlobstid.
-- **Administratorgodkendt medlemskab** -- Faellesskabsmedlemskab kraever manuel godkendelse.
 - **Pseudonyme navne** -- BankID-navne vises aldrig automatisk.
-- **Omradenavne i stedet for koordinater** -- Faellesskaber viser "Norrebro", ikke praecise GPS-koordinater.
+- **Omradenavne i stedet for koordinater** -- Kun omradenavne vises, ikke praecise GPS-koordinater.
 - **Haversine i stedet for PostGIS** -- Enklere, lettere og tilstraekkeligt til byskala.
 - **Hukommelsesbaseret hastighedsbegraensning** -- Ingen Redis nodvendig for en enkelt serverdistribution.
 

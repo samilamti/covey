@@ -60,9 +60,7 @@ Koodit Codeberg-imi Woodpecker CI-millu testit aamma buildingit nammineq. Push t
 ## Aaqqiissutaasut isumaliutit
 
 - **JWT HS256-imik** -- Stateless-imik samgildeq 24 tiimini naammassilluni.
-- **Angajoqqaarmit akuersissuteqartoq** -- Peqatigiiffinni ilaasortanissaq akuersissuteqartariaqarpoq.
 - **Attaviusut atit** -- BankID-p atia nammineq takutinneqanngillaq.
-- **Najugaqarfittut atit koordinatinngillat** -- Peqatigiiffiit "Södermalm" takutippaat, GPS-koordinatinngilaq.
 - **Haversine PostGIS-ip inaani** -- Pitsaassumik, sukumiisumik aamma bygdinut naammassimasoq.
 - **Eqqissimanermik killeqquneqarneq** -- Redis piariaqanngillaq servarimut ataatsimut.
 

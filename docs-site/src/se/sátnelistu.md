@@ -10,7 +10,7 @@ description: Čilgehus dehálaš doahpagiid mat geavahuvvojit Covey:s.
 
 ### Veahkkegáibádus
 
-Áigemeari gáibádus duohta máilmmi oadjebasdoarjagii -- ovdamearkka dihte "Mun dárbbašan geainna vázzit ruoktot." Ráhkaduvvon **bivddi** bokte ja čađahuvvon **veahkki** bokte. Sáhttá leat **friddja** (searvvi haga) dahje **searvveguovdasaš**.
+Áigemeari gáibádus duohta máilmmi oadjebasdoarjagii -- ovdamearkka dihte "Mun dárbbašan geainna vázzit ruoktot." Ráhkaduvvon **bivddi** bokte ja čađahuvvon **veahkki** bokte.
 
 ### Bivddi
 
@@ -24,14 +24,6 @@ Son gii dohkkeha ja čađaha veahkkegáibádusa. Ferte deavdit gelbbolašvuohtae
 
 Veahkkegáibádusa aktiivva muddu, dohkkeheamis loahppaheapmái. Sesšuvnna áigge bivddi ja veahkki sáhttet lonuhit dieđuid ja juogadit sajádaga.
 
-### Searvi
-
-Geavaheddjiidjoavku oktasaš konteavsttain, nugo ássanguovlu, bargosadji dahje universitehta. Searvvit geavahit dohkkehuvvon lahttovuođaid ja suolálaš čájáhusnamaid.
-
-### Friddja gáibádus
-
-Veahkkegáibádus ráhkaduvvon searvvi haga. Oidno buot duohtaduvvon geavaheddjiidie.
-
 ## Gelbbolašvuohta ja oadjebasvuohta
 
 ### Gelbbolašvuohtadássi
@@ -41,16 +33,16 @@ Stivre gii sáhttá oaidnit ja dohkkehit gáibádusa. Golbma dási leat:
 | Dássi | Njuolggadus | Govvádus |
 |-------|-------------|----------|
 | **Seammalágan go mun** | Seamma sohkabealli JA riegádanjahki ±5 | Standárda. Heive olbmuide sullasaš agis ja sohkabealis. |
-| **Duohtaduvvon várdut** | Demografalaš heiveheapmi DAHJE oadjebasstige ≥ 5 | Rahpá vásáhus veahkkiide. |
+| **Kvalifiserejuvvon guoimmáhat** | Demografalaš heiveheapmi DAHJE oadjebasstige ≥ 5 | Rahpá vásáhus veahkkiide. |
 | **Buot lahtut** | Eai ráddjejumit | Buot duohtaduvvon geavaheddjiid sáhttet dohkkehit. |
 
 ### Oadjebasstige
 
-Čoggojuvvon stige vuođđuduvvon árvvoštallamiin loahpahuvvon sesšuvnnaid maŋŋil. Ođđa geavaheddjiid álget 0:s. Stige 5 dahje badjel kvalifisere **duohtaduvvon várdun**.
+Čoggojuvvon stige vuođđuduvvon árvvoštallamiin loahpahuvvon sesšuvnnaid maŋŋil. Ođđa geavaheddjiid álget 0:s. Stige 5 dahje badjel kvalifisere **kvalifiserejuvvon guoimmáhahkan**.
 
-### Duohtaduvvon várdu
+### Kvalifiserejuvvon guoimmáhat
 
-Geavaheaddji gean oadjebasstige olaha šlája (dál 5). Sáhttá dohkkehit gáibádusaid "Duohtaduvvon várdut" dásis demografalaš heiveheami haga.
+Geavaheaddji gean oadjebasstige olaha šlája (dál 5). Sáhttá dohkkehit gáibádusaid "Kvalifiserejuvvon guoimmáhat" dásis demografalaš heiveheami haga.
 
 ## Identitehta ja duohtasteapmi
 

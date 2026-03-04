@@ -16,6 +16,6 @@ Even with limited time, you can make a big difference. Here are actions that mov
 
 3. **Tell a friend** -- Next time you grab a coffee, mention the project to someone who might be interested.
 
-4. **Join the community** -- Jump in and say hello. It shows that there is interest and supports the project.
+4. **Say hello** -- Jump into the project and introduce yourself. It shows that there is interest and supports the project.
 
 Thank you for your time -- every minute counts!

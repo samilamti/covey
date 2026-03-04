@@ -10,7 +10,7 @@ description: Forklaring af vigtige begreber, der bruges i Covey.
 
 ### Hjaelpeanmodning
 
-En tidsbegreanset anmodning om sikkerhedsstotte i virkeligheden -- for eksempel "Jeg har brug for nogen at ga hjem med." Oprettes af en **anmoder** og udfores af en **hjaelper**. Kan vaere **fristaende** (uden faellesskab) eller **faellesskabstilknyttet**.
+En tidsbegreanset anmodning om sikkerhedsstotte i virkeligheden -- for eksempel "Jeg har brug for nogen at ga hjem med." Oprettes af en **anmoder** og udfores af en **hjaelper**.
 
 ### Anmoder
 
@@ -24,14 +24,6 @@ Den der accepterer og udforer en hjaelpeanmodning. Skal opfylde kvalifikationskr
 
 Den aktive fase af en hjaelpeanmodning, fra godkendelse til afslutning. Under en session kan anmoder og hjaelper udveksle beskeder og dele position.
 
-### Faellesskab
-
-En gruppe brugere med en faelles kontekst, for eksempel et boligomrade, en arbejdsplads eller et universitet. Faellesskaber bruger godkendte medlemskaber og pseudonyme visningsnavne.
-
-### Fristaende anmodning
-
-En hjaelpeanmodning oprettet uden faellesskab. Synlig for alle verificerede brugere.
-
 ## Kvalifikation og tryghed
 
 ### Kvalifikationsniveau
@@ -41,16 +33,16 @@ Styrer hvem der kan se og acceptere en anmodning. Tre niveauer findes:
 | Niveau | Regel | Beskrivelse |
 |--------|-------|-------------|
 | **Lignende som mig** | Samme kon OG fodselsar +-5 | Standard. Matcher personer af lignende alder og kon. |
-| **Verificerede vogtere** | Demografisk matching ELLER tryghedscore >= 5 | Abner for erfarne hjaelpere. |
+| **Kvalificerede ledsagere** | Demografisk matching ELLER tryghedscore >= 5 | Abner for erfarne hjaelpere. |
 | **Alle medlemmer** | Ingen begraensninger | Alle verificerede brugere kan acceptere. |
 
 ### Tryghedscore
 
-En akkumuleret score baseret pa vurderinger efter afsluttede sessioner. Nye brugere starter pa 0. En score pa 5 eller hojere kvalificerer som **verificeret vogter**.
+En akkumuleret score baseret pa vurderinger efter afsluttede sessioner. Nye brugere starter pa 0. En score pa 5 eller hojere kvalificerer som **kvalificeret ledsager**.
 
-### Verificeret vogter
+### Kvalificeret ledsager
 
-En bruger, hvis tryghedscore nar taerskelvaerdien (i ojeblikket 5). Kan acceptere anmodninger pa niveauet "Verificerede vogtere" selv uden demografisk matching.
+En bruger, hvis tryghedscore nar taerskelvaerdien (i ojeblikket 5). Kan acceptere anmodninger pa niveauet "Kvalificerede ledsagere" selv uden demografisk matching.
 
 ## Identitet og autentificering
 

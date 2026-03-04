@@ -15,7 +15,7 @@ Covey-p piginnaanissartik suliaqartunik aamma ammarluinnaq koodinik atuisoqarpoq
 - **[Atuartut](/kl/peqataanissamut/atuartut/)** -- Ilinniarnerit, universitetinut attavigineq aamma skjalavinna.
 - **[Pisiniarfissaq](/kl/peqataanissamut/pisiniarfissaq/)** -- Aningaasarsiorneq, samstarv aamma organisationinut.
 - **[Aningaasaqarnermi](/kl/peqataanissamut/aningaasaqarnermi/)** -- Tunisitsivoq rekstrunut aamma menninermut.
-- **[Pisinnaatitaanngitsoq](/kl/peqataanissamut/pisinnaatitaanngitsoq/)** -- Betatestineq, moderering aamma oqaloqateqarneq.
+- **[Pisinnaatitaanngitsoq](/kl/peqataanissamut/pisinnaatitaanngitsoq/)** -- Betatestineq, tilbakemelding aamma oqaloqateqarneq.
 - **[Sukkasuumik](/kl/peqataanissamut/sukkasuumik/)** -- 5 minutsi? Assut ikiorsinnaavutit.
 
 ## Sooq ilaasortaassut?

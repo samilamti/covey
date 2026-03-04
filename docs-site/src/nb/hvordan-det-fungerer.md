@@ -16,7 +16,7 @@ Mange foler seg utrygge nar de skal ga hjem alene sent pa kvelden, for eksempel 
 2. **Beskriv ruten din** -- Oppgi hvor du starter og hvor du skal.
 3. **Velg hvem som ser foresporselen** -- For okt trygghet kan du begrense synligheten:
    - **Lignende som meg** -- Bare personer av samme kjonn og lignende alder (+-5 ar).
-   - **Verifiserte voktere** -- I tillegg personer med hoy trygghetspoengsum.
+   - **Kvalifiserte ledsagere** -- I tillegg personer med hoy trygghetspoengsum.
    - **Alle medlemmer** -- Alle verifiserte brukere kan se foresporselen din.
 
 ### Eksempel
@@ -35,11 +35,4 @@ Nar noen aksepterer foresporselen din, starter en **aktiv okt**:
 ## Fordeler
 
 - **Verifisert identitet** -- Alle har logget inn med BankID. Ingen anonyme brukere.
-- **Lokalt fellesskap** -- Hjelp hverandre i naromradet.
 - **Personvern** -- Din eksakte posisjon deles bare med den som hjelper deg, og slettes automatisk nar okten avsluttes.
-
-## Fellesskap
-
-Du kan ogsa bli med i lokale **trygghetsfellesskap** -- grupper for boligomradet ditt, arbeidsplassen eller skolen. Foresporsler som opprettes innenfor et fellesskap er bare synlige for medlemmene.
-
-A bli med i et fellesskap krever godkjenning av en administrator, noe som skaper et ekstra lag av trygghet.

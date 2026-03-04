@@ -10,7 +10,7 @@ description: Förklaring av viktiga begrepp som används i Covey.
 
 ### Hjälpförfrågan
 
-En tidsbegränsad förfrågan om säkerhetsstöd i verkligheten — till exempel "Jag behöver någon att gå hem med." Skapas av en **begärare** och utförs av en **hjälpare**. Kan vara **fristående** (utan community) eller **community-knuten**.
+En tidsbegränsad förfrågan om säkerhetsstöd i verkligheten — till exempel "Jag behöver någon att gå hem med." Skapas av en **begärare** och utförs av en **hjälpare**.
 
 ### Begärare
 
@@ -24,14 +24,6 @@ Den som accepterar och utför en hjälpförfrågan. Måste uppfylla behörighets
 
 Den aktiva fasen av en hjälpförfrågan, från godkännande till avslut. Under en session kan begärare och hjälpare utbyta meddelanden och dela position.
 
-### Community
-
-En grupp användare med en gemensam kontext, till exempel ett bostadsområde, en arbetsplats eller ett universitet. Communities använder godkända medlemskap och pseudonyma visningsnamn.
-
-### Fristående förfrågan
-
-En hjälpförfrågan skapad utan community. Synlig för alla verifierade användare.
-
 ## Behörighet och trygghet
 
 ### Behörighetsnivå
@@ -41,16 +33,16 @@ Styr vem som kan se och acceptera en förfrågan. Tre nivåer finns:
 | Nivå | Regel | Beskrivning |
 |------|-------|-------------|
 | **Liknande som jag** | Samma kön OCH födelseår ±5 | Standard. Matchar personer av liknande ålder och kön. |
-| **Verifierade väktare** | Demografisk matchning ELLER trygghetspoäng ≥ 5 | Öppnar för erfarna hjälpare. |
+| **Kvalificerade ledsagare** | Demografisk matchning ELLER trygghetspoäng ≥ 5 | Öppnar för erfarna hjälpare. |
 | **Alla medlemmar** | Inga begränsningar | Alla verifierade användare kan acceptera. |
 
 ### Trygghetspoäng
 
-Ett ackumulerat poäng baserat på omdömen efter avslutade sessioner. Nya användare börjar på 0. En poäng på 5 eller högre kvalificerar som **verifierad väktare**.
+Ett ackumulerat poäng baserat på omdömen efter avslutade sessioner. Nya användare börjar på 0. En poäng på 5 eller högre kvalificerar som **kvalificerad ledsagare**.
 
-### Verifierad väktare
+### Kvalificerad ledsagare
 
-En användare vars trygghetspoäng uppnår tröskelvärdet (för närvarande 5). Kan acceptera förfrågningar på nivån "Verifierade väktare" även utan demografisk matchning.
+En användare vars trygghetspoäng uppnår tröskelvärdet (för närvarande 5). Kan acceptera förfrågningar på nivån "Kvalificerade ledsagare" även utan demografisk matchning.
 
 ## Identitet och autentisering
 

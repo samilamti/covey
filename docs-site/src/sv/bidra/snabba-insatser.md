@@ -16,6 +16,6 @@ description: Har du bara fem minuter? Så kan du hjälpa Covey.
 
 3. **Berätta för en vän** — Nästa gång du fikar, nämn projektet för någon som kan vara intresserad.
 
-4. **Gå med i communityt** — Hoppa in och säg hej. Det visar att det finns intresse och stöttar projektet.
+4. **Säg hej** — Hoppa in i projektet och presentera dig. Det visar att det finns intresse och stöttar projektet.
 
 Tack för din tid — varje minut räknas!

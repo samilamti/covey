@@ -20,7 +20,7 @@ Mii váldit geavaheddjiiid priváhtavuođa hui duođalaččat eat ge goassege vu
 ### Geavahaneavttut ja njuolggadusat
 
 - Ráhkadehtet čielga ja vuoiggalaš geavahaneavttuid mat suddjejit sihke lávdadaga ja ovttaskas olbmo.
-- Hábmejit bistevaš juridihkalaš njuolggadusaid searvevuhtii.
+- Hábmejit bistevaš juridihkalaš njuolggadusaid lávdadahkii.
 
 ### Organisašuvdnahápmi ja lisenseren
 

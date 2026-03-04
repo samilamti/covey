@@ -32,7 +32,6 @@ BankID-navnið títt verður ikki víst øðrum brúkarum. Tú velur sjálv/ur e
 
 Tú kanst útflyta øll dátu tíni gjøgnum **Vangamynd → Útflyt dáta**. Útflytingin inniheldur:
 - Vangamyndina tína
-- Samfelagslimaskap tín
 - Hjálparbønirnar tínar
 - Setuboð
 - Virðingar og ummæli
@@ -48,13 +47,8 @@ Tú kanst strika kontona tína gjøgnum **Vangamynd → Strika konto**. Gongdin:
 
 ## Trygdarskipan
 
-### Samfelagstrygd
-
 | Ótti | Vernd |
 |------|-------|
-| Korta limir | Limalister bert sjónligar hjá limum |
-| Korta samfelagsstaðsetingar | Bert økisnøvn víst, aldrin nágreynilig koordinatir |
-| Gerast limur til at njósna | Limaskap krevur góðkenning frá umsitara |
 | Eyðkenna verulig nøvn | Dulnevnd vísningarnøvn |
 | Krosskoyring av brúkarum | Vangamyndin vísir bert vísningarnavn og staðfestingarstøðu |
 | Góðtaka bønir til at nálkast mál | Staðfestingarspor knýta BankID-staðfest einkenni til hvørja setu |

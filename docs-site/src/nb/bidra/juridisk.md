@@ -20,7 +20,7 @@ Vi tar brukernes personvern pa storste alvor og selger aldri data.
 ### Brukeravtaler og regler
 
 - Utarbeid tydelige og rettferdige brukervilkar som beskytter bade plattformen og individet.
-- Formuler holdbare juridiske regler for fellesskapet.
+- Formuler holdbare juridiske regler for plattformen.
 
 ### Organisasjonsform og lisensiering
 

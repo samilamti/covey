@@ -34,9 +34,8 @@ Covey nie jest własnością funduszy venture capital. Kierujemy się naszymi u�
 
 - **Zweryfikowane logowanie** — Integracja z BankID dla bezpiecznej identyfikacji.
 - **Prośby o pomoc** — Poproś o pomoc w codziennym bezpieczeństwie, na przykład wspólne wracanie do domu wieczorem.
-- **Społeczności bezpieczeństwa** — Lokalne grupy do współpracy w Twojej okolicy.
 - **Koordynacja w czasie rzeczywistym** — Udostępniaj swoją lokalizację i rozmawiaj podczas aktywnej sesji.
-- **Ocena bezpieczeństwa** — Buduj zaufanie poprzez oceny społeczności.
+- **Ocena bezpieczeństwa** — Buduj zaufanie poprzez oceny po sesjach.
 
 ## Cele
 

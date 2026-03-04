@@ -16,9 +16,8 @@ Du behöver inte kunna koda för att göra skillnad. Din input är avgörande f�
 - Rapportera buggar eller saker som är krångliga att förstå.
 - Berätta vad du saknar — de bästa idéerna kommer från verkliga behov.
 
-### Community och moderering
+### Välkomna och stöd
 
-- Var en god förebild i dina lokala grupper.
 - Hjälp till att välkomna nya användare.
 - Rapportera olämpligt innehåll för att hålla plattformen trygg.
 

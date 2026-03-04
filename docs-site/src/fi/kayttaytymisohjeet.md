@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Säännöt ja ohjeet Covey-projektiin osallistumiseen.
 ---
 
-Tervetulevan ja tehokkaan ympäristön luomiseksi seuraavat säännöt koskevat kaikkia, jotka osallistuvat Covey-projektiin ja sen yhteisöön:
+Tervetulevan ja tehokkaan ympäristön luomiseksi seuraavat säännöt koskevat kaikkia, jotka osallistuvat Covey-projektiin:
 
 ## 1. Kunnioitus
 

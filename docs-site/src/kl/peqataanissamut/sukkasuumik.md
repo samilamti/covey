@@ -16,6 +16,6 @@ Piffissaq killilik atuinermi assut ikiorsinnaavutit. Suliassarsiornissat suliass
 
 3. **Ilaamut oqaruk** -- Kaffimiortillutit, suliassaqarfik oqaaseqarsinnaavoq.
 
-4. **Peqatigiiffimmi ilaasortaasoq** -- Iserfigisigut aamma inuussutit. Taamaalilluni suliassaqarfimut ikiorsinnaavutit.
+4. **Inuussutit** -- Iserfigisigut aamma inuussutit. Taamaalilluni suliassaqarfimut ikiorsinnaavutit.
 
 Qujanaq piffissaanut -- minutsi tamarmik naleqqunneqarpoq!

@@ -16,6 +16,6 @@ Rajallisella ajallakin voit tehdä suuren eron. Tässä ovat toimet, jotka viev�
 
 3. **Kerro ystävälle** -- Seuraavan kerran kahvitauolla mainitse projekti jollekulle, jota se voisi kiinnostaa.
 
-4. **Liity yhteisöön** -- Hyppää mukaan ja sano hei. Se osoittaa kiinnostusta ja tukee projektia.
+4. **Sano hei** -- Hyppää mukaan ja sano hei Codebergissa. Se osoittaa kiinnostusta ja tukee projektia.
 
 Kiitos ajastasi -- jokainen minuutti merkitsee!

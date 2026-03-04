@@ -32,7 +32,6 @@ BankID-nafnið þitt sést ekki af öðrum notendum. Þess í stað velur þú s
 
 Þú getur flutt út öll gögnin þín í **Prófíl --> Flytja út gögn**. Útflutningurinn inniheldur:
 - Prófílinn þinn
-- Samfélagsaðild þína
 - Aðstoðarbeiðnir þínar
 - Fundaskilaboð
 - Einkunnir og umsagnir
@@ -47,17 +46,6 @@ BankID-nafnið þitt sést ekki af öðrum notendum. Þess í stað velur þú s
 3. Eftir 30 daga er öllum gögnum eytt varanlega af sjálfvirkum bakgrunnsferli.
 
 ## Öryggislíkan
-
-### Samfélagsöryggi
-
-| Ógn | Varnaraðgerð |
-|-----|-------------|
-| Kortleggja meðlimi | Meðlimalistar sýnilegar aðeins meðlimum |
-| Kortleggja staðsetningar samfélaga | Aðeins svæðisnöfn sýnd, aldrei nákvæmar hnit |
-| Ganga í til eftirlits | Aðild krefst samþykkis stjórnanda |
-| Greina raunveruleg nöfn | Dulnefni sem birtingarnöfn |
-| Krosstenging notenda | Prófíllinn sýnir aðeins birtingarnafn og staðfestingarstöðu |
-| Samþykkja beiðnir til að nálgast markmið | Staðfestingarslóð tengir BankID-staðfest auðkenni við hvern fund |
 
 ### Tæknilegar varnaraðgerðir
 

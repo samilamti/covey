@@ -15,7 +15,7 @@ Covey drives av frivillige og apen kildekode. Uansett bakgrunn finnes det mater 
 - **[Studenter](/nb/bidra/student/)** -- Masteroppgaver, universitetskontakter og dokumentasjon.
 - **[Entreprenorer](/nb/bidra/entreprenor/)** -- Finansiering, partnerskap og organisasjonsbygging.
 - **[Okonomisk](/nb/bidra/okonomisk/)** -- Doner til drift og utvikling.
-- **[Ikke-teknisk](/nb/bidra/ikke-teknisk/)** -- Betatesting, fellesskapsmoderasjon og jungeltelegrafen.
+- **[Ikke-teknisk](/nb/bidra/ikke-teknisk/)** -- Betatesting og jungeltelegrafen.
 - **[Raske bidrag](/nb/bidra/raske-bidrag/)** -- Fem minutter? Gjor stor forskjell likevel.
 
 ## Hvorfor bidra?

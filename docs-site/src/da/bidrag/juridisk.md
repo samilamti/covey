@@ -20,7 +20,7 @@ Vi tager brugernes privatliv yderst alvorligt og saelger aldrig data.
 ### Brugeraftaler og regler
 
 - Udarbejd tydelige og retfaerdige brugervilkar, der beskytter bade platformen og den enkelte.
-- Formuler holdbare juridiske regler for faellesskabet.
+- Formuler holdbare juridiske regler for platformen.
 
 ### Organisationsform og licensering
 

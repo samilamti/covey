@@ -60,9 +60,7 @@ Keldukóðagoymslan verður hostað á Codeberg við Woodpecker CI fyri sjálvvi
 ## Trygdaravgerðir
 
 - **JWT við HS256** -- Statleys samgilding við 24 tíma útrennisfrístur.
-- **Umsitaragóðkent limaskap** -- Samfelagslimaskap krevur handvirkt góðkenning.
 - **Dulnevnd nøvn** -- BankID-nøvn verða aldrin sjálvvirknað víst.
-- **Økisnøvn í staðin fyri koordinatir** -- Samfeløg vísa "Södermalm", ikki nágreynilig GPS-koordinatir.
 - **Haversine í staðin fyri PostGIS** -- Einfaldari, léttari og nóg til bygdarskalanum.
 - **Minnisgrundað hastigheitsbegring** -- Ongin Redis er neyðugur fyri eina einstaka miðaradreifingarskipan.
 

@@ -60,9 +60,8 @@ Koderepoet hostes pa Codeberg med Woodpecker CI for automatiserte tester og bygg
 ## Sikkerhetsbeslutninger
 
 - **JWT med HS256** -- Tilstandslos autentisering med 24 timers utlopstid.
-- **Administratorgodkjent medlemskap** -- Fellesskapsmedlemskap krever manuell godkjenning.
 - **Pseudonyme navn** -- BankID-navn vises aldri automatisk.
-- **Omradenavn i stedet for koordinater** -- Fellesskap viser "Gronland", ikke eksakte GPS-koordinater.
+- **Omradenavn i stedet for koordinater** -- Bare omradenavn vises, ikke eksakte GPS-koordinater.
 - **Haversine i stedet for PostGIS** -- Enklere, lettere og tilstrekkelig for byskala.
 - **Minnebasert hastighetsbegrensning** -- Ingen Redis trengs for en enkelt serverdistribusjon.
 

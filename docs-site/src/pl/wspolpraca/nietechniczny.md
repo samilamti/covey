@@ -16,9 +16,8 @@ Nie musisz umieć programować, aby zrobić różnicę. Twój wkład jest kluczo
 - Zgłaszaj błędy lub rzeczy, które są trudne do zrozumienia.
 - Powiedz nam, czego Ci brakuje — najlepsze pomysły pochodzą z rzeczywistych potrzeb.
 
-### Społeczność i moderacja
+### Witaj nowych użytkowników
 
-- Bądź dobrym wzorem w swoich lokalnych grupach.
 - Pomóż witać nowych użytkowników.
 - Zgłaszaj nieodpowiednie treści, aby utrzymać bezpieczeństwo platformy.
 

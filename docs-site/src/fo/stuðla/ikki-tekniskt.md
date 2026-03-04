@@ -16,9 +16,8 @@ Tú tørvar ikki at kunna forrita fyri at gera munin. Mátið títt er avgerandi
 - Boða frá villum ella hentum, sum eru torførir at skilja.
 - Sig frá, hvat tú saknar -- bestu hugskotini koma frá veruligum tørvi.
 
-### Samfelag og stýring
+### Velkomu og stuðul
 
-- Ver eitt gott fordømi í staðbundnu bólkunum.
 - Hjálp til at bjóða nýggjar brúkarar vælkomin.
 - Boða frá ósømiligum innihaldi fyri at halda skipanina trygga.
 

@@ -34,9 +34,8 @@ Covey ejes ikke af venturekapitalister. Vi styres af vores brugere og vores form
 
 - **Verificeret login** -- Integration med BankID for sikker identifikation.
 - **Hjaelpeanmodninger** -- Bed om hjaelp med hverdagssikkerhed, som at ga hjem om aftenen.
-- **Tryghedsfaellesskaber** -- Lokale grupper til samarbejde i dit omrade.
 - **Realtidskoordinering** -- Del position og chat under en aktiv session.
-- **Tryghedsvurdering** -- Opbyg tillid gennem faellesskabets vurderinger.
+- **Tryghedsvurdering** -- Opbyg tillid gennem vurderinger efter afsluttede sessioner.
 
 ## Mal
 

@@ -32,7 +32,6 @@ BankID-ip atia allat atuisoqarsinnaanngitsunut takutinneqanngillaq. Nammineq att
 
 Daatat tamarmik naassarsinnaavutit **Profili → Daatat naassarsinnaanermut**. Naassarsimanerit ilanngullugit:
 - Profilit
-- Peqatigiiffinni ilaasortaanersuutit
 - Qinnuteqaatit
 - Oqaluffimmi allaaserit
 - Naliliinerit
@@ -48,13 +47,8 @@ Kontot peersinnaavat **Profili → Konto peersinnaanermut**. Aaqqiissutaasut:
 
 ## Aaqqiissutaasut nalunaarsorneqarnerit
 
-### Peqatigiiffinni aaqqiissutaasut
-
 | Navianaq | Illersorneq |
 |----------|-------------|
-| Ilaasortanik nalunaarsorneq | Ilaasortanik nalunaarsornerat ilaasortaninnaq takutinnarpput |
-| Peqatigiiffinni sumiinnissaq | Najugaqarfittut ateqqinnaat kisimik, koordinatinngilaq |
-| Ilaasortanissaq misissuinernut | Ilaasortanissaq angajoqqaarmit akuersissuteqartariaqarpoq |
 | Atit namminersut nassuiarnerit | Nalunaanngitsunik attaviusut ateqarnerit |
 | Inuit assingiinnik nassuiarneq | Profilit attaviusumik ateqqinnaamik aamma uppernarsaanerup nalunaarsorneqarnerannik takutippat |
 | Qinnuteqaatinik akuersilluni | BankID-p nalunaarsortaasutaanik sessionit tamarmillu attavigarpput |

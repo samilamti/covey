@@ -34,9 +34,8 @@ Covey er ikki eigt av áløgukapitaliskum. Vit verðum stýrð av brúkarum okka
 
 - **Staðfest innlogging** -- Samanknýtting við BankID til trygg einkenniskjalprógving.
 - **Hjálparbønir** -- Bið um hjálp við gerandisdagsøryggi, sum at ganga heim um kvøldið.
-- **Trygdarsamfeløg** -- Staðbundin bólkar til samstarv í øki títt.
 - **Samtíðarsamskiping** -- Deil staðseting og prátað undir gangandi setu.
-- **Trygdarvirðing** -- Bygg tiltrú gjøgnum ummæli frá samfelagnum.
+- **Trygdarvirðing** -- Bygg tiltrú gjøgnum ummæli eftir liðugar setur.
 
 ## Mál
 
