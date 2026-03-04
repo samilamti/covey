@@ -151,8 +151,7 @@
     "recenter": "Centrera på min position"
   },
   "beta": {
-    "notice": "Det här är en betaversion. Inloggning sker med testuppgifter, inte riktigt BankID.",
-    "dismiss": "OK"
+    "notice": "Det här är en betaversion. Inloggning sker med testuppgifter, inte riktigt BankID."
   },
   "location": {
     "denied": "Platsåtkomst nekades. Aktivera i webbläsarens inställningar.",

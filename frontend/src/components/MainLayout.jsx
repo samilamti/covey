@@ -4,32 +4,7 @@ import { BottomNav } from './BottomNav'
 import { ProfileView } from './ProfileView'
 import { RequestList } from './RequestList'
 import { LanguageSelector } from './LanguageSelector'
-
-function BetaBanner() {
-  const { t } = useTranslation()
-  const [dismissed, setDismissed] = useState(
-    () => sessionStorage.getItem('beta-dismissed') === '1'
-  )
-
-  if (dismissed) return null
-
-  const dismiss = () => {
-    sessionStorage.setItem('beta-dismissed', '1')
-    setDismissed(true)
-  }
-
-  return (
-    <div class="bg-amber-100 border-b border-amber-300 px-4 py-2 flex items-center justify-between text-sm text-amber-900">
-      <span>{t('beta.notice')}</span>
-      <button
-        onClick={dismiss}
-        class="ml-3 shrink-0 font-medium underline hover:no-underline"
-      >
-        {t('beta.dismiss')}
-      </button>
-    </div>
-  )
-}
+import { BetaBanner } from './BetaBanner'
 
 export function MainLayout({ user, onLogout }) {
   const { t } = useTranslation()

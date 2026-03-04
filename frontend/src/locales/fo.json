@@ -151,8 +151,7 @@
     "recenter": "Miðja á mín støðu"
   },
   "beta": {
-    "notice": "Hetta er eitt betaútgáva. Innriting nýtir royndargøgn, ikki veruligt BankID.",
-    "dismiss": "Í lagi"
+    "notice": "Hetta er eitt betaútgáva. Innriting nýtir royndargøgn, ikki veruligt BankID."
   },
   "location": {
     "denied": "Atgongd til støðu varð noktað. Virkja í stillingum hjá kaganum.",

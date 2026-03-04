@@ -2,7 +2,17 @@ import { useState, useRef, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { ShieldCheck, Users, Loader2 } from 'lucide-preact'
 import { LanguageSelector } from './LanguageSelector'
+import { BetaBanner } from './BetaBanner'
 import { authService } from '../services/auth'
+
+/** Generate a random valid 12-digit NIN for unique test users. */
+function generateTestNin() {
+  const year = 1960 + Math.floor(Math.random() * 40)
+  const month = String(1 + Math.floor(Math.random() * 12)).padStart(2, '0')
+  const day = String(1 + Math.floor(Math.random() * 28)).padStart(2, '0')
+  const suffix = String(Math.floor(Math.random() * 10000)).padStart(4, '0')
+  return `${year}${month}${day}${suffix}`
+}
 
 export function LandingPage({ onLogin }) {
   const { t } = useTranslation()
@@ -21,7 +31,7 @@ export function LandingPage({ onLogin }) {
 
   const handleLogin = async () => {
     // Use entered NIN, or fall back to test number
-    const pn = nin.replace(/\D/g, '') || '198001010000'
+    const pn = nin.replace(/\D/g, '') || generateTestNin()
 
     setStatus('loading')
     setError(null)
@@ -73,6 +83,7 @@ export function LandingPage({ onLogin }) {
 
   return (
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col">
+      <BetaBanner />
       <header class="p-4 flex justify-end">
         <LanguageSelector />
       </header>

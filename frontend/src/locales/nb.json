@@ -151,8 +151,7 @@
     "recenter": "Sentrer på min posisjon"
   },
   "beta": {
-    "notice": "Dette er en betaversjon. Innlogging bruker testopplysninger, ikke ekte BankID.",
-    "dismiss": "OK"
+    "notice": "Dette er en betaversjon. Innlogging bruker testopplysninger, ikke ekte BankID."
   },
   "location": {
     "denied": "Tilgang til posisjon ble nektet. Aktiver i nettleserens innstillinger.",

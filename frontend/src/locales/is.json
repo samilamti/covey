@@ -151,8 +151,7 @@
     "recenter": "Miðja á staðsetningu minni"
   },
   "beta": {
-    "notice": "Þetta er betaútgáfa. Innskráning notar prófunargögn, ekki raunverulegt BankID.",
-    "dismiss": "Í lagi"
+    "notice": "Þetta er betaútgáfa. Innskráning notar prófunargögn, ekki raunverulegt BankID."
   },
   "location": {
     "denied": "Staðsetningaraðgangi var hafnað. Virkjaðu í stillingum vafrans.",
