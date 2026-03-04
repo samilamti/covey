@@ -9,7 +9,8 @@
     "bankidUserSign": "Введіть код безпеки в BankID…",
     "bankidError": "Щось пішло не так із BankID. Спробуйте ще раз!",
     "bankidCancel": "Вхід скасовано.",
-    "bankidExpired": "Час вичерпано. Спробуйте ще раз!"
+    "bankidExpired": "Час вичерпано. Спробуйте ще раз!",
+    "learnMore": "Дізнатися більше про Covey"
   },
   "language": {
     "select": "Оберіть мову",

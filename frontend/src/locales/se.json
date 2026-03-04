@@ -9,7 +9,8 @@
     "bankidUserSign": "Čále sisa du dorvokoda BankID:ii…",
     "bankidError": "Juoga manai boastut BankID:in. Geahččal ođđasit!",
     "bankidCancel": "Sisačáliheapmi heaittihuvvui.",
-    "bankidExpired": "Áigemearri nohkai. Geahččal ođđasit!"
+    "bankidExpired": "Áigemearri nohkai. Geahččal ođđasit!",
+    "learnMore": "Loga eanet Covey birra"
   },
   "language": {
     "select": "Vállje giela",

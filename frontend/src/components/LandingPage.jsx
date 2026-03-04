@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
-import { ShieldCheck, Users, Loader2 } from 'lucide-preact'
+import { ShieldCheck, Users, Loader2, ExternalLink } from 'lucide-preact'
 import { LanguageSelector } from './LanguageSelector'
 import { BetaBanner } from './BetaBanner'
 import { authService } from '../services/auth'
@@ -106,9 +106,19 @@ export function LandingPage({ onLogin }) {
             {t('landing.nameMeaning')}
           </p>
 
-          <p class="text-gray-600 mb-8 leading-relaxed">
+          <p class="text-gray-600 mb-4 leading-relaxed">
             {t('landing.description')}
           </p>
+
+          <a
+            href={`${location.protocol}//docs.${location.hostname}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-8"
+          >
+            {t('landing.learnMore')}
+            <ExternalLink size={14} />
+          </a>
 
           {error && (
             <div class="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">

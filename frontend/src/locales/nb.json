@@ -9,7 +9,8 @@
     "bankidUserSign": "Tast inn sikkerhetskoden din i BankID…",
     "bankidError": "Noe gikk galt med BankID. Prøv igjen!",
     "bankidCancel": "Innloggingen ble avbrutt.",
-    "bankidExpired": "Tidsfristen gikk ut. Prøv igjen!"
+    "bankidExpired": "Tidsfristen gikk ut. Prøv igjen!",
+    "learnMore": "Les mer om Covey"
   },
   "language": {
     "select": "Velg språk",

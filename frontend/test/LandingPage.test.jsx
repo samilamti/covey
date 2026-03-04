@@ -13,6 +13,7 @@ vi.mock('lucide-preact', () => ({
   ShieldCheck: () => h('span', null, 'ShieldCheck'),
   Users: () => h('span', null, 'Users'),
   Loader2: () => h('span', null, 'Loader2'),
+  ExternalLink: () => h('span', null, 'ExternalLink'),
 }))
 
 vi.mock('../src/services/auth', () => ({

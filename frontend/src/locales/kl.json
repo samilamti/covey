@@ -9,7 +9,8 @@
     "bankidUserSign": "BankID-imi naqitassiat allaguk…",
     "bankidError": "BankID-imi ajutooqataavoq. Misileqqigit!",
     "bankidCancel": "Iseqqissaarneq unitsinneqarpoq.",
-    "bankidExpired": "Piffissaq naappoq. Misileqqigit!"
+    "bankidExpired": "Piffissaq naappoq. Misileqqigit!",
+    "learnMore": "Covey pillugu atuaqqigit"
   },
   "language": {
     "select": "Oqaatsit toqqaruk",

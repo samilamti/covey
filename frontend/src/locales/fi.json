@@ -9,7 +9,8 @@
     "bankidUserSign": "Syötä turvakoodi BankID-sovellukseen…",
     "bankidError": "Jokin meni pieleen BankID:n kanssa. Yritä uudelleen!",
     "bankidCancel": "Kirjautuminen peruutettiin.",
-    "bankidExpired": "Aikaraja umpeutui. Yritä uudelleen!"
+    "bankidExpired": "Aikaraja umpeutui. Yritä uudelleen!",
+    "learnMore": "Lue lisää Coveysta"
   },
   "language": {
     "select": "Valitse kieli",

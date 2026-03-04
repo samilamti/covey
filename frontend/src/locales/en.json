@@ -9,7 +9,8 @@
     "bankidUserSign": "Enter your security code in BankID…",
     "bankidError": "Something went wrong with BankID. Try again!",
     "bankidCancel": "Login was cancelled.",
-    "bankidExpired": "Time ran out. Try again!"
+    "bankidExpired": "Time ran out. Try again!",
+    "learnMore": "Learn more about Covey"
   },
   "language": {
     "select": "Select language",

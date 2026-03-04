@@ -9,7 +9,8 @@
     "bankidUserSign": "Skriva trygdarkotuna í BankID…",
     "bankidError": "Okkurt gekk skeivt við BankID. Royn aftur!",
     "bankidCancel": "Innritanin varð avbrotin.",
-    "bankidExpired": "Tíðin rann út. Royn aftur!"
+    "bankidExpired": "Tíðin rann út. Royn aftur!",
+    "learnMore": "Les meira um Covey"
   },
   "language": {
     "select": "Vel mál",

@@ -9,7 +9,8 @@
     "bankidUserSign": "Sláðu inn öryggiskóðann þinn í BankID…",
     "bankidError": "Eitthvað fór úrskeiðis með BankID. Reyndu aftur!",
     "bankidCancel": "Innskráning var hætt við.",
-    "bankidExpired": "Tíminn rann út. Reyndu aftur!"
+    "bankidExpired": "Tíminn rann út. Reyndu aftur!",
+    "learnMore": "Lestu meira um Covey"
   },
   "language": {
     "select": "Veldu tungumál",

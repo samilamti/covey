@@ -9,7 +9,8 @@
     "bankidUserSign": "Wpisz swój kod bezpieczeństwa w BankID…",
     "bankidError": "Coś poszło nie tak z BankID. Spróbuj ponownie!",
     "bankidCancel": "Logowanie zostało anulowane.",
-    "bankidExpired": "Czas minął. Spróbuj ponownie!"
+    "bankidExpired": "Czas minął. Spróbuj ponownie!",
+    "learnMore": "Dowiedz się więcej o Covey"
   },
   "language": {
     "select": "Wybierz język",
