@@ -1,12 +1,12 @@
 ---
 name: locale-check
-description: Validate i18n key parity across all 11 locale files. Use after editing locale files or before committing i18n changes.
+description: Validate i18n key parity across all 12 locale files. Use after editing locale files or before committing i18n changes.
 ---
 
-Validate i18n key parity across all 11 locale files.
+Validate i18n key parity across all 12 locale files.
 
 1. Read `frontend/src/locales/sv.json` — this is the canonical source of truth.
-2. Read all other locale files: `nb.json`, `da.json`, `fi.json`, `ar.json`, `is.json`, `pl.json`, `fo.json`, `kl.json`, `se.json`, `en.json`.
+2. Read all other locale files: `nb.json`, `da.json`, `fi.json`, `ar.json`, `is.json`, `pl.json`, `fo.json`, `kl.json`, `se.json`, `uk.json`, `en.json`.
 3. For each locale file:
    - Verify it parses as valid JSON
    - Extract all keys (recursively for nested objects, using dot notation like `request.title`)
@@ -19,7 +19,7 @@ Validate i18n key parity across all 11 locale files.
 
 ## Locale files
 Path: `frontend/src/locales/`
-Languages: sv (canonical), nb, da, fi, ar, is, pl, fo, kl, se, en (11 total)
+Languages: sv (canonical), nb, da, fi, ar, is, pl, fo, kl, se, uk, en (12 total)
 
 ## Notes
 - Swedish (`sv`) is the base language, NOT English

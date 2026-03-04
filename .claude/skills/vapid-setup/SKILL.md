@@ -64,4 +64,4 @@ The public VAPID key needs to be available to the frontend for the `pushManager.
 - The private key must NEVER be committed to the repository
 - `web-push` is already installed in the backend (`package.json`)
 - The notification provider pattern is already implemented — mock provider for dev, real provider for production. Switching is controlled by the `FEATURE_PUSH_NOTIFICATIONS` flag
-- Push notification bodies are hardcoded in all 11 languages in `services/notifications.js`
+- Push notification bodies are hardcoded in all 12 languages in `services/notifications.js`

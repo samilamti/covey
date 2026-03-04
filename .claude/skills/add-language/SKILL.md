@@ -1,6 +1,6 @@
 ---
 name: add-language
-description: Add a new supported language to the application. Use when expanding locale support beyond the current 11 languages.
+description: Add a new supported language to the application. Use when expanding locale support beyond the current 12 languages.
 argument-hint: "<language-code> <native-name>"
 ---
 
@@ -64,5 +64,5 @@ Push notification bodies are hardcoded per language in `backend/src/services/not
 ## Notes
 - Swedish (`sv`) is canonical — translate FROM Swedish, not from English
 - The detection order is `['querystring', 'localStorage', 'cookie']` — no browser auto-detection. Fresh visitors always get Swedish
-- Currently 11 languages: sv, nb, da, fi, ar, is, pl, fo, kl, se, en
+- Currently 12 languages: sv, nb, da, fi, ar, is, pl, fo, kl, se, uk, en
 - Flag SVGs are in `frontend/src/components/flags/` — each is a simple functional component accepting `{ size }` prop

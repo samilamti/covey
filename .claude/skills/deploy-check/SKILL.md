@@ -27,7 +27,7 @@ Check output for:
 - Report the largest chunk size
 
 ### 4. Locale parity
-Read all 11 locale files in `frontend/src/locales/` and verify key parity against `sv.json`. Report any mismatches.
+Read all 12 locale files in `frontend/src/locales/` and verify key parity against `sv.json`. Report any mismatches.
 
 ### 5. Summary
 ```
@@ -36,7 +36,7 @@ Deploy Readiness Report
 Backend tests:  PASS/FAIL (count)
 Frontend tests: PASS/FAIL (count)
 Frontend build: PASS/FAIL (largest chunk: XXX KB)
-Locale parity:  PASS/FAIL (11/11 files)
+Locale parity:  PASS/FAIL (12/12 files)
 
 Result: GO / NO-GO
 ```

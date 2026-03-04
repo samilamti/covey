@@ -50,6 +50,25 @@ export function <ComponentName>({ /* props */ }) {
 }
 ```
 
+### If the component needs geolocation
+
+Use the centralized `useGeolocation` hook (in `frontend/src/hooks/`):
+
+```jsx
+import { useGeolocation } from '../hooks/useGeolocation'
+import { LocationBanner } from './LocationBanner'
+
+// In component body:
+const { position, error: geoError, loading: geoLoading, retry: retryGeo } = useGeolocation()
+// For continuous tracking: useGeolocation({ watch: true, enableHighAccuracy: true })
+
+// In JSX:
+{geoError && <LocationBanner error={geoError} onRetry={retryGeo} />}
+// severity="warning" for safety-critical contexts (default is "info")
+```
+
+Do NOT use `navigator.geolocation` directly — always use the hook. It handles error mapping, retry, cleanup, and mounted-ref safety.
+
 ### If the component needs real-time updates
 
 Add socket subscription in useEffect with cleanup:
@@ -77,5 +96,5 @@ useEffect(() => {
 - **Exports**: Named exports (`export function X`), not default exports
 
 ### After creating the component
-- Add any new locale keys to all 11 locale files (use `/add-locale-key`)
+- Add any new locale keys to all 12 locale files (use `/add-locale-key`)
 - Import and render the component from a parent (e.g. `MainLayout.jsx`, `App.jsx`)

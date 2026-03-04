@@ -30,7 +30,14 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(ls:*)",
-      "WebFetch(domain:covey.se)"
+      "WebFetch(domain:covey.se)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(test:*)",
+      "Bash(for f in frontend/src/locales/*.json)",
+      "Bash(do cp \"$f\" \"$f.full\")",
+      "Bash(git stash -u -m \"backup-all-changes\")",
+      "Bash(git fsck --unreachable --no-reflogs)"
     ]
   }
 }
