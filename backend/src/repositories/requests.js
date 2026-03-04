@@ -204,15 +204,17 @@ export async function cancel(requestId) {
 }
 
 /**
- * Expire old open requests. Called by the expiration worker.
- * @returns {Array} Expired request IDs
+ * Expire non-terminal requests past their expires_at. Called by the expiration worker.
+ * Covers open, accepted, active, and done_pending statuses (2-hour hard limit).
+ * @returns {Array} Expired requests with id, requester_id, helper_id, status (previous)
  */
 export async function expireOldRequests() {
   const { rows } = await db.query(`
     UPDATE assistance_requests
     SET status = 'expired', updated_at = NOW()
-    WHERE status = 'open' AND expires_at < NOW()
-    RETURNING id
+    WHERE status IN ('open', 'accepted', 'active', 'done_pending')
+      AND expires_at < NOW()
+    RETURNING id, requester_id, helper_id
   `)
   return rows
 }

@@ -38,7 +38,11 @@
       "Bash(do cp \"$f\" \"$f.full\")",
       "Bash(git stash -u -m \"backup-all-changes\")",
       "Bash(git fsck --unreachable --no-reflogs)",
-      "Bash(git reset docs-site/)"
+      "Bash(git reset docs-site/)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.blueoctopustechnology.com)",
+      "WebFetch(domain:soul.md)",
+      "WebFetch(domain:dev.to)"
     ]
   }
 }

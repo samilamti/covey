@@ -2,7 +2,8 @@
  * Request expiration worker.
  *
  * Runs in-process via setInterval every 60 seconds.
- * Finds open requests past their expires_at and marks them as expired.
+ * Finds non-terminal requests past their expires_at (2-hour hard limit)
+ * and marks them as expired. Covers open, accepted, active, and done_pending.
  */
 
 import * as reqRepo from '../repositories/requests.js'
@@ -20,12 +21,23 @@ export function startExpirationWorker(io) {
       const expired = await reqRepo.expireOldRequests()
       if (expired.length > 0) {
         console.log(`Expired ${expired.length} request(s)`)
-        // Emit to the appropriate room (community or freestanding)
         if (io) {
           for (const req of expired) {
+            // Always notify the open requests room (for list updates)
             io.to('requests:open').emit('request:expired', {
               requestId: req.id,
             })
+            // Notify session participants directly (requester + helper)
+            if (req.requester_id) {
+              io.to(`user:${req.requester_id}`).emit('request:expired', {
+                requestId: req.id,
+              })
+            }
+            if (req.helper_id) {
+              io.to(`user:${req.helper_id}`).emit('request:expired', {
+                requestId: req.id,
+              })
+            }
           }
         }
       }

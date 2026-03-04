@@ -67,7 +67,7 @@ const migrations = [
         destination_lng NUMERIC(10, 7),
         helper_id       UUID REFERENCES users(id),
         accepted_at     TIMESTAMPTZ,
-        expires_at      TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '30 minutes'),
+        expires_at      TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '2 hours'),
         completed_at    TIMESTAMPTZ,
         cancelled_at    TIMESTAMPTZ,
         done_initiated_by UUID REFERENCES users(id),
@@ -77,7 +77,7 @@ const migrations = [
       );
       CREATE INDEX IF NOT EXISTS idx_req_expires
         ON assistance_requests(expires_at)
-        WHERE status = 'open';
+        WHERE status IN ('open', 'accepted', 'active', 'done_pending');
       CREATE INDEX IF NOT EXISTS idx_req_open
         ON assistance_requests(status, created_at DESC)
         WHERE status IN ('open', 'accepted', 'active');
@@ -210,6 +210,19 @@ const migrations = [
       ALTER TABLE assistance_requests DROP CONSTRAINT IF EXISTS assistance_requests_type_check;
       ALTER TABLE assistance_requests ADD CONSTRAINT assistance_requests_type_check
         CHECK (type IN ('walk', 'wait'));
+    `,
+  },
+  {
+    name: '007_expiry_2h',
+    sql: `
+      -- Extend request expiration from 30 minutes to 2 hours and cover all
+      -- non-terminal statuses (open, accepted, active, done_pending).
+      ALTER TABLE assistance_requests
+        ALTER COLUMN expires_at SET DEFAULT (NOW() + INTERVAL '2 hours');
+      DROP INDEX IF EXISTS idx_req_expires;
+      CREATE INDEX idx_req_expires
+        ON assistance_requests(expires_at)
+        WHERE status IN ('open', 'accepted', 'active', 'done_pending');
     `,
   },
 ]

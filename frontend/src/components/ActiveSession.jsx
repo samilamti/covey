@@ -130,11 +130,18 @@ export function ActiveSession({ request, currentUserId, onClose }) {
       }
     }
 
+    const handleExpired = ({ requestId }) => {
+      if (requestId === request.id) {
+        setStatus('expired')
+      }
+    }
+
     socket.on('request:locationUpdate', handleLocationUpdate)
     socket.on('request:completed', handleStatusChange)
     socket.on('request:cancelled', handleStatusChange)
     socket.on('request:done-initiated', handleDoneInitiated)
     socket.on('request:done-rejected', handleDoneRejected)
+    socket.on('request:expired', handleExpired)
 
     return () => {
       socket.off('request:locationUpdate', handleLocationUpdate)
@@ -142,6 +149,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
       socket.off('request:cancelled', handleStatusChange)
       socket.off('request:done-initiated', handleDoneInitiated)
       socket.off('request:done-rejected', handleDoneRejected)
+      socket.off('request:expired', handleExpired)
     }
   }, [request.id, currentUserId])
 
@@ -445,6 +453,12 @@ export function ActiveSession({ request, currentUserId, onClose }) {
                   {t('requests.doneReject')}
                 </button>
               </div>
+            </div>
+          )}
+
+          {status === 'expired' && (
+            <div class="bg-gray-100 border border-gray-300 rounded-lg p-3 text-center">
+              <p class="text-sm text-gray-600 font-medium">{t('requests.expired')}</p>
             </div>
           )}
 
