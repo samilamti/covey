@@ -18,7 +18,8 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 
 - **Frontend**: Preact 10 + Vite 7 + Tailwind CSS 3 + i18next + Socket.io client + Leaflet
 - **Backend**: Node 22 + Express 5 + Socket.io v4 + PostgreSQL 16 + jose (JWT) + web-push
-- **Infrastructure**: Docker Compose + Traefik v3.6 + nginx (frontend serving)
+- **Infrastructure**: Docker Compose (5 services) + Traefik v3.6 + nginx (frontend + docs serving)
+- **Docs site**: Eleventy 3.0 static site + nginx 1.27, routed at `docs.${DOMAIN}`
 - **Testing**: node:test (backend, 77 tests), vitest + @testing-library/preact (frontend, 150 tests)
 
 ## Key constraints
@@ -180,7 +181,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `frontend/src/i18n.js` — i18next config (12 languages, Swedish fallback)
 - `frontend/src/socket.js` — Socket.io client (autoConnect: false, polling-first)
 - `frontend/src/context/FeatureFlagContext.jsx` — Feature flag context + hooks
-- `frontend/src/components/LandingPage.jsx` — Login with BankID flow
+- `frontend/src/components/LandingPage.jsx` — Login with BankID flow + link to docs site
 - `frontend/src/components/MainLayout.jsx` — Authenticated app shell (default page: /requests)
 - `frontend/src/components/MapView.jsx` — Leaflet map (dynamic import)
 - `frontend/src/components/RequestList.jsx` — Request list with real-time updates
@@ -213,6 +214,12 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `docs/deployment.md` — GleSYS VPS setup + production deploy guide
 - `.env.example` — Production environment variable template
 
+### Public docs site (`docs-site/`)
+- `docs-site/eleventy.config.js` — Eleventy 3.0 config (12-language collections, navigation)
+- `docs-site/src/{lang}/` — Content pages in all 12 languages (sv canonical)
+- `docs-site/Dockerfile` — Multi-stage build: Node 22 (Eleventy) → nginx 1.27
+- `docs-site/nginx.conf` — Static serving with language redirect
+
 ## Known issues / technical debt
 
 - Leaflet is loaded via dynamic import but its CSS comes from unpkg CDN (should be bundled)
@@ -223,6 +230,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - Socket broadcasts (`request:new`) go to all room members without eligibility pre-filtering — ineligible requests may briefly flash before the next API refresh filters them out. Push notifications, however, ARE eligibility-filtered (SQL query in `findEligibleForRequest()`)
 - Stub safety score overrides are in-memory only — lost on container restart (re-populated on next login)
 - Traefik v3.6 required for Docker Engine 29+ compatibility (v3.2 hardcodes Docker API v1.24, Engine 29 requires v1.44+). Production uses HTTP-01 ACME challenge (more reliable than TLS-ALPN-01)
+- Community feature code still exists but community documentation has been removed from docs-site (terminology shift: "verified guardian" → "qualified companion")
 
 ## Development notes
 
