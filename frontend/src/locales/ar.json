@@ -75,10 +75,7 @@
     "activeSession": "جلسة نشطة جارية",
     "tapToView": "اضغط لعرض الخريطة",
     "types": {
-      "walk": "رفقة للمنزل",
-      "escort": "مرافقة",
-      "check_in": "تسجيل وصول",
-      "checkIn": "تسجيل وصول"
+      "walk": "رفقة للمنزل"
     },
     "eligibility": "من يمكنه مساعدتك؟",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ حراس موثقون",
       "verifiedGuardiansDesc": "ما سبق بالإضافة إلى مستخدمين بنقاط أمان ≥ 5",
       "anyMember": "+ أي عضو",
-      "anyMemberDesc": "بدون تصفية",
-      "sameDemographicsShort": "متطابق",
-      "verifiedGuardiansShort": "حارس+"
+      "anyMemberDesc": "بدون تصفية"
     },
     "status": {
       "open": "مفتوح",

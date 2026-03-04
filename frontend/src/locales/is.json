@@ -75,10 +75,7 @@
     "activeSession": "Virk lota í gangi",
     "tapToView": "Ýttu til að skoða kortið",
     "types": {
-      "walk": "Fylgd heim",
-      "escort": "Fylgdarmaður",
-      "check_in": "Innritun",
-      "checkIn": "Innritun"
+      "walk": "Fylgd heim"
     },
     "eligibility": "Hver má hjálpa þér?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Staðfestir verndarvörðir",
       "verifiedGuardiansDesc": "Ofangreint auk notenda með öryggisstig ≥ 5",
       "anyMember": "+ Allir meðlimir",
-      "anyMemberDesc": "Engin síun",
-      "sameDemographicsShort": "Samsvörun",
-      "verifiedGuardiansShort": "Vörður+"
+      "anyMemberDesc": "Engin síun"
     },
     "status": {
       "open": "Opin",

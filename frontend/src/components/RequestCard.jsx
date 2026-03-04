@@ -23,8 +23,7 @@ export function RequestCard({ request, currentUserId, viewerPosition, onAccept, 
 
   const typeIcons = {
     walk: '🚶',
-    escort: '🤝',
-    check_in: '📱',
+    wait: '🚏',
   }
 
   const isRequester = request.requester_id === currentUserId
@@ -52,11 +51,6 @@ export function RequestCard({ request, currentUserId, viewerPosition, onAccept, 
           </span>
         </div>
         <div class="flex items-center gap-2">
-          {request.eligibility_tier && request.eligibility_tier !== 'any_member' && (
-            <span class="text-xs text-gray-400">
-              {t(`requests.tiers.${request.eligibility_tier === 'same_demographics' ? 'sameDemographicsShort' : 'verifiedGuardiansShort'}`)}
-            </span>
-          )}
           <span class={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[request.status] || 'bg-gray-100'}`}>
             {t(`requests.status.${request.status}`)}
           </span>

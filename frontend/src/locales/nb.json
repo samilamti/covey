@@ -75,10 +75,7 @@
     "activeSession": "Aktiv økt pågår",
     "tapToView": "Trykk for å vise kartet",
     "types": {
-      "walk": "Følge hjem",
-      "escort": "Ledsager",
-      "check_in": "Innsjekking",
-      "checkIn": "Innsjekking"
+      "walk": "Følge hjem"
     },
     "eligibility": "Hvem kan hjelpe deg?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Verifiserte voktere",
       "verifiedGuardiansDesc": "Over pluss brukere med trygghetspoeng ≥ 5",
       "anyMember": "+ Alle medlemmer",
-      "anyMemberDesc": "Ingen filtrering",
-      "sameDemographicsShort": "Matchet",
-      "verifiedGuardiansShort": "Vokter+"
+      "anyMemberDesc": "Ingen filtrering"
     },
     "status": {
       "open": "Åpen",

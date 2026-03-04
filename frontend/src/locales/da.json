@@ -75,10 +75,7 @@
     "activeSession": "Aktiv session i gang",
     "tapToView": "Tryk for at se kortet",
     "types": {
-      "walk": "Følgeskab hjem",
-      "escort": "Ledsager",
-      "check_in": "Tjek ind",
-      "checkIn": "Tjek ind"
+      "walk": "Følgeskab hjem"
     },
     "eligibility": "Hvem må hjælpe dig?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Verificerede vogtere",
       "verifiedGuardiansDesc": "Ovenstående plus brugere med tryghedspoint ≥ 5",
       "anyMember": "+ Alle medlemmer",
-      "anyMemberDesc": "Ingen filtrering",
-      "sameDemographicsShort": "Matchet",
-      "verifiedGuardiansShort": "Vogter+"
+      "anyMemberDesc": "Ingen filtrering"
     },
     "status": {
       "open": "Åben",

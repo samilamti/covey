@@ -48,7 +48,7 @@ const migrations = [
       CREATE TABLE IF NOT EXISTS assistance_requests (
         id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         type            TEXT NOT NULL DEFAULT 'walk'
-                          CHECK (type IN ('walk', 'escort', 'check_in')),
+                          CHECK (type IN ('walk', 'wait')),
         message         TEXT NOT NULL DEFAULT '',
         eligibility_tier TEXT NOT NULL DEFAULT 'same_demographics'
                           CHECK (eligibility_tier IN (
@@ -201,6 +201,15 @@ const migrations = [
       -- Allow requester_id to be NULL for GDPR anonymization of deleted users.
       -- DROP NOT NULL is idempotent if the column is already nullable.
       ALTER TABLE assistance_requests ALTER COLUMN requester_id DROP NOT NULL;
+    `,
+  },
+  {
+    name: '006_wait_type',
+    sql: `
+      -- Allow 'wait' type in addition to 'walk' (for existing dev/prod DBs)
+      ALTER TABLE assistance_requests DROP CONSTRAINT IF EXISTS assistance_requests_type_check;
+      ALTER TABLE assistance_requests ADD CONSTRAINT assistance_requests_type_check
+        CHECK (type IN ('walk', 'wait'));
     `,
   },
 ]

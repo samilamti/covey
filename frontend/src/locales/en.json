@@ -75,10 +75,7 @@
     "activeSession": "Active session in progress",
     "tapToView": "Tap to view the map",
     "types": {
-      "walk": "Walk home",
-      "escort": "Escort",
-      "check_in": "Check-in",
-      "checkIn": "Check-in"
+      "walk": "Walk home"
     },
     "eligibility": "Who can help you?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Verified guardians",
       "verifiedGuardiansDesc": "Above plus users with safety score ≥ 5",
       "anyMember": "+ Any member",
-      "anyMemberDesc": "No filtering",
-      "sameDemographicsShort": "Matched",
-      "verifiedGuardiansShort": "Guardian+"
+      "anyMemberDesc": "No filtering"
     },
     "status": {
       "open": "Open",

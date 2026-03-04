@@ -75,10 +75,7 @@
     "activeSession": "Suliassaqarpoq sulinermini",
     "tapToView": "Nunap assinga takukkumavdlugo tooruk",
     "types": {
-      "walk": "Angerlarsimassutit ilaginiarlunga",
-      "escort": "Ilaginiarlunga",
-      "check_in": "Nalunaarutigiuk",
-      "checkIn": "Nalunaarutigiuk"
+      "walk": "Angerlarsimassutit ilaginiarlunga"
     },
     "eligibility": "Kina ikiorsinnaavat?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Uppernarsarneqarsimasut sapinngisamik",
       "verifiedGuardiansDesc": "Siumunneruvoq aamma atorfillit naapertuutissanit ≥ 5",
       "anyMember": "+ Tamarmik ilaasortaq",
-      "anyMemberDesc": "Immikkoortitsineq ajorpoq",
-      "sameDemographicsShort": "Naleqqiut",
-      "verifiedGuardiansShort": "Sapinngisamik+"
+      "anyMemberDesc": "Immikkoortitsineq ajorpoq"
     },
     "status": {
       "open": "Ammarpoq",

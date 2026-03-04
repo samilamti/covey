@@ -75,10 +75,7 @@
     "activeSession": "Aktywna sesja w toku",
     "tapToView": "Dotknij, aby zobaczyć mapę",
     "types": {
-      "walk": "Towarzystwo do domu",
-      "escort": "Eskorta",
-      "check_in": "Zameldowanie",
-      "checkIn": "Zameldowanie"
+      "walk": "Towarzystwo do domu"
     },
     "eligibility": "Kto może ci pomóc?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Zweryfikowani opiekunowie",
       "verifiedGuardiansDesc": "Powyżsi plus użytkownicy z punktami bezpieczeństwa ≥ 5",
       "anyMember": "+ Każdy członek",
-      "anyMemberDesc": "Bez filtrowania",
-      "sameDemographicsShort": "Dopasowani",
-      "verifiedGuardiansShort": "Opiekun+"
+      "anyMemberDesc": "Bez filtrowania"
     },
     "status": {
       "open": "Otwarta",

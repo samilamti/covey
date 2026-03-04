@@ -75,10 +75,7 @@
     "activeSession": "Aktiv session pågår",
     "tapToView": "Tryck för att visa kartan",
     "types": {
-      "walk": "Sällskap hem",
-      "escort": "Följeslagare",
-      "check_in": "Incheckning",
-      "checkIn": "Incheckning"
+      "walk": "Sällskap hem"
     },
     "eligibility": "Vem får hjälpa dig?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Verifierade väktare",
       "verifiedGuardiansDesc": "Ovan plus användare med trygghetspoäng ≥ 5",
       "anyMember": "+ Alla medlemmar",
-      "anyMemberDesc": "Ingen filtrering",
-      "sameDemographicsShort": "Matchad",
-      "verifiedGuardiansShort": "Väktare+"
+      "anyMemberDesc": "Ingen filtrering"
     },
     "status": {
       "open": "Öppen",

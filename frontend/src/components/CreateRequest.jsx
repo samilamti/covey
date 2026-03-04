@@ -6,7 +6,7 @@ import { requestService } from '../services/requests'
 /**
  * CreateRequest — form to create a new assistance request.
  *
- * User selects a type (walk/escort/check_in), writes a message,
+ * User selects a type (walk/wait), writes a message,
  * and optionally sets pickup/destination coordinates.
  */
 export function CreateRequest({ onCreated, onClose }) {
@@ -70,7 +70,7 @@ export function CreateRequest({ onCreated, onClose }) {
             {t('requests.type')}
           </label>
           <div class="flex gap-2">
-            {['walk', 'escort', 'check_in'].map((reqType) => (
+            {['walk', 'wait'].map((reqType) => (
               <button
                 key={reqType}
                 type="button"

@@ -75,10 +75,7 @@
     "activeSession": "Aktiivinen istunto käynnissä",
     "tapToView": "Napauta nähdäksesi kartan",
     "types": {
-      "walk": "Seuraa kotiin",
-      "escort": "Saattaja",
-      "check_in": "Kuittaus",
-      "checkIn": "Kuittaus"
+      "walk": "Seuraa kotiin"
     },
     "eligibility": "Kuka saa auttaa sinua?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Vahvistetut vartijat",
       "verifiedGuardiansDesc": "Edellä mainitut ja käyttäjät joiden turvallisuuspisteet ≥ 5",
       "anyMember": "+ Kaikki jäsenet",
-      "anyMemberDesc": "Ei suodatusta",
-      "sameDemographicsShort": "Sopiva",
-      "verifiedGuardiansShort": "Vartija+"
+      "anyMemberDesc": "Ei suodatusta"
     },
     "status": {
       "open": "Avoin",

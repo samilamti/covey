@@ -75,10 +75,7 @@
     "activeSession": "Aktiivvalaš čoahkkin joatkkemin",
     "tapToView": "Deatte geahččat kártta",
     "types": {
-      "walk": "Mielde ruoktot",
-      "escort": "Čuovvolaš",
-      "check_in": "Dárkkisteapmi",
-      "checkIn": "Dárkkisteapmi"
+      "walk": "Mielde ruoktot"
     },
     "eligibility": "Gii sáhttá veahkehit du?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Duođaštuvvon gáhttit",
       "verifiedGuardiansDesc": "Bajábeale ja geavaheddjiid sihkarvuođačuoggáiguin ≥ 5",
       "anyMember": "+ Buot miellahtut",
-      "anyMemberDesc": "Ii sile",
-      "sameDemographicsShort": "Heivehuvvon",
-      "verifiedGuardiansShort": "Gáhtti+"
+      "anyMemberDesc": "Ii sile"
     },
     "status": {
       "open": "Rabas",

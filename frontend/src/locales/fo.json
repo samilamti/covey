@@ -75,10 +75,7 @@
     "activeSession": "Virkin seta í gongd",
     "tapToView": "Trýst fyri at síggja kortið",
     "types": {
-      "walk": "Fylgi heim",
-      "escort": "Leiðslumaður",
-      "check_in": "Innritan",
-      "checkIn": "Innritan"
+      "walk": "Fylgi heim"
     },
     "eligibility": "Hvør fær at hjálpa tær?",
     "tiers": {
@@ -87,9 +84,7 @@
       "verifiedGuardians": "+ Váttaðir varðmenn",
       "verifiedGuardiansDesc": "Omanfyri pluss brúkarar við tryggisstigum ≥ 5",
       "anyMember": "+ Allir limur",
-      "anyMemberDesc": "Eingin síling",
-      "sameDemographicsShort": "Matchaður",
-      "verifiedGuardiansShort": "Varðmaður+"
+      "anyMemberDesc": "Eingin síling"
     },
     "status": {
       "open": "Opin",
