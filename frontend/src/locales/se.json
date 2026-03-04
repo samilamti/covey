@@ -153,5 +153,12 @@
   "beta": {
     "notice": "Dát lea betaversiovdna. Sisačállin geavaha geahččalandieđuid, ii duohta BankID.",
     "dismiss": "OK"
+  },
+  "location": {
+    "denied": "Báikedieđuid oažžun hilgojuvvui. Ođas dan neahttabláđđeheaddji heivehusat bokte.",
+    "unavailable": "Ii sáhttán gávdnat du báikki.",
+    "retry": "Geahččal ođđasit",
+    "requesting": "Ohcamin báikki…",
+    "sessionWarning": "Du báiki ii juogaduvvo. Nubbi olmmoš ii oainne gos don leat."
   }
 }

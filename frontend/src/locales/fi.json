@@ -1,8 +1,9 @@
 {
   "landing": {
-    "title": "Tervetuloa Tillsammansiin",
-    "subtitle": "Turvallisemmin yhdessä",
-    "description": "Tillsammans auttaa sinua ja naapureitasi pitämään huolta toisistanne. Tarvitsetko seuraa kotimatkalle iltaisin? Täältä löydät jonkun, joka kävelee kanssasi.",
+    "title": "Tervetuloa Coveyhin",
+    "subtitle": "Auttakaa toisianne kotiin – kulkekaa yhdessä! 🫶",
+    "nameMeaning": "Covey – pieni ryhmä ihmisiä (tai pieni parvi lintuja 🕊️, mutta keskitytään ihmisiin)",
+    "description": "Älä kävele kotiin yksin. Löydä turvallista seuraa läheltäsi – silloin kun tarvitset sitä eniten.",
     "loginButton": "Kirjaudu BankID:llä",
     "bankidPending": "Avaa BankID-sovellus puhelimessasi…",
     "bankidUserSign": "Syötä turvakoodi BankID-sovellukseen…",
@@ -22,6 +23,7 @@
     "fo": "Føroyskt",
     "kl": "Kalaallisut",
     "se": "Davvisámegiella",
+    "uk": "Українська",
     "en": "English"
   },
   "nav": {
@@ -75,7 +77,8 @@
     "activeSession": "Aktiivinen istunto käynnissä",
     "tapToView": "Napauta nähdäksesi kartan",
     "types": {
-      "walk": "Seuraa kotiin"
+      "walk": "Seuraa kotiin",
+      "wait": "Odota kanssani"
     },
     "eligibility": "Kuka saa auttaa sinua?",
     "tiers": {
@@ -150,8 +153,14 @@
     "locationPermission": "Salli paikannuksen käyttö nähdäksesi kartan.",
     "recenter": "Keskitä sijaintiini"
   },
+  "location": {
+    "denied": "Sijaintilupa evättiin. Ota käyttöön selaimen asetuksissa.",
+    "unavailable": "Sijaintiasi ei voitu hakea.",
+    "retry": "Yritä uudelleen",
+    "requesting": "Haetaan sijaintia…",
+    "sessionWarning": "Sijaintiasi ei jaeta. Toinen henkilö ei näe, missä olet."
+  },
   "beta": {
-    "notice": "Tämä on betaversio. Kirjautuminen käyttää testitunnuksia, ei oikeaa BankID:tä.",
-    "dismiss": "OK"
+    "notice": "Tämä on betaversio. Kirjautuminen käyttää testitunnuksia, ei oikeaa BankID:tä."
   }
 }

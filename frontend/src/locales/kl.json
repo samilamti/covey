@@ -153,5 +153,12 @@
   "beta": {
     "notice": "Una betaversioni-uvoq. Iserfissaq misilitseriaatsinik atorpoq, BankID-imik pisinnaanngillat.",
     "dismiss": "Aap"
+  },
+  "location": {
+    "denied": "Najugaq pillugu akuersissuteqanngitsoq. Qarasaasiap atuinermut allannguutigisinnaavatit.",
+    "unavailable": "Najugaq nassaarisinnaanngippara.",
+    "retry": "Misileqqigit",
+    "requesting": "Najugaq nassaarineqarpoq…",
+    "sessionWarning": "Najugaq avataanniissimanavianngilaq. Ikinngutit takusinnaanngilaat sumiunniiffinnik."
   }
 }

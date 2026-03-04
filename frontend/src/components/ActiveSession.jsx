@@ -4,6 +4,8 @@ import { CheckCircle, Phone, MapPin, X, Clock, MessageCircle, Send } from 'lucid
 import { socket } from '../socket'
 import { requestService } from '../services/requests'
 import { haversineKm } from '../utils/geo'
+import { LocationBanner } from './LocationBanner'
+import { useGeolocation } from '../hooks/useGeolocation'
 
 /**
  * ActiveSession — live map showing both parties' locations during an active assistance session.
@@ -18,7 +20,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
   const markersRef = useRef({})
   const leafletRef = useRef(null)
   const [otherLocation, setOtherLocation] = useState(null)
-  const [myLocation, setMyLocation] = useState(null)
+  const { position: myLocation, error: geoError, retry: retryGeo } = useGeolocation({ watch: true, enableHighAccuracy: true })
   const [status, setStatus] = useState(request.status)
   const [doneInitiatedBy, setDoneInitiatedBy] = useState(request.done_initiated_by || null)
   const [messages, setMessages] = useState([])
@@ -81,29 +83,17 @@ export function ActiveSession({ request, currentUserId, onClose }) {
     }
   }, [])
 
-  // Watch own position and send updates
+  // Relay own position to the other party via Socket.io
   useEffect(() => {
-    if (!('geolocation' in navigator)) return
-
-    const watchId = navigator.geolocation.watchPosition(
-      (pos) => {
-        const { latitude, longitude, accuracy } = pos.coords
-        setMyLocation({ lat: latitude, lng: longitude })
-
-        // Send to other party via socket
-        socket.emit('location:update', {
-          requestId: request.id,
-          lat: latitude,
-          lng: longitude,
-          accuracy,
-        })
-      },
-      () => {},
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
-    )
-
-    return () => navigator.geolocation.clearWatch(watchId)
-  }, [request.id])
+    if (myLocation) {
+      socket.emit('location:update', {
+        requestId: request.id,
+        lat: myLocation.lat,
+        lng: myLocation.lng,
+        accuracy: myLocation.accuracy ?? null,
+      })
+    }
+  }, [myLocation, request.id])
 
   // Listen for location updates from the other party
   useEffect(() => {
@@ -313,6 +303,16 @@ export function ActiveSession({ request, currentUserId, onClose }) {
 
       {/* Status bar + actions */}
       <div class="bg-white border-t border-gray-200 p-4 safe-area-bottom">
+        {/* Location error — safety-critical warning */}
+        {geoError && (
+          <LocationBanner error={geoError} onRetry={retryGeo} severity="warning" />
+        )}
+        {geoError && (
+          <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-3 text-center">
+            <p class="text-sm font-medium text-red-800">{t('location.sessionWarning')}</p>
+          </div>
+        )}
+
         {/* Location indicators */}
         <div class="flex items-center gap-4 text-xs text-gray-500 mb-3">
           <span class="flex items-center gap-1">

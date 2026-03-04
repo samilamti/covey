@@ -153,5 +153,12 @@
   "beta": {
     "notice": "Dette er en betaversjon. Innlogging bruker testopplysninger, ikke ekte BankID.",
     "dismiss": "OK"
+  },
+  "location": {
+    "denied": "Tilgang til posisjon ble nektet. Aktiver i nettleserens innstillinger.",
+    "unavailable": "Kunne ikke hente posisjonen din.",
+    "retry": "Prøv igjen",
+    "requesting": "Henter posisjon…",
+    "sessionWarning": "Posisjonen din deles ikke. Den andre personen kan ikke se hvor du er."
   }
 }

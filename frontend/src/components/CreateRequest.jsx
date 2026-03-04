@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Send, MapPin, X } from 'lucide-preact'
 import { requestService } from '../services/requests'
+import { LocationBanner } from './LocationBanner'
+import { useGeolocation } from '../hooks/useGeolocation'
 
 /**
  * CreateRequest — form to create a new assistance request.
  *
- * User selects a type (walk/wait), writes a message,
- * and optionally sets pickup/destination coordinates.
+ * User selects a type (walk/wait), writes an optional message,
+ * and optionally sets pickup coordinates.
  */
 export function CreateRequest({ onCreated, onClose }) {
   const { t } = useTranslation()
@@ -16,17 +18,7 @@ export function CreateRequest({ onCreated, onClose }) {
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [position, setPosition] = useState(null)
-
-  // Get current position
-  useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => setPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-        () => {} // Ignore errors — position is optional
-      )
-    }
-  }, [])
+  const { position, error: geoError, loading: geoLoading, retry: retryGeo } = useGeolocation()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -118,7 +110,7 @@ export function CreateRequest({ onCreated, onClose }) {
         {/* Message */}
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
-            {t('requests.message')}
+            {t('requests.message')} <span class="text-gray-400 font-normal">({t('requests.optional')})</span>
           </label>
           <textarea
             value={message}
@@ -136,6 +128,15 @@ export function CreateRequest({ onCreated, onClose }) {
             <MapPin size={12} />
             <span>{t('requests.locationAttached')}</span>
           </div>
+        )}
+        {!position && geoLoading && (
+          <div class="flex items-center gap-2 text-xs text-gray-400">
+            <MapPin size={12} />
+            <span>{t('location.requesting')}</span>
+          </div>
+        )}
+        {!position && geoError && (
+          <LocationBanner error={geoError} onRetry={retryGeo} />
         )}
 
         {/* Error message */}

@@ -153,5 +153,12 @@
   "beta": {
     "notice": "Dette er en betaversion. Login bruger testoplysninger, ikke rigtig BankID.",
     "dismiss": "OK"
+  },
+  "location": {
+    "denied": "Adgang til position blev nægtet. Aktivér i browserens indstillinger.",
+    "unavailable": "Kunne ikke hente din position.",
+    "retry": "Prøv igen",
+    "requesting": "Henter position…",
+    "sessionWarning": "Din position deles ikke. Den anden person kan ikke se, hvor du er."
   }
 }

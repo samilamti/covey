@@ -153,5 +153,12 @@
   "beta": {
     "notice": "Hetta er eitt betaútgáva. Innriting nýtir royndargøgn, ikki veruligt BankID.",
     "dismiss": "Í lagi"
+  },
+  "location": {
+    "denied": "Atgongd til støðu varð noktað. Virkja í stillingum hjá kaganum.",
+    "unavailable": "Fann ikki støðu tína.",
+    "retry": "Royn aftur",
+    "requesting": "Heintir støðu…",
+    "sessionWarning": "Støðan tín verður ikki deild. Hin persónurin kann ikki síggja, hvar tú ert."
   }
 }

@@ -7,6 +7,8 @@ import { RequestCard } from './RequestCard'
 import { CreateRequest } from './CreateRequest'
 import { ActiveSession } from './ActiveSession'
 import { RatingBanner } from './RatingBanner'
+import { LocationBanner } from './LocationBanner'
+import { useGeolocation } from '../hooks/useGeolocation'
 import { socket } from '../socket'
 
 /**
@@ -18,7 +20,7 @@ export function RequestList({ currentUserId }) {
   const [requests, setRequests] = useState([])
   const [openRequests, setOpenRequests] = useState([])
   const [loading, setLoading] = useState(true)
-  const [viewerPosition, setViewerPosition] = useState(null)
+  const { position: viewerPosition, error: geoError, retry: retryGeo } = useGeolocation()
   const [showCreate, setShowCreate] = useState(false)
   const [activeSession, setActiveSession] = useState(null)
   const [pendingRatings, setPendingRatings] = useState([])
@@ -66,17 +68,6 @@ export function RequestList({ currentUserId }) {
     loadOpenRequests()
     loadPendingRatings()
   }
-
-  useEffect(() => {
-    let mounted = true
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => { if (mounted) setViewerPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude }) },
-        () => {}
-      )
-    }
-    return () => { mounted = false }
-  }, [])
 
   useEffect(() => {
     loadAll()
@@ -201,6 +192,9 @@ export function RequestList({ currentUserId }) {
           />
         </div>
       )}
+
+      {/* Location banner */}
+      <LocationBanner error={geoError} onRetry={retryGeo} />
 
       {/* Pending ratings */}
       {pendingRatings.map((pr) => (

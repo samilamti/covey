@@ -153,5 +153,12 @@
   "beta": {
     "notice": "Þetta er betaútgáfa. Innskráning notar prófunargögn, ekki raunverulegt BankID.",
     "dismiss": "Í lagi"
+  },
+  "location": {
+    "denied": "Staðsetningaraðgangi var hafnað. Virkjaðu í stillingum vafrans.",
+    "unavailable": "Ekki tókst að sækja staðsetningu þína.",
+    "retry": "Reyna aftur",
+    "requesting": "Sæki staðsetningu…",
+    "sessionWarning": "Staðsetning þín er ekki deild. Hinn aðilinn getur ekki séð hvar þú ert."
   }
 }
