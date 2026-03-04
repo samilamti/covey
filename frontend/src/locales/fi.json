@@ -162,6 +162,7 @@
     "sessionWarning": "Sijaintiasi ei jaeta. Toinen henkilö ei näe, missä olet."
   },
   "beta": {
-    "notice": "Tämä on betaversio. Kirjautuminen käyttää testitunnuksia, ei oikeaa BankID:tä."
+    "notice": "Tämä on betaversio. Kirjautuminen käyttää testitunnuksia, ei oikeaa BankID:tä.",
+    "feedback": "Lähetä meille palautetta!"
   }
 }

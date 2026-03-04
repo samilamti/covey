@@ -162,6 +162,7 @@
     "sessionWarning": "Staðsetning þín er ekki deild. Hinn aðilinn getur ekki séð hvar þú ert."
   },
   "beta": {
-    "notice": "Þetta er betaútgáfa. Innskráning notar prófunargögn, ekki raunverulegt BankID."
+    "notice": "Þetta er betaútgáfa. Innskráning notar prófunargögn, ekki raunverulegt BankID.",
+    "feedback": "Sendu okkur endurgjöf!"
   }
 }

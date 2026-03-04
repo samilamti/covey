@@ -162,6 +162,7 @@
     "sessionWarning": "Støðan tín verður ikki deild. Hin persónurin kann ikki síggja, hvar tú ert."
   },
   "beta": {
-    "notice": "Hetta er eitt betaútgáva. Innriting nýtir royndargøgn, ikki veruligt BankID."
+    "notice": "Hetta er eitt betaútgáva. Innriting nýtir royndargøgn, ikki veruligt BankID.",
+    "feedback": "Send okkum afturmelding!"
   }
 }

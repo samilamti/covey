@@ -162,6 +162,7 @@
     "sessionWarning": "Your location is not being shared. The other person cannot see where you are."
   },
   "beta": {
-    "notice": "This is a beta version. Login uses test credentials, not real BankID."
+    "notice": "This is a beta version. Login uses test credentials, not real BankID.",
+    "feedback": "Send us your feedback!"
   }
 }

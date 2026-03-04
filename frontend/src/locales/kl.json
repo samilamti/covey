@@ -162,6 +162,7 @@
     "sessionWarning": "Najugaq avataanniissimanavianngilaq. Ikinngutit takusinnaanngilaat sumiunniiffinnik."
   },
   "beta": {
-    "notice": "Una betaversioni-uvoq. Iserfissaq misilitseriaatsinik atorpoq, BankID-imik pisinnaanngillat."
+    "notice": "Una betaversioni-uvoq. Iserfissaq misilitseriaatsinik atorpoq, BankID-imik pisinnaanngillat.",
+    "feedback": "Oqaaseqarfigisigut!"
   }
 }

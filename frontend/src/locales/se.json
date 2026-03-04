@@ -162,6 +162,7 @@
     "sessionWarning": "Du báiki ii juogaduvvo. Nubbi olmmoš ii oainne gos don leat."
   },
   "beta": {
-    "notice": "Dát lea betaversiovdna. Sisačállin geavaha geahččalandieđuid, ii duohta BankID."
+    "notice": "Dát lea betaversiovdna. Sisačállin geavaha geahččalandieđuid, ii duohta BankID.",
+    "feedback": "Sádde midjiide máhcahaga!"
   }
 }

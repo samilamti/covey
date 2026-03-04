@@ -162,6 +162,7 @@
     "sessionWarning": "Din position delas inte. Den andra personen kan inte se var du är."
   },
   "beta": {
-    "notice": "Det här är en betaversion. Inloggning sker med testuppgifter, inte riktigt BankID."
+    "notice": "Det här är en betaversion. Inloggning sker med testuppgifter, inte riktigt BankID.",
+    "feedback": "Skicka gärna feedback!"
   }
 }
