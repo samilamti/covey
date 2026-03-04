@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "الرئيسية",
-    "map": "الخريطة",
     "requests": "الطلبات",
-    "communities": "المجتمعات",
     "profile": "الملف الشخصي"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "صِف إلى أين أنت ذاهب وما نوع المساعدة التي تحتاجها…",
     "pickupLocation": "نقطة الالتقاء",
     "destination": "الوجهة",
-    "community": "المجتمع",
-    "selectCommunity": "اختر مجتمعاً",
     "optional": "اختياري",
-    "noCommunity": "بدون مجتمع (طلب مفتوح)",
     "openRequests": "الطلبات المفتوحة",
     "openRequestsEmpty": "لا توجد طلبات مفتوحة حاليًا.",
     "type": "نوع المساعدة",
@@ -124,52 +119,6 @@
       "stayThere": "ابقَ مكانك"
     }
   },
-  "communities": {
-    "title": "المجتمعات",
-    "join": "طلب الانضمام",
-    "leave": "مغادرة",
-    "nearby": "اكتشف القريبة",
-    "members": "الأعضاء",
-    "memberCount": "{{count}} عضو",
-    "memberCount_plural": "{{count}} أعضاء",
-    "pending": "بانتظار الموافقة",
-    "approved": "تمت الموافقة",
-    "rejected": "مرفوض",
-    "create": "إنشاء مجتمع",
-    "name": "الاسم",
-    "description": "الوصف",
-    "area": "المنطقة",
-    "admin": "مشرف",
-    "noCommunities": "لم تنضم إلى أي مجتمع بعد.",
-    "discoverNearby": "اكتشف مجتمعات قريبة منك!",
-    "notFound": "لم يتم العثور على المجتمع.",
-    "backToList": "رجوع",
-    "joinPending": "طلبك بانتظار الموافقة",
-    "joinPendingDesc": "سيقوم مشرف المجتمع بمراجعة طلبك.",
-    "tryAgain": "حاول مرة أخرى",
-    "nearbyResults": "{{count}} مجتمعات قريبة",
-    "noNearby": "لم يتم العثور على مجتمعات قريبة.",
-    "searchAgain": "ابحث مرة أخرى",
-    "createName": "الاسم",
-    "createDescription": "الوصف",
-    "createAreaName": "المنطقة",
-    "createLocation": "الموقع",
-    "createSubmit": "إنشاء",
-    "useMyLocation": "استخدم موقعي",
-    "createRequiredFields": "الاسم والموقع مطلوبان.",
-    "autoName": "مجتمع {{area}}",
-    "locationDetected": "تم العثور على الموقع: {{area}}",
-    "detectingLocation": "جارٍ البحث عن موقعك…"
-  },
-  "admin": {
-    "title": "لوحة الإدارة",
-    "pendingRequests": "طلبات الانضمام المعلقة",
-    "approve": "موافقة",
-    "reject": "رفض",
-    "noPending": "لا توجد طلبات معلقة.",
-    "backToCommunity": "العودة إلى المجتمع",
-    "role": "مشرف"
-  },
   "profile": {
     "title": "ملفي الشخصي",
     "edit": "تعديل الملف",
@@ -192,7 +141,7 @@
     "uncomfortable": "غير مريح"
   },
   "notifications": {
-    "newRequest": "طلب جديد في مجتمعك!",
+    "newRequest": "شخص بالقرب منك يحتاج مساعدة!",
     "requestAccepted": "شخص ما قبل طلبك!",
     "safetyCheck": "هل وصلت بأمان؟",
     "enable": "تفعيل الإشعارات",

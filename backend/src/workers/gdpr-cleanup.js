@@ -30,7 +30,6 @@ async function cleanup() {
 
       // Delete in order (respecting foreign keys)
       await db.query('DELETE FROM push_subscriptions WHERE user_id = $1', [userId])
-      await db.query('DELETE FROM community_members WHERE user_id = $1', [userId])
 
       // Anonymize assistance requests (keep for audit trail but remove identity)
       await db.query(`

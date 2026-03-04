@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Hem",
-    "map": "Karta",
     "requests": "Förfrågningar",
-    "communities": "Gemenskaper",
     "profile": "Profil"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Beskriv vart du ska och vad du behöver hjälp med…",
     "pickupLocation": "Hämtplats",
     "destination": "Destination",
-    "community": "Gemenskap",
-    "selectCommunity": "Välj en gemenskap",
     "optional": "valfritt",
-    "noCommunity": "Ingen gemenskap (öppen förfrågan)",
     "openRequests": "Öppna förfrågningar",
     "openRequestsEmpty": "Inga öppna förfrågningar just nu.",
     "type": "Typ av hjälp",
@@ -124,52 +119,6 @@
       "stayThere": "Stanna där du är"
     }
   },
-  "communities": {
-    "title": "Gemenskaper",
-    "join": "Ansök om att gå med",
-    "leave": "Lämna",
-    "nearby": "Upptäck i närheten",
-    "members": "Medlemmar",
-    "memberCount": "{{count}} medlem",
-    "memberCount_plural": "{{count}} medlemmar",
-    "pending": "Väntar på godkännande",
-    "approved": "Godkänd",
-    "rejected": "Nekad",
-    "create": "Skapa gemenskap",
-    "name": "Namn",
-    "description": "Beskrivning",
-    "area": "Område",
-    "admin": "Admin",
-    "noCommunities": "Du är inte med i någon gemenskap ännu.",
-    "discoverNearby": "Hitta gemenskaper nära dig!",
-    "notFound": "Gemenskapen hittades inte.",
-    "backToList": "Tillbaka",
-    "joinPending": "Din ansökan väntar på godkännande",
-    "joinPendingDesc": "En admin i gemenskapen kommer att granska din ansökan.",
-    "tryAgain": "Försök igen",
-    "nearbyResults": "{{count}} gemenskaper i närheten",
-    "noNearby": "Inga gemenskaper hittades i närheten.",
-    "searchAgain": "Sök igen",
-    "createName": "Namn",
-    "createDescription": "Beskrivning",
-    "createAreaName": "Område",
-    "createLocation": "Plats",
-    "createSubmit": "Skapa",
-    "useMyLocation": "Använd min plats",
-    "createRequiredFields": "Namn och plats krävs.",
-    "autoName": "{{area}} gemenskap",
-    "locationDetected": "Plats hittad: {{area}}",
-    "detectingLocation": "Söker din plats…"
-  },
-  "admin": {
-    "title": "Adminpanel",
-    "pendingRequests": "Väntande ansökningar",
-    "approve": "Godkänn",
-    "reject": "Neka",
-    "noPending": "Inga väntande ansökningar.",
-    "backToCommunity": "Tillbaka till gemenskapen",
-    "role": "Admin"
-  },
   "profile": {
     "title": "Min profil",
     "edit": "Redigera profil",
@@ -192,7 +141,7 @@
     "uncomfortable": "Obekvämt"
   },
   "notifications": {
-    "newRequest": "Ny förfrågan i din gemenskap!",
+    "newRequest": "Någon behöver hjälp i närheten!",
     "requestAccepted": "Någon har accepterat din förfrågan!",
     "safetyCheck": "Kom du fram säkert?",
     "enable": "Slå på notifikationer",

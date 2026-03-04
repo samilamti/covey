@@ -1,32 +1,22 @@
 import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Send, MapPin, X } from 'lucide-preact'
-import { communityService } from '../services/communities'
 import { requestService } from '../services/requests'
 
 /**
  * CreateRequest — form to create a new assistance request.
  *
- * User selects a community, type (walk/escort/check_in), writes a message,
+ * User selects a type (walk/escort/check_in), writes a message,
  * and optionally sets pickup/destination coordinates.
  */
 export function CreateRequest({ onCreated, onClose }) {
   const { t } = useTranslation()
-  const [communities, setCommunities] = useState([])
-  const [communityId, setCommunityId] = useState('')
   const [type, setType] = useState('walk')
   const [eligibilityTier, setEligibilityTier] = useState('same_demographics')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [position, setPosition] = useState(null)
-
-  // Load user's communities
-  useEffect(() => {
-    communityService.list()
-      .then(({ communities }) => setCommunities(communities))
-      .catch(() => {})
-  }, [])
 
   // Get current position
   useEffect(() => {
@@ -45,7 +35,6 @@ export function CreateRequest({ onCreated, onClose }) {
 
     try {
       const data = {
-        communityId: communityId || null,
         type,
         message,
         eligibilityTier,
@@ -75,23 +64,6 @@ export function CreateRequest({ onCreated, onClose }) {
       </div>
 
       <form onSubmit={handleSubmit} class="space-y-4">
-        {/* Community selection (optional) */}
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
-            {t('requests.community')} <span class="text-gray-400 font-normal">({t('requests.optional')})</span>
-          </label>
-          <select
-            value={communityId}
-            onChange={(e) => setCommunityId(e.target.value)}
-            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            <option value="">{t('requests.noCommunity')}</option>
-            {communities.map((c) => (
-              <option key={c.id} value={c.id}>{c.name}</option>
-            ))}
-          </select>
-        </div>
-
         {/* Request type */}
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">

@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Heim",
-    "map": "Kort",
     "requests": "Umbøðir",
-    "communities": "Feløg",
     "profile": "Vangamynd"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Lýs hvar tú skalt og hvørja hjálp tú tørvar…",
     "pickupLocation": "Møtistaður",
     "destination": "Endastaður",
-    "community": "Felag",
-    "selectCommunity": "Vel eitt felag",
     "optional": "valfrítt",
-    "noCommunity": "Einki felagsskapur (opin umbøn)",
     "openRequests": "Opnar umbønir",
     "openRequestsEmpty": "Ongar opnar umbønir júst nú.",
     "type": "Slag av hjálp",
@@ -124,52 +119,6 @@
       "stayThere": "Verð har tú ert"
     }
   },
-  "communities": {
-    "title": "Feløg",
-    "join": "Søk um at vera við",
-    "leave": "Fara úr",
-    "nearby": "Finn í nærumhvørvinum",
-    "members": "Limur",
-    "memberCount": "{{count}} limur",
-    "memberCount_plural": "{{count}} limir",
-    "pending": "Bíðar eftir góðkenning",
-    "approved": "Góðkent",
-    "rejected": "Avvísað",
-    "create": "Stovna felag",
-    "name": "Navn",
-    "description": "Lýsing",
-    "area": "Øki",
-    "admin": "Umsitari",
-    "noCommunities": "Tú ert ikki í onkrum felagi enn.",
-    "discoverNearby": "Finn feløg nær tær!",
-    "notFound": "Felagið varð ikki funnið.",
-    "backToList": "Aftur",
-    "joinPending": "Umsókn tín bíðar eftir góðkenning",
-    "joinPendingDesc": "Ein umsitari í felagnum fer igjennum umsókn tína.",
-    "tryAgain": "Royn aftur",
-    "nearbyResults": "{{count}} feløg í nærleikanum",
-    "noNearby": "Ongi feløg funnin í nærleikanum.",
-    "searchAgain": "Leita aftur",
-    "createName": "Navn",
-    "createDescription": "Lýsing",
-    "createAreaName": "Øki",
-    "createLocation": "Støða",
-    "createSubmit": "Stovna",
-    "useMyLocation": "Nýt mína støðu",
-    "createRequiredFields": "Navn og støða eru kravd.",
-    "autoName": "{{area}} felagsskapur",
-    "locationDetected": "Støða funnin: {{area}}",
-    "detectingLocation": "Leitar eftir støðu tíni…"
-  },
-  "admin": {
-    "title": "Umsitarapanelur",
-    "pendingRequests": "Bíðandi umbøðir",
-    "approve": "Góðkenn",
-    "reject": "Avvís",
-    "noPending": "Ongar bíðandi umbøðir.",
-    "backToCommunity": "Aftur til felagið",
-    "role": "Umsitari"
-  },
   "profile": {
     "title": "Mítt vangamynd",
     "edit": "Broyt vangamynd",
@@ -192,7 +141,7 @@
     "uncomfortable": "Óhugnaligt"
   },
   "notifications": {
-    "newRequest": "Nýggj umbøð í tínum felagi!",
+    "newRequest": "Onkur í nærleikanum tørvar hjálp!",
     "requestAccepted": "Onkur hevur góðtikið umbøð tína!",
     "safetyCheck": "Komst tú trygt heim?",
     "enable": "Slá fráboðanir á",

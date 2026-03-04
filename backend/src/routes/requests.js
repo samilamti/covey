@@ -5,7 +5,6 @@
 import { Router } from 'express'
 import { authenticate } from '../auth/index.js'
 import * as reqRepo from '../repositories/requests.js'
-import * as commRepo from '../repositories/communities.js'
 import * as msgRepo from '../repositories/messages.js'
 import * as userRepo from '../repositories/users.js'
 import * as ratingRepo from '../repositories/ratings.js'
@@ -21,23 +20,14 @@ requestRouter.use(authenticate)
  * communityId is optional — omit for freestanding requests.
  */
 requestRouter.post('/', async (req, res) => {
-  const { communityId, type, message, pickupLat, pickupLng, destinationLat, destinationLng, eligibilityTier } = req.body
+  const { type, message, pickupLat, pickupLng, destinationLat, destinationLng, eligibilityTier } = req.body
 
   const validTiers = ['same_demographics', 'verified_guardians', 'any_member']
   const tier = eligibilityTier && validTiers.includes(eligibilityTier) ? eligibilityTier : 'same_demographics'
 
-  // If communityId is provided, validate membership
-  if (communityId) {
-    const memberCheck = await commRepo.isMember(communityId, req.user.userId)
-    if (!memberCheck) {
-      return res.status(403).json({ error: 'Must be a community member to create requests' })
-    }
-  }
-
   try {
     const request = await reqRepo.create({
       requesterId: req.user.userId,
-      communityId: communityId || null,
       type,
       message,
       eligibilityTier: tier,
@@ -50,10 +40,7 @@ requestRouter.post('/', async (req, res) => {
     // Broadcast to other clients via Socket.io
     const io = req.app.get('io')
     if (io) {
-      const room = request.community_id
-        ? `community:${request.community_id}`
-        : 'requests:open'
-      io.to(room).emit('request:new', { request })
+      io.to('requests:open').emit('request:new', { request })
     }
 
     // Push-notify eligible responders (fire-and-forget)
@@ -98,33 +85,6 @@ requestRouter.get('/open', async (req, res) => {
   } catch (err) {
     console.error('Open requests error:', err.message)
     res.status(500).json({ error: 'Failed to list open requests' })
-  }
-})
-
-/**
- * GET /api/requests/community/:cid — Open requests in a community
- */
-requestRouter.get('/community/:cid', async (req, res) => {
-  const memberCheck = await commRepo.isMember(req.params.cid, req.user.userId)
-  if (!memberCheck) {
-    return res.status(403).json({ error: 'Must be a community member' })
-  }
-
-  try {
-    const [helper, score] = await Promise.all([
-      userRepo.findById(req.user.userId),
-      ratingRepo.getSafetyScore(req.user.userId),
-    ])
-    const requests = await reqRepo.findByCommunity(req.params.cid, {
-      userId: req.user.userId,
-      sex: helper?.sex || null,
-      birthYear: helper?.birth_year || null,
-      safetyScore: score,
-    })
-    res.json({ requests })
-  } catch (err) {
-    console.error('Community requests error:', err.message)
-    res.status(500).json({ error: 'Failed to list community requests' })
   }
 })
 
@@ -188,10 +148,7 @@ requestRouter.post('/:id/accept', async (req, res) => {
     // Broadcast socket events so other clients update in real-time
     const io = req.app.get('io')
     if (io) {
-      const room = request.community_id
-        ? `community:${request.community_id}`
-        : 'requests:open'
-      io.to(room).emit('request:accepted', { requestId: request.id })
+      io.to('requests:open').emit('request:accepted', { requestId: request.id })
       io.to(`user:${request.requester_id}`).emit('request:accepted', {
         requestId: request.id,
         request,

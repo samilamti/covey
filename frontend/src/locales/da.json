@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Hjem",
-    "map": "Kort",
     "requests": "Anmodninger",
-    "communities": "Fællesskaber",
     "profile": "Profil"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Beskriv hvor du skal hen, og hvad du har brug for hjælp til…",
     "pickupLocation": "Mødested",
     "destination": "Destination",
-    "community": "Fællesskab",
-    "selectCommunity": "Vælg et fællesskab",
     "optional": "valgfrit",
-    "noCommunity": "Intet fællesskab (åben anmodning)",
     "openRequests": "Åbne anmodninger",
     "openRequestsEmpty": "Ingen åbne anmodninger lige nu.",
     "type": "Type hjælp",
@@ -124,52 +119,6 @@
       "stayThere": "Bliv hvor du er"
     }
   },
-  "communities": {
-    "title": "Fællesskaber",
-    "join": "Ansøg om at deltage",
-    "leave": "Forlad",
-    "nearby": "Opdag i nærheden",
-    "members": "Medlemmer",
-    "memberCount": "{{count}} medlem",
-    "memberCount_plural": "{{count}} medlemmer",
-    "pending": "Afventer godkendelse",
-    "approved": "Godkendt",
-    "rejected": "Afvist",
-    "create": "Opret fællesskab",
-    "name": "Navn",
-    "description": "Beskrivelse",
-    "area": "Område",
-    "admin": "Admin",
-    "noCommunities": "Du er ikke med i noget fællesskab endnu.",
-    "discoverNearby": "Find fællesskaber tæt på dig!",
-    "notFound": "Fællesskabet blev ikke fundet.",
-    "backToList": "Tilbage",
-    "joinPending": "Din ansøgning afventer godkendelse",
-    "joinPendingDesc": "En admin i fællesskabet vil gennemgå din ansøgning.",
-    "tryAgain": "Prøv igen",
-    "nearbyResults": "{{count}} fællesskaber i nærheden",
-    "noNearby": "Ingen fællesskaber fundet i nærheden.",
-    "searchAgain": "Søg igen",
-    "createName": "Navn",
-    "createDescription": "Beskrivelse",
-    "createAreaName": "Område",
-    "createLocation": "Placering",
-    "createSubmit": "Opret",
-    "useMyLocation": "Brug min placering",
-    "createRequiredFields": "Navn og placering er påkrævet.",
-    "autoName": "{{area}} fællesskab",
-    "locationDetected": "Placering fundet: {{area}}",
-    "detectingLocation": "Finder din placering…"
-  },
-  "admin": {
-    "title": "Adminpanel",
-    "pendingRequests": "Ventende ansøgninger",
-    "approve": "Godkend",
-    "reject": "Afvis",
-    "noPending": "Ingen ventende ansøgninger.",
-    "backToCommunity": "Tilbage til fællesskabet",
-    "role": "Admin"
-  },
   "profile": {
     "title": "Min profil",
     "edit": "Rediger profil",
@@ -192,7 +141,7 @@
     "uncomfortable": "Ubehageligt"
   },
   "notifications": {
-    "newRequest": "Ny anmodning i dit fællesskab!",
+    "newRequest": "Nogen i nærheden har brug for hjælp!",
     "requestAccepted": "Nogen har accepteret din anmodning!",
     "safetyCheck": "Kom du sikkert frem?",
     "enable": "Slå notifikationer til",

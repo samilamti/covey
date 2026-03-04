@@ -1,10 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { Map, HelpCircle, Users, User } from 'lucide-preact'
+import { HelpCircle, User } from 'lucide-preact'
 
 const tabs = [
-  { path: '/map', icon: Map, labelKey: 'nav.map' },
   { path: '/requests', icon: HelpCircle, labelKey: 'nav.requests' },
-  { path: '/communities', icon: Users, labelKey: 'nav.communities' },
   { path: '/profile', icon: User, labelKey: 'nav.profile' },
 ]
 

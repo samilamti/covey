@@ -1,10 +1,8 @@
 import { useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { BottomNav } from './BottomNav'
-import { CommunityList } from './CommunityList'
 import { ProfileView } from './ProfileView'
 import { RequestList } from './RequestList'
-import { MapView } from './MapView'
 import { LanguageSelector } from './LanguageSelector'
 
 function BetaBanner() {
@@ -39,12 +37,8 @@ export function MainLayout({ user, onLogout }) {
 
   const renderContent = () => {
     switch (currentPath) {
-      case '/map':
-        return <MapView />
       case '/requests':
         return <RequestList currentUserId={user?.userId} />
-      case '/communities':
-        return <CommunityList currentUserId={user?.userId} />
       case '/profile':
         return <ProfileView user={user} onLogout={onLogout} />
       default:

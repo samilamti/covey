@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Ruoktu",
-    "map": "Kárta",
     "requests": "Bivddut",
-    "communities": "Searvvit",
     "profile": "Profila"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Muital gosa don manat ja makkár veahki dárbbašat…",
     "pickupLocation": "Deaivvadanbáiki",
     "destination": "Mánusbáiki",
-    "community": "Searvi",
-    "selectCommunity": "Vállje searvvi",
     "optional": "válljenmuttot",
-    "noCommunity": "Ii searvegoddi (rabas bivdda)",
     "openRequests": "Rabas bivdagat",
     "openRequestsEmpty": "Eai leat rabas bivdagat dál.",
     "type": "Veahki šládja",
@@ -124,52 +119,6 @@
       "stayThere": "Báze doppe gos leat"
     }
   },
-  "communities": {
-    "title": "Searvvit",
-    "join": "Ohce mielde",
-    "leave": "Vuolge",
-    "nearby": "Oza lagamus",
-    "members": "Miellahtut",
-    "memberCount": "{{count}} miellahttu",
-    "memberCount_plural": "{{count}} miellahttu",
-    "pending": "Vuordimin dohkkeheami",
-    "approved": "Dohkkehuvvon",
-    "rejected": "Hilgojuvvon",
-    "create": "Ráhkat searvvi",
-    "name": "Namma",
-    "description": "Čilgehus",
-    "area": "Guovlu",
-    "admin": "Hálddahus",
-    "noCommunities": "Don it leat vel makkárge searvvis.",
-    "discoverNearby": "Gávnna searvviid du lahka!",
-    "notFound": "Searvi ii gávdnon.",
-    "backToList": "Ruoktot",
-    "joinPending": "Du ohcamuš vuordá dohkkeheami",
-    "joinPendingDesc": "Searvvi hálddahus geahččá du ohcamuša.",
-    "tryAgain": "Geahččal ođđasit",
-    "nearbyResults": "{{count}} searvvit du lahka",
-    "noNearby": "Ii gávdnon searvvit du lahka.",
-    "searchAgain": "Oza ođđasit",
-    "createName": "Namma",
-    "createDescription": "Govvidus",
-    "createAreaName": "Guovlu",
-    "createLocation": "Báiki",
-    "createSubmit": "Ráhkat",
-    "useMyLocation": "Geavat mu báikki",
-    "createRequiredFields": "Namma ja báiki gáibiduvvojit.",
-    "autoName": "{{area}} searvi",
-    "locationDetected": "Báiki gávdnon: {{area}}",
-    "detectingLocation": "Ohcamin du báikki…"
-  },
-  "admin": {
-    "title": "Hálddahuspanela",
-    "pendingRequests": "Vuordimin ohcamuš",
-    "approve": "Dohkket",
-    "reject": "Hilgot",
-    "noPending": "Ii leat vuordimin ohcamušat.",
-    "backToCommunity": "Ruoktot searvái",
-    "role": "Hálddahus"
-  },
   "profile": {
     "title": "Mu profila",
     "edit": "Rievdat profiilla",
@@ -192,7 +141,7 @@
     "uncomfortable": "Guoddemeahttun"
   },
   "notifications": {
-    "newRequest": "Ođđa bivddu du searvvis!",
+    "newRequest": "Muhtin du lahka dárbbaha veahki!",
     "requestAccepted": "Muhtin lea dohkkehan du bivddu!",
     "safetyCheck": "Bohtet go oadjebassat?",
     "enable": "Biját dieđuid johtui",

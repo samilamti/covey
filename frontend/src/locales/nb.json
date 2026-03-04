@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Hjem",
-    "map": "Kart",
     "requests": "Forespørsler",
-    "communities": "Fellesskap",
     "profile": "Profil"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Beskriv hvor du skal og hva du trenger hjelp med…",
     "pickupLocation": "Hentested",
     "destination": "Destinasjon",
-    "community": "Fellesskap",
-    "selectCommunity": "Velg et fellesskap",
     "optional": "valgfritt",
-    "noCommunity": "Ingen fellesskap (åpen forespørsel)",
     "openRequests": "Åpne forespørsler",
     "openRequestsEmpty": "Ingen åpne forespørsler akkurat nå.",
     "type": "Type hjelp",
@@ -124,52 +119,6 @@
       "stayThere": "Bli der du er"
     }
   },
-  "communities": {
-    "title": "Fellesskap",
-    "join": "Søk om å bli med",
-    "leave": "Forlat",
-    "nearby": "Oppdag i nærheten",
-    "members": "Medlemmer",
-    "memberCount": "{{count}} medlem",
-    "memberCount_plural": "{{count}} medlemmer",
-    "pending": "Venter på godkjenning",
-    "approved": "Godkjent",
-    "rejected": "Avvist",
-    "create": "Opprett fellesskap",
-    "name": "Navn",
-    "description": "Beskrivelse",
-    "area": "Område",
-    "admin": "Admin",
-    "noCommunities": "Du er ikke med i noe fellesskap ennå.",
-    "discoverNearby": "Finn fellesskap nær deg!",
-    "notFound": "Fellesskapet ble ikke funnet.",
-    "backToList": "Tilbake",
-    "joinPending": "Søknaden din venter på godkjenning",
-    "joinPendingDesc": "En admin i fellesskapet vil gjennomgå søknaden din.",
-    "tryAgain": "Prøv igjen",
-    "nearbyResults": "{{count}} fellesskap i nærheten",
-    "noNearby": "Ingen fellesskap funnet i nærheten.",
-    "searchAgain": "Søk igjen",
-    "createName": "Navn",
-    "createDescription": "Beskrivelse",
-    "createAreaName": "Område",
-    "createLocation": "Sted",
-    "createSubmit": "Opprett",
-    "useMyLocation": "Bruk min posisjon",
-    "createRequiredFields": "Navn og sted er påkrevd.",
-    "autoName": "{{area}} fellesskap",
-    "locationDetected": "Sted funnet: {{area}}",
-    "detectingLocation": "Finner din posisjon…"
-  },
-  "admin": {
-    "title": "Adminpanel",
-    "pendingRequests": "Ventende søknader",
-    "approve": "Godkjenn",
-    "reject": "Avvis",
-    "noPending": "Ingen ventende søknader.",
-    "backToCommunity": "Tilbake til fellesskapet",
-    "role": "Admin"
-  },
   "profile": {
     "title": "Min profil",
     "edit": "Rediger profil",
@@ -192,7 +141,7 @@
     "uncomfortable": "Ubehagelig"
   },
   "notifications": {
-    "newRequest": "Ny forespørsel i ditt fellesskap!",
+    "newRequest": "Noen i nærheten trenger hjelp!",
     "requestAccepted": "Noen har akseptert forespørselen din!",
     "safetyCheck": "Kom du trygt frem?",
     "enable": "Slå på varsler",

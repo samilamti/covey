@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Koti",
-    "map": "Kartta",
     "requests": "Pyynnöt",
-    "communities": "Yhteisöt",
     "profile": "Profiili"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Kuvaile minne olet menossa ja millaista apua tarvitset…",
     "pickupLocation": "Noutopaikka",
     "destination": "Määränpää",
-    "community": "Yhteisö",
-    "selectCommunity": "Valitse yhteisö",
     "optional": "valinnainen",
-    "noCommunity": "Ei yhteisöä (avoin pyyntö)",
     "openRequests": "Avoimet pyynnöt",
     "openRequestsEmpty": "Ei avoimia pyyntöjä juuri nyt.",
     "type": "Avun tyyppi",
@@ -124,52 +119,6 @@
       "stayThere": "Pysy paikallasi"
     }
   },
-  "communities": {
-    "title": "Yhteisöt",
-    "join": "Hae jäseneksi",
-    "leave": "Poistu",
-    "nearby": "Löydä lähistöltä",
-    "members": "Jäsenet",
-    "memberCount": "{{count}} jäsen",
-    "memberCount_plural": "{{count}} jäsentä",
-    "pending": "Odottaa hyväksyntää",
-    "approved": "Hyväksytty",
-    "rejected": "Hylätty",
-    "create": "Luo yhteisö",
-    "name": "Nimi",
-    "description": "Kuvaus",
-    "area": "Alue",
-    "admin": "Ylläpitäjä",
-    "noCommunities": "Et kuulu vielä mihinkään yhteisöön.",
-    "discoverNearby": "Löydä yhteisöjä läheltäsi!",
-    "notFound": "Yhteisöä ei löytynyt.",
-    "backToList": "Takaisin",
-    "joinPending": "Hakemuksesi odottaa hyväksyntää",
-    "joinPendingDesc": "Yhteisön ylläpitäjä käsittelee hakemuksesi.",
-    "tryAgain": "Yritä uudelleen",
-    "nearbyResults": "{{count}} yhteisöä lähistöllä",
-    "noNearby": "Yhteisöjä ei löytynyt lähistöltä.",
-    "searchAgain": "Hae uudelleen",
-    "createName": "Nimi",
-    "createDescription": "Kuvaus",
-    "createAreaName": "Alue",
-    "createLocation": "Sijainti",
-    "createSubmit": "Luo",
-    "useMyLocation": "Käytä sijaintiani",
-    "createRequiredFields": "Nimi ja sijainti vaaditaan.",
-    "autoName": "{{area}} yhteisö",
-    "locationDetected": "Sijainti löydetty: {{area}}",
-    "detectingLocation": "Etsitään sijaintiasi…"
-  },
-  "admin": {
-    "title": "Hallintapaneeli",
-    "pendingRequests": "Odottavat hakemukset",
-    "approve": "Hyväksy",
-    "reject": "Hylkää",
-    "noPending": "Ei odottavia hakemuksia.",
-    "backToCommunity": "Takaisin yhteisöön",
-    "role": "Ylläpitäjä"
-  },
   "profile": {
     "title": "Profiilini",
     "edit": "Muokkaa profiilia",
@@ -192,7 +141,7 @@
     "uncomfortable": "Epämukavaa"
   },
   "notifications": {
-    "newRequest": "Uusi pyyntö yhteisössäsi!",
+    "newRequest": "Joku lähistöllä tarvitsee apua!",
     "requestAccepted": "Joku on hyväksynyt pyyntösi!",
     "safetyCheck": "Pääsitkö turvallisesti perille?",
     "enable": "Ota ilmoitukset käyttöön",

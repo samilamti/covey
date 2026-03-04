@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Start",
-    "map": "Mapa",
     "requests": "Prośby",
-    "communities": "Społeczności",
     "profile": "Profil"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Opisz dokąd idziesz i jakiej pomocy potrzebujesz…",
     "pickupLocation": "Miejsce odbioru",
     "destination": "Cel",
-    "community": "Społeczność",
-    "selectCommunity": "Wybierz społeczność",
     "optional": "opcjonalnie",
-    "noCommunity": "Bez społeczności (otwarta prośba)",
     "openRequests": "Otwarte prośby",
     "openRequestsEmpty": "Brak otwartych próśb w tej chwili.",
     "type": "Rodzaj pomocy",
@@ -124,52 +119,6 @@
       "stayThere": "Zostań tam, gdzie jesteś"
     }
   },
-  "communities": {
-    "title": "Społeczności",
-    "join": "Poproś o dołączenie",
-    "leave": "Opuść",
-    "nearby": "Odkryj w pobliżu",
-    "members": "Członkowie",
-    "memberCount": "{{count}} członek",
-    "memberCount_plural": "{{count}} członków",
-    "pending": "Oczekuje na zatwierdzenie",
-    "approved": "Zatwierdzono",
-    "rejected": "Odrzucono",
-    "create": "Utwórz społeczność",
-    "name": "Nazwa",
-    "description": "Opis",
-    "area": "Obszar",
-    "admin": "Admin",
-    "noCommunities": "Nie należysz jeszcze do żadnej społeczności.",
-    "discoverNearby": "Znajdź społeczności blisko Ciebie!",
-    "notFound": "Nie znaleziono społeczności.",
-    "backToList": "Wróć",
-    "joinPending": "Twój wniosek oczekuje na zatwierdzenie",
-    "joinPendingDesc": "Administrator społeczności rozpatrzy Twój wniosek.",
-    "tryAgain": "Spróbuj ponownie",
-    "nearbyResults": "{{count}} społeczności w pobliżu",
-    "noNearby": "Nie znaleziono społeczności w pobliżu.",
-    "searchAgain": "Szukaj ponownie",
-    "createName": "Nazwa",
-    "createDescription": "Opis",
-    "createAreaName": "Obszar",
-    "createLocation": "Lokalizacja",
-    "createSubmit": "Utwórz",
-    "useMyLocation": "Użyj mojej lokalizacji",
-    "createRequiredFields": "Nazwa i lokalizacja są wymagane.",
-    "autoName": "Wspólnota {{area}}",
-    "locationDetected": "Lokalizacja znaleziona: {{area}}",
-    "detectingLocation": "Szukanie Twojej lokalizacji…"
-  },
-  "admin": {
-    "title": "Panel administracyjny",
-    "pendingRequests": "Oczekujące wnioski",
-    "approve": "Zatwierdź",
-    "reject": "Odrzuć",
-    "noPending": "Brak oczekujących wniosków.",
-    "backToCommunity": "Wróć do społeczności",
-    "role": "Admin"
-  },
   "profile": {
     "title": "Mój profil",
     "edit": "Edytuj profil",
@@ -192,7 +141,7 @@
     "uncomfortable": "Niekomfortowo"
   },
   "notifications": {
-    "newRequest": "Nowa prośba w Twojej społeczności!",
+    "newRequest": "Ktoś w pobliżu potrzebuje pomocy!",
     "requestAccepted": "Ktoś zaakceptował Twoją prośbę!",
     "safetyCheck": "Czy dotarłeś/aś bezpiecznie?",
     "enable": "Włącz powiadomienia",

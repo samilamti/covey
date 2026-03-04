@@ -14,7 +14,6 @@ const DEFAULTS = {
   BANKID_AUTH: false,
   PUSH_NOTIFICATIONS: false,
   GEOLOCATION: false,
-  COMMUNITIES: false,
 }
 
 const flags = {}

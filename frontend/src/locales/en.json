@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Home",
-    "map": "Map",
     "requests": "Requests",
-    "communities": "Communities",
     "profile": "Profile"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Describe where you're going and what help you need…",
     "pickupLocation": "Pickup location",
     "destination": "Destination",
-    "community": "Community",
-    "selectCommunity": "Select a community",
     "optional": "optional",
-    "noCommunity": "No community (open request)",
     "openRequests": "Open requests",
     "openRequestsEmpty": "No open requests right now.",
     "type": "Type of help",
@@ -124,52 +119,6 @@
       "stayThere": "Stay where you are"
     }
   },
-  "communities": {
-    "title": "Communities",
-    "join": "Request to join",
-    "leave": "Leave",
-    "nearby": "Discover nearby",
-    "members": "Members",
-    "memberCount": "{{count}} member",
-    "memberCount_plural": "{{count}} members",
-    "pending": "Awaiting approval",
-    "approved": "Approved",
-    "rejected": "Rejected",
-    "create": "Create community",
-    "name": "Name",
-    "description": "Description",
-    "area": "Area",
-    "admin": "Admin",
-    "noCommunities": "You haven't joined any community yet.",
-    "discoverNearby": "Find communities near you!",
-    "notFound": "Community not found.",
-    "backToList": "Back",
-    "joinPending": "Your application is awaiting approval",
-    "joinPendingDesc": "A community admin will review your application.",
-    "tryAgain": "Try again",
-    "nearbyResults": "{{count}} communities nearby",
-    "noNearby": "No communities found nearby.",
-    "searchAgain": "Search again",
-    "createName": "Name",
-    "createDescription": "Description",
-    "createAreaName": "Area",
-    "createLocation": "Location",
-    "createSubmit": "Create",
-    "useMyLocation": "Use my location",
-    "createRequiredFields": "Name and location are required.",
-    "autoName": "{{area}} community",
-    "locationDetected": "Location found: {{area}}",
-    "detectingLocation": "Finding your location…"
-  },
-  "admin": {
-    "title": "Admin panel",
-    "pendingRequests": "Pending applications",
-    "approve": "Approve",
-    "reject": "Reject",
-    "noPending": "No pending applications.",
-    "backToCommunity": "Back to community",
-    "role": "Admin"
-  },
   "profile": {
     "title": "My profile",
     "edit": "Edit profile",
@@ -192,7 +141,7 @@
     "uncomfortable": "Uncomfortable"
   },
   "notifications": {
-    "newRequest": "New request in your community!",
+    "newRequest": "Someone nearby needs help!",
     "requestAccepted": "Someone accepted your request!",
     "safetyCheck": "Did you arrive safely?",
     "enable": "Enable notifications",

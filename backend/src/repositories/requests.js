@@ -8,16 +8,16 @@ import { db } from '../pool.js'
  * Create a new assistance request.
  */
 export async function create({
-  requesterId, communityId, type, message, eligibilityTier,
+  requesterId, type, message, eligibilityTier,
   pickupLat, pickupLng, destinationLat, destinationLng,
 }) {
   const { rows } = await db.query(`
     INSERT INTO assistance_requests
-      (requester_id, community_id, type, message, eligibility_tier,
+      (requester_id, type, message, eligibility_tier,
        pickup_lat, pickup_lng, destination_lat, destination_lng)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *
-  `, [requesterId, communityId, type || 'walk', message || '',
+  `, [requesterId, type || 'walk', message || '',
       eligibilityTier || 'same_demographics',
       pickupLat, pickupLng, destinationLat, destinationLng])
   return rows[0]
@@ -46,48 +46,12 @@ export async function findByUser(userId) {
 }
 
 /**
- * Get open requests in a community.
- */
-export async function findByCommunity(communityId, { userId, sex, birthYear, safetyScore }) {
-  const { rows } = await db.query(`
-    SELECT ar.id, ar.type, ar.message, ar.status, ar.eligibility_tier,
-           ar.requester_id, ar.community_id, ar.helper_id,
-           ROUND(ar.pickup_lat, 3) AS pickup_lat,
-           ROUND(ar.pickup_lng, 3) AS pickup_lng,
-           NULL::numeric AS destination_lat,
-           NULL::numeric AS destination_lng,
-           ar.accepted_at, ar.expires_at, ar.completed_at, ar.cancelled_at,
-           ar.created_at, ar.updated_at
-    FROM assistance_requests ar
-    JOIN users u ON u.id = ar.requester_id
-    WHERE ar.community_id = $1
-      AND ar.status = 'open'
-      AND ar.requester_id != $2
-      AND (
-        ar.eligibility_tier = 'any_member'
-        OR (ar.eligibility_tier = 'verified_guardians' AND (
-          (u.sex = $3 AND u.birth_year IS NOT NULL AND $4::int IS NOT NULL
-           AND ABS(u.birth_year - $4::int) <= 5)
-          OR $5::int >= 5
-        ))
-        OR (ar.eligibility_tier = 'same_demographics'
-          AND u.sex = $3 AND u.birth_year IS NOT NULL AND $4::int IS NOT NULL
-          AND ABS(u.birth_year - $4::int) <= 5
-        )
-      )
-    ORDER BY ar.created_at DESC
-    LIMIT 50
-  `, [communityId, userId, sex, birthYear, safetyScore])
-  return rows
-}
-
-/**
- * Get open freestanding requests (no community).
+ * Get open requests eligible for a user.
  */
 export async function findOpenFreestanding({ userId, sex, birthYear, safetyScore }) {
   const { rows } = await db.query(`
     SELECT ar.id, ar.type, ar.message, ar.status, ar.eligibility_tier,
-           ar.requester_id, ar.community_id, ar.helper_id,
+           ar.requester_id, ar.helper_id,
            ROUND(ar.pickup_lat, 3) AS pickup_lat,
            ROUND(ar.pickup_lng, 3) AS pickup_lng,
            NULL::numeric AS destination_lat,
@@ -96,8 +60,7 @@ export async function findOpenFreestanding({ userId, sex, birthYear, safetyScore
            ar.created_at, ar.updated_at
     FROM assistance_requests ar
     JOIN users u ON u.id = ar.requester_id
-    WHERE ar.community_id IS NULL
-      AND ar.status = 'open'
+    WHERE ar.status = 'open'
       AND ar.requester_id != $1
       AND (
         ar.eligibility_tier = 'any_member'
@@ -249,7 +212,7 @@ export async function expireOldRequests() {
     UPDATE assistance_requests
     SET status = 'expired', updated_at = NOW()
     WHERE status = 'open' AND expires_at < NOW()
-    RETURNING id, community_id
+    RETURNING id
   `)
   return rows
 }

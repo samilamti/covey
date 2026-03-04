@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Saqqaa",
-    "map": "Nunap assinga",
     "requests": "Qinnuteqaatit",
-    "communities": "Kattuffissat",
     "profile": "Uanga pillut"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Sumut aallassanerpit ikiornissallu qanoq pisariaqarpit nassuiaguk…",
     "pickupLocation": "Najugaq",
     "destination": "Sumut",
-    "community": "Kattuffik",
-    "selectCommunity": "Kattuffik toqqaruk",
     "optional": "toqqarsinnaasut",
-    "noCommunity": "Kattuffiit akunginnit (ammasumik killissarfik)",
     "openRequests": "Ammasumik killissarfiit",
     "openRequestsEmpty": "Ammasumik killissarfiit maanna pittaanngillat.",
     "type": "Ikiuinermi suut",
@@ -124,52 +119,6 @@
       "stayThere": "Sumiinnerpit inissiani"
     }
   },
-  "communities": {
-    "title": "Kattuffissat",
-    "join": "Ilaatigineqarsinnaanera qinnuteqaagit",
-    "leave": "Anigit",
-    "nearby": "Qanittumiittut nassaaruk",
-    "members": "Ilaatigineqartut",
-    "memberCount": "{{count}} ilaataavoq",
-    "memberCount_plural": "{{count}} ilaataapput",
-    "pending": "Akuersinneqarfissaa utaqqigaa",
-    "approved": "Akuersineqarpoq",
-    "rejected": "Akuersineqanngitsoq",
-    "create": "Kattuffik pilersitsiuk",
-    "name": "Ateq",
-    "description": "Nassuiaat",
-    "area": "Sumiiffiit",
-    "admin": "Aqutsisoq",
-    "noCommunities": "Suli kattuffinnut ilaanngikkalit.",
-    "discoverNearby": "Kattuffissat qanittumiittut nassaaruk!",
-    "notFound": "Kattuffik nassaarineqanngilaq.",
-    "backToList": "Uteriaruk",
-    "joinPending": "Qinnuteqaatit akuersinneqarfissaa utaqqigaa",
-    "joinPendingDesc": "Kattuffimmi aqutsisoq qinnuteqaatit isiginnaasissavaa.",
-    "tryAgain": "Misileqqigit",
-    "nearbyResults": "{{count}} kattuffissat qanittumiittut",
-    "noNearby": "Kattuffissat qanittumiittut nassaarineqanngilat.",
-    "searchAgain": "Uterit nassaariniarlutit",
-    "createName": "Ateq",
-    "createDescription": "Nassuiaat",
-    "createAreaName": "Eqqarsuaq",
-    "createLocation": "Inissaq",
-    "createSubmit": "Pilersitsivoq",
-    "useMyLocation": "Inissara atoruk",
-    "createRequiredFields": "Ateq inissarlu pisariaqarput.",
-    "autoName": "{{area}} peqatigiit",
-    "locationDetected": "Sumiiffik nassaarineqarpoq: {{area}}",
-    "detectingLocation": "Sumiiffiit ujarlerneqarput…"
-  },
-  "admin": {
-    "title": "Aqutsisoq pillutit",
-    "pendingRequests": "Qinnuteqaatit utaqqigineqartut",
-    "approve": "Akuersigit",
-    "reject": "Akuersinngigit",
-    "noPending": "Qinnuteqaatit utaqqigineqartut pigineqanngillat.",
-    "backToCommunity": "Kattuffimmut uteriaruk",
-    "role": "Aqutsisoq"
-  },
   "profile": {
     "title": "Uanga pillut",
     "edit": "Allannguigit",
@@ -192,7 +141,7 @@
     "uncomfortable": "Ajoqutaasoq"
   },
   "notifications": {
-    "newRequest": "Kattuffinni qinnuteqaat nutaaq!",
+    "newRequest": "Qanittumiittoq ikiornissaq pisariaqarpoq!",
     "requestAccepted": "Qinnuteqaatit akuersineqarpoq!",
     "safetyCheck": "Nalinginnarsumik tikippat?",
     "enable": "Nalunaarutigisinnaanerat ammaruk",

@@ -23,10 +23,7 @@ export function startExpirationWorker(io) {
         // Emit to the appropriate room (community or freestanding)
         if (io) {
           for (const req of expired) {
-            const room = req.community_id
-              ? `community:${req.community_id}`
-              : 'requests:open'
-            io.to(room).emit('request:expired', {
+            io.to('requests:open').emit('request:expired', {
               requestId: req.id,
             })
           }

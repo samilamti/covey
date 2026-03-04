@@ -25,13 +25,7 @@ gdprRouter.get('/export', async (req, res) => {
     }
 
     // Gather all user data
-    const [memberships, requests, subscriptions, ratingsGiven, ratingsReceived, sessionMessages] = await Promise.all([
-      db.query(`
-        SELECT c.name, cm.role, cm.status, cm.joined_at, cm.requested_at
-        FROM community_members cm
-        JOIN communities c ON c.id = cm.community_id
-        WHERE cm.user_id = $1
-      `, [req.user.userId]),
+    const [requests, subscriptions, ratingsGiven, ratingsReceived, sessionMessages] = await Promise.all([
       db.query(`
         SELECT id, type, message, status, created_at, completed_at, done_initiated_at
         FROM assistance_requests
@@ -68,7 +62,6 @@ gdprRouter.get('/export', async (req, res) => {
         createdAt: user.created_at,
         lastLoginAt: user.last_login_at,
       },
-      communityMemberships: memberships.rows,
       assistanceRequests: requests.rows,
       pushSubscriptions: subscriptions.rows.map((s) => ({
         endpoint: s.endpoint,

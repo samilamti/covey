@@ -44,40 +44,6 @@ const migrations = [
       CREATE INDEX IF NOT EXISTS idx_users_nin_hash
         ON users(nin_hash) WHERE deleted_at IS NULL;
 
-      -- Safety communities
-      CREATE TABLE IF NOT EXISTS communities (
-        id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        name        TEXT NOT NULL,
-        description TEXT NOT NULL DEFAULT '',
-        latitude    NUMERIC(10, 7) NOT NULL,
-        longitude   NUMERIC(10, 7) NOT NULL,
-        radius_m    INTEGER NOT NULL DEFAULT 2000,
-        area_name   TEXT NOT NULL DEFAULT '',
-        created_by  UUID REFERENCES users(id),
-        created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        deleted_at  TIMESTAMPTZ
-      );
-      CREATE INDEX IF NOT EXISTS idx_communities_geo
-        ON communities(latitude, longitude) WHERE deleted_at IS NULL;
-
-      -- Community membership with approval workflow
-      CREATE TABLE IF NOT EXISTS community_members (
-        community_id UUID NOT NULL REFERENCES communities(id) ON DELETE CASCADE,
-        user_id      UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-        role         TEXT NOT NULL DEFAULT 'member'
-                       CHECK (role IN ('member', 'admin')),
-        status       TEXT NOT NULL DEFAULT 'pending'
-                       CHECK (status IN ('pending', 'approved', 'rejected')),
-        joined_at    TIMESTAMPTZ,
-        requested_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        PRIMARY KEY (community_id, user_id)
-      );
-      CREATE INDEX IF NOT EXISTS idx_cm_user
-        ON community_members(user_id);
-      CREATE INDEX IF NOT EXISTS idx_cm_pending
-        ON community_members(community_id, status) WHERE status = 'pending';
-
       -- Assistance requests (the core feature)
       CREATE TABLE IF NOT EXISTS assistance_requests (
         id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -95,7 +61,6 @@ const migrations = [
                             'cancelled', 'expired'
                           )),
         requester_id    UUID REFERENCES users(id),
-        community_id    UUID REFERENCES communities(id),
         pickup_lat      NUMERIC(10, 7),
         pickup_lng      NUMERIC(10, 7),
         destination_lat NUMERIC(10, 7),
@@ -110,15 +75,12 @@ const migrations = [
         created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
-      CREATE INDEX IF NOT EXISTS idx_req_community
-        ON assistance_requests(community_id, status)
-        WHERE status IN ('open', 'accepted', 'active');
       CREATE INDEX IF NOT EXISTS idx_req_expires
         ON assistance_requests(expires_at)
         WHERE status = 'open';
-      CREATE INDEX IF NOT EXISTS idx_req_freestanding
+      CREATE INDEX IF NOT EXISTS idx_req_open
         ON assistance_requests(status, created_at DESC)
-        WHERE community_id IS NULL AND status IN ('open', 'accepted', 'active');
+        WHERE status IN ('open', 'accepted', 'active');
 
       -- Ephemeral location data during active sessions (GDPR-sensitive)
       CREATE TABLE IF NOT EXISTS location_updates (

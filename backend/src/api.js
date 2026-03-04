@@ -2,7 +2,6 @@ import { Router } from 'express'
 import { db } from './pool.js'
 import { authRouter, authenticate } from './auth/index.js'
 import { getAllFlags } from './features.js'
-import { communityRouter } from './routes/communities.js'
 import { profileRouter } from './routes/profile.js'
 import { requestRouter } from './routes/requests.js'
 import { notificationRouter } from './routes/notifications.js'
@@ -22,9 +21,6 @@ apiRouter.use('/auth', authRateLimit, authRouter)
 
 // --- Apply API rate limit to all authenticated routes below ---
 apiRouter.use(apiRateLimit)
-
-// --- Community routes ---
-apiRouter.use('/communities', communityRouter)
 
 // --- Profile routes ---
 apiRouter.use('/profile', profileRouter)

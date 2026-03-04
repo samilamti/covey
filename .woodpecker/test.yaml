@@ -14,7 +14,6 @@ steps:
       FEATURE_BANKID_AUTH: "false"
       FEATURE_PUSH_NOTIFICATIONS: "false"
       FEATURE_GEOLOCATION: "false"
-      FEATURE_COMMUNITIES: "false"
 
   - name: frontend-test
     image: node:22-alpine

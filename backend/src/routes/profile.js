@@ -9,7 +9,6 @@
 import { Router } from 'express'
 import { authenticate } from '../auth/index.js'
 import * as userRepo from '../repositories/users.js'
-import * as commRepo from '../repositories/communities.js'
 import * as ratingRepo from '../repositories/ratings.js'
 
 export const profileRouter = Router()
@@ -18,7 +17,7 @@ export const profileRouter = Router()
 profileRouter.use(authenticate)
 
 /**
- * GET /api/profile — Own profile + my communities
+ * GET /api/profile — Own profile
  */
 profileRouter.get('/', async (req, res) => {
   try {
@@ -27,10 +26,7 @@ profileRouter.get('/', async (req, res) => {
       return res.status(404).json({ error: 'User not found' })
     }
 
-    const [communities, safetyScore] = await Promise.all([
-      commRepo.getUserCommunities(req.user.userId),
-      ratingRepo.getSafetyScore(req.user.userId),
-    ])
+    const safetyScore = await ratingRepo.getSafetyScore(req.user.userId)
 
     res.json({
       user: {
@@ -45,7 +41,6 @@ profileRouter.get('/', async (req, res) => {
         isGuardian: safetyScore >= 5,
         hasDemographics: !!(user.birth_year && user.sex),
       },
-      communities,
     })
   } catch (err) {
     console.error('Get profile error:', err.message)

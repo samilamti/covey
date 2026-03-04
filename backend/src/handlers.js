@@ -7,7 +7,6 @@
  */
 
 import { verifyToken } from './auth/jwt.js'
-import * as commRepo from './repositories/communities.js'
 import * as reqRepo from './repositories/requests.js'
 import * as msgRepo from './repositories/messages.js'
 import { processLocationUpdate } from './services/geolocation.js'
@@ -46,36 +45,8 @@ export function registerSocketHandlers(io) {
     // Join user's personal room for targeted events
     socket.join(`user:${socket.user.userId}`)
 
-    // Join the open requests room for freestanding request events
+    // Join the open requests room for request events
     socket.join('requests:open')
-
-    // --- Community room subscriptions ---
-
-    /**
-     * community:subscribe — join a community room (approved members only)
-     */
-    socket.on('community:subscribe', async ({ communityId }) => {
-      if (!communityId) return
-
-      try {
-        const isMember = await commRepo.isMember(communityId, socket.user.userId)
-        if (!isMember) {
-          socket.emit('error', { message: 'Not an approved member of this community' })
-          return
-        }
-        socket.join(`community:${communityId}`)
-      } catch (err) {
-        console.error('Community subscribe error:', err.message)
-      }
-    })
-
-    /**
-     * community:unsubscribe — leave a community room
-     */
-    socket.on('community:unsubscribe', ({ communityId }) => {
-      if (!communityId) return
-      socket.leave(`community:${communityId}`)
-    })
 
     // --- Assistance request events ---
 
@@ -83,22 +54,7 @@ export function registerSocketHandlers(io) {
      * request:create — create a new assistance request
      */
     socket.on('request:create', async (data) => {
-      const { communityId, type, message, pickupLat, pickupLng, destLat, destLng, eligibilityTier } = data || {}
-
-      // If communityId is provided, validate membership
-      if (communityId) {
-        try {
-          const isMember = await commRepo.isMember(communityId, socket.user.userId)
-          if (!isMember) {
-            socket.emit('error', { message: 'Must be a community member' })
-            return
-          }
-        } catch (err) {
-          console.error('Socket request:create membership check error:', err.message)
-          socket.emit('error', { message: 'Failed to verify membership' })
-          return
-        }
-      }
+      const { type, message, pickupLat, pickupLng, destLat, destLng, eligibilityTier } = data || {}
 
       try {
         const validTiers = ['same_demographics', 'verified_guardians', 'any_member']
@@ -106,7 +62,6 @@ export function registerSocketHandlers(io) {
 
         const request = await reqRepo.create({
           requesterId: socket.user.userId,
-          communityId: communityId || null,
           type,
           message,
           eligibilityTier: tier,
@@ -116,12 +71,7 @@ export function registerSocketHandlers(io) {
           destinationLng: destLng ? parseFloat(destLng) : null,
         })
 
-        // Broadcast to appropriate room
-        if (communityId) {
-          io.to(`community:${communityId}`).emit('request:new', { request })
-        } else {
-          io.to('requests:open').emit('request:new', { request })
-        }
+        io.to('requests:open').emit('request:new', { request })
 
         // Push-notify eligible responders (fire-and-forget)
         notifyNewRequest(request).catch(() => {})
@@ -163,10 +113,7 @@ export function registerSocketHandlers(io) {
         }
 
         // Notify the room (so other potential helpers remove the request)
-        const acceptRoom = request.community_id
-          ? `community:${request.community_id}`
-          : 'requests:open'
-        io.to(acceptRoom).emit('request:accepted', { requestId })
+        io.to('requests:open').emit('request:accepted', { requestId })
         // Notify the requester with full request data for auto-entering ActiveSession
         io.to(`user:${request.requester_id}`).emit('request:accepted', {
           requestId,
@@ -292,10 +239,7 @@ export function registerSocketHandlers(io) {
         const request = await reqRepo.cancel(requestId)
         if (!request) return
 
-        const cancelRoom = request.community_id
-          ? `community:${request.community_id}`
-          : 'requests:open'
-        io.to(cancelRoom).emit('request:cancelled', { requestId })
+        io.to('requests:open').emit('request:cancelled', { requestId })
 
         // Notify helper if one was assigned
         if (request.helper_id) {

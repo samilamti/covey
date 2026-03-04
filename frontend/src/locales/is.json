@@ -26,9 +26,7 @@
   },
   "nav": {
     "home": "Heim",
-    "map": "Kort",
     "requests": "Beiðnir",
-    "communities": "Samfélög",
     "profile": "Prófíll"
   },
   "app": {
@@ -57,10 +55,7 @@
     "messagePlaceholder": "Lýstu hvert þú ert á leið og hvers konar hjálp þú þarft…",
     "pickupLocation": "Mætistaður",
     "destination": "Áfangastaður",
-    "community": "Samfélag",
-    "selectCommunity": "Veldu samfélag",
     "optional": "valfrjálst",
-    "noCommunity": "Ekkert samfélag (opin beiðni)",
     "openRequests": "Opnar beiðnir",
     "openRequestsEmpty": "Engar opnar beiðnir núna.",
     "type": "Tegund hjálpar",
@@ -124,52 +119,6 @@
       "stayThere": "Vertu þar sem þú ert"
     }
   },
-  "communities": {
-    "title": "Samfélög",
-    "join": "Sækja um aðild",
-    "leave": "Yfirgefa",
-    "nearby": "Uppgötva í nágrenninu",
-    "members": "Meðlimir",
-    "memberCount": "{{count}} meðlimur",
-    "memberCount_plural": "{{count}} meðlimir",
-    "pending": "Bíður samþykkis",
-    "approved": "Samþykkt",
-    "rejected": "Hafnað",
-    "create": "Stofna samfélag",
-    "name": "Nafn",
-    "description": "Lýsing",
-    "area": "Svæði",
-    "admin": "Stjórnandi",
-    "noCommunities": "Þú ert ekki í neinu samfélagi ennþá.",
-    "discoverNearby": "Finndu samfélög nálægt þér!",
-    "notFound": "Samfélagið fannst ekki.",
-    "backToList": "Til baka",
-    "joinPending": "Umsókn þín bíður samþykkis",
-    "joinPendingDesc": "Stjórnandi samfélagsins mun fara yfir umsókn þína.",
-    "tryAgain": "Reyna aftur",
-    "nearbyResults": "{{count}} samfélög í nágrenninu",
-    "noNearby": "Engin samfélög fundust í nágrenninu.",
-    "searchAgain": "Leita aftur",
-    "createName": "Nafn",
-    "createDescription": "Lýsing",
-    "createAreaName": "Svæði",
-    "createLocation": "Staðsetning",
-    "createSubmit": "Búa til",
-    "useMyLocation": "Nota mína staðsetningu",
-    "createRequiredFields": "Nafn og staðsetning eru nauðsynleg.",
-    "autoName": "{{area}} samfélag",
-    "locationDetected": "Staðsetning fundin: {{area}}",
-    "detectingLocation": "Leita að staðsetningu þinni…"
-  },
-  "admin": {
-    "title": "Stjórnborð",
-    "pendingRequests": "Umsóknir í bið",
-    "approve": "Samþykkja",
-    "reject": "Hafna",
-    "noPending": "Engar umsóknir í bið.",
-    "backToCommunity": "Til baka í samfélagið",
-    "role": "Stjórnandi"
-  },
   "profile": {
     "title": "Prófíllinn minn",
     "edit": "Breyta prófíl",
@@ -192,7 +141,7 @@
     "uncomfortable": "Óþægilegt"
   },
   "notifications": {
-    "newRequest": "Ný beiðni í samfélaginu þínu!",
+    "newRequest": "Einhver í nágrenninu þarfnast hjálpar!",
     "requestAccepted": "Einhver hefur samþykkt beiðni þína!",
     "safetyCheck": "Komstu heim á heilu og höldnu?",
     "enable": "Kveikja á tilkynningum",
