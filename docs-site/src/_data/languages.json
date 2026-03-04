@@ -1,0 +1,14 @@
+[
+  { "code": "sv", "label": "Svenska", "dir": "ltr" },
+  { "code": "nb", "label": "Norsk", "dir": "ltr" },
+  { "code": "da", "label": "Dansk", "dir": "ltr" },
+  { "code": "fi", "label": "Suomi", "dir": "ltr" },
+  { "code": "ar", "label": "العربية", "dir": "rtl" },
+  { "code": "is", "label": "Íslenska", "dir": "ltr" },
+  { "code": "pl", "label": "Polski", "dir": "ltr" },
+  { "code": "fo", "label": "Føroyskt", "dir": "ltr" },
+  { "code": "kl", "label": "Kalaallisut", "dir": "ltr" },
+  { "code": "se", "label": "Davvisámegiella", "dir": "ltr" },
+  { "code": "uk", "label": "Українська", "dir": "ltr" },
+  { "code": "en", "label": "English", "dir": "ltr" }
+]

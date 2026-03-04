@@ -1,0 +1,38 @@
+<nav class="sidebar" aria-label="Documentation">
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'); document.getElementById('nav-list').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <span>Menu</span>
+  </button>
+  <ul id="nav-list" class="nav-list">
+    {% for item in navigation.pages %}
+      {% if not item.parent %}
+        {% set itemUrl = item.pageId | localizedUrl(lang) %}
+        {% set isCurrent = page.url == itemUrl %}
+        {% set hasChildren = false %}
+        <li class="nav-item{% if isCurrent %} active{% endif %}">
+          <a href="{{ itemUrl }}"{% if isCurrent %} aria-current="page"{% endif %}>{{ item.pageId | localizedNavLabel(lang) }}</a>
+          {# Check for child items #}
+          {% set children = [] %}
+          {% for child in navigation.pages %}
+            {% if child.parent == item.pageId %}
+              {% set children = (children.push(child), children) %}
+            {% endif %}
+          {% endfor %}
+          {% if children.length > 0 %}
+            <ul class="nav-children">
+              {% for child in navigation.pages %}
+                {% if child.parent == item.pageId %}
+                  {% set childUrl = child.pageId | localizedUrl(lang) %}
+                  {% set isChildCurrent = page.url == childUrl %}
+                  <li class="nav-item{% if isChildCurrent %} active{% endif %}">
+                    <a href="{{ childUrl }}"{% if isChildCurrent %} aria-current="page"{% endif %}>{{ child.pageId | localizedNavLabel(lang) }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</nav>

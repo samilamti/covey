@@ -1,0 +1,17 @@
+---
+layout: layouts/base.njk
+---
+{% include "partials/header.njk" %}
+
+<div class="page-wrapper">
+  {% include "partials/nav.njk" %}
+
+  <main class="content">
+    <article>
+      <h1>{{ title }}</h1>
+      {{ content | safe }}
+    </article>
+  </main>
+</div>
+
+{% include "partials/footer.njk" %}

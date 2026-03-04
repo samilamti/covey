@@ -1,0 +1,14 @@
+<div class="lang-switcher">
+  <button class="lang-trigger" aria-expanded="false" aria-haspopup="listbox" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'); this.nextElementSibling.classList.toggle('open')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    <span>{{ locale }}</span>
+  </button>
+  <ul class="lang-list" role="listbox" aria-label="Language">
+    {% for l in languages %}
+      {% set targetUrl = pageId | localizedUrl(l.code) %}
+      <li role="option"{% if l.code == lang %} aria-selected="true"{% endif %}>
+        <a href="{{ targetUrl }}"{% if l.code == lang %} class="current"{% endif %} lang="{{ l.code }}">{{ l.label }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

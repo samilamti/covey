@@ -1,0 +1,74 @@
+{
+  "pages": [
+    {
+      "pageId": "home",
+      "icon": "home",
+      "slugs": { "sv": "", "nb": "", "da": "", "fi": "", "ar": "", "is": "", "pl": "", "fo": "", "kl": "", "se": "", "uk": "", "en": "" }
+    },
+    {
+      "pageId": "how-it-works",
+      "icon": "info",
+      "slugs": { "sv": "hur-det-fungerar", "nb": "hvordan-det-fungerer", "da": "hvordan-det-virker", "fi": "miten-se-toimii", "ar": "كيف-يعمل", "is": "hvernig-virkar", "pl": "jak-to-dziala", "fo": "hvussu-virkar", "kl": "qanoq-suliffissarpa", "se": "movt-doaibma", "uk": "yak-tse-pratsyuye", "en": "how-it-works" }
+    },
+    {
+      "pageId": "privacy",
+      "icon": "shield",
+      "slugs": { "sv": "integritet", "nb": "personvern", "da": "privatlivspolitik", "fi": "tietosuoja", "ar": "الخصوصية", "is": "personuvernd", "pl": "prywatnosc", "fo": "privatliv", "kl": "inuup-namminersorneqarnera", "se": "priváhtta", "uk": "konfidentsiinist", "en": "privacy" }
+    },
+    {
+      "pageId": "code-of-conduct",
+      "icon": "handshake",
+      "slugs": { "sv": "uppforandekod", "nb": "retningslinjer", "da": "retningslinjer", "fi": "kayttaytymisohjeet", "ar": "قواعد-السلوك", "is": "hegdunarreglur", "pl": "kodeks-postepowania", "fo": "reglur", "kl": "inatsisit", "se": "njuolggadusat", "uk": "kodeks-povedinky", "en": "code-of-conduct" }
+    },
+    {
+      "pageId": "glossary",
+      "icon": "book",
+      "slugs": { "sv": "ordlista", "nb": "ordliste", "da": "ordliste", "fi": "sanasto", "ar": "المصطلحات", "is": "oroaskra", "pl": "slownik", "fo": "oroabók", "kl": "oqaatsit", "se": "sátnelistu", "uk": "hlosarij", "en": "glossary" }
+    },
+    {
+      "pageId": "transparency",
+      "icon": "eye",
+      "slugs": { "sv": "transparens", "nb": "transparens", "da": "transparens", "fi": "laapinakyvyys", "ar": "الشفافية", "is": "gagnsaei", "pl": "transparentnosc", "fo": "sjónleiki", "kl": "nalunaarutigiinnarneq", "se": "čađatčielggasvuohta", "uk": "prozorist", "en": "transparency" }
+    },
+    {
+      "pageId": "contribute",
+      "icon": "heart",
+      "slugs": { "sv": "bidra", "nb": "bidra", "da": "bidrag", "fi": "osallistu", "ar": "ساهم", "is": "leggja-til", "pl": "wspolpraca", "fo": "stuðla", "kl": "peqataanissamut", "se": "váikkuhit", "uk": "dopomoha", "en": "contribute" }
+    },
+    {
+      "pageId": "contribute-developer",
+      "parent": "contribute",
+      "slugs": { "sv": "bidra/utvecklare", "nb": "bidra/utviklere", "da": "bidrag/udviklere", "fi": "osallistu/kehittajat", "ar": "ساهم/مطورون", "is": "leggja-til/thróunaraðilar", "pl": "wspolpraca/programisci", "fo": "stuðla/forritarar", "kl": "peqataanissamut/sulisartut", "se": "váikkuhit/ovddideaddjit", "uk": "dopomoha/rozrobnyky", "en": "contribute/developers" }
+    },
+    {
+      "pageId": "contribute-legal",
+      "parent": "contribute",
+      "slugs": { "sv": "bidra/juridik", "nb": "bidra/juridisk", "da": "bidrag/juridisk", "fi": "osallistu/laki", "ar": "ساهم/قانوني", "is": "leggja-til/logfraedi", "pl": "wspolpraca/prawnik", "fo": "stuðla/løgfrøði", "kl": "peqataanissamut/inatsisit", "se": "váikkuhit/juridihkka", "uk": "dopomoha/yurydychna", "en": "contribute/legal" }
+    },
+    {
+      "pageId": "contribute-student",
+      "parent": "contribute",
+      "slugs": { "sv": "bidra/student", "nb": "bidra/student", "da": "bidrag/studerende", "fi": "osallistu/opiskelijat", "ar": "ساهم/طلاب", "is": "leggja-til/nemendur", "pl": "wspolpraca/studenci", "fo": "stuðla/lesandi", "kl": "peqataanissamut/atuartut", "se": "váikkuhit/studeanttat", "uk": "dopomoha/studenty", "en": "contribute/students" }
+    },
+    {
+      "pageId": "contribute-entrepreneur",
+      "parent": "contribute",
+      "slugs": { "sv": "bidra/entreprenor", "nb": "bidra/entreprenor", "da": "bidrag/ivaerksaetter", "fi": "osallistu/yrittajat", "ar": "ساهم/رواد-اعمال", "is": "leggja-til/frumkvodlar", "pl": "wspolpraca/przedsiebiorcy", "fo": "stuðla/framiløga", "kl": "peqataanissamut/pisiniarfissaq", "se": "váikkuhit/fitnodagat", "uk": "dopomoha/pidpryyemtsi", "en": "contribute/entrepreneurs" }
+    },
+    {
+      "pageId": "contribute-financial",
+      "parent": "contribute",
+      "slugs": { "sv": "bidra/ekonomiskt", "nb": "bidra/okonomisk", "da": "bidrag/okonomisk", "fi": "osallistu/taloudellisesti", "ar": "ساهم/ماليا", "is": "leggja-til/fjarhagslegur", "pl": "wspolpraca/finansowo", "fo": "stuðla/fíggjarliga", "kl": "peqataanissamut/aningaasaqarnermi", "se": "váikkuhit/ekonomalaččat", "uk": "dopomoha/finansovo", "en": "contribute/financially" }
+    },
+    {
+      "pageId": "contribute-nontechnical",
+      "parent": "contribute",
+      "slugs": { "sv": "bidra/icke-teknisk", "nb": "bidra/ikke-teknisk", "da": "bidrag/ikke-teknisk", "fi": "osallistu/ei-tekninen", "ar": "ساهم/غير-تقني", "is": "leggja-til/otaeknilegt", "pl": "wspolpraca/nietechniczny", "fo": "stuðla/ikki-tekniskt", "kl": "peqataanissamut/pisinnaatitaanngitsoq", "se": "váikkuhit/ii-teknihkalaš", "uk": "dopomoha/netekhnichna", "en": "contribute/non-technical" }
+    },
+    {
+      "pageId": "contribute-quick",
+      "parent": "contribute",
+      "slugs": { "sv": "bidra/snabba-insatser", "nb": "bidra/raske-bidrag", "da": "bidrag/hurtige-indsatser", "fi": "osallistu/nopeat-teot", "ar": "ساهم/مساهمات-سريعة", "is": "leggja-til/fljotleg-framlog", "pl": "wspolpraca/szybkie-dzialania", "fo": "stuðla/skjót-íkast", "kl": "peqataanissamut/sukkasuumik", "se": "váikkuhit/jođánis-dahkut", "uk": "dopomoha/shvydki-diyi", "en": "contribute/quick-actions" }
+    }
+  ]
+}
