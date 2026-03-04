@@ -27,6 +27,12 @@ steps:
       - cd frontend && npm ci
       - cd frontend && npm run build
 
+  - name: docs-build
+    image: node:22-alpine
+    commands:
+      - cd docs-site && npm ci
+      - cd docs-site && npm run build
+
 services:
   - name: postgres
     image: postgres:16-alpine

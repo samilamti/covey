@@ -22,6 +22,11 @@ services:
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls=true"
 
+  docs:
+    labels:
+      - "traefik.http.routers.docs.entrypoints=websecure"
+      - "traefik.http.routers.docs.tls=true"
+
   traefik:
     command:
       - "--providers.docker=true"
