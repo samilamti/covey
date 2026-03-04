@@ -21,8 +21,8 @@ export function rateLimit({ windowMs, max, keyFn, message } = {}) {
   /** Map<key, { timestamps: number[] }> */
   const clients = new Map()
 
-  // Cleanup old entries every window period
-  setInterval(() => {
+  // Cleanup old entries every window period (unref so it doesn't prevent process exit)
+  const cleanup = setInterval(() => {
     const now = Date.now()
     for (const [key, data] of clients) {
       data.timestamps = data.timestamps.filter((t) => now - t < window)
@@ -31,6 +31,7 @@ export function rateLimit({ windowMs, max, keyFn, message } = {}) {
       }
     }
   }, window)
+  cleanup.unref()
 
   return (req, res, next) => {
     const key = getKey(req)
