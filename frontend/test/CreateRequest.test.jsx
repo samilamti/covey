@@ -23,6 +23,18 @@ vi.mock('../src/components/icons/WaitIcon', () => ({
   WaitIcon: () => h('span', null, 'WaitIcon'),
 }))
 
+vi.mock('../src/components/icons/FewPeopleIcon', () => ({
+  FewPeopleIcon: () => h('span', null, 'FewPeopleIcon'),
+}))
+
+vi.mock('../src/components/icons/MorePeopleIcon', () => ({
+  MorePeopleIcon: () => h('span', null, 'MorePeopleIcon'),
+}))
+
+vi.mock('../src/components/icons/EveryoneIcon', () => ({
+  EveryoneIcon: () => h('span', null, 'EveryoneIcon'),
+}))
+
 vi.mock('../src/services/requests', () => ({
   requestService: {
     create: vi.fn().mockResolvedValue({ request: { id: 'new-1', type: 'walk', status: 'open' } }),

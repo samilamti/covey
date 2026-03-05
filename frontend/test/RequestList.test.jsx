@@ -14,6 +14,7 @@ vi.mock('react-i18next', () => ({
 vi.mock('lucide-preact', () => ({
   HelpCircle: (props) => h('span', props, 'HelpCircle'),
   Plus: (props) => h('span', props, 'Plus'),
+  List: (props) => h('span', props, 'List'),
   Send: (props) => h('span', props, 'Send'),
   MapPin: (props) => h('span', props, 'MapPin'),
   X: (props) => h('span', props, 'X'),
@@ -21,6 +22,7 @@ vi.mock('lucide-preact', () => ({
   User: (props) => h('span', props, 'User'),
   CheckCircle: (props) => h('span', props, 'CheckCircle'),
   AlertCircle: (props) => h('span', props, 'AlertCircle'),
+  ArrowLeft: (props) => h('span', props, 'ArrowLeft'),
 }))
 
 vi.mock('../src/services/requests', () => ({
@@ -95,12 +97,30 @@ describe('RequestList', () => {
     })
   })
 
-  it('shows create request form when user has no requests', async () => {
-    const { getAllByText } = render(<RequestList currentUserId="user-a" />)
+  it('shows create request form by default', async () => {
+    const { getByText } = render(<RequestList currentUserId="user-a" />)
     await waitFor(() => {
-      // Header button + inline CreateRequest form h3 both show this key
-      const matches = getAllByText('requests.create')
-      expect(matches.length).toBeGreaterThanOrEqual(2)
+      // Header shows "view requests" toggle, form shows "Ny förfrågan" header
+      expect(getByText('requests.viewRequests')).toBeTruthy()
+      expect(getByText('requests.create')).toBeTruthy()
+    })
+  })
+
+  it('toggles between create form and request list', async () => {
+    const { getByText, queryByText } = render(<RequestList currentUserId="user-a" />)
+    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
+
+    // Click "view requests" to hide create form
+    fireEvent.click(getByText('requests.viewRequests'))
+    await waitFor(() => {
+      expect(getByText('requests.create')).toBeTruthy() // now shows "Ny förfrågan" button
+      expect(queryByText('requests.viewRequests')).toBeNull()
+    })
+
+    // Click "Ny förfrågan" to show create form again
+    fireEvent.click(getByText('requests.create'))
+    await waitFor(() => {
+      expect(getByText('requests.viewRequests')).toBeTruthy()
     })
   })
 
@@ -118,16 +138,18 @@ describe('RequestList', () => {
 
   it('shows LocationBanner when geolocation is denied', async () => {
     geoState = { ...geoState, position: null, error: 'denied', loading: false }
-    // Provide a request so the inline CreateRequest (with its own LocationBanner) doesn't render
     requestService.list.mockResolvedValue({ requests: [{
       id: 'r1', type: 'walk', status: 'open', message: '',
       requester_id: 'user-a', helper_id: null,
       pickup_lat: null, pickup_lng: null,
       eligibility_tier: 'any_member', created_at: new Date().toISOString(),
     }] })
-    const { getByText } = render(<RequestList currentUserId="user-a" />)
+    const { getByText, getAllByText } = render(<RequestList currentUserId="user-a" />)
+    // Toggle to list view to avoid duplicate LocationBanner from CreateRequest
+    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
+    fireEvent.click(getByText('requests.viewRequests'))
     await waitFor(() => {
-      expect(getByText('location.denied')).toBeTruthy()
+      expect(getAllByText('location.denied').length).toBeGreaterThanOrEqual(1)
     })
   })
 
@@ -139,9 +161,11 @@ describe('RequestList', () => {
       pickup_lat: null, pickup_lng: null,
       eligibility_tier: 'any_member', created_at: new Date().toISOString(),
     }] })
-    const { getByText } = render(<RequestList currentUserId="user-a" />)
+    const { getByText, getAllByText } = render(<RequestList currentUserId="user-a" />)
+    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
+    fireEvent.click(getByText('requests.viewRequests'))
     await waitFor(() => {
-      expect(getByText('location.unavailable')).toBeTruthy()
+      expect(getAllByText('location.unavailable').length).toBeGreaterThanOrEqual(1)
     })
   })
 
@@ -154,10 +178,12 @@ describe('RequestList', () => {
       pickup_lat: null, pickup_lng: null,
       eligibility_tier: 'any_member', created_at: new Date().toISOString(),
     }] })
-    const { getByText } = render(<RequestList currentUserId="user-a" />)
+    const { getByText, getAllByText } = render(<RequestList currentUserId="user-a" />)
+    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
+    fireEvent.click(getByText('requests.viewRequests'))
     await waitFor(() => {
-      const btn = getByText('location.retry')
-      fireEvent.click(btn)
+      const btns = getAllByText('location.retry')
+      fireEvent.click(btns[0])
       expect(retryFn).toHaveBeenCalledOnce()
     })
   })
@@ -175,6 +201,9 @@ describe('RequestList', () => {
     requestService.list.mockResolvedValue({ requests: [] })
 
     const { getByText } = render(<RequestList currentUserId="user-a" />)
+    // Toggle to list view (create form is shown by default)
+    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
+    fireEvent.click(getByText('requests.viewRequests'))
     await waitFor(() => {
       // The mocked formatDistance returns '~800m bort'
       expect(getByText('~800m bort')).toBeTruthy()
@@ -193,6 +222,9 @@ describe('RequestList', () => {
     requestService.list.mockResolvedValue({ requests: [] })
 
     const { getByText } = render(<RequestList currentUserId="user-a" />)
+    // Toggle to list view
+    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
+    fireEvent.click(getByText('requests.viewRequests'))
     await waitFor(() => {
       expect(getByText('requests.locationAvailable')).toBeTruthy()
     })
