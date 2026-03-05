@@ -103,6 +103,7 @@ Scaffolding skills encode project conventions (route ordering, 4-file feature fl
 - **Geolocation**: Centralized `useGeolocation` hook in `frontend/src/hooks/useGeolocation.js` — replaces all inline `navigator.geolocation` calls. Returns `{ position, error, loading, retry, supported }`. Error codes mapped: 1→`denied`, 2→`unavailable`, 3→`timeout`. `LocationBanner` component shows user-facing feedback with retry button. Used by `RequestList` (info severity), `CreateRequest` (info), and `ActiveSession` (warning — safety-critical). Never call `navigator.geolocation` directly from components. Includes `visibilitychange` listener — automatically re-acquires position when the page regains focus (one-shot mode re-calls `getCurrentPosition`, watch mode restarts `watchPosition`).
 - **Mutual done flow**: Either party can initiate "done" (`active` → `done_pending`). The other party accepts (`→ completed`) or rejects (`→ active`). Simultaneous done clicks auto-complete. Tracked via `done_initiated_by`/`done_initiated_at` columns. Routes: `/:id/done`, `/:id/done/accept`, `/:id/done/reject`. Socket events: `request:done-initiated`, `request:done-rejected`. Location relay + messaging remain active during `done_pending`. `ActiveSession` re-fetches request state on socket reconnect and `visibilitychange` to catch missed events. `MainLayout` keeps persistent listeners for `request:done-initiated` and `request:accepted` — auto-navigates to Requests tab and bumps a `refreshKey` that forces `RequestList` re-mount.
 - **Push subscription**: `subscribeToPush()` is called fire-and-forget after both session restore and fresh login in `App.jsx`. Errors are silently logged. Relies on `VITE_VAPID_PUBLIC_KEY` build-time env var.
+- **PWA update strategy**: Service worker uses network-first for navigation requests (always fetches fresh `index.html`), cache-first for fingerprinted static assets. Cache name includes a build timestamp (`covey-<version>`) injected by a Vite `closeBundle` plugin — each deploy produces a byte-different `sw.js`, triggering the browser's update flow. `main.jsx` polls `reg.update()` every 5 minutes and auto-reloads on `controllerchange` (with `sessionStorage` loop guard). nginx serves `sw.js` and `index.html` with `no-cache, no-store, must-revalidate`.
 
 ## Localization
 
@@ -181,7 +182,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 
 ### Frontend
 - `frontend/src/App.jsx` — Root with FeatureFlagProvider, session restore, socket connect
-- `frontend/src/main.jsx` — Entry point + service worker registration
+- `frontend/src/main.jsx` — Entry point + service worker registration with update detection (5-min polling, auto-reload on controllerchange)
 - `frontend/src/i18n.js` — i18next config (12 languages, Swedish fallback)
 - `frontend/src/socket.js` — Socket.io client (autoConnect: false, polling-first)
 - `frontend/src/context/FeatureFlagContext.jsx` — Feature flag context + hooks
@@ -207,7 +208,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `frontend/src/components/BottomNav.jsx` — Mobile tab navigation
 - `frontend/src/services/` — API clients (auth, features, notifications, profile, ratings, requests)
 - `frontend/src/locales/*.json` — 12 locale files (sv.json is canonical)
-- `frontend/public/sw.js` — Service worker (push, offline cache)
+- `frontend/public/sw.js` — Service worker (push, offline cache, network-first navigation, build-stamped cache versioning)
 - `frontend/vitest.config.js` — Test config (jsdom, preact aliases)
 
 ### CI/CD
