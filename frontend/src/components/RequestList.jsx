@@ -32,8 +32,10 @@ export function RequestList({ currentUserId }) {
     try {
       const { requests: data } = await requestService.list()
       setRequests(data)
+      return data
     } catch (err) {
       console.error('Load requests error:', err.message)
+      return []
     } finally {
       setLoading(false)
     }
@@ -68,14 +70,22 @@ export function RequestList({ currentUserId }) {
   }
 
   const loadAll = async () => {
-    const [, openResult] = await Promise.all([
+    const [requestsResult, openResult] = await Promise.all([
       loadRequests(),
       loadOpenRequests(),
       loadPendingRatings(),
     ])
     if (!initialViewDecided.current) {
       initialViewDecided.current = true
-      setShowCreate(openResult.length === 0)
+      const active = requestsResult.find(
+        (r) => ['active', 'accepted', 'done_pending'].includes(r.status) &&
+               (r.requester_id === currentUserId || r.helper_id === currentUserId)
+      )
+      if (active) {
+        setActiveSession(active)
+      } else {
+        setShowCreate(openResult.length === 0)
+      }
     }
   }
 
@@ -196,6 +206,11 @@ export function RequestList({ currentUserId }) {
 
   return (
     <div>
+      {/* Pending ratings — above the heading for prominence */}
+      {pendingRatings.map((pr) => (
+        <RatingBanner key={pr.request_id} pendingRating={pr} onRated={handleRated} />
+      ))}
+
       {/* Header + create button */}
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-bold">{t('requests.title')}</h2>
@@ -230,11 +245,6 @@ export function RequestList({ currentUserId }) {
 
       {/* Location banner */}
       <LocationBanner error={geoError} onRetry={retryGeo} />
-
-      {/* Pending ratings */}
-      {pendingRatings.map((pr) => (
-        <RatingBanner key={pr.request_id} pendingRating={pr} onRated={handleRated} />
-      ))}
 
       {/* Active session banner */}
       {activeRequest && (

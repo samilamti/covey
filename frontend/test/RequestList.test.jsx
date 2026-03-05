@@ -23,6 +23,8 @@ vi.mock('lucide-preact', () => ({
   CheckCircle: (props) => h('span', props, 'CheckCircle'),
   AlertCircle: (props) => h('span', props, 'AlertCircle'),
   ArrowLeft: (props) => h('span', props, 'ArrowLeft'),
+  MessageCircle: (props) => h('span', props, 'MessageCircle'),
+  Phone: (props) => h('span', props, 'Phone'),
 }))
 
 vi.mock('../src/services/requests', () => ({
@@ -49,6 +51,10 @@ vi.mock('../src/socket', () => ({
     off: vi.fn(),
     emit: vi.fn(),
   },
+}))
+
+vi.mock('../src/components/ActiveSession', () => ({
+  ActiveSession: ({ request }) => h('div', { 'data-testid': 'active-session' }, `ActiveSession:${request.id}`),
 }))
 
 vi.mock('../src/utils/geo', () => ({
@@ -270,7 +276,7 @@ describe('RequestList', () => {
     })
   })
 
-  it('shows active session banner when user has an active request', async () => {
+  it('auto-navigates to ActiveSession when user has an active request', async () => {
     const myRequests = [{
       id: 'r1', type: 'walk', status: 'active', message: '',
       requester_id: 'user-a', helper_id: 'user-b',
@@ -279,10 +285,9 @@ describe('RequestList', () => {
     }]
     requestService.list.mockResolvedValue({ requests: myRequests })
 
-    const { getByText } = render(<RequestList currentUserId="user-a" />)
+    const { getByTestId } = render(<RequestList currentUserId="user-a" />)
     await waitFor(() => {
-      expect(getByText('requests.activeSession')).toBeTruthy()
-      expect(getByText('requests.tapToView')).toBeTruthy()
+      expect(getByTestId('active-session')).toBeTruthy()
     })
   })
 })
