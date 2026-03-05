@@ -79,8 +79,10 @@
     "activeSession": "Active session in progress",
     "tapToView": "Tap to view the map",
     "types": {
-      "walk": "Walk home",
-      "wait": "Wait with me"
+      "walk": "Walk",
+      "walkExamples": "E.g. from the bus to your home, to the shop",
+      "wait": "Wait",
+      "waitExamples": "E.g. wait for the bus, train or your ride"
     },
     "eligibility": "Who can help you?",
     "tiers": {

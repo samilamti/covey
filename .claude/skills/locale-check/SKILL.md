@@ -3,19 +3,15 @@ name: locale-check
 description: Validate i18n key parity across all 12 locale files. Use after editing locale files or before committing i18n changes.
 ---
 
-Validate i18n key parity across all 12 locale files.
+Validate i18n key parity across all 12 locale files using a dedicated script.
 
-1. Read `frontend/src/locales/sv.json` — this is the canonical source of truth.
-2. Read all other locale files: `nb.json`, `da.json`, `fi.json`, `ar.json`, `is.json`, `pl.json`, `fo.json`, `kl.json`, `se.json`, `uk.json`, `en.json`.
-3. For each locale file:
-   - Verify it parses as valid JSON
-   - Extract all keys (recursively for nested objects, using dot notation like `request.title`)
-   - Compare against `sv.json` keys
-   - Report missing keys (in sv but not in this locale)
-   - Report extra keys (in this locale but not in sv)
-4. Summarize results:
-   - If all files are in parity: report success
-   - If there are issues: list each locale with its missing/extra keys
+Run this command via Bash:
+
+```bash
+node .claude/scripts/locale-check.cjs
+```
+
+Report the output to the user. If there are missing/extra keys, suggest fixes.
 
 ## Locale files
 Path: `frontend/src/locales/`
@@ -24,4 +20,5 @@ Languages: sv (canonical), nb, da, fi, ar, is, pl, fo, kl, se, uk, en (12 total)
 ## Notes
 - Swedish (`sv`) is the base language, NOT English
 - All translations should be derived from Swedish source text
+- The script at `.claude/scripts/locale-check.cjs` recursively extracts all keys (dot notation) from each locale file and compares against `sv.json`
 - The frontend test suite includes a parity test (`test/i18n.test.js`) that checks the same thing — this skill is a quick standalone check without running the full test suite

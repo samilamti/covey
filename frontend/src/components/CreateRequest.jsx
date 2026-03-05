@@ -4,6 +4,8 @@ import { Send, MapPin, X } from 'lucide-preact'
 import { requestService } from '../services/requests'
 import { LocationBanner } from './LocationBanner'
 import { useGeolocation } from '../hooks/useGeolocation'
+import { WalkIcon } from './icons/WalkIcon'
+import { WaitIcon } from './icons/WaitIcon'
 
 /**
  * CreateRequest — form to create a new assistance request.
@@ -57,26 +59,26 @@ export function CreateRequest({ onCreated, onClose }) {
 
       <form onSubmit={handleSubmit} class="space-y-4">
         {/* Request type */}
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
-            {t('requests.type')}
-          </label>
-          <div class="flex gap-2">
-            {['walk', 'wait'].map((reqType) => (
-              <button
-                key={reqType}
-                type="button"
-                onClick={() => setType(reqType)}
-                class={`flex-1 px-3 py-2 rounded-lg text-sm font-medium border transition-colors ${
-                  type === reqType
-                    ? 'bg-indigo-50 border-indigo-300 text-indigo-700'
-                    : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
-                }`}
-              >
-                {t(`requests.types.${reqType}`)}
-              </button>
-            ))}
-          </div>
+        <div class="flex gap-3">
+          {[
+            { key: 'walk', Icon: WalkIcon },
+            { key: 'wait', Icon: WaitIcon },
+          ].map(({ key, Icon }) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setType(key)}
+              class={`flex-1 flex flex-col items-center text-center px-4 py-5 rounded-xl border-2 transition-colors ${
+                type === key
+                  ? 'bg-indigo-50 border-indigo-400 text-indigo-700'
+                  : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              <Icon size={44} />
+              <span class="text-lg font-bold mt-2">{t(`requests.types.${key}`)}</span>
+              <span class="text-xs opacity-60 mt-1 leading-snug">{t(`requests.types.${key}Examples`)}</span>
+            </button>
+          ))}
         </div>
 
         {/* Eligibility tier */}

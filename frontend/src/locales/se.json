@@ -79,8 +79,10 @@
     "activeSession": "Aktiivvalaš čoahkkin joatkkemin",
     "tapToView": "Deatte geahččat kártta",
     "types": {
-      "walk": "Mielde ruoktot",
-      "wait": "Vuordde mu mielde"
+      "walk": "Vácci",
+      "walkExamples": "Ovd. bussas ruoktot, gávpái",
+      "wait": "Vuordde",
+      "waitExamples": "Ovd. vuordde busse, togga dahje skovlla"
     },
     "eligibility": "Gii sáhttá veahkehit du?",
     "tiers": {

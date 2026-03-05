@@ -79,8 +79,10 @@
     "activeSession": "Aktiivinen istunto käynnissä",
     "tapToView": "Napauta nähdäksesi kartan",
     "types": {
-      "walk": "Seuraa kotiin",
-      "wait": "Odota kanssani"
+      "walk": "Kävele",
+      "walkExamples": "Esim. bussista kotiin, kauppaan",
+      "wait": "Odota",
+      "waitExamples": "Esim. odota bussia, junaa tai kyytiä"
     },
     "eligibility": "Kuka saa auttaa sinua?",
     "tiers": {

@@ -15,6 +15,14 @@ vi.mock('lucide-preact', () => ({
   X: () => h('span', null, 'X'),
 }))
 
+vi.mock('../src/components/icons/WalkIcon', () => ({
+  WalkIcon: () => h('span', null, 'WalkIcon'),
+}))
+
+vi.mock('../src/components/icons/WaitIcon', () => ({
+  WaitIcon: () => h('span', null, 'WaitIcon'),
+}))
+
 vi.mock('../src/services/requests', () => ({
   requestService: {
     create: vi.fn().mockResolvedValue({ request: { id: 'new-1', type: 'walk', status: 'open' } }),
@@ -59,15 +67,15 @@ describe('CreateRequest', () => {
 
   it('has walk selected by default', () => {
     const { getByText } = render(<CreateRequest />)
-    const walkBtn = getByText('requests.types.walk')
+    const walkBtn = getByText('requests.types.walk').closest('button')
     expect(walkBtn.className).toContain('bg-indigo-50')
   })
 
   it('clicking wait selects wait type', async () => {
     const { getByText } = render(<CreateRequest />)
     await fireEvent.click(getByText('requests.types.wait'))
-    expect(getByText('requests.types.wait').className).toContain('bg-indigo-50')
-    expect(getByText('requests.types.walk').className).not.toContain('bg-indigo-50')
+    expect(getByText('requests.types.wait').closest('button').className).toContain('bg-indigo-50')
+    expect(getByText('requests.types.walk').closest('button').className).not.toContain('bg-indigo-50')
   })
 
   it('renders all three eligibility tier options', () => {

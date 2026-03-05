@@ -79,8 +79,10 @@
     "activeSession": "Aktiv session pågår",
     "tapToView": "Tryck för att visa kartan",
     "types": {
-      "walk": "Sällskap hem",
-      "wait": "Vänta med mig"
+      "walk": "Gå",
+      "walkExamples": "T.ex. från bussen till hemmet, till affären",
+      "wait": "Vänta",
+      "waitExamples": "T.ex. vänta på bussen, tåget eller skjutsen"
     },
     "eligibility": "Vem får hjälpa dig?",
     "tiers": {

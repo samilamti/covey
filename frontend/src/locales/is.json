@@ -79,8 +79,10 @@
     "activeSession": "Virk lota í gangi",
     "tapToView": "Ýttu til að skoða kortið",
     "types": {
-      "walk": "Fylgd heim",
-      "wait": "Bíddu með mér"
+      "walk": "Ganga",
+      "walkExamples": "T.d. frá strætó heim, í búðina",
+      "wait": "Bíða",
+      "waitExamples": "T.d. bíða eftir strætó, lest eða ferð"
     },
     "eligibility": "Hver má hjálpa þér?",
     "tiers": {

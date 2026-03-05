@@ -79,8 +79,10 @@
     "activeSession": "Virkin seta í gongd",
     "tapToView": "Trýst fyri at síggja kortið",
     "types": {
-      "walk": "Fylgi heim",
-      "wait": "Bíða við meg"
+      "walk": "Ganga",
+      "walkExamples": "T.d. frá bussi heim, til handils",
+      "wait": "Bíða",
+      "waitExamples": "T.d. bíða eftir bussi, tog ella ferð"
     },
     "eligibility": "Hvør fær at hjálpa tær?",
     "tiers": {

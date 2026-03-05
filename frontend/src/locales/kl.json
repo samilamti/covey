@@ -79,8 +79,10 @@
     "activeSession": "Suliassaqarpoq sulinermini",
     "tapToView": "Nunap assinga takukkumavdlugo tooruk",
     "types": {
-      "walk": "Angerlarsimassutit ilaginiarlunga",
-      "wait": "Utaqqigit"
+      "walk": "Pisullunga",
+      "walkExamples": "Soorlu bussimit angerlarnermut, niuvertoqarfimmut",
+      "wait": "Utaqqit",
+      "waitExamples": "Soorlu bussi, toget imaluunniit angalaffik utaqqissallugu"
     },
     "eligibility": "Kina ikiorsinnaavat?",
     "tiers": {

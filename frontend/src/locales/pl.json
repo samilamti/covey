@@ -79,8 +79,10 @@
     "activeSession": "Aktywna sesja w toku",
     "tapToView": "Dotknij, aby zobaczyć mapę",
     "types": {
-      "walk": "Towarzystwo do domu",
-      "wait": "Poczekaj ze mną"
+      "walk": "Idź",
+      "walkExamples": "Np. z autobusu do domu, do sklepu",
+      "wait": "Czekaj",
+      "waitExamples": "Np. czekanie na autobus, pociąg lub podwózkę"
     },
     "eligibility": "Kto może ci pomóc?",
     "tiers": {

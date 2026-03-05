@@ -79,8 +79,10 @@
     "activeSession": "Aktiv økt pågår",
     "tapToView": "Trykk for å vise kartet",
     "types": {
-      "walk": "Følge hjem",
-      "wait": "Vent med meg"
+      "walk": "Gå",
+      "walkExamples": "F.eks. fra bussen til hjemmet, til butikken",
+      "wait": "Vente",
+      "waitExamples": "F.eks. vente på bussen, toget eller skyssen"
     },
     "eligibility": "Hvem kan hjelpe deg?",
     "tiers": {
