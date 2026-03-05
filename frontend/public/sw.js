@@ -4,7 +4,7 @@
  * Handles push notifications and offline caching of the app shell.
  */
 
-const CACHE_NAME = 'covey-v1'
+const CACHE_NAME = 'covey-__SW_VERSION__'
 const MAX_CACHE_ENTRIES = 100
 const APP_SHELL = [
   '/',
@@ -35,12 +35,15 @@ self.addEventListener('activate', (event) => {
   self.clients.claim()
 })
 
-// --- Fetch: cache-first for static, network-first for API ---
+// --- Fetch: network-first for navigation + API, cache-first for static assets ---
 self.addEventListener('fetch', (event) => {
   const { request } = event
   const url = new URL(request.url)
 
-  // Network-first for API calls
+  // Only handle GET requests
+  if (request.method !== 'GET') return
+
+  // Network-first for API calls and Socket.io
   if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/socket.io/')) {
     event.respondWith(
       fetch(request).catch(() => caches.match(request))
@@ -48,7 +51,24 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // Cache-first for static assets
+  // Network-first for navigation requests (HTML pages like index.html)
+  // Ensures users always get the latest index.html with current asset hashes
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const clone = response.clone()
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
+          }
+          return response
+        })
+        .catch(() => caches.match('/index.html'))
+    )
+    return
+  }
+
+  // Cache-first for static assets (JS, CSS, images — fingerprinted by Vite)
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) return cached
