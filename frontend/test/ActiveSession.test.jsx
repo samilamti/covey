@@ -312,4 +312,80 @@ describe('ActiveSession', () => {
     const msgToggles = queryByText('messages.title')
     expect(msgToggles).toBeNull()
   })
+
+  /* ── Reconnect and visibility refresh ── */
+
+  it('registers connect listener for reconnect refresh', () => {
+    render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    const onCalls = socket.on.mock.calls.map(([event]) => event)
+    expect(onCalls).toContain('connect')
+  })
+
+  it('re-fetches request state on socket reconnect', async () => {
+    const { requestService } = await import('../src/services/requests')
+    requestService.get.mockResolvedValue({
+      request: { id: 'r1', status: 'done_pending', done_initiated_by: 'user-b' },
+    })
+
+    render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    vi.clearAllMocks()
+
+    // Simulate socket reconnect
+    listeners['connect']?.forEach((fn) => fn())
+
+    await waitFor(() => {
+      expect(requestService.get).toHaveBeenCalledWith('r1')
+    })
+  })
+
+  it('re-fetches request state on visibilitychange', async () => {
+    const { requestService } = await import('../src/services/requests')
+    requestService.get.mockResolvedValue({
+      request: { id: 'r1', status: 'done_pending', done_initiated_by: 'user-b' },
+    })
+
+    render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    vi.clearAllMocks()
+
+    Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true })
+    document.dispatchEvent(new Event('visibilitychange'))
+
+    await waitFor(() => {
+      expect(requestService.get).toHaveBeenCalledWith('r1')
+    })
+  })
+
+  it('updates UI from re-fetched done_pending state', async () => {
+    const { requestService } = await import('../src/services/requests')
+    requestService.get.mockResolvedValue({
+      request: { id: 'r1', status: 'done_pending', done_initiated_by: 'user-b' },
+    })
+
+    const { getByText } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+
+    // Simulate socket reconnect to trigger refresh
+    listeners['connect']?.forEach((fn) => fn())
+
+    await waitFor(() => {
+      expect(getByText('requests.doneProposal')).toBeTruthy()
+    })
+  })
+
+  it('cleans up connect listener on unmount', () => {
+    const { unmount } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    unmount()
+
+    const offCalls = socket.off.mock.calls.map(([event]) => event)
+    expect(offCalls).toContain('connect')
+  })
 })

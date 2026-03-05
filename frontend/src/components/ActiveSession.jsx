@@ -153,6 +153,33 @@ export function ActiveSession({ request, currentUserId, onClose }) {
     }
   }, [request.id, currentUserId])
 
+  // Re-sync request state on reconnect and visibility change.
+  // Catches missed socket events during disconnect or background.
+  useEffect(() => {
+    const refreshState = () => {
+      requestService.get(request.id)
+        .then(({ request: updated }) => {
+          setStatus(updated.status)
+          setDoneInitiatedBy(updated.done_initiated_by || null)
+        })
+        .catch(() => {})
+    }
+
+    socket.on('connect', refreshState)
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        refreshState()
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+
+    return () => {
+      socket.off('connect', refreshState)
+      document.removeEventListener('visibilitychange', handleVisibility)
+    }
+  }, [request.id])
+
   // Update map markers when positions change
   useEffect(() => {
     const L = leafletRef.current
