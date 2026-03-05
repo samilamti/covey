@@ -12,7 +12,12 @@ export function ProfileView({ user, onLogout }) {
 
   useEffect(() => {
     profileService.get()
-      .then(({ user: profileData }) => setProfile(profileData))
+      .then(({ user: profileData }) => {
+        setProfile(profileData)
+        if (profileData.displayName) {
+          setDisplayName(profileData.displayName)
+        }
+      })
       .catch(() => {})
   }, [])
 
