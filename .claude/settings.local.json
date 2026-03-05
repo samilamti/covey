@@ -42,7 +42,12 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:www.blueoctopustechnology.com)",
       "WebFetch(domain:soul.md)",
-      "WebFetch(domain:dev.to)"
+      "WebFetch(domain:dev.to)",
+      "Bash(for f in sv.json en.json nb.json da.json fi.json ar.json is.json pl.json fo.json kl.json se.json uk.json)",
+      "Bash(do python -c \"import json; json.load\\(open\\(''$f'', encoding=''utf-8''\\)\\); print\\(''$f: valid''\\)\")",
+      "Bash(echo \"$f: INVALID\")",
+      "Bash(git status -u)",
+      "Bash(git checkout -- frontend/src/components/ActiveSession.jsx)"
     ]
   }
 }

@@ -51,7 +51,7 @@ All 7 implementation phases are complete. The application is feature-complete fo
 
 ### Claude Code skills
 
-21 reusable skills in `.claude/skills/`. Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (`name`, `description`, optional `argument-hint`) followed by Markdown instructions. The `description` field drives auto-invocation — Claude uses skills contextually without needing `/skill-name`. Skill bodies contain step-by-step procedures, code templates, and gotcha warnings. Arguments are available via `$ARGUMENTS` in the body.
+23 reusable skills in `.claude/skills/`. Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (`name`, `description`, optional `argument-hint`) followed by Markdown instructions. The `description` field drives auto-invocation — Claude uses skills contextually without needing `/skill-name`. Skill bodies contain step-by-step procedures, code templates, and gotcha warnings. Arguments are available via `$ARGUMENTS` in the body.
 
 ```
 .claude/skills/
@@ -69,9 +69,11 @@ All 7 implementation phases are complete. The application is feature-complete fo
 ├── check-exports/SKILL.md     # Verify cross-module import/export matches
 ├── db/SKILL.md                # Quick DB queries via docker exec
 ├── deploy-check/SKILL.md      # Pre-deployment validation checklist
+├── finalize/SKILL.md          # Post-plan wrap-up (docs, CLAUDE.md, memory, commits)
 ├── health/SKILL.md            # Docker stack health check
 ├── locale-check/SKILL.md      # i18n key parity across 12 locale files
 ├── login/SKILL.md             # Stub BankID login → JWT token
+├── preplan-tests/SKILL.md     # TDD red phase — write failing tests before implementation
 ├── stack/SKILL.md             # Docker Compose up/down/reset/logs
 ├── test/SKILL.md              # Run backend/frontend/all tests
 ├── test-pair/SKILL.md         # Two compatible test users by tier
@@ -81,6 +83,7 @@ All 7 implementation phases are complete. The application is feature-complete fo
 **Categories**:
 - **Operations**: `/test`, `/stack`, `/login`, `/db`, `/health`, `/locale-check`, `/deploy-check`, `/check-exports`, `/test-pair`, `/add-locale-key`
 - **Scaffolding**: `/add-route`, `/add-repository`, `/add-feature-flag`, `/add-migration`, `/add-component`, `/add-hook`, `/add-service`, `/add-socket-event`, `/add-test`, `/add-language`, `/vapid-setup`
+- **Workflow**: `/preplan-tests` (TDD red phase before implementation) → `/finalize` (post-plan wrap-up: docs, CLAUDE.md, memory, commits)
 
 Scaffolding skills encode project conventions (route ordering, 4-file feature flag lockstep, migration DDL patterns, component boilerplate, `useGeolocation` hook usage, repository SQL patterns, Socket.io handler guards, `consoleErrorSpy` test pattern) to prevent documented gotchas.
 
