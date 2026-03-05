@@ -334,10 +334,10 @@ export function ActiveSession({ request, currentUserId, onClose }) {
       </div>
 
       {/* Map */}
-      <div ref={mapRef} class="flex-1" />
+      <div ref={mapRef} class="flex-1 min-h-0" />
 
       {/* Status bar + actions */}
-      <div class="bg-white border-t border-gray-200 p-4 safe-area-bottom">
+      <div class="bg-white border-t border-gray-200 p-4 safe-area-bottom overflow-y-auto" style="max-height:60vh">
         {/* Location error — safety-critical warning */}
         {geoError && (
           <LocationBanner error={geoError} onRetry={retryGeo} severity="warning" />
