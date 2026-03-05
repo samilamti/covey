@@ -164,5 +164,11 @@
   "beta": {
     "notice": "Dette er en betaversion. Login bruger testoplysninger, ikke rigtig BankID.",
     "feedback": "Send os gerne feedback!"
+  },
+  "install": {
+    "title": "Installer Covey",
+    "description": "Installer appen på din startskærm for hurtig adgang.",
+    "iosHint": "Tryk på Del-knappen og derefter \"Føj til hjemmeskærm\".",
+    "button": "Installer"
   }
 }

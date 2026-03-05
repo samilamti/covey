@@ -164,5 +164,11 @@
   "beta": {
     "notice": "Tämä on betaversio. Kirjautuminen käyttää testitunnuksia, ei oikeaa BankID:tä.",
     "feedback": "Lähetä meille palautetta!"
+  },
+  "install": {
+    "title": "Asenna Covey",
+    "description": "Asenna sovellus kotinäytölle nopeaa käyttöä varten.",
+    "iosHint": "Napauta Jaa-painiketta ja sitten \"Lisää kotinäytölle\".",
+    "button": "Asenna"
   }
 }

@@ -164,5 +164,11 @@
   "beta": {
     "notice": "Hetta er eitt betaútgáva. Innriting nýtir royndargøgn, ikki veruligt BankID.",
     "feedback": "Send okkum afturmelding!"
+  },
+  "install": {
+    "title": "Innset Covey",
+    "description": "Innset appina á heimaskíggjanum fyri skjótan atgongd.",
+    "iosHint": "Trýst á Deil-knøttin og síðan \"Legg afturat á heimaskíggjanum\".",
+    "button": "Innset"
   }
 }

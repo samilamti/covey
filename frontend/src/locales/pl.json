@@ -164,5 +164,11 @@
   "beta": {
     "notice": "To jest wersja beta. Logowanie używa danych testowych, nie prawdziwego BankID.",
     "feedback": "Wyślij nam swoją opinię!"
+  },
+  "install": {
+    "title": "Zainstaluj Covey",
+    "description": "Zainstaluj aplikację na ekranie głównym dla szybkiego dostępu.",
+    "iosHint": "Naciśnij przycisk Udostępnij, a następnie \"Dodaj do ekranu głównego\".",
+    "button": "Zainstaluj"
   }
 }

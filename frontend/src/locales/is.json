@@ -164,5 +164,11 @@
   "beta": {
     "notice": "Þetta er betaútgáfa. Innskráning notar prófunargögn, ekki raunverulegt BankID.",
     "feedback": "Sendu okkur endurgjöf!"
+  },
+  "install": {
+    "title": "Setja upp Covey",
+    "description": "Settu forritið á heimaskjáinn fyrir skjótan aðgang.",
+    "iosHint": "Ýttu á Deila-hnappinn og síðan \"Bæta á heimaskjá\".",
+    "button": "Setja upp"
   }
 }

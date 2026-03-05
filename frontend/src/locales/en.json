@@ -164,5 +164,11 @@
   "beta": {
     "notice": "This is a beta version. Login uses test credentials, not real BankID.",
     "feedback": "Send us your feedback!"
+  },
+  "install": {
+    "title": "Install Covey",
+    "description": "Install the app on your home screen for quick access.",
+    "iosHint": "Tap the Share button, then \"Add to Home Screen\".",
+    "button": "Install"
   }
 }

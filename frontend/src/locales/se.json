@@ -164,5 +164,11 @@
   "beta": {
     "notice": "Dát lea betaversiovdna. Sisačállin geavaha geahččalandieđuid, ii duohta BankID.",
     "feedback": "Sádde midjiide máhcahaga!"
+  },
+  "install": {
+    "title": "Biját Covey",
+    "description": "Biját heahtaskáldii jođánis olahan dihte.",
+    "iosHint": "Deaddil Juoge-boalu ja de \"Lasit ruoktoskáldii\".",
+    "button": "Biját"
   }
 }

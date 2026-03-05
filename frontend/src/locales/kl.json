@@ -164,5 +164,11 @@
   "beta": {
     "notice": "Una betaversioni-uvoq. Iserfissaq misilitseriaatsinik atorpoq, BankID-imik pisinnaanngillat.",
     "feedback": "Oqaaseqarfigisigut!"
+  },
+  "install": {
+    "title": "Covey ikkussuinnaruk",
+    "description": "App-i angallassimaasinnut ikkussuinnaruk sukumiissumik atuiffiginnassagukku.",
+    "iosHint": "Tunniussinnaatitaannut tooruk \"Angallassimaasinnut ilanngunneq\"-lu toqqaruk.",
+    "button": "Ikkussuinnaruk"
   }
 }
