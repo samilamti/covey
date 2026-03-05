@@ -20,7 +20,7 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 - **Backend**: Node 22 + Express 5 + Socket.io v4 + PostgreSQL 16 + jose (JWT) + web-push
 - **Infrastructure**: Docker Compose (5 services) + Traefik v3.6 + nginx (frontend + docs serving)
 - **Docs site**: Eleventy 3.0 static site + nginx 1.27, routed at `docs.${DOMAIN}`
-- **Testing**: node:test (backend, 77 tests), vitest + @testing-library/preact (frontend, 178 tests)
+- **Testing**: node:test (backend, 77 tests), vitest + @testing-library/preact (frontend, 182 tests)
 
 ## Key constraints
 
@@ -138,7 +138,7 @@ docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.loc
 
 # Tests (or use /test skill)
 cd backend && npm test        # node:test (77 tests)
-cd frontend && npm test       # vitest (150 tests)
+cd frontend && npm test       # vitest (182 tests)
 
 # Build
 cd frontend && npm run build  # Vite production build
@@ -189,9 +189,10 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `frontend/src/components/MainLayout.jsx` — Authenticated app shell (default page: /requests), persistent socket listeners for done/accepted events, visibility refresh
 - `frontend/src/components/InstallPrompt.jsx` — PWA install banner (beforeinstallprompt on Android, iOS Safari hint)
 - `frontend/src/components/MapView.jsx` — Leaflet map (dynamic import)
-- `frontend/src/components/RequestList.jsx` — Request list with real-time updates
+- `frontend/src/components/RequestList.jsx` — Request list + create form (default view: create form shown), toggle between create/list views, post-create map
 - `frontend/src/components/RequestCard.jsx` — Individual request card
-- `frontend/src/components/CreateRequest.jsx` — New request form (community optional)
+- `frontend/src/components/CreateRequest.jsx` — New request form with eligibility tier icons (FewPeople/MorePeople/Everyone)
+- `frontend/src/components/PostCreateMap.jsx` — Leaflet map shown after request submission (centered on requester position)
 - `frontend/src/components/ActiveSession.jsx` — Live map with location relay, ETA, messaging UI
 - `frontend/src/components/LocationBanner.jsx` — Geolocation error feedback banner (info/warning severity)
 - `frontend/src/hooks/useGeolocation.js` — Centralized geolocation hook (getCurrentPosition/watchPosition, error mapping, retry, visibilitychange refresh)
