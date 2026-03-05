@@ -6,6 +6,9 @@ import { requestService } from '../services/requests'
 import { haversineKm } from '../utils/geo'
 import { LocationBanner } from './LocationBanner'
 import { useGeolocation } from '../hooks/useGeolocation'
+import { profileService } from '../services/profile'
+
+const PROXIMITY_THRESHOLD_KM = 0.2 // 200 meters
 
 /**
  * ActiveSession — live map showing both parties' locations during an active assistance session.
@@ -29,6 +32,8 @@ export function ActiveSession({ request, currentUserId, onClose }) {
   const showMessagesRef = useRef(false)
   const [unreadCount, setUnreadCount] = useState(0)
   const messagesEndRef = useRef(null)
+  const [myName, setMyName] = useState(null)
+  const [otherName, setOtherName] = useState(null)
 
   const isRequester = request.requester_id === currentUserId
   const isHelper = request.helper_id === currentUserId
@@ -211,7 +216,28 @@ export function ActiveSession({ request, currentUserId, onClose }) {
 
     updateMarker('me', myLocation, '#4f46e5')
     updateMarker('other', otherLocation, '#059669')
-  }, [myLocation, otherLocation])
+
+    // Show display name tooltips when within proximity threshold
+    const isClose = myLocation && otherLocation
+      && haversineKm(myLocation.lat, myLocation.lng, otherLocation.lat, otherLocation.lng) < PROXIMITY_THRESHOLD_KM
+
+    const updateTooltip = (id, name) => {
+      const marker = markersRef.current[id]
+      if (!marker) return
+      if (isClose && name) {
+        if (!marker.getTooltip()) {
+          marker.bindTooltip(name, { permanent: true, direction: 'top', offset: [0, -10] })
+        } else {
+          marker.setTooltipContent(name)
+        }
+      } else if (marker.getTooltip()) {
+        marker.unbindTooltip()
+      }
+    }
+
+    updateTooltip('me', myName)
+    updateTooltip('other', otherName)
+  }, [myLocation, otherLocation, myName, otherName])
 
   // Load message history on mount
   useEffect(() => {
@@ -219,6 +245,21 @@ export function ActiveSession({ request, currentUserId, onClose }) {
       .then(({ messages: msgs }) => setMessages(msgs))
       .catch(() => {})
   }, [request.id])
+
+  // Fetch display names for both parties
+  useEffect(() => {
+    const otherId = isRequester ? request.helper_id : request.requester_id
+
+    profileService.getPublicProfile(currentUserId)
+      .then(({ user: profile }) => setMyName(profile.displayName || null))
+      .catch(() => {})
+
+    if (otherId) {
+      profileService.getPublicProfile(otherId)
+        .then(({ user: profile }) => setOtherName(profile.displayName || null))
+        .catch(() => {})
+    }
+  }, [request.requester_id, request.helper_id, currentUserId])
 
   // Keep showMessagesRef in sync to avoid re-registering socket listeners on toggle
   useEffect(() => { showMessagesRef.current = showMessages }, [showMessages])
