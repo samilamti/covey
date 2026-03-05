@@ -147,4 +147,103 @@ describe('useGeolocation', () => {
     const { result } = renderHook(() => useGeolocation())
     expect(result.current.position.accuracy).toBe(42.5)
   })
+
+  /* ── Visibility change handling ── */
+
+  it('re-calls getCurrentPosition when page becomes visible (one-shot mode)', async () => {
+    const getCurrentPosition = vi.fn((success) => {
+      success({ coords: { latitude: 59.33, longitude: 18.07, accuracy: 10 } })
+    })
+    mockGeolocation({ getCurrentPosition })
+
+    renderHook(() => useGeolocation())
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1)
+
+    // Simulate page becoming visible
+    Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true })
+    act(() => {
+      document.dispatchEvent(new Event('visibilitychange'))
+    })
+
+    expect(getCurrentPosition).toHaveBeenCalledTimes(2)
+  })
+
+  it('restarts watchPosition when page becomes visible (watch mode)', async () => {
+    const clearWatch = vi.fn()
+    let watchId = 0
+    const watchPosition = vi.fn((success) => {
+      watchId++
+      success({ coords: { latitude: 60.0, longitude: 19.0, accuracy: 15 } })
+      return watchId
+    })
+    mockGeolocation({ watchPosition, clearWatch })
+
+    const { unmount } = renderHook(() => useGeolocation({ watch: true }))
+    expect(watchPosition).toHaveBeenCalledTimes(1)
+
+    Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true })
+    act(() => {
+      document.dispatchEvent(new Event('visibilitychange'))
+    })
+
+    // Old watcher cleared, new one started
+    expect(clearWatch).toHaveBeenCalled()
+    expect(watchPosition).toHaveBeenCalledTimes(2)
+
+    // Unmount before afterEach restores navigator.geolocation
+    unmount()
+  })
+
+  it('does not re-acquire when page becomes hidden', async () => {
+    const getCurrentPosition = vi.fn((success) => {
+      success({ coords: { latitude: 59.33, longitude: 18.07, accuracy: 10 } })
+    })
+    mockGeolocation({ getCurrentPosition })
+
+    renderHook(() => useGeolocation())
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1)
+
+    Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true })
+    act(() => {
+      document.dispatchEvent(new Event('visibilitychange'))
+    })
+
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not re-acquire after unmount', async () => {
+    const getCurrentPosition = vi.fn((success) => {
+      success({ coords: { latitude: 59.33, longitude: 18.07, accuracy: 10 } })
+    })
+    mockGeolocation({ getCurrentPosition })
+
+    const { unmount } = renderHook(() => useGeolocation())
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1)
+
+    unmount()
+
+    Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true })
+    document.dispatchEvent(new Event('visibilitychange'))
+
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1)
+  })
+
+  it('cleans up visibilitychange listener on unmount', async () => {
+    mockGeolocation({
+      getCurrentPosition: vi.fn((success) => {
+        success({ coords: { latitude: 59.33, longitude: 18.07, accuracy: 10 } })
+      }),
+    })
+
+    const removeListenerSpy = vi.spyOn(document, 'removeEventListener')
+
+    const { unmount } = renderHook(() => useGeolocation())
+    unmount()
+
+    const visibilityCalls = removeListenerSpy.mock.calls.filter(
+      ([event]) => event === 'visibilitychange'
+    )
+    expect(visibilityCalls.length).toBeGreaterThan(0)
+    removeListenerSpy.mockRestore()
+  })
 })

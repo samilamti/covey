@@ -67,8 +67,18 @@ export function useGeolocation({ watch = false, enableHighAccuracy = false } = {
     mountedRef.current = true
     start()
 
+    // Re-acquire position when the page regains visibility.
+    // Mobile browsers may pause/stop geolocation when backgrounded.
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible' && mountedRef.current) {
+        start()
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+
     return () => {
       mountedRef.current = false
+      document.removeEventListener('visibilitychange', handleVisibility)
       if (watchIdRef.current != null) {
         navigator.geolocation.clearWatch(watchIdRef.current)
         watchIdRef.current = null
