@@ -5,6 +5,13 @@ import { MainLayout } from './components/MainLayout'
 import { FeatureFlagProvider } from './context/FeatureFlagContext'
 import { socket } from './socket'
 import { authService } from './services/auth'
+import { subscribeToPush } from './services/notifications'
+
+function trySubscribePush() {
+  subscribeToPush().catch((err) => {
+    console.log('Push subscription skipped:', err.message)
+  })
+}
 
 function AppContent() {
   const { t } = useTranslation()
@@ -27,6 +34,7 @@ function AppContent() {
           // Connect socket with the stored token
           socket.auth = { token }
           socket.connect()
+          trySubscribePush()
         } catch {
           localStorage.removeItem('token')
         }
@@ -48,6 +56,7 @@ function AppContent() {
     // Connect socket with the new token
     socket.auth = { token }
     socket.connect()
+    trySubscribePush()
   }
 
   const handleLogout = () => {
