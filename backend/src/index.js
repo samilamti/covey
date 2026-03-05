@@ -8,11 +8,22 @@ import { registerSocketHandlers } from './handlers.js'
 import { startExpirationWorker } from './workers/expiration.js'
 import { startGdprCleanupWorker } from './workers/gdpr-cleanup.js'
 import { migrate } from './migrate.js'
+import * as reqRepo from './repositories/requests.js'
 
 // --- Run migrations before anything else ---
 // Guarantees all tables exist before the server accepts traffic or workers query the DB.
 // Safe to call every startup — uses CREATE TABLE IF NOT EXISTS and tracks applied migrations.
 await migrate()
+
+// --- Cleanup terminal requests from previous sessions ---
+try {
+  const deletedCount = await reqRepo.deleteTerminal()
+  if (deletedCount > 0) {
+    console.log(`Startup cleanup: deleted ${deletedCount} terminal request(s)`)
+  }
+} catch (err) {
+  console.error('Startup cleanup error:', err.message)
+}
 
 const app = express()
 app.set('trust proxy', 1) // Trust Traefik reverse proxy for correct req.ip

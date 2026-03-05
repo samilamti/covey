@@ -220,6 +220,20 @@ export async function expireOldRequests() {
 }
 
 /**
+ * Delete all requests in terminal statuses.
+ * Safe for startup cleanup — CASCADE handles session_messages and ratings.
+ * Location updates already auto-deleted by DB trigger on terminal status.
+ * @returns {Promise<number>} Number of deleted requests
+ */
+export async function deleteTerminal() {
+  const { rowCount } = await db.query(`
+    DELETE FROM assistance_requests
+    WHERE status IN ('completed', 'safety_confirmed', 'cancelled', 'expired')
+  `)
+  return rowCount
+}
+
+/**
  * Save a location update.
  */
 export async function saveLocationUpdate({ requestId, userId, latitude, longitude, accuracyM }) {
