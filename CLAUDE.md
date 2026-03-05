@@ -20,7 +20,7 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 - **Backend**: Node 22 + Express 5 + Socket.io v4 + PostgreSQL 16 + jose (JWT) + web-push
 - **Infrastructure**: Docker Compose (5 services) + Traefik v3.6 + nginx (frontend + docs serving)
 - **Docs site**: Eleventy 3.0 static site + nginx 1.27, routed at `docs.${DOMAIN}`
-- **Testing**: node:test (backend, 77 tests), vitest + @testing-library/preact (frontend, 150 tests)
+- **Testing**: node:test (backend, 77 tests), vitest + @testing-library/preact (frontend, 178 tests)
 
 ## Key constraints
 
@@ -97,8 +97,9 @@ Scaffolding skills encode project conventions (route ordering, 4-file feature fl
 - **Eligibility tiers**: Three levels control who can accept requests — `same_demographics` (same sex, birth year ±5), `verified_guardians` (demographics OR safety score ≥ 5), `any_member` (no filtering). Default is `same_demographics`. Pre-filtering in SQL prevents users from seeing requests they can't accept. Accept-time guard provides defense-in-depth.
 - **Stub safety scores**: `STUB_SAFETY_SCORES` env var (`nin:score,nin:score`) sets in-memory overrides applied at stub login. Stored in `Map<userId, score>` in `ratings.js`, checked before DB query. Enables testing `verified_guardians` tier without real rating history.
 - **Session messaging**: In-session chat between requester and helper via Socket.io. Messages persisted to `session_messages` table. Rate limited (2s per user per request). Six pre-filled quick messages provided. Included in GDPR export.
-- **Geolocation**: Centralized `useGeolocation` hook in `frontend/src/hooks/useGeolocation.js` — replaces all inline `navigator.geolocation` calls. Returns `{ position, error, loading, retry, supported }`. Error codes mapped: 1→`denied`, 2→`unavailable`, 3→`timeout`. `LocationBanner` component shows user-facing feedback with retry button. Used by `RequestList` (info severity), `CreateRequest` (info), and `ActiveSession` (warning — safety-critical). Never call `navigator.geolocation` directly from components.
-- **Mutual done flow**: Either party can initiate "done" (`active` → `done_pending`). The other party accepts (`→ completed`) or rejects (`→ active`). Simultaneous done clicks auto-complete. Tracked via `done_initiated_by`/`done_initiated_at` columns. Routes: `/:id/done`, `/:id/done/accept`, `/:id/done/reject`. Socket events: `request:done-initiated`, `request:done-rejected`. Location relay + messaging remain active during `done_pending`.
+- **Geolocation**: Centralized `useGeolocation` hook in `frontend/src/hooks/useGeolocation.js` — replaces all inline `navigator.geolocation` calls. Returns `{ position, error, loading, retry, supported }`. Error codes mapped: 1→`denied`, 2→`unavailable`, 3→`timeout`. `LocationBanner` component shows user-facing feedback with retry button. Used by `RequestList` (info severity), `CreateRequest` (info), and `ActiveSession` (warning — safety-critical). Never call `navigator.geolocation` directly from components. Includes `visibilitychange` listener — automatically re-acquires position when the page regains focus (one-shot mode re-calls `getCurrentPosition`, watch mode restarts `watchPosition`).
+- **Mutual done flow**: Either party can initiate "done" (`active` → `done_pending`). The other party accepts (`→ completed`) or rejects (`→ active`). Simultaneous done clicks auto-complete. Tracked via `done_initiated_by`/`done_initiated_at` columns. Routes: `/:id/done`, `/:id/done/accept`, `/:id/done/reject`. Socket events: `request:done-initiated`, `request:done-rejected`. Location relay + messaging remain active during `done_pending`. `ActiveSession` re-fetches request state on socket reconnect and `visibilitychange` to catch missed events. `MainLayout` keeps persistent listeners for `request:done-initiated` and `request:accepted` — auto-navigates to Requests tab and bumps a `refreshKey` that forces `RequestList` re-mount.
+- **Push subscription**: `subscribeToPush()` is called fire-and-forget after both session restore and fresh login in `App.jsx`. Errors are silently logged. Relies on `VITE_VAPID_PUBLIC_KEY` build-time env var.
 
 ## Localization
 
@@ -182,14 +183,15 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `frontend/src/socket.js` — Socket.io client (autoConnect: false, polling-first)
 - `frontend/src/context/FeatureFlagContext.jsx` — Feature flag context + hooks
 - `frontend/src/components/LandingPage.jsx` — Login with BankID flow + link to docs site
-- `frontend/src/components/MainLayout.jsx` — Authenticated app shell (default page: /requests)
+- `frontend/src/components/MainLayout.jsx` — Authenticated app shell (default page: /requests), persistent socket listeners for done/accepted events, visibility refresh
+- `frontend/src/components/InstallPrompt.jsx` — PWA install banner (beforeinstallprompt on Android, iOS Safari hint)
 - `frontend/src/components/MapView.jsx` — Leaflet map (dynamic import)
 - `frontend/src/components/RequestList.jsx` — Request list with real-time updates
 - `frontend/src/components/RequestCard.jsx` — Individual request card
 - `frontend/src/components/CreateRequest.jsx` — New request form (community optional)
 - `frontend/src/components/ActiveSession.jsx` — Live map with location relay, ETA, messaging UI
 - `frontend/src/components/LocationBanner.jsx` — Geolocation error feedback banner (info/warning severity)
-- `frontend/src/hooks/useGeolocation.js` — Centralized geolocation hook (getCurrentPosition/watchPosition, error mapping, retry)
+- `frontend/src/hooks/useGeolocation.js` — Centralized geolocation hook (getCurrentPosition/watchPosition, error mapping, retry, visibilitychange refresh)
 - `frontend/src/utils/geo.js` — Haversine distance + formatting utilities
 - `frontend/src/components/CommunityList.jsx` — Community browser + create community form
 - `frontend/src/components/CommunityDetail.jsx` — Community info + member list
