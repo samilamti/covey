@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "أشخاص مشابهون لي",
       "sameDemographicsDesc": "نفس الجنس، عمر مماثل (±5 سنوات)",
-      "verifiedGuardians": "+ حراس موثقون",
+      "verifiedGuardians": "أشخاص موثقو الأمان",
       "verifiedGuardiansDesc": "ما سبق بالإضافة إلى مستخدمين بنقاط أمان ≥ 5",
-      "anyMember": "+ أي عضو",
+      "anyMember": "جميع المسجلين",
       "anyMemberDesc": "بدون تصفية"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} بعيد",
     "locationAvailable": "الموقع مرفق",
     "eta": "~{{minutes}} دقيقة للقاء",
-    "etaArriving": "على وشك الوصول!"
+    "etaArriving": "على وشك الوصول!",
+    "viewRequests": "عرض الطلبات",
+    "waitingForHelp": "تم إرسال طلبك!",
+    "backToList": "العودة إلى القائمة"
   },
   "messages": {
     "title": "الرسائل",

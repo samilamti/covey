@@ -86,11 +86,11 @@
     },
     "eligibility": "Vem får hjälpa dig?",
     "tiers": {
-      "sameDemographics": "Liknande som jag",
+      "sameDemographics": "Sådana som jag",
       "sameDemographicsDesc": "Samma kön, liknande ålder (±5 år)",
-      "verifiedGuardians": "+ Verifierade väktare",
+      "verifiedGuardians": "Trygghetsverifierade personer",
       "verifiedGuardiansDesc": "Ovan plus användare med trygghetspoäng ≥ 5",
-      "anyMember": "+ Alla medlemmar",
+      "anyMember": "Alla inloggade",
       "anyMemberDesc": "Ingen filtrering"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} bort",
     "locationAvailable": "Position bifogad",
     "eta": "~{{minutes}} min till möte",
-    "etaArriving": "Nästan framme!"
+    "etaArriving": "Nästan framme!",
+    "viewRequests": "Visa förfrågningar",
+    "waitingForHelp": "Din förfrågan är skickad!",
+    "backToList": "Tillbaka till listan"
   },
   "messages": {
     "title": "Meddelanden",

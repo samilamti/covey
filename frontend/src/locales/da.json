@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "Ligesom mig",
       "sameDemographicsDesc": "Samme køn, lignende alder (±5 år)",
-      "verifiedGuardians": "+ Verificerede vogtere",
+      "verifiedGuardians": "Tryghedsverificerede personer",
       "verifiedGuardiansDesc": "Ovenstående plus brugere med tryghedspoint ≥ 5",
-      "anyMember": "+ Alle medlemmer",
+      "anyMember": "Alle indloggede",
       "anyMemberDesc": "Ingen filtrering"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} væk",
     "locationAvailable": "Position vedhæftet",
     "eta": "~{{minutes}} min til møde",
-    "etaArriving": "Næsten fremme!"
+    "etaArriving": "Næsten fremme!",
+    "viewRequests": "Vis anmodninger",
+    "waitingForHelp": "Din anmodning er sendt!",
+    "backToList": "Tilbage til listen"
   },
   "messages": {
     "title": "Beskeder",

@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "People like me",
       "sameDemographicsDesc": "Same sex, similar age (±5 years)",
-      "verifiedGuardians": "+ Verified guardians",
+      "verifiedGuardians": "Safety-verified people",
       "verifiedGuardiansDesc": "Above plus users with safety score ≥ 5",
-      "anyMember": "+ Any member",
+      "anyMember": "All logged in",
       "anyMemberDesc": "No filtering"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} away",
     "locationAvailable": "Location attached",
     "eta": "~{{minutes}} min to meetup",
-    "etaArriving": "Almost there!"
+    "etaArriving": "Almost there!",
+    "viewRequests": "View requests",
+    "waitingForHelp": "Your request has been sent!",
+    "backToList": "Back to list"
   },
   "messages": {
     "title": "Messages",

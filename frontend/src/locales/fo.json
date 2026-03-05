@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "Líka sum eg",
       "sameDemographicsDesc": "Sama kyn, líkur aldur (±5 ár)",
-      "verifiedGuardians": "+ Váttaðir varðmenn",
+      "verifiedGuardians": "Tryggisváttaðir persónar",
       "verifiedGuardiansDesc": "Omanfyri pluss brúkarar við tryggisstigum ≥ 5",
-      "anyMember": "+ Allir limur",
+      "anyMember": "Allir innritaðir",
       "anyMemberDesc": "Eingin síling"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} burtur",
     "locationAvailable": "Staðseting viðheft",
     "eta": "~{{minutes}} min til møti",
-    "etaArriving": "Næstan frammi!"
+    "etaArriving": "Næstan frammi!",
+    "viewRequests": "Vís umbøðir",
+    "waitingForHelp": "Umbøðin tín er send!",
+    "backToList": "Aftur til listuna"
   },
   "messages": {
     "title": "Boð",

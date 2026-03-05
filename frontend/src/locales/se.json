@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "Sullii mu láhkái",
       "sameDemographicsDesc": "Seamma sohkabealli, lahka ahki (±5 jagi)",
-      "verifiedGuardians": "+ Duođaštuvvon gáhttit",
+      "verifiedGuardians": "Sihkarvuođaduođaštuvvon olbmot",
       "verifiedGuardiansDesc": "Bajábeale ja geavaheddjiid sihkarvuođačuoggáiguin ≥ 5",
-      "anyMember": "+ Buot miellahtut",
+      "anyMember": "Buot sisačálihan",
       "anyMemberDesc": "Ii sile"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} eret",
     "locationAvailable": "Báiki mielddusin",
     "eta": "~{{minutes}} min deaivvadeapmái",
-    "etaArriving": "Measta boahtán!"
+    "etaArriving": "Measta boahtán!",
+    "viewRequests": "Čájet bivdduid",
+    "waitingForHelp": "Du bivddu lea sáddejuvvon!",
+    "backToList": "Máhccat listtui"
   },
   "messages": {
     "title": "Dieđut",

@@ -86,11 +86,11 @@
     },
     "eligibility": "Hvem kan hjelpe deg?",
     "tiers": {
-      "sameDemographics": "Like meg",
+      "sameDemographics": "Slike som meg",
       "sameDemographicsDesc": "Samme kjønn, lignende alder (±5 år)",
-      "verifiedGuardians": "+ Verifiserte voktere",
+      "verifiedGuardians": "Trygghetsverifiserte personer",
       "verifiedGuardiansDesc": "Over pluss brukere med trygghetspoeng ≥ 5",
-      "anyMember": "+ Alle medlemmer",
+      "anyMember": "Alle innloggede",
       "anyMemberDesc": "Ingen filtrering"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} unna",
     "locationAvailable": "Posisjon vedlagt",
     "eta": "~{{minutes}} min til møte",
-    "etaArriving": "Nesten fremme!"
+    "etaArriving": "Nesten fremme!",
+    "viewRequests": "Vis forespørsler",
+    "waitingForHelp": "Forespørselen din er sendt!",
+    "backToList": "Tilbake til listen"
   },
   "messages": {
     "title": "Meldinger",

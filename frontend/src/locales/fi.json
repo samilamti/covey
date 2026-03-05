@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "Kaltaiseni",
       "sameDemographicsDesc": "Sama sukupuoli, samanikäinen (±5 vuotta)",
-      "verifiedGuardians": "+ Vahvistetut vartijat",
+      "verifiedGuardians": "Turvallisuusvahvistetut henkilöt",
       "verifiedGuardiansDesc": "Edellä mainitut ja käyttäjät joiden turvallisuuspisteet ≥ 5",
-      "anyMember": "+ Kaikki jäsenet",
+      "anyMember": "Kaikki kirjautuneet",
       "anyMemberDesc": "Ei suodatusta"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} päässä",
     "locationAvailable": "Sijainti liitetty",
     "eta": "~{{minutes}} min tapaamiseen",
-    "etaArriving": "Melkein perillä!"
+    "etaArriving": "Melkein perillä!",
+    "viewRequests": "Näytä pyynnöt",
+    "waitingForHelp": "Pyyntösi on lähetetty!",
+    "backToList": "Takaisin listaan"
   },
   "messages": {
     "title": "Viestit",

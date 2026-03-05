@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "Podobni do mnie",
       "sameDemographicsDesc": "Ta sama płeć, podobny wiek (±5 lat)",
-      "verifiedGuardians": "+ Zweryfikowani opiekunowie",
+      "verifiedGuardians": "Osoby zweryfikowane pod kątem bezpieczeństwa",
       "verifiedGuardiansDesc": "Powyżsi plus użytkownicy z punktami bezpieczeństwa ≥ 5",
-      "anyMember": "+ Każdy członek",
+      "anyMember": "Wszyscy zalogowani",
       "anyMemberDesc": "Bez filtrowania"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} stąd",
     "locationAvailable": "Lokalizacja dołączona",
     "eta": "~{{minutes}} min do spotkania",
-    "etaArriving": "Prawie na miejscu!"
+    "etaArriving": "Prawie na miejscu!",
+    "viewRequests": "Pokaż prośby",
+    "waitingForHelp": "Twoja prośba została wysłana!",
+    "backToList": "Powrót do listy"
   },
   "messages": {
     "title": "Wiadomości",

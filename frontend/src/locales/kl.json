@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "Uanga-tusaat",
       "sameDemographicsDesc": "Suiaassuseq assigiinngitsut, ukiut assigiinngitsut (±5)",
-      "verifiedGuardians": "+ Uppernarsarneqarsimasut sapinngisamik",
+      "verifiedGuardians": "Nalinginnartunik uppernarsarneqarsimasut",
       "verifiedGuardiansDesc": "Siumunneruvoq aamma atorfillit naapertuutissanit ≥ 5",
-      "anyMember": "+ Tamarmik ilaasortaq",
+      "anyMember": "Tamarmik iserisimaffinni",
       "anyMemberDesc": "Immikkoortitsineq ajorpoq"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} ungasissoq",
     "locationAvailable": "Sumiiffiit ilanngussaq",
     "eta": "~{{minutes}} min katersornermi",
-    "etaArriving": "Qanittumi!"
+    "etaArriving": "Qanittumi!",
+    "viewRequests": "Qinnuteqaatit takugit",
+    "waitingForHelp": "Qinnuteqaat nassiunneqarpoq!",
+    "backToList": "Uteriarfigisinnaavatit"
   },
   "messages": {
     "title": "Allagaat",

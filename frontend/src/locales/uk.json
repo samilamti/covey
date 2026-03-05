@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "Схожі на мене",
       "sameDemographicsDesc": "Та ж стать, схожий вік (±5 років)",
-      "verifiedGuardians": "+ Перевірені опікуни",
+      "verifiedGuardians": "Перевірені на безпеку особи",
       "verifiedGuardiansDesc": "Вище зазначені плюс користувачі з балом безпеки ≥ 5",
-      "anyMember": "+ Будь-який учасник",
+      "anyMember": "Усі авторизовані",
       "anyMemberDesc": "Без фільтрації"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} звідси",
     "locationAvailable": "Місцезнаходження додано",
     "eta": "~{{minutes}} хв до зустрічі",
-    "etaArriving": "Майже на місці!"
+    "etaArriving": "Майже на місці!",
+    "viewRequests": "Переглянути запити",
+    "waitingForHelp": "Ваш запит надіслано!",
+    "backToList": "Назад до списку"
   },
   "messages": {
     "title": "Повідомлення",

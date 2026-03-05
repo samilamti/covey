@@ -88,9 +88,9 @@
     "tiers": {
       "sameDemographics": "Líkt og ég",
       "sameDemographicsDesc": "Sama kyn, svipuð aldur (±5 ár)",
-      "verifiedGuardians": "+ Staðfestir verndarvörðir",
+      "verifiedGuardians": "Öryggisvottaðir einstaklingar",
       "verifiedGuardiansDesc": "Ofangreint auk notenda með öryggisstig ≥ 5",
-      "anyMember": "+ Allir meðlimir",
+      "anyMember": "Allir innskráðir",
       "anyMemberDesc": "Engin síun"
     },
     "status": {
@@ -107,7 +107,10 @@
     "distanceAway": "~{{distance}} í burtu",
     "locationAvailable": "Staðsetning meðfylgjandi",
     "eta": "~{{minutes}} mín til fundar",
-    "etaArriving": "Næstum kominn!"
+    "etaArriving": "Næstum kominn!",
+    "viewRequests": "Skoða beiðnir",
+    "waitingForHelp": "Beiðni þín hefur verið send!",
+    "backToList": "Til baka á listann"
   },
   "messages": {
     "title": "Skilaboð",
