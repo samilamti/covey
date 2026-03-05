@@ -230,6 +230,35 @@ export function registerSocketHandlers(io) {
     })
 
     /**
+     * request:done-cancel — initiator retracts their done proposal
+     */
+    socket.on('request:done-cancel', async ({ requestId }) => {
+      if (!requestId) return
+
+      try {
+        const existing = await reqRepo.findById(requestId)
+        if (!existing || existing.status !== 'done_pending') return
+
+        if (existing.done_initiated_by !== socket.user.userId) return
+
+        const isParticipant =
+          socket.user.userId === existing.requester_id ||
+          socket.user.userId === existing.helper_id
+        if (!isParticipant) return
+
+        const request = await reqRepo.rejectDone(requestId)
+        if (!request) return
+
+        io.to(`user:${existing.requester_id}`).emit('request:done-cancelled', { requestId })
+        if (existing.helper_id) {
+          io.to(`user:${existing.helper_id}`).emit('request:done-cancelled', { requestId })
+        }
+      } catch (err) {
+        console.error('Socket request:done-cancel error:', err.message)
+      }
+    })
+
+    /**
      * request:cancel — cancel a request
      */
     socket.on('request:cancel', async ({ requestId }) => {

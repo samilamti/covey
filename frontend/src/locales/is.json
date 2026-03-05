@@ -49,6 +49,7 @@
     "doneProposal": "Hinn aðilinn hefur merkt lotið. Ertu sammála?",
     "doneAccept": "Já, við erum búin",
     "doneReject": "Nei, halda áfram",
+    "doneCancel": "Afturkalla",
     "confirmSafety": "Ég komst heim á heilu og höldnu",
     "empty": "Engar virkar beiðnir núna.",
     "expired": "Beiðni er útrunnin.",

@@ -130,6 +130,13 @@ export function ActiveSession({ request, currentUserId, onClose }) {
       }
     }
 
+    const handleDoneCancelled = ({ requestId }) => {
+      if (requestId === request.id) {
+        setStatus('active')
+        setDoneInitiatedBy(null)
+      }
+    }
+
     const handleExpired = ({ requestId }) => {
       if (requestId === request.id) {
         setStatus('expired')
@@ -141,6 +148,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
     socket.on('request:cancelled', handleStatusChange)
     socket.on('request:done-initiated', handleDoneInitiated)
     socket.on('request:done-rejected', handleDoneRejected)
+    socket.on('request:done-cancelled', handleDoneCancelled)
     socket.on('request:expired', handleExpired)
 
     return () => {
@@ -149,6 +157,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
       socket.off('request:cancelled', handleStatusChange)
       socket.off('request:done-initiated', handleDoneInitiated)
       socket.off('request:done-rejected', handleDoneRejected)
+      socket.off('request:done-cancelled', handleDoneCancelled)
       socket.off('request:expired', handleExpired)
     }
   }, [request.id, currentUserId])
@@ -287,6 +296,16 @@ export function ActiveSession({ request, currentUserId, onClose }) {
       setDoneInitiatedBy(null)
     } catch (err) {
       console.error('Reject done error:', err.message)
+    }
+  }
+
+  const handleCancelDone = async () => {
+    try {
+      const { request: updated } = await requestService.cancelDone(request.id)
+      setStatus(updated.status)
+      setDoneInitiatedBy(null)
+    } catch (err) {
+      console.error('Cancel done error:', err.message)
     }
   }
 
@@ -458,7 +477,13 @@ export function ActiveSession({ request, currentUserId, onClose }) {
 
           {status === 'done_pending' && doneInitiatedBy === currentUserId && (
             <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-center">
-              <p class="text-sm text-yellow-800 font-medium">{t('requests.doneWaiting')}</p>
+              <p class="text-sm text-yellow-800 font-medium mb-2">{t('requests.doneWaiting')}</p>
+              <button
+                onClick={handleCancelDone}
+                class="text-sm text-yellow-700 underline"
+              >
+                {t('requests.doneCancel')}
+              </button>
             </div>
           )}
 

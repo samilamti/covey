@@ -49,6 +49,7 @@
     "doneProposal": "Den andra har markerat sessionen som klar. Håller du med?",
     "doneAccept": "Ja, vi är klara",
     "doneReject": "Nej, fortsätt",
+    "doneCancel": "Ångra",
     "confirmSafety": "Jag kom fram säkert",
     "empty": "Inga aktiva förfrågningar just nu.",
     "expired": "Förfrågan har gått ut.",

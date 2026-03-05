@@ -49,6 +49,7 @@
     "doneProposal": "Den anden har markeret sessionen som færdig. Er du enig?",
     "doneAccept": "Ja, vi er færdige",
     "doneReject": "Nej, fortsæt",
+    "doneCancel": "Fortryd",
     "confirmSafety": "Jeg kom sikkert frem",
     "empty": "Ingen aktive anmodninger lige nu.",
     "expired": "Anmodningen er udløbet.",

@@ -49,6 +49,7 @@
     "doneProposal": "Toinen on merkinnyt istunnon valmiiksi. Oletko samaa mieltä?",
     "doneAccept": "Kyllä, olemme valmiita",
     "doneReject": "Ei, jatketaan",
+    "doneCancel": "Kumoa",
     "confirmSafety": "Pääsin turvallisesti perille",
     "empty": "Ei aktiivisia pyyntöjä juuri nyt.",
     "expired": "Pyyntö on vanhentunut.",

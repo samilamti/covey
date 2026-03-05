@@ -119,6 +119,15 @@ export const requestService = {
     return res.json()
   },
 
+  async cancelDone(id) {
+    const res = await fetch(`${API_URL}/${id}/done/cancel`, {
+      method: 'POST',
+      headers: authHeaders(),
+    })
+    if (!res.ok) throw new Error('Failed to cancel done')
+    return res.json()
+  },
+
   async cancel(id) {
     const res = await fetch(`${API_URL}/${id}/cancel`, {
       method: 'POST',

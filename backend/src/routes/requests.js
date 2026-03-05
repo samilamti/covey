@@ -253,6 +253,45 @@ requestRouter.post('/:id/done/reject', async (req, res) => {
 })
 
 /**
+ * POST /api/requests/:id/done/cancel — Initiator retracts their done proposal
+ */
+requestRouter.post('/:id/done/cancel', async (req, res) => {
+  try {
+    const existing = await reqRepo.findById(req.params.id)
+    if (!existing) return res.status(404).json({ error: 'Request not found' })
+
+    const isParticipant =
+      req.user.userId === existing.requester_id ||
+      req.user.userId === existing.helper_id
+    if (!isParticipant) return res.status(403).json({ error: 'Not a participant' })
+
+    if (existing.done_initiated_by !== req.user.userId) {
+      return res.status(403).json({ error: 'Only the initiator can cancel a done proposal' })
+    }
+
+    if (existing.status !== 'done_pending') {
+      return res.status(409).json({ error: 'No pending done proposal' })
+    }
+
+    const request = await reqRepo.rejectDone(req.params.id)
+    if (!request) return res.status(409).json({ error: 'Failed to cancel done' })
+
+    const io = req.app.get('io')
+    if (io) {
+      io.to(`user:${existing.requester_id}`).emit('request:done-cancelled', { requestId: request.id })
+      if (existing.helper_id) {
+        io.to(`user:${existing.helper_id}`).emit('request:done-cancelled', { requestId: request.id })
+      }
+    }
+
+    res.json({ request })
+  } catch (err) {
+    console.error('Done cancel error:', err.message)
+    res.status(500).json({ error: 'Failed to cancel done' })
+  }
+})
+
+/**
  * POST /api/requests/:id/done — Initiate a "done" proposal
  */
 requestRouter.post('/:id/done', async (req, res) => {

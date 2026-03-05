@@ -49,6 +49,7 @@
     "doneProposal": "The other party has marked the session as done. Do you agree?",
     "doneAccept": "Yes, we're done",
     "doneReject": "No, continue",
+    "doneCancel": "Undo",
     "confirmSafety": "I arrived safely",
     "empty": "No active requests right now.",
     "expired": "Request has expired.",

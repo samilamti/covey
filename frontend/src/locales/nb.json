@@ -49,6 +49,7 @@
     "doneProposal": "Den andre har markert sesjonen som ferdig. Er du enig?",
     "doneAccept": "Ja, vi er ferdige",
     "doneReject": "Nei, fortsett",
+    "doneCancel": "Angre",
     "confirmSafety": "Jeg kom trygt frem",
     "empty": "Ingen aktive forespørsler akkurat nå.",
     "expired": "Forespørselen har utløpt.",
