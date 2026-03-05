@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
-import { HelpCircle, Plus } from 'lucide-preact'
+import { HelpCircle, Plus, List } from 'lucide-preact'
 import { requestService } from '../services/requests'
 import { ratingService } from '../services/ratings'
 import { RequestCard } from './RequestCard'
 import { CreateRequest } from './CreateRequest'
 import { ActiveSession } from './ActiveSession'
+import { PostCreateMap } from './PostCreateMap'
 import { RatingBanner } from './RatingBanner'
 import { LocationBanner } from './LocationBanner'
 import { useGeolocation } from '../hooks/useGeolocation'
@@ -21,8 +22,9 @@ export function RequestList({ currentUserId }) {
   const [openRequests, setOpenRequests] = useState([])
   const [loading, setLoading] = useState(true)
   const { position: viewerPosition, error: geoError, retry: retryGeo } = useGeolocation()
-  const [showCreate, setShowCreate] = useState(false)
+  const [showCreate, setShowCreate] = useState(true)
   const [activeSession, setActiveSession] = useState(null)
+  const [createdPosition, setCreatedPosition] = useState(null)
   const [pendingRatings, setPendingRatings] = useState([])
 
   const loadRequests = async () => {
@@ -144,6 +146,12 @@ export function RequestList({ currentUserId }) {
 
   const handleCreated = (request) => {
     setShowCreate(false)
+    if (request.pickup_lat && request.pickup_lng) {
+      setCreatedPosition({
+        lat: parseFloat(request.pickup_lat),
+        lng: parseFloat(request.pickup_lng),
+      })
+    }
     loadAll()
   }
 
@@ -165,6 +173,15 @@ export function RequestList({ currentUserId }) {
     )
   }
 
+  if (createdPosition) {
+    return (
+      <PostCreateMap
+        position={createdPosition}
+        onBack={() => setCreatedPosition(null)}
+      />
+    )
+  }
+
   if (loading) {
     return <div class="text-center py-8 text-gray-400">{t('app.loading')}</div>
   }
@@ -174,13 +191,23 @@ export function RequestList({ currentUserId }) {
       {/* Header + create button */}
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-bold">{t('requests.title')}</h2>
-        <button
-          onClick={() => setShowCreate(!showCreate)}
-          class="flex items-center gap-1 text-indigo-600 text-sm font-medium"
-        >
-          <Plus size={16} />
-          {t('requests.create')}
-        </button>
+        {showCreate ? (
+          <button
+            onClick={() => setShowCreate(false)}
+            class="flex items-center gap-1 text-indigo-600 text-sm font-medium"
+          >
+            <List size={16} />
+            {t('requests.viewRequests')}
+          </button>
+        ) : (
+          <button
+            onClick={() => setShowCreate(true)}
+            class="flex items-center gap-1 text-indigo-600 text-sm font-medium"
+          >
+            <Plus size={16} />
+            {t('requests.create')}
+          </button>
+        )}
       </div>
 
       {/* Create request form */}
@@ -212,15 +239,8 @@ export function RequestList({ currentUserId }) {
         </button>
       )}
 
-      {/* My requests — show create form by default when user has nothing */}
-      {requests.length === 0 && openRequests.length === 0 ? (
-        <div class="mb-4">
-          <CreateRequest
-            onCreated={handleCreated}
-            onClose={() => setShowCreate(false)}
-          />
-        </div>
-      ) : (
+      {/* Request lists (visible when create form is hidden) */}
+      {!showCreate && (
         <>
           {requests.length > 0 && (
             <div class="space-y-3">
@@ -254,6 +274,12 @@ export function RequestList({ currentUserId }) {
                   />
                 ))}
               </div>
+            </div>
+          )}
+
+          {requests.length === 0 && openRequests.length === 0 && (
+            <div class="text-center py-8 text-gray-400">
+              {t('requests.empty')}
             </div>
           )}
         </>

@@ -6,6 +6,9 @@ import { LocationBanner } from './LocationBanner'
 import { useGeolocation } from '../hooks/useGeolocation'
 import { WalkIcon } from './icons/WalkIcon'
 import { WaitIcon } from './icons/WaitIcon'
+import { FewPeopleIcon } from './icons/FewPeopleIcon'
+import { MorePeopleIcon } from './icons/MorePeopleIcon'
+import { EveryoneIcon } from './icons/EveryoneIcon'
 
 /**
  * CreateRequest — form to create a new assistance request.
@@ -88,22 +91,25 @@ export function CreateRequest({ onCreated, onClose }) {
           </label>
           <div class="space-y-2">
             {[
-              { value: 'same_demographics', label: t('requests.tiers.sameDemographics'), desc: t('requests.tiers.sameDemographicsDesc') },
-              { value: 'verified_guardians', label: t('requests.tiers.verifiedGuardians'), desc: t('requests.tiers.verifiedGuardiansDesc') },
-              { value: 'any_member', label: t('requests.tiers.anyMember'), desc: t('requests.tiers.anyMemberDesc') },
+              { value: 'same_demographics', label: t('requests.tiers.sameDemographics'), desc: t('requests.tiers.sameDemographicsDesc'), Icon: FewPeopleIcon },
+              { value: 'verified_guardians', label: t('requests.tiers.verifiedGuardians'), desc: t('requests.tiers.verifiedGuardiansDesc'), Icon: MorePeopleIcon },
+              { value: 'any_member', label: t('requests.tiers.anyMember'), desc: t('requests.tiers.anyMemberDesc'), Icon: EveryoneIcon },
             ].map((tier) => (
               <button
                 key={tier.value}
                 type="button"
                 onClick={() => setEligibilityTier(tier.value)}
-                class={`w-full text-left px-3 py-2 rounded-lg text-sm border transition-colors ${
+                class={`w-full flex items-center gap-3 text-left px-3 py-2 rounded-lg text-sm border transition-colors ${
                   eligibilityTier === tier.value
                     ? 'bg-indigo-50 border-indigo-300 text-indigo-700'
                     : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
                 }`}
               >
-                <div class="font-medium">{tier.label}</div>
-                <div class="text-xs opacity-70">{tier.desc}</div>
+                <tier.Icon size={28} />
+                <div>
+                  <div class="font-medium">{tier.label}</div>
+                  <div class="text-xs opacity-70">{tier.desc}</div>
+                </div>
               </button>
             ))}
           </div>
