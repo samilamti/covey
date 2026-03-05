@@ -176,6 +176,34 @@ describe('MainLayout', () => {
     })
   })
 
+  it('does not re-mount RequestList on request:accepted when already on requests tab', async () => {
+    const { getByTestId } = render(<MainLayout user={user} onLogout={vi.fn()} />)
+    const initialMount = getByTestId('request-list').getAttribute('data-mount')
+
+    // Fire request:accepted while already on requests tab
+    listeners['request:accepted']?.forEach((fn) => fn({ requestId: 'r1' }))
+
+    // Wait a tick to let any potential state updates flush
+    await waitFor(() => {
+      const currentMount = getByTestId('request-list').getAttribute('data-mount')
+      expect(Number(currentMount)).toBe(Number(initialMount))
+    })
+  })
+
+  it('does not re-mount RequestList on request:done-initiated when already on requests tab', async () => {
+    const { getByTestId } = render(<MainLayout user={user} onLogout={vi.fn()} />)
+    const initialMount = getByTestId('request-list').getAttribute('data-mount')
+
+    // Fire done-initiated while already on requests tab
+    listeners['request:done-initiated']?.forEach((fn) => fn({ requestId: 'r1', initiatedBy: 'other' }))
+
+    // Wait a tick to let any potential state updates flush
+    await waitFor(() => {
+      const currentMount = getByTestId('request-list').getAttribute('data-mount')
+      expect(Number(currentMount)).toBe(Number(initialMount))
+    })
+  })
+
   it('cleans up socket listeners on unmount', () => {
     const { unmount } = render(<MainLayout user={user} onLogout={vi.fn()} />)
     unmount()

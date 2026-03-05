@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useState, useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { BottomNav } from './BottomNav'
 import { ProfileView } from './ProfileView'
@@ -12,6 +12,8 @@ export function MainLayout({ user, onLogout }) {
   const { t } = useTranslation()
   const [currentPath, setCurrentPath] = useState('/requests')
   const [refreshKey, setRefreshKey] = useState(0)
+  const currentPathRef = useRef(currentPath)
+  currentPathRef.current = currentPath
 
   // Refresh RequestList on visibility change and socket reconnect
   useEffect(() => {
@@ -37,8 +39,10 @@ export function MainLayout({ user, onLogout }) {
   // When user is on Profile tab, auto-navigate to Requests.
   useEffect(() => {
     const handleLifecycleEvent = () => {
+      if (currentPathRef.current !== '/requests') {
+        setRefreshKey((k) => k + 1)
+      }
       setCurrentPath('/requests')
-      setRefreshKey((k) => k + 1)
     }
 
     socket.on('request:done-initiated', handleLifecycleEvent)
