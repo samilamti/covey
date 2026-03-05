@@ -410,7 +410,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
             </div>
 
             {/* Quick messages */}
-            <div class="px-3 py-2 border-t border-gray-200 flex gap-2 overflow-x-auto">
+            <div class="px-3 py-2 border-t border-gray-200 flex gap-2 overflow-x-auto flex-shrink-0">
               {quickMessages.map((qm) => (
                 <button
                   key={qm.key}
@@ -423,7 +423,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
             </div>
 
             {/* Text input */}
-            <div class="px-3 py-2 border-t border-gray-200 flex gap-2">
+            <div class="px-3 py-2 border-t border-gray-200 flex gap-2 flex-shrink-0">
               <input
                 type="text"
                 value={messageText}
