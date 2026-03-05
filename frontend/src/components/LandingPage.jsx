@@ -82,7 +82,7 @@ export function LandingPage({ onLogin }) {
     : t('landing.bankidPending')
 
   return (
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col">
+    <div class="fixed inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col overflow-y-auto">
       <BetaBanner />
       <header class="p-4 flex justify-end">
         <LanguageSelector />
