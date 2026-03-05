@@ -97,12 +97,28 @@ describe('RequestList', () => {
     })
   })
 
-  it('shows create request form by default', async () => {
+  it('shows create request form by default when no open requests', async () => {
     const { getByText } = render(<RequestList currentUserId="user-a" />)
     await waitFor(() => {
       // Header shows "view requests" toggle, form shows "Ny förfrågan" header
       expect(getByText('requests.viewRequests')).toBeTruthy()
       expect(getByText('requests.create')).toBeTruthy()
+    })
+  })
+
+  it('defaults to list view when open requests exist', async () => {
+    requestService.listOpen.mockResolvedValue({ requests: [{
+      id: 'r-open-1', type: 'walk', status: 'open', message: 'Need help',
+      requester_id: 'user-b', helper_id: null,
+      pickup_lat: '59.34', pickup_lng: '18.08',
+      eligibility_tier: 'any_member', created_at: new Date().toISOString(),
+    }] })
+    const { getByText, queryByText } = render(<RequestList currentUserId="user-a" />)
+    await waitFor(() => {
+      expect(getByText('requests.openRequests')).toBeTruthy()
+      // Toggle button should offer "create" (we're in list view)
+      expect(getByText('requests.create')).toBeTruthy()
+      expect(queryByText('requests.viewRequests')).toBeNull()
     })
   })
 
@@ -201,9 +217,7 @@ describe('RequestList', () => {
     requestService.list.mockResolvedValue({ requests: [] })
 
     const { getByText } = render(<RequestList currentUserId="user-a" />)
-    // Toggle to list view (create form is shown by default)
-    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
-    fireEvent.click(getByText('requests.viewRequests'))
+    // List view shows by default when open requests exist
     await waitFor(() => {
       // The mocked formatDistance returns '~800m bort'
       expect(getByText('~800m bort')).toBeTruthy()
@@ -222,15 +236,39 @@ describe('RequestList', () => {
     requestService.list.mockResolvedValue({ requests: [] })
 
     const { getByText } = render(<RequestList currentUserId="user-a" />)
-    // Toggle to list view
-    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
-    fireEvent.click(getByText('requests.viewRequests'))
+    // List view shows by default when open requests exist
     await waitFor(() => {
       expect(getByText('requests.locationAvailable')).toBeTruthy()
     })
   })
 
   /* ── Active session detection ── */
+
+  it('does not override manual toggle on subsequent data refreshes', async () => {
+    requestService.listOpen.mockResolvedValue({ requests: [{
+      id: 'r-open-1', type: 'walk', status: 'open', message: '',
+      requester_id: 'user-b', helper_id: null,
+      pickup_lat: null, pickup_lng: null,
+      eligibility_tier: 'any_member', created_at: new Date().toISOString(),
+    }] })
+    const { getByText } = render(<RequestList currentUserId="user-a" />)
+    // Should default to list view
+    await waitFor(() => expect(getByText('requests.create')).toBeTruthy())
+
+    // User manually toggles to create form
+    fireEvent.click(getByText('requests.create'))
+    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
+
+    // Simulate a socket-driven refresh (triggers loadAll again)
+    const { socket } = await import('../src/socket')
+    const handleNew = socket.on.mock.calls.find(([event]) => event === 'request:new')?.[1]
+    if (handleNew) await handleNew()
+
+    // Create form should still be visible (not flipped back to list)
+    await waitFor(() => {
+      expect(getByText('requests.viewRequests')).toBeTruthy()
+    })
+  })
 
   it('shows active session banner when user has an active request', async () => {
     const myRequests = [{

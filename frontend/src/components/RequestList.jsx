@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useState, useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { HelpCircle, Plus, List } from 'lucide-preact'
 import { requestService } from '../services/requests'
@@ -22,10 +22,11 @@ export function RequestList({ currentUserId }) {
   const [openRequests, setOpenRequests] = useState([])
   const [loading, setLoading] = useState(true)
   const { position: viewerPosition, error: geoError, retry: retryGeo } = useGeolocation()
-  const [showCreate, setShowCreate] = useState(true)
+  const [showCreate, setShowCreate] = useState(null)
   const [activeSession, setActiveSession] = useState(null)
   const [createdPosition, setCreatedPosition] = useState(null)
   const [pendingRatings, setPendingRatings] = useState([])
+  const initialViewDecided = useRef(false)
 
   const loadRequests = async () => {
     try {
@@ -42,13 +43,14 @@ export function RequestList({ currentUserId }) {
     try {
       const { requests: data } = await requestService.listOpen()
       // Filter out the current user's own requests
-      setOpenRequests(
-        currentUserId
-          ? data.filter((r) => r.requester_id !== currentUserId && r.helper_id !== currentUserId)
-          : []
-      )
+      const filtered = currentUserId
+        ? data.filter((r) => r.requester_id !== currentUserId && r.helper_id !== currentUserId)
+        : []
+      setOpenRequests(filtered)
+      return filtered
     } catch (err) {
       console.error('Load open requests error:', err.message)
+      return []
     }
   }
 
@@ -65,10 +67,16 @@ export function RequestList({ currentUserId }) {
     setPendingRatings((prev) => prev.filter((r) => r.request_id !== requestId))
   }
 
-  const loadAll = () => {
-    loadRequests()
-    loadOpenRequests()
-    loadPendingRatings()
+  const loadAll = async () => {
+    const [, openResult] = await Promise.all([
+      loadRequests(),
+      loadOpenRequests(),
+      loadPendingRatings(),
+    ])
+    if (!initialViewDecided.current) {
+      initialViewDecided.current = true
+      setShowCreate(openResult.length === 0)
+    }
   }
 
   useEffect(() => {
@@ -211,7 +219,7 @@ export function RequestList({ currentUserId }) {
       </div>
 
       {/* Create request form */}
-      {showCreate && (
+      {showCreate === true && (
         <div class="mb-4">
           <CreateRequest
             onCreated={handleCreated}
@@ -240,7 +248,7 @@ export function RequestList({ currentUserId }) {
       )}
 
       {/* Request lists (visible when create form is hidden) */}
-      {!showCreate && (
+      {showCreate === false && (
         <>
           {requests.length > 0 && (
             <div class="space-y-3">
