@@ -30,6 +30,33 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 - Preact, not React (3KB vs 40KB)
 - Socket.io polling-first transport (old browser compatibility)
 
+## Development rules
+
+### Testing
+
+All tests must pass before committing. Run the full test suite (not just related tests) after any backend or shared logic change.
+
+```bash
+cd backend && npm test        # node:test (77 tests)
+cd frontend && npm test       # vitest (182 tests)
+```
+
+### Common pitfalls
+
+After implementing any feature that involves real-time updates (sockets, notifications, state changes), always check for race conditions between HTTP responses and socket events before committing.
+
+### File editing rules
+
+When editing locale/translation files (e.g., `sv.json`, `en.json`, and other locale JSON files), always read the full file first, then make edits. Never attempt partial edits on locale files without reading them completely.
+
+### Database & migrations
+
+When modifying database schemas, always use `ALTER TABLE` migrations for existing tables — never rely on `CREATE TABLE IF NOT EXISTS` to add new columns. Test migrations against an existing populated database, not just a fresh one.
+
+### Refactoring checklist
+
+After any multi-file rename or domain change, run a project-wide grep for the old name to catch stragglers before committing. Example: `grep -r 'oldname' --include='*.jsx' --include='*.js' --include='*.json' --include='*.yaml' --include='*.md' .`
+
 ## Current state (Mar 2026)
 
 All 7 implementation phases are complete. The application is feature-complete for its initial scope:
@@ -51,7 +78,7 @@ All 7 implementation phases are complete. The application is feature-complete fo
 
 ### Claude Code skills
 
-23 reusable skills in `.claude/skills/`. Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (`name`, `description`, optional `argument-hint`) followed by Markdown instructions. The `description` field drives auto-invocation — Claude uses skills contextually without needing `/skill-name`. Skill bodies contain step-by-step procedures, code templates, and gotcha warnings. Arguments are available via `$ARGUMENTS` in the body.
+25 reusable skills in `.claude/skills/`. Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (`name`, `description`, optional `argument-hint`) followed by Markdown instructions. The `description` field drives auto-invocation — Claude uses skills contextually without needing `/skill-name`. Skill bodies contain step-by-step procedures, code templates, and gotcha warnings. Arguments are available via `$ARGUMENTS` in the body.
 
 ```
 .claude/skills/
@@ -72,8 +99,10 @@ All 7 implementation phases are complete. The application is feature-complete fo
 ├── finalize/SKILL.md          # Post-plan wrap-up (docs, CLAUDE.md, memory, commits)
 ├── health/SKILL.md            # Docker stack health check
 ├── locale-check/SKILL.md      # i18n key parity across 12 locale files
+├── locale-update/SKILL.md     # Safe locale file editing (read-all-first)
 ├── login/SKILL.md             # Stub BankID login → JWT token
 ├── preplan-tests/SKILL.md     # TDD red phase — write failing tests before implementation
+├── safe-rename/SKILL.md       # Project-wide rename with grep verification
 ├── stack/SKILL.md             # Docker Compose up/down/reset/logs
 ├── test/SKILL.md              # Run backend/frontend/all tests
 ├── test-pair/SKILL.md         # Two compatible test users by tier
@@ -81,7 +110,7 @@ All 7 implementation phases are complete. The application is feature-complete fo
 ```
 
 **Categories**:
-- **Operations**: `/test`, `/stack`, `/login`, `/db`, `/health`, `/locale-check`, `/deploy-check`, `/check-exports`, `/test-pair`, `/add-locale-key`
+- **Operations**: `/test`, `/stack`, `/login`, `/db`, `/health`, `/locale-check`, `/locale-update`, `/deploy-check`, `/check-exports`, `/test-pair`, `/add-locale-key`, `/safe-rename`
 - **Scaffolding**: `/add-route`, `/add-repository`, `/add-feature-flag`, `/add-migration`, `/add-component`, `/add-hook`, `/add-service`, `/add-socket-event`, `/add-test`, `/add-language`, `/vapid-setup`
 - **Workflow**: `/preplan-tests` (TDD red phase before implementation) → `/finalize` (post-plan wrap-up: docs, CLAUDE.md, memory, commits)
 
