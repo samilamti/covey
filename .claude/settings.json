@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "postToolUse": [
+      {
+        "tool": "Edit",
+        "pattern": "**/migrations/**",
+        "command": "echo '⚠️  Migration edited — remember to test against existing DB, not just fresh'"
+      }
+    ],
+    "preCommit": [
+      {
+        "command": "npm test 2>&1 | tail -5"
+      }
+    ]
+  }
+}
