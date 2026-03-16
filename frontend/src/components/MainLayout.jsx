@@ -66,11 +66,11 @@ export function MainLayout({ user, onLogout }) {
   }
 
   return (
-    <div class="min-h-screen bg-gray-50 pb-16">
+    <div class="min-h-screen bg-gray-50 pb-16 safe-area-x">
       <BetaBanner />
       <InstallPrompt />
       {/* Top bar */}
-      <header class="bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center sticky top-0 z-[1001]">
+      <header class="bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center sticky top-0 z-[1001] safe-area-top">
         <h1 class="text-lg font-bold text-gray-900">Covey</h1>
         <div class="flex items-center gap-2">
           <LanguageSelector />
