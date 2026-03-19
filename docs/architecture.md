@@ -116,8 +116,10 @@ Request created → notifyNewRequest() [fire-and-forget]
   │   ├── JOIN push_subscriptions × users × community_members
   │   ├── Eligibility tier filtering (same_demographics / verified_guardians / any_member)
   │   ├── Exclude requester, exclude soft-deleted users
+  │   ├── DISTINCT ON (user_id) — 1 subscription per user (most recent)
   │   └── For community-scoped: restrict to approved members
-  ├── Localize body per user's preferred_lang (11 languages, hardcoded)
+  ├── JS defense-in-depth: deduplicate by user_id + exclude requester
+  ├── Localize body per user's preferred_lang (12 languages, hardcoded)
   └── Promise.allSettled() — one failure doesn't block others
 ```
 

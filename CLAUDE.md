@@ -20,7 +20,7 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 - **Backend**: Node 22 + Express 5 + Socket.io v4 + PostgreSQL 16 + jose (JWT) + web-push
 - **Infrastructure**: Docker Compose (5 services) + Traefik v3.6 + nginx (frontend + docs serving)
 - **Docs site**: Eleventy 3.0 static site + nginx 1.27, routed at `docs.${DOMAIN}`
-- **Testing**: node:test (backend, 77 tests), vitest + @testing-library/preact (frontend, 182 tests)
+- **Testing**: node:test (backend, 83 tests), vitest + @testing-library/preact (frontend, 186 tests)
 
 ## Key constraints
 
@@ -37,8 +37,8 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 All tests must pass before committing. Run the full test suite (not just related tests) after any backend or shared logic change.
 
 ```bash
-cd backend && npm test        # node:test (77 tests)
-cd frontend && npm test       # vitest (182 tests)
+cd backend && npm test        # node:test (83 tests)
+cd frontend && npm test       # vitest (186 tests)
 ```
 
 ### Common pitfalls
@@ -120,7 +120,7 @@ Scaffolding skills encode project conventions (route ordering, 4-file feature fl
 
 - **Feature flags**: `FEATURE_*` env vars, backend registry in `src/features.js`, frontend context in `src/context/FeatureFlagContext.jsx`
 - **Auth**: Provider pattern in `src/auth/` — stub provider simulates BankID with time-based states and error simulation via NIN prefix (`000*` = cancel, `111*` = expired). JWT via jose (HS256, 24h expiry). The `collect` endpoint upserts the user into the DB and puts the real UUID (not the hash) in the JWT as `userId`. The `verify` endpoint validates the token AND checks the user exists in the DB. The `authenticate` middleware rejects tokens where `userId` is not a valid UUID format. **API field name**: The login endpoint expects `nin` as the API field name.
-- **Notifications**: Provider pattern — mock provider records sent notifications for test assertions. Real provider uses `web-push` library with VAPID keys (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_CONTACT` env vars). Falls back to mock if VAPID keys not configured. `notifyNewRequest()` sends push notifications to all eligible responders when a request is created (both HTTP and Socket paths). Uses `findEligibleForRequest()` in push-subscriptions repo — a single SQL query that applies eligibility tier filtering, community membership checks, and excludes the requester. Notification bodies are hardcoded in all 12 languages (push runs outside browser context, no i18next). Fire-and-forget: errors are logged but never block request creation. Frontend `VITE_VAPID_PUBLIC_KEY` is a build-time arg in `frontend/Dockerfile`.
+- **Notifications**: Provider pattern — mock provider records sent notifications for test assertions. Real provider uses `web-push` library with VAPID keys (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_CONTACT` env vars). Falls back to mock if VAPID keys not configured. `notifyNewRequest()` sends push notifications to all eligible responders when a request is created (both HTTP and Socket paths). Uses `findEligibleForRequest()` in push-subscriptions repo — a single SQL query that applies eligibility tier filtering, community membership checks, excludes the requester, and deduplicates by user (`DISTINCT ON (user_id)` picks the most recent subscription per user). JS-level defense-in-depth in `notifyNewRequest()` also deduplicates by `user_id` and excludes the requester. Notification bodies are hardcoded in all 12 languages (push runs outside browser context, no i18next). Fire-and-forget: errors are logged but never block request creation. Frontend `VITE_VAPID_PUBLIC_KEY` is a build-time arg in `frontend/Dockerfile`.
 - **Database**: Single `001_initial` migration creates all tables, plus `003_session_messages` for in-session messaging, `004_done_pending` for mutual completion flow, and `005_nullable_requester` for GDPR cleanup (makes `requester_id` nullable). No production data yet. `community_id` on `assistance_requests` is nullable (freestanding requests). **DB credentials are dynamic** — they come from `.env.local` via Docker Compose env vars (`$POSTGRES_USER`, `$POSTGRES_DB`), NOT hardcoded as `postgres`/`tillsammans`. Always read from the container environment.
 - **Workers**: In-process `setInterval` (no job queue) — request expiration (60s) + GDPR cleanup (daily hard-delete of accounts soft-deleted >30 days). Startup cleanup deletes terminal requests (`completed`, `safety_confirmed`, `cancelled`, `expired`) before the server accepts traffic.
 - **Rate limiting**: In-memory sliding window rate limiter — auth (10 req/min), API (100 req/min), nearby discovery (5 req/min)
@@ -167,8 +167,8 @@ docker compose up db -d       # Database only
 docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml up --build -d
 
 # Tests (or use /test skill)
-cd backend && npm test        # node:test (77 tests)
-cd frontend && npm test       # vitest (182 tests)
+cd backend && npm test        # node:test (83 tests)
+cd frontend && npm test       # vitest (186 tests)
 
 # Build
 cd frontend && npm run build  # Vite production build
