@@ -22,15 +22,35 @@ if ('serviceWorker' in navigator) {
         console.log('SW registration failed:', err.message)
       })
 
-    // When a new SW takes control (skipWaiting + clients.claim), reload to
-    // pick up the new version. sessionStorage guard prevents reload loops.
+    // When a new SW takes control (skipWaiting + clients.claim), show a brief
+    // toast and reload. sessionStorage guard prevents reload loops.
     let refreshing = false
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (refreshing) return
       if (sessionStorage.getItem('sw-reloaded')) return
       refreshing = true
       sessionStorage.setItem('sw-reloaded', '1')
-      window.location.reload()
+
+      const toast = document.createElement('div')
+      toast.textContent = 'Updating...'
+      toast.setAttribute('role', 'status')
+      toast.setAttribute('aria-live', 'polite')
+      Object.assign(toast.style, {
+        position: 'fixed',
+        bottom: '80px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        background: '#1e293b',
+        color: '#fff',
+        padding: '12px 24px',
+        borderRadius: '8px',
+        fontSize: '14px',
+        zIndex: '9999',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+      })
+      document.body.appendChild(toast)
+
+      setTimeout(() => window.location.reload(), 300)
     })
   })
 }

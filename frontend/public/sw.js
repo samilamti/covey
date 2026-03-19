@@ -11,12 +11,19 @@ const APP_SHELL = [
   '/index.html',
 ]
 
-// --- Install: pre-cache app shell ---
+// --- Install: pre-cache app shell (per-URL so one failure doesn't block install) ---
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.all(
+        APP_SHELL.map((url) =>
+          cache.add(url).catch((err) => {
+            console.error('[SW] precache failed for', url, err)
+          })
+        )
+      )
+    )
   )
-  // Activate immediately
   self.skipWaiting()
 })
 
@@ -29,9 +36,10 @@ self.addEventListener('activate', (event) => {
           .filter((key) => key !== CACHE_NAME)
           .map((key) => caches.delete(key))
       )
-    )
+    ).then(() => {
+      console.log('[SW] activated version:', CACHE_NAME)
+    })
   )
-  // Take control of all pages immediately
   self.clients.claim()
 })
 

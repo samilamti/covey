@@ -10,10 +10,18 @@ function swVersionPlugin() {
     name: 'sw-version',
     closeBundle() {
       const swPath = resolve('dist/sw.js')
-      let sw = readFileSync(swPath, 'utf-8')
-      const version = Date.now().toString(36)
-      sw = sw.replace('__SW_VERSION__', version)
-      writeFileSync(swPath, sw)
+      try {
+        let sw = readFileSync(swPath, 'utf-8')
+        if (!sw.includes('__SW_VERSION__')) {
+          throw new Error('sw.js is missing __SW_VERSION__ placeholder')
+        }
+        const version = Date.now().toString(36)
+        sw = sw.replace('__SW_VERSION__', version)
+        writeFileSync(swPath, sw)
+        console.log(`[sw-version] stamped sw.js with version: ${version}`)
+      } catch (err) {
+        throw new Error(`[sw-version] Failed to stamp sw.js: ${err.message}`)
+      }
     },
   }
 }
