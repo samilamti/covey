@@ -52,7 +52,8 @@ export async function findByUser(userId) {
  */
 export async function findEligibleForRequest({ requesterId, eligibilityTier }) {
   const { rows } = await db.query(`
-    SELECT ps.endpoint, ps.p256dh, ps.auth, ps.user_id, u.preferred_lang
+    SELECT DISTINCT ON (ps.user_id)
+      ps.endpoint, ps.p256dh, ps.auth, ps.user_id, u.preferred_lang
     FROM push_subscriptions ps
     JOIN users u ON u.id = ps.user_id AND u.deleted_at IS NULL
     CROSS JOIN (SELECT birth_year, sex FROM users WHERE id = $1) AS req
@@ -68,6 +69,7 @@ export async function findEligibleForRequest({ requesterId, eligibilityTier }) {
           AND u.sex = req.sex AND u.birth_year IS NOT NULL AND req.birth_year IS NOT NULL
           AND ABS(u.birth_year - req.birth_year) <= 5)
       )
+    ORDER BY ps.user_id, ps.created_at DESC
   `, [requesterId, eligibilityTier])
   return rows
 }

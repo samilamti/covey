@@ -120,8 +120,19 @@ export async function notifyNewRequest(request) {
 
     if (subscriptions.length === 0) return
 
+    // Defense-in-depth: exclude requester and deduplicate by user
+    const seen = new Set()
+    const uniqueSubs = subscriptions.filter((sub) => {
+      if (sub.user_id === request.requester_id) return false
+      if (seen.has(sub.user_id)) return false
+      seen.add(sub.user_id)
+      return true
+    })
+
+    if (uniqueSubs.length === 0) return
+
     const results = await Promise.allSettled(
-      subscriptions.map((sub) => {
+      uniqueSubs.map((sub) => {
         const lang = sub.preferred_lang || 'sv'
         const payload = {
           title: 'Covey',
@@ -138,7 +149,7 @@ export async function notifyNewRequest(request) {
 
     const failed = results.filter((r) => r.status === 'rejected')
     if (failed.length > 0) {
-      console.warn(`[push] ${failed.length}/${subscriptions.length} notifications failed`)
+      console.warn(`[push] ${failed.length}/${uniqueSubs.length} notifications failed`)
     }
   } catch (err) {
     console.error('[push] notifyNewRequest error:', err.message)
