@@ -105,6 +105,56 @@ const NOTIFY_BODY = {
   uk: 'Комусь потрібна допомога! Чи можете ви піти разом?',
 }
 
+const ACCEPTED_BODY = {
+  sv: 'Någon har accepterat din förfrågan! Öppna appen.',
+  en: 'Someone accepted your request! Open the app.',
+  nb: 'Noen har akseptert forespørselen din! Åpne appen.',
+  da: 'Nogen har accepteret din anmodning! Åbn appen.',
+  fi: 'Joku hyväksyi pyyntösi! Avaa sovellus.',
+  ar: 'شخص ما قبل طلبك! افتح التطبيق.',
+  is: 'Einhver samþykkti beiðni þína! Opnaðu appið.',
+  pl: 'Ktoś zaakceptował Twoje zgłoszenie! Otwórz aplikację.',
+  fo: 'Onkur hevur góðtikið umbøn tína! Lat appina upp.',
+  kl: 'Inuit qinnuteqaat akuerissimavaat! App-i ammaruk.',
+  se: 'Muhtin lea dohkkehan du jearaldaga! Rahpa app.',
+  uk: 'Хтось прийняв ваш запит! Відкрийте додаток.',
+}
+
+/**
+ * Send a push notification to the requester when their request is accepted.
+ * Fire-and-forget: errors are logged, never thrown.
+ *
+ * @param {object} request - The accepted request row from DB
+ */
+export async function notifyRequestAccepted(request) {
+  try {
+    const subscriptions = await pushRepo.findByUserWithLang(request.requester_id)
+    if (subscriptions.length === 0) return
+
+    const lang = subscriptions[0].preferred_lang || 'sv'
+    const payload = {
+      title: 'Covey',
+      body: ACCEPTED_BODY[lang] || ACCEPTED_BODY.sv,
+      url: '/requests',
+      requestId: request.id,
+    }
+
+    const results = await Promise.allSettled(
+      subscriptions.map((sub) => sendNotification(
+        { endpoint: sub.endpoint, p256dh: sub.p256dh, auth: sub.auth },
+        payload
+      ))
+    )
+
+    const failed = results.filter((r) => r.status === 'rejected')
+    if (failed.length > 0) {
+      console.warn(`[push] ${failed.length}/${subscriptions.length} accept notifications failed`)
+    }
+  } catch (err) {
+    console.error('[push] notifyRequestAccepted error:', err.message)
+  }
+}
+
 /**
  * Send push notifications to all users eligible to respond to a new request.
  * Fire-and-forget: errors are logged, never thrown.

@@ -42,6 +42,20 @@ export async function findByUser(userId) {
 }
 
 /**
+ * Get all subscriptions for a user, including preferred language.
+ */
+export async function findByUserWithLang(userId) {
+  const { rows } = await db.query(`
+    SELECT ps.endpoint, ps.p256dh, ps.auth, u.preferred_lang
+    FROM push_subscriptions ps
+    JOIN users u ON u.id = ps.user_id
+    WHERE ps.user_id = $1
+    ORDER BY ps.created_at DESC
+  `, [userId])
+  return rows
+}
+
+/**
  * Find push subscriptions for all users eligible to respond to a request.
  * Applies the same eligibility tier logic used in request listing queries.
  *

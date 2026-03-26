@@ -14,10 +14,12 @@ import assert from 'node:assert/strict'
 // --- Mock dependencies before importing the module under test ---
 
 const findEligibleForRequest = mock.fn()
+const findByUserWithLang = mock.fn()
 
 mock.module('../src/repositories/push-subscriptions.js', {
   namedExports: {
     findEligibleForRequest,
+    findByUserWithLang,
     upsert: mock.fn(),
     remove: mock.fn(),
     findByUser: mock.fn(),
@@ -33,6 +35,7 @@ mock.module('../src/features.js', {
 
 const {
   notifyNewRequest,
+  notifyRequestAccepted,
   getSentNotifications,
   clearSentNotifications,
 } = await import('../src/services/notifications.js')
@@ -66,6 +69,7 @@ describe('notifyNewRequest', () => {
   beforeEach(() => {
     clearSentNotifications()
     findEligibleForRequest.mock.resetCalls()
+    findByUserWithLang.mock.resetCalls()
   })
 
   it('should send at most 1 notification per eligible user', async () => {
@@ -139,5 +143,66 @@ describe('notifyNewRequest', () => {
 
     // Should resolve without throwing
     await assert.doesNotReject(() => notifyNewRequest(makeRequest()))
+  })
+})
+
+describe('notifyRequestAccepted', () => {
+  beforeEach(() => {
+    clearSentNotifications()
+    findByUserWithLang.mock.resetCalls()
+  })
+
+  it('should notify the requester when their request is accepted', async () => {
+    findByUserWithLang.mock.mockImplementation(async () => [
+      { endpoint: 'https://push.example.com/requester', p256dh: 'p1', auth: 'a1', preferred_lang: 'sv' },
+    ])
+
+    await notifyRequestAccepted(makeRequest())
+
+    const sent = getSentNotifications()
+    assert.equal(sent.length, 1)
+    assert.equal(sent[0].subscription.endpoint, 'https://push.example.com/requester')
+    assert.ok(sent[0].payload.body.includes('accepterat'), 'Should contain Swedish accept text')
+  })
+
+  it('should send to all subscriptions of the requester', async () => {
+    findByUserWithLang.mock.mockImplementation(async () => [
+      { endpoint: 'https://push.example.com/1', p256dh: 'p1', auth: 'a1', preferred_lang: 'sv' },
+      { endpoint: 'https://push.example.com/2', p256dh: 'p2', auth: 'a2', preferred_lang: 'sv' },
+    ])
+
+    await notifyRequestAccepted(makeRequest())
+
+    const sent = getSentNotifications()
+    assert.equal(sent.length, 2)
+  })
+
+  it('should use preferred_lang for notification body', async () => {
+    findByUserWithLang.mock.mockImplementation(async () => [
+      { endpoint: 'https://push.example.com/1', p256dh: 'p1', auth: 'a1', preferred_lang: 'en' },
+    ])
+
+    await notifyRequestAccepted(makeRequest())
+
+    const sent = getSentNotifications()
+    assert.equal(sent.length, 1)
+    assert.equal(sent[0].payload.body, 'Someone accepted your request! Open the app.')
+  })
+
+  it('should not send when requester has no subscriptions', async () => {
+    findByUserWithLang.mock.mockImplementation(async () => [])
+
+    await notifyRequestAccepted(makeRequest())
+
+    const sent = getSentNotifications()
+    assert.equal(sent.length, 0)
+  })
+
+  it('should not throw when findByUserWithLang fails', async () => {
+    findByUserWithLang.mock.mockImplementation(async () => {
+      throw new Error('DB connection failed')
+    })
+
+    await assert.doesNotReject(() => notifyRequestAccepted(makeRequest()))
   })
 })

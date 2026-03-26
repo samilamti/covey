@@ -9,7 +9,7 @@ import * as msgRepo from '../repositories/messages.js'
 import * as userRepo from '../repositories/users.js'
 import * as ratingRepo from '../repositories/ratings.js'
 import { checkEligibility } from '../services/eligibility.js'
-import { notifyNewRequest } from '../services/notifications.js'
+import { notifyNewRequest, notifyRequestAccepted } from '../services/notifications.js'
 
 export const requestRouter = Router()
 
@@ -154,6 +154,9 @@ requestRouter.post('/:id/accept', async (req, res) => {
         request,
       })
     }
+
+    // Push notification to requester (fire-and-forget)
+    notifyRequestAccepted(request).catch(() => {})
 
     res.json({ request })
   } catch (err) {

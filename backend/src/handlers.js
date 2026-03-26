@@ -11,7 +11,7 @@ import * as reqRepo from './repositories/requests.js'
 import * as msgRepo from './repositories/messages.js'
 import { processLocationUpdate } from './services/geolocation.js'
 import { checkEligibility } from './services/eligibility.js'
-import { notifyNewRequest } from './services/notifications.js'
+import { notifyNewRequest, notifyRequestAccepted } from './services/notifications.js'
 
 /**
  * Register Socket.io middleware and event handlers.
@@ -119,6 +119,9 @@ export function registerSocketHandlers(io) {
           requestId,
           request,
         })
+
+        // Push notification to requester (fire-and-forget)
+        notifyRequestAccepted(request).catch(() => {})
       } catch (err) {
         console.error('Socket request:accept error:', err.message)
       }
