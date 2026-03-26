@@ -225,6 +225,42 @@ const migrations = [
         WHERE status IN ('open', 'accepted', 'active', 'done_pending');
     `,
   },
+  {
+    name: '008_points_system',
+    sql: `
+      -- Points ledger: one entry per user per completed session
+      CREATE TABLE IF NOT EXISTS points_ledger (
+        id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id     UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        request_id  UUID NOT NULL REFERENCES assistance_requests(id) ON DELETE CASCADE,
+        role        TEXT NOT NULL CHECK (role IN ('helper', 'requester')),
+        points      INTEGER NOT NULL,
+        reason      TEXT NOT NULL DEFAULT 'session_completed',
+        created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE(user_id, request_id)
+      );
+      CREATE INDEX IF NOT EXISTS idx_points_user ON points_ledger(user_id);
+
+      -- Badges: private by default, opt-in visibility
+      CREATE TABLE IF NOT EXISTS badges (
+        id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id     UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        badge_key   TEXT NOT NULL,
+        earned_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        visible     BOOLEAN NOT NULL DEFAULT FALSE,
+        UNIQUE(user_id, badge_key)
+      );
+      CREATE INDEX IF NOT EXISTS idx_badges_user ON badges(user_id);
+
+      -- Anti-gaming: pair cooldown (canonical ordering: smaller UUID = user_a)
+      CREATE TABLE IF NOT EXISTS pair_cooldowns (
+        user_a            UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        user_b            UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        last_completed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (user_a, user_b)
+      );
+    `,
+  },
 ]
 
 /**
