@@ -12,6 +12,11 @@ vi.mock('react-i18next', () => ({
 vi.mock('lucide-preact', () => ({
   HelpCircle: (props) => h('span', null, 'HelpCircle'),
   User: (props) => h('span', null, 'User'),
+  Trophy: (props) => h('span', null, 'Trophy'),
+}))
+
+vi.mock('../src/context/FeatureFlagContext', () => ({
+  useFeatureFlag: () => false,
 }))
 
 const { BottomNav } = await import('../src/components/BottomNav')
