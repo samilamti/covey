@@ -26,10 +26,6 @@ vi.mock('../src/components/LanguageSelector', () => ({
   LanguageSelector: () => h('div', null, 'LanguageSelector'),
 }))
 
-vi.mock('../src/components/BetaBanner', () => ({
-  BetaBanner: () => h('div', { 'data-testid': 'beta-banner' }, 'BetaBanner'),
-}))
-
 vi.mock('../src/components/InstallPrompt', () => ({
   InstallPrompt: () => null,
 }))

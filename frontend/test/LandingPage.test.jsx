@@ -30,10 +30,6 @@ vi.mock('../src/components/LanguageSelector', () => ({
   LanguageSelector: () => h('div', { 'data-testid': 'lang-selector' }, 'LanguageSelector'),
 }))
 
-vi.mock('../src/components/BetaBanner', () => ({
-  BetaBanner: () => h('div', { 'data-testid': 'beta-banner' }, 'BetaBanner'),
-}))
-
 const { LandingPage } = await import('../src/components/LandingPage')
 
 describe('LandingPage', () => {
@@ -65,15 +61,13 @@ describe('LandingPage', () => {
     expect(getByText('landing.loginButton')).toBeTruthy()
   })
 
-  it('renders subtitle and description', () => {
+  it('renders description', () => {
     const { getByText } = render(<LandingPage onLogin={vi.fn()} />)
-    expect(getByText('landing.subtitle')).toBeTruthy()
     expect(getByText('landing.description')).toBeTruthy()
   })
 
-  it('renders BetaBanner and LanguageSelector', () => {
+  it('renders LanguageSelector', () => {
     const { getByTestId } = render(<LandingPage onLogin={vi.fn()} />)
-    expect(getByTestId('beta-banner')).toBeTruthy()
     expect(getByTestId('lang-selector')).toBeTruthy()
   })
 })

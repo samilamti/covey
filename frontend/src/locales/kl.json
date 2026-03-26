@@ -1,7 +1,6 @@
 {
   "landing": {
     "title": "Tikilluarit Covey-mut",
-    "subtitle": "Ataatsimut ikiutigisigit angerlarlutit – katillutit pisigit! 🫶",
     "nameMeaning": "Covey – inuit ikittuinnaat (imaluunniit timmissat ikittuinnaat 🕊️, kisiannili inunnut isumaginninnerulta)",
     "description": "Kisimi angerlarniaqqutit. Qanittumiittut ikiuteqarfigisinnaavatit – pisinnarissamut aamma pitsaanerpaamik.",
     "loginButton": "BankID-ikkut iserfigisinnaavatit",
@@ -167,10 +166,6 @@
     "retry": "Misileqqigit",
     "requesting": "Najugaq nassaarineqarpoq…",
     "sessionWarning": "Najugaq avataanniissimanavianngilaq. Ikinngutit takusinnaanngilaat sumiunniiffinnik."
-  },
-  "beta": {
-    "notice": "Una betaversioni-uvoq. Iserfissaq misilitseriaatsinik atorpoq, BankID-imik pisinnaanngillat.",
-    "feedback": "Oqaaseqarfigisigut!"
   },
   "install": {
     "title": "Covey ikkussuinnaruk",

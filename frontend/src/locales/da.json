@@ -1,7 +1,6 @@
 {
   "landing": {
     "title": "Velkommen til Covey",
-    "subtitle": "Hjælp hinanden hjem – gå sammen! 🫶",
     "nameMeaning": "Covey – en lille gruppe mennesker (eller en lille flok fugle 🕊️, men lad os fokusere på menneskene)",
     "description": "Slip for at gå hjem alene. Find trygt følgeskab i nærheden – når du har mest brug for det.",
     "loginButton": "Log ind med BankID",
@@ -167,10 +166,6 @@
     "retry": "Prøv igen",
     "requesting": "Henter position…",
     "sessionWarning": "Din position deles ikke. Den anden person kan ikke se, hvor du er."
-  },
-  "beta": {
-    "notice": "Dette er en betaversion. Login bruger testoplysninger, ikke rigtig BankID.",
-    "feedback": "Send os gerne feedback!"
   },
   "install": {
     "title": "Installer Covey",

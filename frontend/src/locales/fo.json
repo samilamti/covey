@@ -1,7 +1,6 @@
 {
   "landing": {
     "title": "Vælkomin til Covey",
-    "subtitle": "Hjálpist heim – gangið saman! 🫶",
     "nameMeaning": "Covey – ein lítil bólkur av fólki (ella ein lítil flokkur av fuglum 🕊️, men lat okkum leggja dent á fólkið)",
     "description": "Slep at ganga heim einsamøll(ur). Finn tryggt fylgi í nærumhvørvinum – tá ið tú mest tørvar.",
     "loginButton": "Rita inn við BankID",
@@ -167,10 +166,6 @@
     "retry": "Royn aftur",
     "requesting": "Heintir støðu…",
     "sessionWarning": "Støðan tín verður ikki deild. Hin persónurin kann ikki síggja, hvar tú ert."
-  },
-  "beta": {
-    "notice": "Hetta er eitt betaútgáva. Innriting nýtir royndargøgn, ikki veruligt BankID.",
-    "feedback": "Send okkum afturmelding!"
   },
   "install": {
     "title": "Innset Covey",

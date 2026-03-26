@@ -1,7 +1,6 @@
 {
   "landing": {
     "title": "Witaj w Covey",
-    "subtitle": "Pomagajcie sobie nawzajem w drodze do domu – idźcie razem! 🫶",
     "nameMeaning": "Covey – mała grupa ludzi (lub mały stadko ptaków 🕊️, ale skupmy się na ludziach)",
     "description": "Nie wracaj do domu sam(a). Znajdź bezpieczne towarzystwo w pobliżu – kiedy najbardziej tego potrzebujesz.",
     "loginButton": "Zaloguj się przez BankID",
@@ -167,10 +166,6 @@
     "retry": "Spróbuj ponownie",
     "requesting": "Pobieranie lokalizacji…",
     "sessionWarning": "Twoja lokalizacja nie jest udostępniana. Druga osoba nie widzi, gdzie jesteś."
-  },
-  "beta": {
-    "notice": "To jest wersja beta. Logowanie używa danych testowych, nie prawdziwego BankID.",
-    "feedback": "Wyślij nam swoją opinię!"
   },
   "install": {
     "title": "Zainstaluj Covey",

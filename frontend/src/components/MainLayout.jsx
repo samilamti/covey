@@ -4,7 +4,6 @@ import { BottomNav } from './BottomNav'
 import { ProfileView } from './ProfileView'
 import { RequestList } from './RequestList'
 import { LanguageSelector } from './LanguageSelector'
-import { BetaBanner } from './BetaBanner'
 import { InstallPrompt } from './InstallPrompt'
 import { socket } from '../socket'
 
@@ -67,7 +66,6 @@ export function MainLayout({ user, onLogout }) {
 
   return (
     <div class="min-h-screen bg-gray-50 pb-16 safe-area-x">
-      <BetaBanner />
       <InstallPrompt />
       {/* Top bar */}
       <header class="bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center sticky top-0 z-[1001] safe-area-top">

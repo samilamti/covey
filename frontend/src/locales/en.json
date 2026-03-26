@@ -1,7 +1,6 @@
 {
   "landing": {
     "title": "Welcome to Covey",
-    "subtitle": "Help each other home – walk together! 🫶",
     "nameMeaning": "Covey – a small group of people (or a small flock of birds 🕊️, but let's focus on the people)",
     "description": "Don't walk home alone. Find safe company nearby – when you need it the most.",
     "loginButton": "Log in with BankID",
@@ -167,10 +166,6 @@
     "retry": "Try again",
     "requesting": "Getting location…",
     "sessionWarning": "Your location is not being shared. The other person cannot see where you are."
-  },
-  "beta": {
-    "notice": "This is a beta version. Login uses test credentials, not real BankID.",
-    "feedback": "Send us your feedback!"
   },
   "install": {
     "title": "Install Covey",

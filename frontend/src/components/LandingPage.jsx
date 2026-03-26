@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { ShieldCheck, Users, Loader2, ExternalLink } from 'lucide-preact'
 import { LanguageSelector } from './LanguageSelector'
-import { BetaBanner } from './BetaBanner'
 import { authService } from '../services/auth'
 
 /** Generate a random valid 12-digit NIN for unique test users. */
@@ -83,7 +82,6 @@ export function LandingPage({ onLogin }) {
 
   return (
     <div class="fixed inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col overflow-y-auto safe-area-top safe-area-bottom safe-area-x">
-      <BetaBanner />
       <header class="p-4 flex justify-end">
         <LanguageSelector />
       </header>
@@ -97,10 +95,6 @@ export function LandingPage({ onLogin }) {
           <h1 class="text-3xl font-bold text-gray-900 mb-2">
             {t('landing.title')}
           </h1>
-
-          <p class="text-lg text-indigo-600 font-medium mb-4">
-            {t('landing.subtitle')}
-          </p>
 
           <p class="text-sm text-gray-500 italic mb-6">
             {t('landing.nameMeaning')}

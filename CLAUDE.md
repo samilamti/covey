@@ -20,7 +20,7 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 - **Backend**: Node 22 + Express 5 + Socket.io v4 + PostgreSQL 16 + jose (JWT) + web-push
 - **Infrastructure**: Docker Compose (5 services) + Traefik v3.6 + nginx (frontend + docs serving)
 - **Docs site**: Eleventy 3.0 static site + nginx 1.27, routed at `docs.${DOMAIN}`
-- **Testing**: node:test (backend, 88 tests), vitest + @testing-library/preact (frontend, 186 tests)
+- **Testing**: node:test (backend, 88 tests), vitest + @testing-library/preact (frontend, 184 tests)
 
 ## Key constraints
 
@@ -38,7 +38,7 @@ All tests must pass before committing. Run the full test suite (not just related
 
 ```bash
 cd backend && npm test        # node:test (88 tests)
-cd frontend && npm test       # vitest (186 tests)
+cd frontend && npm test       # vitest (184 tests)
 ```
 
 ### Common pitfalls
@@ -168,7 +168,7 @@ docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.loc
 
 # Tests (or use /test skill)
 cd backend && npm test        # node:test (88 tests)
-cd frontend && npm test       # vitest (186 tests)
+cd frontend && npm test       # vitest (184 tests)
 
 # Build
 cd frontend && npm run build  # Vite production build

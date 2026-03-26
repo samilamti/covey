@@ -1,7 +1,6 @@
 {
   "landing": {
     "title": "Tervetuloa Coveyhin",
-    "subtitle": "Auttakaa toisianne kotiin – kulkekaa yhdessä! 🫶",
     "nameMeaning": "Covey – pieni ryhmä ihmisiä (tai pieni parvi lintuja 🕊️, mutta keskitytään ihmisiin)",
     "description": "Älä kävele kotiin yksin. Löydä turvallista seuraa läheltäsi – silloin kun tarvitset sitä eniten.",
     "loginButton": "Kirjaudu BankID:llä",
@@ -167,10 +166,6 @@
     "retry": "Yritä uudelleen",
     "requesting": "Haetaan sijaintia…",
     "sessionWarning": "Sijaintiasi ei jaeta. Toinen henkilö ei näe, missä olet."
-  },
-  "beta": {
-    "notice": "Tämä on betaversio. Kirjautuminen käyttää testitunnuksia, ei oikeaa BankID:tä.",
-    "feedback": "Lähetä meille palautetta!"
   },
   "install": {
     "title": "Asenna Covey",
