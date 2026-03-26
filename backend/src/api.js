@@ -7,6 +7,7 @@ import { requestRouter } from './routes/requests.js'
 import { notificationRouter } from './routes/notifications.js'
 import { gdprRouter } from './routes/gdpr.js'
 import { ratingRouter } from './routes/ratings.js'
+import { pointsRouter } from './routes/points.js'
 import { authRateLimit, apiRateLimit } from './middleware/rateLimit.js'
 
 export const apiRouter = Router()
@@ -33,6 +34,9 @@ apiRouter.use('/notifications', notificationRouter)
 
 // --- Rating routes ---
 apiRouter.use('/ratings', ratingRouter)
+
+// --- Points routes ---
+apiRouter.use('/points', pointsRouter)
 
 // --- GDPR routes ---
 apiRouter.use('/gdpr', gdprRouter)
