@@ -1,13 +1,16 @@
 import { useTranslation } from 'react-i18next'
-import { HelpCircle, User } from 'lucide-preact'
-
-const tabs = [
-  { path: '/requests', icon: HelpCircle, labelKey: 'nav.requests' },
-  { path: '/profile', icon: User, labelKey: 'nav.profile' },
-]
+import { HelpCircle, User, Trophy } from 'lucide-preact'
+import { useFeatureFlag } from '../context/FeatureFlagContext'
 
 export function BottomNav({ currentPath, onNavigate }) {
   const { t } = useTranslation()
+  const pointsEnabled = useFeatureFlag('POINTS_SYSTEM')
+
+  const tabs = [
+    { path: '/requests', icon: HelpCircle, labelKey: 'nav.requests' },
+    ...(pointsEnabled ? [{ path: '/progress', icon: Trophy, labelKey: 'nav.progress' }] : []),
+    { path: '/profile', icon: User, labelKey: 'nav.profile' },
+  ]
 
   return (
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center h-16 z-50 safe-area-bottom">

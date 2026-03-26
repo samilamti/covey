@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
-import { ShieldCheck, Shield, Download, Trash2, Save } from 'lucide-preact'
+import { ShieldCheck, Shield, Download, Trash2, Save, Award } from 'lucide-preact'
 import { profileService } from '../services/profile'
 
 export function ProfileView({ user, onLogout }) {
@@ -87,6 +87,16 @@ export function ProfileView({ user, onLogout }) {
             <div class="flex items-center gap-2 text-amber-600">
               <Shield size={20} />
               <span class="text-sm font-medium">{t('profile.guardian')}</span>
+            </div>
+          )}
+          {profile.badges?.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-2">
+              {profile.badges.filter(b => b.visible).map(b => (
+                <div key={b.badge_key} class="flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-1 rounded-full text-xs">
+                  <Award size={12} />
+                  <span>{t(`progress.badge.${b.badge_key}`)}</span>
+                </div>
+              ))}
             </div>
           )}
         </div>

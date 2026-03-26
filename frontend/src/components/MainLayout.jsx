@@ -5,6 +5,7 @@ import { ProfileView } from './ProfileView'
 import { RequestList } from './RequestList'
 import { LanguageSelector } from './LanguageSelector'
 import { InstallPrompt } from './InstallPrompt'
+import { ProgressDashboard } from './ProgressDashboard'
 import { socket } from '../socket'
 
 export function MainLayout({ user, onLogout }) {
@@ -57,6 +58,8 @@ export function MainLayout({ user, onLogout }) {
     switch (currentPath) {
       case '/requests':
         return <RequestList currentUserId={user?.userId} key={refreshKey} />
+      case '/progress':
+        return <ProgressDashboard />
       case '/profile':
         return <ProfileView user={user} onLogout={onLogout} />
       default:
