@@ -78,6 +78,25 @@ services:
     networks:
       - web
 
+  webhook:
+    build: ./deploy/webhook
+    restart: unless-stopped
+    environment:
+      DEPLOY_WEBHOOK_SECRET: ${DEPLOY_WEBHOOK_SECRET:-}
+    volumes:
+      - ./deploy/webhook/hooks.json:/etc/webhook/hooks.json:ro
+      - ./deploy/webhook/deploy.sh:/scripts/deploy.sh:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/repo
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webhook.rule=Host(`${DOMAIN}`) && Path(`/hooks/deploy`)"
+      - "traefik.http.routers.webhook.entrypoints=web"
+      - "traefik.http.services.webhook.loadbalancer.server.port=9000"
+      - "traefik.docker.network=tillsammans_web"
+    networks:
+      - web
+
   traefik:
     image: traefik:v3.6
     restart: unless-stopped

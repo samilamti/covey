@@ -1,0 +1,19 @@
+[
+  {
+    "id": "deploy",
+    "execute-command": "/scripts/deploy.sh",
+    "command-working-directory": "/repo",
+    "include-command-output-in-response": true,
+    "response-message": "Deploy triggered",
+    "trigger-rule": {
+      "match": {
+        "type": "payload-hmac-sha256",
+        "secret": "{{ getenv \"DEPLOY_WEBHOOK_SECRET\" }}",
+        "parameter": {
+          "source": "header",
+          "name": "X-Webhook-Signature"
+        }
+      }
+    }
+  }
+]

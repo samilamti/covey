@@ -2,10 +2,21 @@ when:
   event: [push]
   branch: main
 
+depends_on:
+  - test
+
 steps:
-  - name: docker-build
-    image: docker
+  - name: trigger-deploy
+    image: alpine
     commands:
-      - docker compose build
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - apk add --no-cache curl openssl
+      - |
+        BODY='{"ref":"main","trigger":"woodpecker"}'
+        SIGNATURE=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac "$DEPLOY_WEBHOOK_SECRET" | awk '{print $2}')
+        curl -fsSL \
+          -X POST \
+          -H "Content-Type: application/json" \
+          -H "X-Webhook-Signature: sha256=$SIGNATURE" \
+          -d "$BODY" \
+          "https://covey.se/hooks/deploy"
+    secrets: [deploy_webhook_secret]

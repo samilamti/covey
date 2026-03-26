@@ -17,6 +17,11 @@ services:
       - "traefik.http.routers.docs.entrypoints=websecure"
       - "traefik.http.routers.docs.tls.certresolver=letsencrypt"
 
+  webhook:
+    labels:
+      - "traefik.http.routers.webhook.entrypoints=websecure"
+      - "traefik.http.routers.webhook.tls.certresolver=letsencrypt"
+
   traefik:
     command:
       - "--providers.docker=true"

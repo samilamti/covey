@@ -1,4 +1,4 @@
-# Tillsammans Beta Deployment Guide
+# Tillsammans Deployment Guide
 
 Production deployment of Tillsammans at covey.se on a GleSYS VPS.
 
@@ -183,7 +183,7 @@ docker compose \
 ### Verify
 
 ```bash
-# All 4 containers running
+# All containers running
 docker compose --env-file .env.prod \
   -f docker-compose.yml -f docker-compose.prod.yml ps
 
@@ -268,6 +268,62 @@ Usage: `~/apps/tillsammans/deploy.sh`
 
 ---
 
+## 6. Auto-Deploy via Webhook
+
+Pushes to `main` auto-deploy after Woodpecker CI tests pass. A lightweight webhook listener runs as a Docker service, triggered by the CI pipeline.
+
+### One-time setup
+
+```bash
+# 1. Generate a shared secret
+SECRET=$(openssl rand -hex 32)
+echo "DEPLOY_WEBHOOK_SECRET=$SECRET"
+
+# 2. Add to .env.prod on the VPS
+echo "DEPLOY_WEBHOOK_SECRET=$SECRET" >> ~/apps/tillsammans/.env.prod
+
+# 3. Add as a Woodpecker secret in Codeberg repo settings:
+#    - Name: deploy_webhook_secret
+#    - Value: <the same secret>
+#    - Events: push
+
+# 4. Rebuild the stack (this one last manual deploy bootstraps the webhook)
+cd ~/apps/tillsammans && git pull origin main
+docker compose --env-file .env.prod \
+  -f docker-compose.yml -f docker-compose.prod.yml \
+  up --build -d
+```
+
+### How it works
+
+1. Push to `main` triggers Woodpecker CI
+2. `test.yaml` runs backend + frontend tests
+3. `build.yaml` (depends on test) sends an HMAC-signed POST to `https://covey.se/hooks/deploy`
+4. The webhook container verifies the signature and runs `deploy.sh`
+5. `deploy.sh` acquires a flock, runs `git pull` + `docker compose up --build -d`
+
+### Test manually
+
+```bash
+BODY='{"ref":"main","trigger":"manual"}'
+SIGNATURE=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac "$DEPLOY_WEBHOOK_SECRET" | awk '{print $2}')
+curl -fsSL -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-Webhook-Signature: sha256=$SIGNATURE" \
+  -d "$BODY" \
+  https://covey.se/hooks/deploy
+```
+
+### View deploy logs
+
+```bash
+docker compose --env-file .env.prod \
+  -f docker-compose.yml -f docker-compose.prod.yml \
+  logs -f webhook
+```
+
+---
+
 ## Quick Reference
 
 | What | Command |
@@ -278,4 +334,5 @@ Usage: `~/apps/tillsammans/deploy.sh`
 | DB shell | `docker exec -it tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER -d $POSTGRES_DB'` |
 | Manual backup | `~/apps/backup-db.sh` |
 | Redeploy | `~/apps/tillsammans/deploy.sh` |
+| Webhook logs | `docker compose --env-file .env.prod -f docker-compose.yml -f docker-compose.prod.yml logs -f webhook` |
 | Container stats | `docker stats --no-stream` |
