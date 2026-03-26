@@ -8,6 +8,8 @@ import { Router } from 'express'
 import { authenticate } from '../auth/index.js'
 import * as userRepo from '../repositories/users.js'
 import * as msgRepo from '../repositories/messages.js'
+import * as pointsRepo from '../repositories/points.js'
+import { isEnabled } from '../features.js'
 import { db } from '../pool.js'
 
 export const gdprRouter = Router()
@@ -25,7 +27,7 @@ gdprRouter.get('/export', async (req, res) => {
     }
 
     // Gather all user data
-    const [requests, subscriptions, ratingsGiven, ratingsReceived, sessionMessages] = await Promise.all([
+    const [requests, subscriptions, ratingsGiven, ratingsReceived, sessionMessages, pointsData] = await Promise.all([
       db.query(`
         SELECT id, type, message, status, created_at, completed_at, done_initiated_at
         FROM assistance_requests
@@ -48,6 +50,7 @@ gdprRouter.get('/export', async (req, res) => {
         ORDER BY created_at DESC
       `, [req.user.userId]),
       msgRepo.findByUser(req.user.userId),
+      isEnabled('POINTS_SYSTEM') ? pointsRepo.getExportData(req.user.userId) : { points: [], badges: [] },
     ])
 
     res.json({
@@ -70,6 +73,7 @@ gdprRouter.get('/export', async (req, res) => {
       ratingsGiven: ratingsGiven.rows,
       ratingsReceived: ratingsReceived.rows,
       sessionMessages,
+      pointsAndBadges: pointsData,
     })
   } catch (err) {
     console.error('GDPR export error:', err.message)

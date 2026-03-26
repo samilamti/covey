@@ -10,6 +10,8 @@ import { Router } from 'express'
 import { authenticate } from '../auth/index.js'
 import * as userRepo from '../repositories/users.js'
 import * as ratingRepo from '../repositories/ratings.js'
+import * as pointsRepo from '../repositories/points.js'
+import { isEnabled } from '../features.js'
 
 export const profileRouter = Router()
 
@@ -27,6 +29,9 @@ profileRouter.get('/', async (req, res) => {
     }
 
     const safetyScore = await ratingRepo.getSafetyScore(req.user.userId)
+    const badges = isEnabled('POINTS_SYSTEM')
+      ? await pointsRepo.getBadges(req.user.userId)
+      : []
 
     res.json({
       user: {
@@ -40,6 +45,7 @@ profileRouter.get('/', async (req, res) => {
         safetyScore,
         isGuardian: safetyScore >= 5,
         hasDemographics: !!(user.birth_year && user.sex),
+        badges,
       },
     })
   } catch (err) {
@@ -108,6 +114,9 @@ profileRouter.get('/:userId', async (req, res) => {
     }
 
     const safetyScore = await ratingRepo.getSafetyScore(req.params.userId)
+    const visibleBadges = isEnabled('POINTS_SYSTEM')
+      ? (await pointsRepo.getBadges(req.params.userId)).filter(b => b.visible)
+      : []
 
     res.json({
       user: {
@@ -116,6 +125,7 @@ profileRouter.get('/:userId', async (req, res) => {
         verified: user.verified,
         safetyScore,
         isGuardian: safetyScore >= 5,
+        badges: visibleBadges,
       },
     })
   } catch (err) {

@@ -10,6 +10,8 @@ import * as userRepo from '../repositories/users.js'
 import * as ratingRepo from '../repositories/ratings.js'
 import { checkEligibility } from '../services/eligibility.js'
 import { notifyNewRequest, notifyRequestAccepted } from '../services/notifications.js'
+import { isEnabled } from '../features.js'
+import * as pointsRepo from '../repositories/points.js'
 
 export const requestRouter = Router()
 
@@ -211,6 +213,14 @@ requestRouter.post('/:id/done/accept', async (req, res) => {
       }
     }
 
+    if (isEnabled('POINTS_SYSTEM') && request.requester_id && request.helper_id) {
+      pointsRepo.awardSessionPoints({
+        requestId: request.id,
+        requesterId: request.requester_id,
+        helperId: request.helper_id,
+      }).catch(err => console.error('Points award error:', err.message))
+    }
+
     res.json({ request })
   } catch (err) {
     console.error('Done accept error:', err.message)
@@ -318,6 +328,13 @@ requestRouter.post('/:id/done', async (req, res) => {
             if (completed.helper_id) {
               io.to(`user:${completed.helper_id}`).emit('request:completed', { requestId: completed.id })
             }
+          }
+          if (isEnabled('POINTS_SYSTEM') && completed.requester_id && completed.helper_id) {
+            pointsRepo.awardSessionPoints({
+              requestId: completed.id,
+              requesterId: completed.requester_id,
+              helperId: completed.helper_id,
+            }).catch(err => console.error('Points award error:', err.message))
           }
           return res.json({ request: completed })
         }

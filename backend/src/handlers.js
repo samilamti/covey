@@ -12,6 +12,8 @@ import * as msgRepo from './repositories/messages.js'
 import { processLocationUpdate } from './services/geolocation.js'
 import { checkEligibility } from './services/eligibility.js'
 import { notifyNewRequest, notifyRequestAccepted } from './services/notifications.js'
+import { isEnabled } from './features.js'
+import * as pointsRepo from './repositories/points.js'
 
 /**
  * Register Socket.io middleware and event handlers.
@@ -150,6 +152,13 @@ export function registerSocketHandlers(io) {
             if (completed.helper_id) {
               io.to(`user:${completed.helper_id}`).emit('request:completed', { requestId })
             }
+            if (isEnabled('POINTS_SYSTEM') && completed.requester_id && completed.helper_id) {
+              pointsRepo.awardSessionPoints({
+                requestId: completed.id,
+                requesterId: completed.requester_id,
+                helperId: completed.helper_id,
+              }).catch(err => console.error('Points award error:', err.message))
+            }
           }
           return
         }
@@ -199,6 +208,13 @@ export function registerSocketHandlers(io) {
         io.to(`user:${request.requester_id}`).emit('request:completed', { requestId })
         if (request.helper_id) {
           io.to(`user:${request.helper_id}`).emit('request:completed', { requestId })
+        }
+        if (isEnabled('POINTS_SYSTEM') && request.requester_id && request.helper_id) {
+          pointsRepo.awardSessionPoints({
+            requestId: request.id,
+            requesterId: request.requester_id,
+            helperId: request.helper_id,
+          }).catch(err => console.error('Points award error:', err.message))
         }
       } catch (err) {
         console.error('Socket request:done-accept error:', err.message)
