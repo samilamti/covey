@@ -63,13 +63,15 @@ frontend/
 │   │   ├── CommunityDetail.jsx     # Community detail + members
 │   │   ├── NearbyDiscovery.jsx     # Discover nearby communities
 │   │   ├── AdminPanel.jsx          # Community admin (approve/reject)
-│   │   └── ProfileView.jsx         # User profile + GDPR actions
+│   │   ├── ProfileView.jsx         # User profile + GDPR actions
+│   │   └── ProgressDashboard.jsx   # Personal points & badges (feature-flagged)
 │   ├── services/
 │   │   ├── auth.js                 # Auth API client
 │   │   ├── features.js             # Feature flag client
 │   │   ├── communities.js          # Community API client
 │   │   ├── profile.js              # Profile API client
 │   │   ├── requests.js             # Request API client
+│   │   ├── points.js               # Points & progress API client
 │   │   ├── geolocation.js          # Geolocation API wrapper
 │   │   └── notifications.js        # Push subscription client
 │   └── locales/
@@ -128,11 +130,13 @@ backend/
     │   ├── profile.js      # User profile endpoints
     │   ├── requests.js     # Assistance request lifecycle
     │   ├── notifications.js # Push subscription + test endpoints
+    │   ├── points.js       # Points & badges API (feature-flagged)
     │   └── gdpr.js         # GDPR data export + deletion
     ├── repositories/
     │   ├── users.js        # User DB operations
     │   ├── communities.js  # Community DB operations
     │   ├── requests.js     # Request DB operations
+    │   ├── points.js       # Points ledger, badges, pair cooldowns
     │   └── push-subscriptions.js  # Push subscription DB ops
     ├── services/
     │   ├── geolocation.js  # Rate-limited location relay

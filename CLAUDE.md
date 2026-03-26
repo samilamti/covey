@@ -20,7 +20,7 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 - **Backend**: Node 22 + Express 5 + Socket.io v4 + PostgreSQL 16 + jose (JWT) + web-push
 - **Infrastructure**: Docker Compose (5 services) + Traefik v3.6 + nginx (frontend + docs serving)
 - **Docs site**: Eleventy 3.0 static site + nginx 1.27, routed at `docs.${DOMAIN}`
-- **Testing**: node:test (backend, 88 tests), vitest + @testing-library/preact (frontend, 184 tests)
+- **Testing**: node:test (backend, 107 tests), vitest + @testing-library/preact (frontend, 191 tests)
 
 ## Key constraints
 
@@ -37,8 +37,8 @@ CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline f
 All tests must pass before committing. Run the full test suite (not just related tests) after any backend or shared logic change.
 
 ```bash
-cd backend && npm test        # node:test (88 tests)
-cd frontend && npm test       # vitest (184 tests)
+cd backend && npm test        # node:test (107 tests)
+cd frontend && npm test       # vitest (191 tests)
 ```
 
 ### Common pitfalls
@@ -74,7 +74,9 @@ All 7 implementation phases are complete. The application is feature-complete fo
 
 - **Production**: Live at covey.se on GleSYS VPS with Let's Encrypt TLS ✅
 
-**Not yet done**: Real BankID RP agreement, branding, accessibility audit. See `docs/roadmap.md` "Future" section.
+- **Points & progress**: Personal points/badges system behind `FEATURE_POINTS_SYSTEM` flag ✅
+
+**Not yet done**: Real BankID RP agreement, branding, accessibility audit, partner point redemption. See `docs/roadmap.md` "Future" section.
 
 ### Claude Code skills
 
@@ -132,6 +134,7 @@ Scaffolding skills encode project conventions (route ordering, 4-file feature fl
 - **Geolocation**: Centralized `useGeolocation` hook in `frontend/src/hooks/useGeolocation.js` — replaces all inline `navigator.geolocation` calls. Returns `{ position, error, loading, retry, supported }`. Error codes mapped: 1→`denied`, 2→`unavailable`, 3→`timeout`. `LocationBanner` component shows user-facing feedback with retry button. Used by `RequestList` (info severity), `CreateRequest` (info), and `ActiveSession` (warning — safety-critical). Never call `navigator.geolocation` directly from components. Includes `visibilitychange` listener — automatically re-acquires position when the page regains focus (one-shot mode re-calls `getCurrentPosition`, watch mode restarts `watchPosition`).
 - **Mutual done flow**: Either party can initiate "done" (`active` → `done_pending`). The other party accepts (`→ completed`) or rejects (`→ active`). Simultaneous done clicks auto-complete. Tracked via `done_initiated_by`/`done_initiated_at` columns. Routes: `/:id/done`, `/:id/done/accept`, `/:id/done/reject`. Socket events: `request:done-initiated`, `request:done-rejected`. Location relay + messaging remain active during `done_pending`. `ActiveSession` re-fetches request state on socket reconnect and `visibilitychange` to catch missed events. `MainLayout` keeps persistent listeners for `request:done-initiated` and `request:accepted` — auto-navigates to Requests tab and bumps a `refreshKey` that forces `RequestList` re-mount.
 - **Push subscription**: `subscribeToPush()` is called fire-and-forget after both session restore and fresh login in `App.jsx`. Errors are silently logged. Relies on `VITE_VAPID_PUBLIC_KEY` build-time env var.
+- **Points & badges**: Feature-flagged (`FEATURE_POINTS_SYSTEM`) personal progress system. Points awarded fire-and-forget when sessions complete (mutual done/accept) — helper gets 10, requester gets 3. Anti-gaming: `UNIQUE(user_id, request_id)` prevents double-award, `pair_cooldowns` table blocks same pair within 4h (canonical UUID ordering). Badge evaluation runs after each award. Constants in `src/points-config.js` (DB-free for testability), repository in `src/repositories/points.js`. Frontend: `/progress` tab in BottomNav (conditionally shown), `ProgressDashboard.jsx` component. Badges are private by default, opt-in visibility via `PUT /api/points/badges/:key/visibility`. Profile route includes visible badges for public profiles. Points data included in GDPR export. All tables cascade on user delete.
 - **PWA update strategy**: Service worker uses network-first for navigation requests (always fetches fresh `index.html`), cache-first for fingerprinted static assets. Cache name includes a build timestamp (`covey-<version>`) injected by a Vite `closeBundle` plugin — each deploy produces a byte-different `sw.js`, triggering the browser's update flow. `main.jsx` polls `reg.update()` every 5 minutes and auto-reloads on `controllerchange` (with `sessionStorage` loop guard). nginx serves `sw.js` and `index.html` with `no-cache, no-store, must-revalidate`.
 
 ## Localization
@@ -167,8 +170,8 @@ docker compose up db -d       # Database only
 docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml up --build -d
 
 # Tests (or use /test skill)
-cd backend && npm test        # node:test (88 tests)
-cd frontend && npm test       # vitest (184 tests)
+cd backend && npm test        # node:test (107 tests)
+cd frontend && npm test       # vitest (191 tests)
 
 # Build
 cd frontend && npm run build  # Vite production build
@@ -194,10 +197,13 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `backend/src/routes/requests.js` — Assistance request lifecycle
 - `backend/src/routes/profile.js` — User profile CRUD
 - `backend/src/routes/notifications.js` — Push subscription management
+- `backend/src/routes/points.js` — Points summary, history, badges, visibility toggle
 - `backend/src/routes/gdpr.js` — Data export + account deletion
 - `backend/src/repositories/` — Database access (users, communities, requests, push-subscriptions, ratings, messages)
 - `backend/src/repositories/messages.js` — Session message CRUD (create, findByRequest, findByUser)
 - `backend/src/repositories/ratings.js` — Safety ratings + stub score overrides
+- `backend/src/repositories/points.js` — Points ledger, badges, pair cooldowns, GDPR export
+- `backend/src/points-config.js` — Points constants + badge definitions (DB-free, importable in tests)
 - `backend/src/repositories/push-subscriptions.js` — Push subscription CRUD + `findEligibleForRequest()` for notification targeting
 - `backend/src/services/notifications.js` — Mock + real notification providers + `notifyNewRequest()` orchestration
 - `backend/src/services/geolocation.js` — Rate-limited location relay
@@ -231,11 +237,12 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `frontend/src/components/CommunityDetail.jsx` — Community info + member list
 - `frontend/src/components/NearbyDiscovery.jsx` — Geolocation-based discovery
 - `frontend/src/components/AdminPanel.jsx` — Approve/reject join requests
-- `frontend/src/components/ProfileView.jsx` — Profile + GDPR
+- `frontend/src/components/ProfileView.jsx` — Profile + GDPR + visible badges
+- `frontend/src/components/ProgressDashboard.jsx` — Personal points, badges grid, activity history (feature-flagged)
 - `frontend/src/components/LanguageSelector.jsx` — 12 languages, Sami SVG flag
 - `frontend/src/components/SamiFlag.jsx` — Custom SVG of the Sami flag
 - `frontend/src/components/BottomNav.jsx` — Mobile tab navigation
-- `frontend/src/services/` — API clients (auth, features, notifications, profile, ratings, requests)
+- `frontend/src/services/` — API clients (auth, features, notifications, points, profile, ratings, requests)
 - `frontend/src/locales/*.json` — 12 locale files (sv.json is canonical)
 - `frontend/public/sw.js` — Service worker (push, offline cache, network-first navigation, build-stamped cache versioning)
 - `frontend/vitest.config.js` — Test config (jsdom, preact aliases)
