@@ -30,7 +30,8 @@
   "nav": {
     "home": "Heim",
     "requests": "Beiðnir",
-    "profile": "Prófíll"
+    "profile": "Prófíll",
+    "progress": "Framfarir"
   },
   "app": {
     "loading": "Hleður…",
@@ -172,5 +173,30 @@
     "description": "Settu forritið á heimaskjáinn fyrir skjótan aðgang.",
     "iosHint": "Ýttu á Deila-hnappinn og síðan \"Bæta á heimaskjá\".",
     "button": "Setja upp"
+  },
+  "progress": {
+    "title": "Framfarir mínar",
+    "totalPoints": "Stig",
+    "sessionsHelped": "Hjálpað öðrum",
+    "sessionsRequested": "Fengið hjálp",
+    "badges": "Merki",
+    "badgesEarned": "{{earned}} af {{total}}",
+    "recentActivity": "Nýleg virkni",
+    "noActivity": "Engir stigar ennþá — hjálpaðu einhverjum til að byrja!",
+    "pointsEarned": "+{{points}} stig",
+    "asHelper": "Sem hjálpari",
+    "asRequester": "Sem beiðandi",
+    "showOnProfile": "Sýna á prófíl",
+    "hideFromProfile": "Fela af prófíl",
+    "badge": {
+      "first_session": "Fyrsta lotan",
+      "helper_5": "Hjálpað 5 sinnum",
+      "helper_20": "Hjálpað 20 sinnum",
+      "helper_50": "Hjálpað 50 sinnum",
+      "points_50": "50 stig",
+      "points_200": "200 stig",
+      "points_500": "500 stig"
+    },
+    "locked": "Læst"
   }
 }

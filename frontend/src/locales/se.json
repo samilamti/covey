@@ -30,7 +30,8 @@
   "nav": {
     "home": "Ruoktu",
     "requests": "Bivddut",
-    "profile": "Profila"
+    "profile": "Profila",
+    "progress": "Ovdáneapmi"
   },
   "app": {
     "loading": "Viežžamin…",
@@ -172,5 +173,30 @@
     "description": "Biját heahtaskáldii jođánis olahan dihte.",
     "iosHint": "Deaddil Juoge-boalu ja de \"Lasit ruoktoskáldii\".",
     "button": "Biját"
+  },
+  "progress": {
+    "title": "Mu ovdáneapmi",
+    "totalPoints": "Čuoggát",
+    "sessionsHelped": "Veahkehan earáid",
+    "sessionsRequested": "Ožžon veahki",
+    "badges": "Mearkkut",
+    "badgesEarned": "{{earned}} / {{total}}",
+    "recentActivity": "Maŋimuš doaimmat",
+    "noActivity": "Eai čuoggát vel — veahkke muhtin álggahit!",
+    "pointsEarned": "+{{points}} čuoggá",
+    "asHelper": "Veahkkin",
+    "asRequester": "Bivdiin",
+    "showOnProfile": "Čájet profiillas",
+    "hideFromProfile": "Čiega profiillas",
+    "badge": {
+      "first_session": "Vuosttaš sesšuvdna",
+      "helper_5": "Veahkehan 5 gearddi",
+      "helper_20": "Veahkehan 20 gearddi",
+      "helper_50": "Veahkehan 50 gearddi",
+      "points_50": "50 čuoggá",
+      "points_200": "200 čuoggá",
+      "points_500": "500 čuoggá"
+    },
+    "locked": "Giddejuvvon"
   }
 }

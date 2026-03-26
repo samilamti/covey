@@ -30,7 +30,8 @@
   "nav": {
     "home": "Hjem",
     "requests": "Forespørsler",
-    "profile": "Profil"
+    "profile": "Profil",
+    "progress": "Fremgang"
   },
   "app": {
     "loading": "Laster…",
@@ -172,5 +173,30 @@
     "description": "Installer appen på hjemskjermen for rask tilgang.",
     "iosHint": "Trykk på Del-knappen og deretter \"Legg til på Hjem-skjerm\".",
     "button": "Installer"
+  },
+  "progress": {
+    "title": "Min fremgang",
+    "totalPoints": "Poeng",
+    "sessionsHelped": "Hjulpet andre",
+    "sessionsRequested": "Fått hjelp",
+    "badges": "Merker",
+    "badgesEarned": "{{earned}} av {{total}}",
+    "recentActivity": "Siste aktivitet",
+    "noActivity": "Ingen poeng ennå — hjelp noen for å komme i gang!",
+    "pointsEarned": "+{{points}} poeng",
+    "asHelper": "Som hjelper",
+    "asRequester": "Som forespørrer",
+    "showOnProfile": "Vis på profil",
+    "hideFromProfile": "Skjul fra profil",
+    "badge": {
+      "first_session": "Første økt",
+      "helper_5": "Hjulpet 5 ganger",
+      "helper_20": "Hjulpet 20 ganger",
+      "helper_50": "Hjulpet 50 ganger",
+      "points_50": "50 poeng",
+      "points_200": "200 poeng",
+      "points_500": "500 poeng"
+    },
+    "locked": "Låst"
   }
 }

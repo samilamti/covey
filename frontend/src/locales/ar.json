@@ -30,7 +30,8 @@
   "nav": {
     "home": "الرئيسية",
     "requests": "الطلبات",
-    "profile": "الملف الشخصي"
+    "profile": "الملف الشخصي",
+    "progress": "التقدم"
   },
   "app": {
     "loading": "جارٍ التحميل…",
@@ -172,5 +173,30 @@
     "description": "ثبّت التطبيق على شاشتك الرئيسية للوصول السريع.",
     "iosHint": "اضغط على زر المشاركة ثم \"إضافة إلى الشاشة الرئيسية\".",
     "button": "تثبيت"
+  },
+  "progress": {
+    "title": "تقدمي",
+    "totalPoints": "النقاط",
+    "sessionsHelped": "ساعدت الآخرين",
+    "sessionsRequested": "حصلت على مساعدة",
+    "badges": "الشارات",
+    "badgesEarned": "{{earned}} من {{total}}",
+    "recentActivity": "النشاط الأخير",
+    "noActivity": "لا نقاط بعد — ساعد شخصاً ما للبدء!",
+    "pointsEarned": "+{{points}} نقطة",
+    "asHelper": "كمساعد",
+    "asRequester": "كطالب مساعدة",
+    "showOnProfile": "إظهار في الملف الشخصي",
+    "hideFromProfile": "إخفاء من الملف الشخصي",
+    "badge": {
+      "first_session": "الجلسة الأولى",
+      "helper_5": "ساعدت 5 مرات",
+      "helper_20": "ساعدت 20 مرة",
+      "helper_50": "ساعدت 50 مرة",
+      "points_50": "50 نقطة",
+      "points_200": "200 نقطة",
+      "points_500": "500 نقطة"
+    },
+    "locked": "مقفل"
   }
 }

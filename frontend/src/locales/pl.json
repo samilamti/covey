@@ -30,7 +30,8 @@
   "nav": {
     "home": "Start",
     "requests": "Prośby",
-    "profile": "Profil"
+    "profile": "Profil",
+    "progress": "Postępy"
   },
   "app": {
     "loading": "Ładowanie…",
@@ -172,5 +173,30 @@
     "description": "Zainstaluj aplikację na ekranie głównym dla szybkiego dostępu.",
     "iosHint": "Naciśnij przycisk Udostępnij, a następnie \"Dodaj do ekranu głównego\".",
     "button": "Zainstaluj"
+  },
+  "progress": {
+    "title": "Moje postępy",
+    "totalPoints": "Punkty",
+    "sessionsHelped": "Pomógł innym",
+    "sessionsRequested": "Otrzymał pomoc",
+    "badges": "Odznaki",
+    "badgesEarned": "{{earned}} z {{total}}",
+    "recentActivity": "Ostatnia aktywność",
+    "noActivity": "Brak punktów — pomóż komuś, aby zacząć!",
+    "pointsEarned": "+{{points}} pkt",
+    "asHelper": "Jako pomocnik",
+    "asRequester": "Jako proszący",
+    "showOnProfile": "Pokaż na profilu",
+    "hideFromProfile": "Ukryj z profilu",
+    "badge": {
+      "first_session": "Pierwsza sesja",
+      "helper_5": "Pomógł 5 razy",
+      "helper_20": "Pomógł 20 razy",
+      "helper_50": "Pomógł 50 razy",
+      "points_50": "50 punktów",
+      "points_200": "200 punktów",
+      "points_500": "500 punktów"
+    },
+    "locked": "Zablokowane"
   }
 }

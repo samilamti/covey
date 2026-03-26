@@ -30,7 +30,8 @@
   "nav": {
     "home": "Koti",
     "requests": "Pyynnöt",
-    "profile": "Profiili"
+    "profile": "Profiili",
+    "progress": "Edistyminen"
   },
   "app": {
     "loading": "Ladataan…",
@@ -172,5 +173,30 @@
     "description": "Asenna sovellus kotinäytölle nopeaa käyttöä varten.",
     "iosHint": "Napauta Jaa-painiketta ja sitten \"Lisää kotinäytölle\".",
     "button": "Asenna"
+  },
+  "progress": {
+    "title": "Edistymiseni",
+    "totalPoints": "Pisteet",
+    "sessionsHelped": "Auttanut muita",
+    "sessionsRequested": "Saanut apua",
+    "badges": "Merkit",
+    "badgesEarned": "{{earned}} / {{total}}",
+    "recentActivity": "Viimeaikainen toiminta",
+    "noActivity": "Ei pisteitä vielä — auta jotakuta aloittaaksesi!",
+    "pointsEarned": "+{{points}} pistettä",
+    "asHelper": "Auttajana",
+    "asRequester": "Pyytäjänä",
+    "showOnProfile": "Näytä profiilissa",
+    "hideFromProfile": "Piilota profiilista",
+    "badge": {
+      "first_session": "Ensimmäinen sessio",
+      "helper_5": "Auttanut 5 kertaa",
+      "helper_20": "Auttanut 20 kertaa",
+      "helper_50": "Auttanut 50 kertaa",
+      "points_50": "50 pistettä",
+      "points_200": "200 pistettä",
+      "points_500": "500 pistettä"
+    },
+    "locked": "Lukittu"
   }
 }

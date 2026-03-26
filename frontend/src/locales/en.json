@@ -30,7 +30,8 @@
   "nav": {
     "home": "Home",
     "requests": "Requests",
-    "profile": "Profile"
+    "profile": "Profile",
+    "progress": "Progress"
   },
   "app": {
     "loading": "Loading…",
@@ -172,5 +173,30 @@
     "description": "Install the app on your home screen for quick access.",
     "iosHint": "Tap the Share button, then \"Add to Home Screen\".",
     "button": "Install"
+  },
+  "progress": {
+    "title": "My progress",
+    "totalPoints": "Points",
+    "sessionsHelped": "Helped others",
+    "sessionsRequested": "Got help",
+    "badges": "Badges",
+    "badgesEarned": "{{earned}} of {{total}}",
+    "recentActivity": "Recent activity",
+    "noActivity": "No points yet — help someone to get started!",
+    "pointsEarned": "+{{points}} points",
+    "asHelper": "As helper",
+    "asRequester": "As requester",
+    "showOnProfile": "Show on profile",
+    "hideFromProfile": "Hide from profile",
+    "badge": {
+      "first_session": "First session",
+      "helper_5": "Helped 5 times",
+      "helper_20": "Helped 20 times",
+      "helper_50": "Helped 50 times",
+      "points_50": "50 points",
+      "points_200": "200 points",
+      "points_500": "500 points"
+    },
+    "locked": "Locked"
   }
 }

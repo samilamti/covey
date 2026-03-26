@@ -30,7 +30,8 @@
   "nav": {
     "home": "Saqqaa",
     "requests": "Qinnuteqaatit",
-    "profile": "Uanga pillut"
+    "profile": "Uanga pillut",
+    "progress": "Ingerlatsivik"
   },
   "app": {
     "loading": "Ikkuarpoq…",
@@ -172,5 +173,30 @@
     "description": "App-i angallassimaasinnut ikkussuinnaruk sukumiissumik atuiffiginnassagukku.",
     "iosHint": "Tunniussinnaatitaannut tooruk \"Angallassimaasinnut ilanngunneq\"-lu toqqaruk.",
     "button": "Ikkussuinnaruk"
+  },
+  "progress": {
+    "title": "Ingerlatsiviqa",
+    "totalPoints": "Pointit",
+    "sessionsHelped": "Ikinngutit ikiorpakka",
+    "sessionsRequested": "Ikiortinneqarpoq",
+    "badges": "Nalunaarsuutit",
+    "badgesEarned": "{{earned}} / {{total}}",
+    "recentActivity": "Kingusinnerusoq",
+    "noActivity": "Pointiigoq sunaana — ikinngutit ikiuterit aallarniarlutit!",
+    "pointsEarned": "+{{points}} pointit",
+    "asHelper": "Ikiorti",
+    "asRequester": "Nalunaarsortaq",
+    "showOnProfile": "Profiilinni takutissiuk",
+    "hideFromProfile": "Profiilinnit tarrissiuk",
+    "badge": {
+      "first_session": "Siulleq",
+      "helper_5": "Ikiorpakka 5",
+      "helper_20": "Ikiorpakka 20",
+      "helper_50": "Ikiorpakka 50",
+      "points_50": "50 pointit",
+      "points_200": "200 pointit",
+      "points_500": "500 pointit"
+    },
+    "locked": "Matusaavoq"
   }
 }

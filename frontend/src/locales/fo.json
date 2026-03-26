@@ -30,7 +30,8 @@
   "nav": {
     "home": "Heim",
     "requests": "Umbøðir",
-    "profile": "Vangamynd"
+    "profile": "Vangamynd",
+    "progress": "Framgongd"
   },
   "app": {
     "loading": "Lesur inn…",
@@ -172,5 +173,30 @@
     "description": "Innset appina á heimaskíggjanum fyri skjótan atgongd.",
     "iosHint": "Trýst á Deil-knøttin og síðan \"Legg afturat á heimaskíggjanum\".",
     "button": "Innset"
+  },
+  "progress": {
+    "title": "Mín framgongd",
+    "totalPoints": "Stig",
+    "sessionsHelped": "Hjálpt øðrum",
+    "sessionsRequested": "Fingið hjálp",
+    "badges": "Merki",
+    "badgesEarned": "{{earned}} av {{total}}",
+    "recentActivity": "Seinasta virksemi",
+    "noActivity": "Eingi stig enn — hjálp onkrum at byrja!",
+    "pointsEarned": "+{{points}} stig",
+    "asHelper": "Sum hjálpari",
+    "asRequester": "Sum biðjari",
+    "showOnProfile": "Vís á profili",
+    "hideFromProfile": "Fjal frá profili",
+    "badge": {
+      "first_session": "Fyrsta løtan",
+      "helper_5": "Hjálpt 5 ferðir",
+      "helper_20": "Hjálpt 20 ferðir",
+      "helper_50": "Hjálpt 50 ferðir",
+      "points_50": "50 stig",
+      "points_200": "200 stig",
+      "points_500": "500 stig"
+    },
+    "locked": "Læst"
   }
 }

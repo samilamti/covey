@@ -30,7 +30,8 @@
   "nav": {
     "home": "Hem",
     "requests": "Förfrågningar",
-    "profile": "Profil"
+    "profile": "Profil",
+    "progress": "Framsteg"
   },
   "app": {
     "loading": "Laddar…",
@@ -172,5 +173,30 @@
     "description": "Installera appen på din hemskärm för snabb åtkomst.",
     "iosHint": "Tryck på Dela-knappen och sedan \"Lägg till på hemskärmen\".",
     "button": "Installera"
+  },
+  "progress": {
+    "title": "Min framsteg",
+    "totalPoints": "Poäng",
+    "sessionsHelped": "Hjälpt andra",
+    "sessionsRequested": "Fått hjälp",
+    "badges": "Märken",
+    "badgesEarned": "{{earned}} av {{total}}",
+    "recentActivity": "Senaste aktivitet",
+    "noActivity": "Inga poäng ännu — hjälp någon för att börja!",
+    "pointsEarned": "+{{points}} poäng",
+    "asHelper": "Som hjälpare",
+    "asRequester": "Som förfrågare",
+    "showOnProfile": "Visa på profil",
+    "hideFromProfile": "Dölj från profil",
+    "badge": {
+      "first_session": "Första sessionen",
+      "helper_5": "Hjälpt 5 gånger",
+      "helper_20": "Hjälpt 20 gånger",
+      "helper_50": "Hjälpt 50 gånger",
+      "points_50": "50 poäng",
+      "points_200": "200 poäng",
+      "points_500": "500 poäng"
+    },
+    "locked": "Låst"
   }
 }

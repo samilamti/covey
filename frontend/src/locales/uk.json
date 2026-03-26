@@ -30,7 +30,8 @@
   "nav": {
     "home": "Головна",
     "requests": "Запити",
-    "profile": "Профіль"
+    "profile": "Профіль",
+    "progress": "Прогрес"
   },
   "app": {
     "loading": "Завантаження…",
@@ -172,5 +173,30 @@
     "description": "Встановіть додаток на головний екран для швидкого доступу.",
     "iosHint": "Натисніть кнопку «Поділитися», а потім «На Початковий екран».",
     "button": "Встановити"
+  },
+  "progress": {
+    "title": "Мій прогрес",
+    "totalPoints": "Бали",
+    "sessionsHelped": "Допомогли іншим",
+    "sessionsRequested": "Отримали допомогу",
+    "badges": "Значки",
+    "badgesEarned": "{{earned}} з {{total}}",
+    "recentActivity": "Остання активність",
+    "noActivity": "Ще немає балів — допоможіть комусь, щоб почати!",
+    "pointsEarned": "+{{points}} балів",
+    "asHelper": "Як помічник",
+    "asRequester": "Як заявник",
+    "showOnProfile": "Показати в профілі",
+    "hideFromProfile": "Сховати з профілю",
+    "badge": {
+      "first_session": "Перша сесія",
+      "helper_5": "Допоміг 5 разів",
+      "helper_20": "Допоміг 20 разів",
+      "helper_50": "Допоміг 50 разів",
+      "points_50": "50 балів",
+      "points_200": "200 балів",
+      "points_500": "500 балів"
+    },
+    "locked": "Заблоковано"
   }
 }
