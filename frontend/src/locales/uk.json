@@ -10,7 +10,8 @@
     "bankidError": "Щось пішло не так із BankID. Спробуйте ще раз!",
     "bankidCancel": "Вхід скасовано.",
     "bankidExpired": "Час вичерпано. Спробуйте ще раз!",
-    "learnMore": "Дізнатися більше про Covey"
+    "learnMore": "Дізнатися більше про Covey",
+    "partnersLink": "Партнери безпеки"
   },
   "language": {
     "select": "Оберіть мову",

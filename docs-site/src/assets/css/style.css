@@ -235,6 +235,13 @@ a:hover { text-decoration: underline; }
 
 .content strong { font-weight: 600; }
 
+.content .partner-logo {
+  max-width: 240px;
+  height: auto;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+}
+
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--color-border);

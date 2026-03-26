@@ -10,7 +10,8 @@
     "bankidError": "حدث خطأ في BankID. حاول مرة أخرى!",
     "bankidCancel": "تم إلغاء تسجيل الدخول.",
     "bankidExpired": "انتهت المهلة. حاول مرة أخرى!",
-    "learnMore": "اقرأ المزيد عن Covey"
+    "learnMore": "اقرأ المزيد عن Covey",
+    "partnersLink": "شركاء الأمان"
   },
   "language": {
     "select": "اختر اللغة",

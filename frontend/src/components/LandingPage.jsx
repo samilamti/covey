@@ -114,9 +114,19 @@ export function LandingPage({ onLogin }) {
             href={`${location.protocol}//docs.${location.hostname}`}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-8"
+            class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-2"
           >
             {t('landing.learnMore')}
+            <ExternalLink size={14} />
+          </a>
+
+          <a
+            href={`${location.protocol}//docs.${location.hostname}/sv/trygghetspartners/`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-8"
+          >
+            {t('landing.partnersLink')}
             <ExternalLink size={14} />
           </a>
 

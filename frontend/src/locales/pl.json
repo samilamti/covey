@@ -10,7 +10,8 @@
     "bankidError": "Coś poszło nie tak z BankID. Spróbuj ponownie!",
     "bankidCancel": "Logowanie zostało anulowane.",
     "bankidExpired": "Czas minął. Spróbuj ponownie!",
-    "learnMore": "Dowiedz się więcej o Covey"
+    "learnMore": "Dowiedz się więcej o Covey",
+    "partnersLink": "Partnerzy bezpieczeństwa"
   },
   "language": {
     "select": "Wybierz język",

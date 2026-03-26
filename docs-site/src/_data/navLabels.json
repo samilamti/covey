@@ -194,5 +194,33 @@
     "se": "Jođánis dahkut",
     "uk": "Швидкі дії",
     "en": "Quick actions"
+  },
+  "partners": {
+    "sv": "Trygghetspartners",
+    "nb": "Trygghetspartnere",
+    "da": "Tryghedspartnere",
+    "fi": "Turvallisuuskumppanit",
+    "ar": "شركاء الأمان",
+    "is": "Öryggisaðilar",
+    "pl": "Partnerzy bezpieczeństwa",
+    "fo": "Trygdarpartnarar",
+    "kl": "Peqatigiit",
+    "se": "Guoimmit",
+    "uk": "Партнери безпеки",
+    "en": "Safety partners"
+  },
+  "partners-ri-factory": {
+    "sv": "RI Factory",
+    "nb": "RI Factory",
+    "da": "RI Factory",
+    "fi": "RI Factory",
+    "ar": "RI Factory",
+    "is": "RI Factory",
+    "pl": "RI Factory",
+    "fo": "RI Factory",
+    "kl": "RI Factory",
+    "se": "RI Factory",
+    "uk": "RI Factory",
+    "en": "RI Factory"
   }
 }

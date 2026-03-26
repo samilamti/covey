@@ -10,7 +10,8 @@
     "bankidError": "Okkurt gekk skeivt við BankID. Royn aftur!",
     "bankidCancel": "Innritanin varð avbrotin.",
     "bankidExpired": "Tíðin rann út. Royn aftur!",
-    "learnMore": "Les meira um Covey"
+    "learnMore": "Les meira um Covey",
+    "partnersLink": "Trygdarpartnarar"
   },
   "language": {
     "select": "Vel mál",

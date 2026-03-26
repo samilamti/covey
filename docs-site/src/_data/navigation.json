@@ -69,6 +69,16 @@
       "pageId": "contribute-quick",
       "parent": "contribute",
       "slugs": { "sv": "bidra/snabba-insatser", "nb": "bidra/raske-bidrag", "da": "bidrag/hurtige-indsatser", "fi": "osallistu/nopeat-teot", "ar": "ساهم/مساهمات-سريعة", "is": "leggja-til/fljotleg-framlog", "pl": "wspolpraca/szybkie-dzialania", "fo": "stuðla/skjót-íkast", "kl": "peqataanissamut/sukkasuumik", "se": "váikkuhit/jođánis-dahkut", "uk": "dopomoha/shvydki-diyi", "en": "contribute/quick-actions" }
+    },
+    {
+      "pageId": "partners",
+      "icon": "handshake",
+      "slugs": { "sv": "trygghetspartners", "nb": "trygghetspartnere", "da": "tryghedspartnere", "fi": "turvallisuuskumppanit", "ar": "شركاء-الأمان", "is": "öryggisadilar", "pl": "partnerzy-bezpieczenstwa", "fo": "trygdarpartnarar", "kl": "peqatigiit", "se": "guoimmit", "uk": "partnery-bezpeky", "en": "safety-partners" }
+    },
+    {
+      "pageId": "partners-ri-factory",
+      "parent": "partners",
+      "slugs": { "sv": "trygghetspartners/ri-factory", "nb": "trygghetspartnere/ri-factory", "da": "tryghedspartnere/ri-factory", "fi": "turvallisuuskumppanit/ri-factory", "ar": "شركاء-الأمان/ri-factory", "is": "öryggisadilar/ri-factory", "pl": "partnerzy-bezpieczenstwa/ri-factory", "fo": "trygdarpartnarar/ri-factory", "kl": "peqatigiit/ri-factory", "se": "guoimmit/ri-factory", "uk": "partnery-bezpeky/ri-factory", "en": "safety-partners/ri-factory" }
     }
   ]
 }

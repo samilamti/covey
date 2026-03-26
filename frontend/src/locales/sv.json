@@ -10,7 +10,8 @@
     "bankidError": "Något gick fel med BankID. Försök igen!",
     "bankidCancel": "Inloggningen avbröts.",
     "bankidExpired": "Tidsgränsen gick ut. Försök igen!",
-    "learnMore": "Läs mer om Covey"
+    "learnMore": "Läs mer om Covey",
+    "partnersLink": "Trygghetspartners"
   },
   "language": {
     "select": "Välj språk",

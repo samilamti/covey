@@ -10,7 +10,8 @@
     "bankidError": "Something went wrong with BankID. Try again!",
     "bankidCancel": "Login was cancelled.",
     "bankidExpired": "Time ran out. Try again!",
-    "learnMore": "Learn more about Covey"
+    "learnMore": "Learn more about Covey",
+    "partnersLink": "Safety partners"
   },
   "language": {
     "select": "Select language",

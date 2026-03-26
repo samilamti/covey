@@ -10,7 +10,8 @@
     "bankidError": "Jokin meni pieleen BankID:n kanssa. Yritä uudelleen!",
     "bankidCancel": "Kirjautuminen peruutettiin.",
     "bankidExpired": "Aikaraja umpeutui. Yritä uudelleen!",
-    "learnMore": "Lue lisää Coveysta"
+    "learnMore": "Lue lisää Coveysta",
+    "partnersLink": "Turvallisuuskumppanit"
   },
   "language": {
     "select": "Valitse kieli",

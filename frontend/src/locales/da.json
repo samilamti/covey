@@ -10,7 +10,8 @@
     "bankidError": "Noget gik galt med BankID. Prøv igen!",
     "bankidCancel": "Login blev afbrudt.",
     "bankidExpired": "Tidsfristen udløb. Prøv igen!",
-    "learnMore": "Læs mere om Covey"
+    "learnMore": "Læs mere om Covey",
+    "partnersLink": "Tryghedspartnere"
   },
   "language": {
     "select": "Vælg sprog",
