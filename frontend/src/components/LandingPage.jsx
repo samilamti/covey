@@ -20,6 +20,7 @@ export function LandingPage({ onLogin }) {
   const [hintCode, setHintCode] = useState(null)
   const [error, setError] = useState(null)
   const pollRef = useRef(null)
+  const [inputFocused, setInputFocused] = useState(false)
 
   // Clean up polling interval on unmount (e.g. user navigates away mid-login)
   useEffect(() => {
@@ -81,7 +82,7 @@ export function LandingPage({ onLogin }) {
     : t('landing.bankidPending')
 
   return (
-    <div class="fixed inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col overflow-y-auto safe-area-top safe-area-bottom safe-area-x">
+    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col safe-area-top safe-area-bottom safe-area-x">
       <header class="p-4 flex justify-end">
         <LanguageSelector />
       </header>
@@ -96,33 +97,39 @@ export function LandingPage({ onLogin }) {
             {t('landing.title')}
           </h1>
 
-          <p class="text-sm text-gray-500 italic mb-6">
-            {t('landing.nameMeaning')}
-          </p>
+          <div class={`transition-all duration-300 overflow-hidden ${inputFocused ? 'opacity-0 max-h-0' : 'opacity-100 max-h-40'}`}>
+            <p class="text-sm text-gray-500 italic mb-6">
+              {t('landing.nameMeaning')}
+            </p>
+          </div>
 
-          <p class="text-gray-600 mb-4 leading-relaxed">
-            {t('landing.description')}
-          </p>
+          <div class={`transition-all duration-300 overflow-hidden ${inputFocused ? 'opacity-0 max-h-0' : 'opacity-100 max-h-40'}`}>
+            <p class="text-gray-600 mb-4 leading-relaxed">
+              {t('landing.description')}
+            </p>
+          </div>
 
-          <a
-            href={`${location.protocol}//docs.${location.hostname}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-2"
-          >
-            {t('landing.learnMore')}
-            <ExternalLink size={14} />
-          </a>
+          <div class={`transition-all duration-300 overflow-hidden ${inputFocused ? 'opacity-0 max-h-0' : 'opacity-100 max-h-40'}`}>
+            <a
+              href={`${location.protocol}//docs.${location.hostname}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-2"
+            >
+              {t('landing.learnMore')}
+              <ExternalLink size={14} />
+            </a>
 
-          <a
-            href={`${location.protocol}//docs.${location.hostname}/sv/trygghetspartners/`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-8"
-          >
-            {t('landing.partnersLink')}
-            <ExternalLink size={14} />
-          </a>
+            <a
+              href={`${location.protocol}//docs.${location.hostname}/sv/trygghetspartners/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-8"
+            >
+              {t('landing.partnersLink')}
+              <ExternalLink size={14} />
+            </a>
+          </div>
 
           {error && (
             <div class="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
@@ -145,8 +152,10 @@ export function LandingPage({ onLogin }) {
                 maxLength={12}
                 value={nin}
                 onInput={(e) => setNin(e.target.value)}
+                onFocus={(e) => { setInputFocused(true); setTimeout(() => e.target.scrollIntoView({ block: 'center', behavior: 'smooth' }), 350) }}
+                onBlur={() => setInputFocused(false)}
                 placeholder="ÅÅÅÅMMDDXXXX"
-                class="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                class={`w-full mb-4 px-4 py-3 border rounded-lg text-center text-lg tracking-widest focus:outline-none transition-shadow duration-300 ${inputFocused ? 'border-amber-400 ring-4 ring-amber-300' : 'border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'}`}
                 aria-label="Personnummer"
               />
 
