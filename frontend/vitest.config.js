@@ -12,6 +12,11 @@ export default defineConfig({
       react: 'preact/compat',
       'react-dom': 'preact/compat',
       'react-dom/test-utils': 'preact/compat',
+      // Capacitor mocks for tests — always returns isNativePlatform() = false
+      '@capacitor/core': new URL('./test/__mocks__/@capacitor/core.js', import.meta.url).pathname,
+      '@capacitor/splash-screen': new URL('./test/__mocks__/@capacitor/splash-screen.js', import.meta.url).pathname,
+      '@capacitor/status-bar': new URL('./test/__mocks__/@capacitor/status-bar.js', import.meta.url).pathname,
+      '@capacitor/push-notifications': new URL('./test/__mocks__/@capacitor/push-notifications.js', import.meta.url).pathname,
     },
   },
 })

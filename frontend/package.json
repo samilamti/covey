@@ -8,9 +8,19 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "ios": "vite build && npx cap sync ios && npx cap run ios",
+    "android": "vite build && npx cap sync android && npx cap run android"
   },
   "dependencies": {
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/geolocation": "^7.0.0",
+    "@capacitor/haptics": "^7.0.0",
+    "@capacitor/keyboard": "^7.0.0",
+    "@capacitor/push-notifications": "^7.0.0",
+    "@capacitor/splash-screen": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0",
     "i18next": "^25.8.11",
     "i18next-browser-languagedetector": "^8.2.1",
     "leaflet": "^1.9.4",
@@ -21,12 +31,16 @@
     "socket.io-client": "^4.8.0"
   },
   "devDependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
     "@preact/preset-vite": "^2.9.0",
     "@testing-library/preact": "^3.2.4",
     "autoprefixer": "^10.4.0",
     "jsdom": "^26.1.0",
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
+    "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^3.1.1"
   }
