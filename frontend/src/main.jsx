@@ -1,4 +1,5 @@
 import { render } from 'preact'
+import { Capacitor } from '@capacitor/core'
 import { App } from './App'
 import './i18n'
 import './index.css'
@@ -6,7 +7,9 @@ import './index.css'
 render(<App />, document.getElementById('app'))
 
 // --- Register Service Worker + update detection ---
-if ('serviceWorker' in navigator) {
+// Skip SW in Capacitor native — WKWebView has unreliable SW support and
+// the native shell handles caching, offline, and push.
+if ('serviceWorker' in navigator && !Capacitor.isNativePlatform()) {
   window.addEventListener('load', () => {
     // Clear reload guard from previous update cycle
     sessionStorage.removeItem('sw-reloaded')

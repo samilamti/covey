@@ -5,6 +5,7 @@
  * for the session lifetime. Used by the FeatureFlagContext to provide
  * flags to the component tree via useFeatureFlag() hook.
  */
+import { API_BASE } from '../config.js'
 
 let cachedFlags = null
 
@@ -15,7 +16,7 @@ let cachedFlags = null
 export async function getFeatureFlags() {
   if (cachedFlags) return cachedFlags
   try {
-    const res = await fetch('/api/features')
+    const res = await fetch(`${API_BASE}/api/features`)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
     cachedFlags = data.flags

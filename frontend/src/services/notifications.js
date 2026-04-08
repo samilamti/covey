@@ -2,7 +2,9 @@
  * Push notification subscription client.
  */
 
-const API_URL = '/api/notifications'
+import { API_BASE } from '../config.js'
+
+const API_URL = `${API_BASE}/api/notifications`
 
 function authHeaders() {
   const token = localStorage.getItem('token')

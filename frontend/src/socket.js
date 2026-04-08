@@ -1,4 +1,5 @@
 import { io } from 'socket.io-client'
+import { API_BASE } from './config.js'
 
 /**
  * Singleton Socket.io client.
@@ -8,8 +9,9 @@ import { io } from 'socket.io-client'
  *
  * In dev, Vite proxies /socket.io → localhost:3000.
  * In production, the request goes to the same origin (Traefik routes it).
+ * In Capacitor native, API_BASE provides the full server URL.
  */
-export const socket = io({
+export const socket = io(API_BASE || undefined, {
   path: '/socket.io',
   // Upgrade to WebSocket once connected; fall back to polling on old Android
   transports: ['polling', 'websocket'],

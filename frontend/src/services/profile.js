@@ -2,7 +2,9 @@
  * Profile API client.
  */
 
-const API_URL = '/api/profile'
+import { API_BASE } from '../config.js'
+
+const API_URL = `${API_BASE}/api/profile`
 
 function authHeaders() {
   const token = localStorage.getItem('token')

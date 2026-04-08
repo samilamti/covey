@@ -1,4 +1,6 @@
-const API_URL = '/api/auth';
+import { API_BASE } from '../config.js'
+
+const API_URL = `${API_BASE}/api/auth`;
 
 export const authService = {
   async login(nin) {

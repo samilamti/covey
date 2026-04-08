@@ -2,7 +2,9 @@
  * Request API client.
  */
 
-const API_URL = '/api/requests'
+import { API_BASE } from '../config.js'
+
+const API_URL = `${API_BASE}/api/requests`
 
 function authHeaders() {
   const token = localStorage.getItem('token')

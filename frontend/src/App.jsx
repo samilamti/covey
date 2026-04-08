@@ -1,16 +1,40 @@
 import { useEffect, useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
+import { Capacitor } from '@capacitor/core'
 import { LandingPage } from './components/LandingPage'
 import { MainLayout } from './components/MainLayout'
 import { FeatureFlagProvider } from './context/FeatureFlagContext'
 import { socket } from './socket'
 import { authService } from './services/auth'
 import { subscribeToPush } from './services/notifications'
+import { registerNativePush } from './services/push'
 
 function trySubscribePush() {
-  subscribeToPush().catch((err) => {
-    console.log('Push subscription skipped:', err.message)
-  })
+  if (Capacitor.isNativePlatform()) {
+    registerNativePush().catch((err) => {
+      console.log('Native push registration skipped:', err.message)
+    })
+  } else {
+    subscribeToPush().catch((err) => {
+      console.log('Push subscription skipped:', err.message)
+    })
+  }
+}
+
+async function initNativePlugins() {
+  if (!Capacitor.isNativePlatform()) return
+  try {
+    const { SplashScreen } = await import('@capacitor/splash-screen')
+    const { StatusBar, Style } = await import('@capacitor/status-bar')
+    // Dark status bar to match #1e293b theme
+    await StatusBar.setStyle({ style: Style.Dark })
+    if (Capacitor.getPlatform() === 'android') {
+      await StatusBar.setBackgroundColor({ color: '#1e293b' })
+    }
+    await SplashScreen.hide()
+  } catch (err) {
+    console.log('Native plugin init skipped:', err.message)
+  }
 }
 
 function AppContent() {
@@ -20,6 +44,8 @@ function AppContent() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    initNativePlugins()
+
     // Socket connection events
     socket.on('connect', () => setConnected(true))
     socket.on('disconnect', () => setConnected(false))

@@ -2,7 +2,9 @@
  * Points & progress API client.
  */
 
-const API_URL = '/api/points'
+import { API_BASE } from '../config.js'
+
+const API_URL = `${API_BASE}/api/points`
 
 function authHeaders() {
   const token = localStorage.getItem('token')

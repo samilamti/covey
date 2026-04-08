@@ -2,7 +2,9 @@
  * Rating API client.
  */
 
-const API_URL = '/api/ratings'
+import { API_BASE } from '../config.js'
+
+const API_URL = `${API_BASE}/api/ratings`
 
 function authHeaders() {
   const token = localStorage.getItem('token')
