@@ -26,6 +26,20 @@ mock.module('../src/repositories/push-subscriptions.js', {
   },
 })
 
+// Mock native push repository — returns empty arrays (no native tokens)
+const nativeFindEligible = mock.fn(async () => [])
+const nativeFindByUserWithLang = mock.fn(async () => [])
+
+mock.module('../src/repositories/native-push.js', {
+  namedExports: {
+    findEligibleForRequest: nativeFindEligible,
+    findByUserWithLang: nativeFindByUserWithLang,
+    upsert: mock.fn(),
+    remove: mock.fn(),
+    findByUser: mock.fn(),
+  },
+})
+
 mock.module('../src/features.js', {
   namedExports: {
     isEnabled: mock.fn(() => false),
@@ -70,6 +84,10 @@ describe('notifyNewRequest', () => {
     clearSentNotifications()
     findEligibleForRequest.mock.resetCalls()
     findByUserWithLang.mock.resetCalls()
+    nativeFindEligible.mock.resetCalls()
+    nativeFindEligible.mock.mockImplementation(async () => [])
+    nativeFindByUserWithLang.mock.resetCalls()
+    nativeFindByUserWithLang.mock.mockImplementation(async () => [])
   })
 
   it('should send at most 1 notification per eligible user', async () => {
@@ -150,6 +168,8 @@ describe('notifyRequestAccepted', () => {
   beforeEach(() => {
     clearSentNotifications()
     findByUserWithLang.mock.resetCalls()
+    nativeFindByUserWithLang.mock.resetCalls()
+    nativeFindByUserWithLang.mock.mockImplementation(async () => [])
   })
 
   it('should notify the requester when their request is accepted', async () => {

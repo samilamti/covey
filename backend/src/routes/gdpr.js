@@ -9,6 +9,7 @@ import { authenticate } from '../auth/index.js'
 import * as userRepo from '../repositories/users.js'
 import * as msgRepo from '../repositories/messages.js'
 import * as pointsRepo from '../repositories/points.js'
+import * as nativePushRepo from '../repositories/native-push.js'
 import { isEnabled } from '../features.js'
 import { db } from '../pool.js'
 
@@ -27,7 +28,7 @@ gdprRouter.get('/export', async (req, res) => {
     }
 
     // Gather all user data
-    const [requests, subscriptions, ratingsGiven, ratingsReceived, sessionMessages, pointsData] = await Promise.all([
+    const [requests, subscriptions, nativeTokens, ratingsGiven, ratingsReceived, sessionMessages, pointsData] = await Promise.all([
       db.query(`
         SELECT id, type, message, status, created_at, completed_at, done_initiated_at
         FROM assistance_requests
@@ -39,6 +40,7 @@ gdprRouter.get('/export', async (req, res) => {
         FROM push_subscriptions
         WHERE user_id = $1
       `, [req.user.userId]),
+      nativePushRepo.findByUser(req.user.userId),
       db.query(`
         SELECT request_id, rated_id, value, created_at
         FROM ratings WHERE rater_id = $1
@@ -69,6 +71,10 @@ gdprRouter.get('/export', async (req, res) => {
       pushSubscriptions: subscriptions.rows.map((s) => ({
         endpoint: s.endpoint,
         createdAt: s.created_at,
+      })),
+      nativePushTokens: nativeTokens.map((t) => ({
+        platform: t.platform,
+        createdAt: t.created_at,
       })),
       ratingsGiven: ratingsGiven.rows,
       ratingsReceived: ratingsReceived.rows,

@@ -29,10 +29,25 @@ const app = express()
 app.set('trust proxy', 1) // Trust Traefik reverse proxy for correct req.ip
 const httpServer = createServer(app)
 
+// --- CORS origins ---
+// Include Capacitor native origins alongside the configured web origin.
+const allowedOrigins = [
+  process.env.CORS_ORIGIN || 'http://localhost:5173',
+  'capacitor://localhost',  // iOS Capacitor
+  'http://localhost',        // Android Capacitor
+]
+
+function corsOriginCheck(origin, callback) {
+  // Allow requests with no origin (mobile apps, server-to-server)
+  if (!origin) return callback(null, true)
+  if (allowedOrigins.includes(origin)) return callback(null, true)
+  callback(new Error('Not allowed by CORS'))
+}
+
 // --- Socket.io ---
 const io = new SocketIOServer(httpServer, {
   cors: {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    origin: corsOriginCheck,
     methods: ['GET', 'POST'],
   },
   // Start on long-polling, upgrade to WebSocket — handles old Android browsers
@@ -58,7 +73,7 @@ app.use(helmet({
     },
   },
 }))
-app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:5173' }))
+app.use(cors({ origin: corsOriginCheck }))
 app.use(express.json())
 
 // --- Routes ---

@@ -261,6 +261,23 @@ const migrations = [
       );
     `,
   },
+  {
+    name: '009_native_push_tokens',
+    sql: `
+      -- Native push tokens for Capacitor iOS (APNs) and Android (FCM) apps.
+      -- Separate from push_subscriptions which stores Web Push (VAPID) data.
+      CREATE TABLE IF NOT EXISTS native_push_tokens (
+        id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id    UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        token      TEXT NOT NULL,
+        platform   TEXT NOT NULL CHECK (platform IN ('ios', 'android')),
+        language   TEXT NOT NULL DEFAULT 'sv',
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE(user_id, token)
+      );
+      CREATE INDEX IF NOT EXISTS idx_native_push_user ON native_push_tokens(user_id);
+    `,
+  },
 ]
 
 /**

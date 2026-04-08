@@ -6,6 +6,7 @@ import { Router } from 'express'
 import { authenticate } from '../auth/index.js'
 import { isEnabled } from '../features.js'
 import * as pushRepo from '../repositories/push-subscriptions.js'
+import * as nativePushRepo from '../repositories/native-push.js'
 import { sendNotification, getSentNotifications } from '../services/notifications.js'
 
 export const notificationRouter = Router()
@@ -51,6 +52,51 @@ notificationRouter.delete('/subscribe', async (req, res) => {
     res.json({ ok: true })
   } catch (err) {
     console.error('Unsubscribe error:', err.message)
+    res.status(500).json({ error: 'Failed to unsubscribe' })
+  }
+})
+
+/**
+ * POST /api/notifications/subscribe-native — Register native push token (Capacitor)
+ */
+notificationRouter.post('/subscribe-native', async (req, res) => {
+  const { token, platform } = req.body
+
+  if (!token || !platform) {
+    return res.status(400).json({ error: 'token and platform are required' })
+  }
+  if (!['ios', 'android'].includes(platform)) {
+    return res.status(400).json({ error: 'platform must be ios or android' })
+  }
+
+  try {
+    await nativePushRepo.upsert({
+      userId: req.user.userId,
+      token,
+      platform,
+    })
+    res.json({ ok: true })
+  } catch (err) {
+    console.error('Native subscribe error:', err.message)
+    res.status(500).json({ error: 'Failed to subscribe' })
+  }
+})
+
+/**
+ * DELETE /api/notifications/subscribe-native — Unregister native push token
+ */
+notificationRouter.delete('/subscribe-native', async (req, res) => {
+  const { token } = req.body
+
+  if (!token) {
+    return res.status(400).json({ error: 'token is required' })
+  }
+
+  try {
+    await nativePushRepo.remove(req.user.userId, token)
+    res.json({ ok: true })
+  } catch (err) {
+    console.error('Native unsubscribe error:', err.message)
     res.status(500).json({ error: 'Failed to unsubscribe' })
   }
 })
