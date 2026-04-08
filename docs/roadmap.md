@@ -83,6 +83,19 @@
 - [x] `docs/deployment.md` — GleSYS VPS setup + deploy guide
 - [x] Hosting provider chosen: GleSYS (Stockholm, ~€20/mo)
 
+### Capacitor Native Apps ✅
+- [x] Capacitor 7 project setup (iOS + Android platform projects)
+- [x] API base URL abstraction (`frontend/src/config.js`) for native → production server
+- [x] CORS for Capacitor origins (`capacitor://localhost`, `http://localhost`)
+- [x] Native push registration via `@capacitor/push-notifications` + FCM/APNs backend
+- [x] Native push token storage (`native_push_tokens` table, migration 009)
+- [x] Firebase Admin SDK integration for native push delivery
+- [x] Service worker skip on native (WKWebView unreliable SW support)
+- [x] Splash screen, status bar, keyboard plugin configuration
+- [x] GDPR export includes native push tokens
+- [x] iOS keyboard fix: collapsible landing page content on input focus
+- [x] Build scripts: `npm run ios`, `npm run android`
+
 ## 🔲 Future (post-launch)
 - [ ] Obtain BankID Relying Party agreement and certificate
 - [x] ~~Generate VAPID keys for production push notifications~~ (wired, generate on VPS)

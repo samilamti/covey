@@ -76,6 +76,8 @@ All 7 implementation phases are complete. The application is feature-complete fo
 
 - **Points & progress**: Personal points/badges system behind `FEATURE_POINTS_SYSTEM` flag ✅
 
+- **Capacitor native apps**: iOS + Android via Capacitor 7, native push (FCM/APNs), CORS, API base URL, keyboard fix ✅
+
 **Not yet done**: Real BankID RP agreement, branding, accessibility audit, partner point redemption. See `docs/roadmap.md` "Future" section.
 
 ### Claude Code skills
@@ -133,7 +135,9 @@ Scaffolding skills encode project conventions (route ordering, 4-file feature fl
 - **Session messaging**: In-session chat between requester and helper via Socket.io. Messages persisted to `session_messages` table. Rate limited (2s per user per request). Six pre-filled quick messages provided. Included in GDPR export.
 - **Geolocation**: Centralized `useGeolocation` hook in `frontend/src/hooks/useGeolocation.js` — replaces all inline `navigator.geolocation` calls. Returns `{ position, error, loading, retry, supported }`. Error codes mapped: 1→`denied`, 2→`unavailable`, 3→`timeout`. `LocationBanner` component shows user-facing feedback with retry button. Used by `RequestList` (info severity), `CreateRequest` (info), and `ActiveSession` (warning — safety-critical). Never call `navigator.geolocation` directly from components. Includes `visibilitychange` listener — automatically re-acquires position when the page regains focus (one-shot mode re-calls `getCurrentPosition`, watch mode restarts `watchPosition`).
 - **Mutual done flow**: Either party can initiate "done" (`active` → `done_pending`). The other party accepts (`→ completed`) or rejects (`→ active`). Simultaneous done clicks auto-complete. Tracked via `done_initiated_by`/`done_initiated_at` columns. Routes: `/:id/done`, `/:id/done/accept`, `/:id/done/reject`. Socket events: `request:done-initiated`, `request:done-rejected`. Location relay + messaging remain active during `done_pending`. `ActiveSession` re-fetches request state on socket reconnect and `visibilitychange` to catch missed events. `MainLayout` keeps persistent listeners for `request:done-initiated` and `request:accepted` — auto-navigates to Requests tab and bumps a `refreshKey` that forces `RequestList` re-mount.
-- **Push subscription**: `subscribeToPush()` is called fire-and-forget after both session restore and fresh login in `App.jsx`. Errors are silently logged. Relies on `VITE_VAPID_PUBLIC_KEY` build-time env var.
+- **Push subscription**: Web push via `subscribeToPush()`, native push via `registerNativePush()` — platform detection in `App.jsx` calls the right one fire-and-forget after login/restore. Web relies on `VITE_VAPID_PUBLIC_KEY` build-time env var. Native uses `@capacitor/push-notifications` and registers tokens to `POST /api/notifications/subscribe-native`.
+- **Capacitor native apps**: iOS and Android apps via Capacitor 7. `frontend/src/config.js` provides `API_BASE` (empty on web, `https://covey.se` on native). All frontend services and socket use `API_BASE` for API URLs. Backend CORS allows Capacitor origins (`capacitor://localhost`, `http://localhost`). Service worker registration skipped on native. Splash screen, status bar, keyboard plugins configured in `frontend/capacitor.config.ts`. Native push tokens stored in `native_push_tokens` table (migration 009), delivered via Firebase Admin SDK (`FIREBASE_SERVICE_ACCOUNT` env var). Build: `npm run ios` / `npm run android` (build + sync + run).
+- **Landing page keyboard fix**: On iOS, the keyboard covers the NIN input field. `LandingPage.jsx` collapses decorative content (subtitle, description, links) when the input gains focus — `transition-all duration-300` on `opacity` + `max-height`. Input gets amber ring highlight (`ring-4 ring-amber-300`). Content restores on blur. Also fires `scrollIntoView` after 350ms as backup.
 - **Points & badges**: Feature-flagged (`FEATURE_POINTS_SYSTEM`) personal progress system. Points awarded fire-and-forget when sessions complete (mutual done/accept) — helper gets 10, requester gets 3. Anti-gaming: `UNIQUE(user_id, request_id)` prevents double-award, `pair_cooldowns` table blocks same pair within 4h (canonical UUID ordering). Badge evaluation runs after each award. Constants in `src/points-config.js` (DB-free for testability), repository in `src/repositories/points.js`. Frontend: `/progress` tab in BottomNav (conditionally shown), `ProgressDashboard.jsx` component. Badges are private by default, opt-in visibility via `PUT /api/points/badges/:key/visibility`. Profile route includes visible badges for public profiles. Points data included in GDPR export. All tables cascade on user delete.
 - **PWA update strategy**: Service worker uses network-first for navigation requests (always fetches fresh `index.html`), cache-first for fingerprinted static assets. Cache name includes a build timestamp (`covey-<version>`) injected by a Vite `closeBundle` plugin — each deploy produces a byte-different `sw.js`, triggering the browser's update flow. `main.jsx` polls `reg.update()` every 5 minutes and auto-reloads on `controllerchange` (with `sessionStorage` loop guard). nginx serves `sw.js` and `index.html` with `no-cache, no-store, must-revalidate`.
 
@@ -196,7 +200,8 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `backend/src/routes/communities.js` — Community CRUD + security
 - `backend/src/routes/requests.js` — Assistance request lifecycle
 - `backend/src/routes/profile.js` — User profile CRUD
-- `backend/src/routes/notifications.js` — Push subscription management
+- `backend/src/routes/notifications.js` — Push subscription management (web + native)
+- `backend/src/repositories/native-push.js` — Native push token CRUD + eligibility queries
 - `backend/src/routes/points.js` — Points summary, history, badges, visibility toggle
 - `backend/src/routes/gdpr.js` — Data export + account deletion
 - `backend/src/repositories/` — Database access (users, communities, requests, push-subscriptions, ratings, messages)
@@ -219,7 +224,10 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `frontend/src/App.jsx` — Root with FeatureFlagProvider, session restore, socket connect
 - `frontend/src/main.jsx` — Entry point + service worker registration with update detection (5-min polling, auto-reload on controllerchange)
 - `frontend/src/i18n.js` — i18next config (12 languages, Swedish fallback)
-- `frontend/src/socket.js` — Socket.io client (autoConnect: false, polling-first)
+- `frontend/src/socket.js` — Socket.io client (autoConnect: false, polling-first, API_BASE for native)
+- `frontend/src/config.js` — Platform config (API_BASE: empty on web, production URL on Capacitor)
+- `frontend/src/services/push.js` — Native push registration via @capacitor/push-notifications
+- `frontend/capacitor.config.ts` — Capacitor plugin config (splash, status bar, keyboard)
 - `frontend/src/context/FeatureFlagContext.jsx` — Feature flag context + hooks
 - `frontend/src/components/LandingPage.jsx` — Login with BankID flow + link to docs site
 - `frontend/src/components/MainLayout.jsx` — Authenticated app shell (default page: /requests), persistent socket listeners for done/accepted events, visibility refresh

@@ -2,11 +2,12 @@
 
 ## Overview
 
-Tillsammans is a 4-service stack orchestrated by Docker Compose:
+Tillsammans is a 4-service stack orchestrated by Docker Compose, with optional native iOS/Android apps via Capacitor:
 
 ```mermaid
 graph LR
     User["Browser / PWA"] -->|HTTPS| Traefik
+    Native["iOS / Android<br/>Capacitor"] -->|HTTPS| Traefik
     Traefik -->|"Host(covey.se)"| Frontend["Frontend<br/>nginx"]
     Traefik -->|"/api, /socket.io"| Backend["Backend<br/>Express + Socket.io"]
     Backend --> DB["PostgreSQL 16"]
@@ -104,6 +105,8 @@ FEATURE_PUSH_NOTIFICATIONS env var
 
 Real provider uses `webPush.sendNotification()` with VAPID credentials (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_CONTACT` env vars). The frontend `VITE_VAPID_PUBLIC_KEY` is a build-time arg in `frontend/Dockerfile`, baked into the Vite bundle for subscription creation.
 
+Native push (iOS APNs / Android FCM) uses Firebase Admin SDK via `firebase-admin`. Enabled when `FIREBASE_SERVICE_ACCOUNT` env var is set (JSON service account key). Native tokens stored in `native_push_tokens` table (separate from `push_subscriptions`). Both `notifyNewRequest()` and `notifyRequestAccepted()` send to web and native subscriptions in parallel.
+
 Mock provider exposes `getSentNotifications()` for test assertions and `GET /api/notifications/sent` endpoint. This means tests can verify notification content and delivery without real push infrastructure.
 
 ### Request-triggered notifications
@@ -161,6 +164,7 @@ All tables are created in a single initial migration (`001_initial`):
 - `assistance_requests` — the core feature (walk, escort, check_in)
 - `location_updates` — ephemeral location data during active sessions
 - `push_subscriptions` — Web Push API subscriptions
+- `native_push_tokens` — Capacitor iOS (APNs) / Android (FCM) push tokens
 
 ## Environment variables
 
@@ -183,3 +187,4 @@ All secrets live in the root `.env` file (never committed). Docker Compose inter
 | `VAPID_PUBLIC_KEY` | backend, frontend (build arg) | Web Push VAPID public key |
 | `VAPID_PRIVATE_KEY` | backend | Web Push VAPID private key |
 | `VAPID_CONTACT` | backend | VAPID contact email (default: `mailto:sentinel@covey.se`) |
+| `FIREBASE_SERVICE_ACCOUNT` | backend | Firebase service account JSON for native push (FCM) |
