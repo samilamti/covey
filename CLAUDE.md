@@ -265,6 +265,15 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `.woodpecker/test.yaml` — Backend + frontend tests + build (Postgres service)
 - `.woodpecker/build.yaml` — Docker Compose build on push to main
 
+### Deployment helpers
+- `scripts/deploy/set-prod-secret.sh` — Idempotent helper to inject/rotate a single env var on the prod VPS (SSH + sudo + atomic .env.prod rewrite + backend restart). See `scripts/deploy/README.md`.
+- `scripts/deploy/.env.local.example` — Template for the gitignored local config (`.env.local`) the helper reads.
+
+### iOS deployment automation
+- `scripts/ios/all.sh` — End-to-end pipeline: prereqs → install/build → Xcode patches → bundle ID + push capability registration → archive → export → TestFlight upload via App Store Connect API.
+- `scripts/ios/.env.ios.example` — Template for the gitignored ASC API key + bundle config.
+- See `scripts/ios/lib/` for the JWT signer, curl wrapper, and asset upload helper.
+
 ### Documentation
 - `docs/roadmap.md` — 7-phase plan + future items
 - `docs/architecture.md` — Full system architecture + security model
