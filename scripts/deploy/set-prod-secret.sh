@@ -14,7 +14,7 @@
 # values preserve backslashes (so JSON strings with literal "\n" survive
 # intact for Node JSON.parse), double-quoted values process escapes.
 #
-# Required env vars (export before calling, or set in scripts/deploy/.env.local):
+# Required env vars (set in scripts/deploy/.env.local):
 #   PROD_HOST       e.g. 46.246.48.39
 #   PROD_USER       SSH user (typically `tillsammans` — original GleSYS user)
 #   PROD_KEY        path to passphrase-free SSH private key
@@ -50,87 +50,110 @@ VAR_NAME=$(head -1 "$LINE_FILE" | cut -d= -f1)
 
 log()  { printf '\033[1;36m▶ %s\033[0m\n' "$*"; }
 ok()   { printf '\033[1;32m✓ %s\033[0m\n' "$*"; }
-err()  { printf '\033[1;31m✗ %s\033[0m\n' "$*" >&2; }
 
-SSH=(ssh -i "$PROD_KEY" -o BatchMode=yes -o ConnectTimeout=15 "$PROD_USER@$PROD_HOST")
-SCP=(scp -i "$PROD_KEY" -o BatchMode=yes -o ConnectTimeout=15)
+SSH_OPTS=(-i "$PROD_KEY" -o BatchMode=yes -o ConnectTimeout=15)
+SSH_TARGET="$PROD_USER@$PROD_HOST"
+
+# run_remote_sudo CMD…
+# Pipes the sudo password as the first line of remote stdin; remaining lines
+# (the actual commands fed via `bash -s`) are read by bash AFTER sudo has
+# consumed the password. The remote shell expands $REMOTE_VAR refs from the
+# heredoc literally — only $LOCAL escapes via the calling environment.
+run_remote_sudo() {
+  local user_flag=""
+  if [[ "${1:-}" == "--as" ]]; then
+    user_flag="-u $2"; shift 2
+  fi
+  ssh "${SSH_OPTS[@]}" "$SSH_TARGET" \
+    "sudo -S -k -p '' $user_flag bash -s"
+}
 
 REMOTE_TMP="/tmp/.${VAR_NAME}.$$"
 
 log "Uploading line file to ${PROD_HOST}:${REMOTE_TMP}"
-"${SCP[@]}" "$LINE_FILE" "$PROD_USER@$PROD_HOST:$REMOTE_TMP"
+scp "${SSH_OPTS[@]}" "$LINE_FILE" "$SSH_TARGET:$REMOTE_TMP" >/dev/null
 ok "Uploaded ($(wc -c < "$LINE_FILE") bytes)"
 
-log "Injecting $VAR_NAME into $PROD_APP_DIR/.env.prod (sudo as $PROD_DEPLOY_USER)"
-# Pipe the sudo password on stdin to `sudo -S`. The password is read once
-# at the start; the remaining stdin is consumed by the sudo'd shell.
-"${SSH[@]}" "
-  set -e
-  PASS=\$(head -1)
-  echo \"\$PASS\" | sudo -S -k -p '' bash -se <<'REMOTE'
-    set -e
-    APP=\"$PROD_APP_DIR\"
-    ENV=\"\$APP/.env.prod\"
-    NEW_LINE=\$(cat \"$REMOTE_TMP\")
+log "Injecting $VAR_NAME into $PROD_APP_DIR/.env.prod (sudo)"
+{
+  printf '%s\n' "$PROD_SUDO_PASS"
+  cat <<REMOTE
+set -e
+APP="$PROD_APP_DIR"
+ENV="\$APP/.env.prod"
+[[ -f "\$ENV" ]] || { echo "\$ENV not found" >&2; exit 1; }
 
-    [[ -f \"\$ENV\" ]] || { echo \"\$ENV not found\" >&2; exit 1; }
+cp "\$ENV" "\$ENV.bak.\$(date +%s)"
+grep -v '^${VAR_NAME}=' "\$ENV" > "\$ENV.new" || true
+cat "$REMOTE_TMP" >> "\$ENV.new"
+# Ensure trailing newline
+[[ "\$(tail -c1 "\$ENV.new" | xxd -p)" == "0a" ]] || echo "" >> "\$ENV.new"
 
-    # Strip any existing line for this variable, append the new one.
-    cp \"\$ENV\" \"\$ENV.bak.\$(date +%s)\"
-    grep -v \"^${VAR_NAME}=\" \"\$ENV\" > \"\$ENV.new\"
-    cat \"$REMOTE_TMP\" >> \"\$ENV.new\"
-    grep -q '\$' \"\$ENV.new\" && [[ \"\$(tail -c1 \"\$ENV.new\" | xxd -p)\" != '0a' ]] && echo \"\" >> \"\$ENV.new\"
+chown $PROD_DEPLOY_USER:$PROD_DEPLOY_USER "\$ENV.new"
+chmod 600 "\$ENV.new"
+mv "\$ENV.new" "\$ENV"
+shred -u "$REMOTE_TMP" 2>/dev/null || rm -f "$REMOTE_TMP"
 
-    chown $PROD_DEPLOY_USER:$PROD_DEPLOY_USER \"\$ENV.new\"
-    chmod 600 \"\$ENV.new\"
-    mv \"\$ENV.new\" \"\$ENV\"
-    rm -f \"$REMOTE_TMP\"
-
-    echo \"OK: \$ENV updated (\$(wc -l < \"\$ENV\") lines, \$(stat -c %a \"\$ENV\"))\"
-    echo \"VAR_LEN: \$(grep -c \"^${VAR_NAME}=\" \"\$ENV\") line(s) starting with ${VAR_NAME}=\"
+LINES=\$(wc -l < "\$ENV")
+MODE=\$(stat -c %a "\$ENV")
+COUNT=\$(grep -c '^${VAR_NAME}=' "\$ENV")
+echo "OK: \$ENV → \$LINES lines, mode \$MODE, ${VAR_NAME} occurrences: \$COUNT"
 REMOTE
-" <<< "$PROD_SUDO_PASS"
-ok "$VAR_NAME persisted in .env.prod"
+} | run_remote_sudo
+ok "$VAR_NAME persisted"
 
 log "Pulling latest from git as $PROD_DEPLOY_USER"
-"${SSH[@]}" "
-  PASS=\$(head -1)
-  echo \"\$PASS\" | sudo -S -k -p '' -u $PROD_DEPLOY_USER bash -c 'cd $PROD_APP_DIR && git pull --ff-only 2>&1 | tail -10'
-" <<< "$PROD_SUDO_PASS"
+{
+  printf '%s\n' "$PROD_SUDO_PASS"
+  cat <<REMOTE
+cd "$PROD_APP_DIR"
+git fetch --quiet
+BEFORE=\$(git rev-parse HEAD)
+git pull --ff-only 2>&1 | tail -5
+AFTER=\$(git rev-parse HEAD)
+if [[ "\$BEFORE" == "\$AFTER" ]]; then
+  echo "Already up-to-date at \$BEFORE"
+else
+  echo "Updated \$BEFORE → \$AFTER"
+fi
+REMOTE
+} | run_remote_sudo --as "$PROD_DEPLOY_USER"
 
-log "Restarting backend service (this picks up the new env)"
-"${SSH[@]}" "
-  PASS=\$(head -1)
-  echo \"\$PASS\" | sudo -S -k -p '' -u $PROD_DEPLOY_USER bash -c '
-    cd $PROD_APP_DIR
-    docker compose --env-file .env.prod -f docker-compose.yml -f docker-compose.prod.yml up -d backend 2>&1 | tail -15
-  '
-" <<< "$PROD_SUDO_PASS"
-ok "Backend restarted"
+log "Restarting backend (this picks up the new env)"
+{
+  printf '%s\n' "$PROD_SUDO_PASS"
+  cat <<REMOTE
+cd "$PROD_APP_DIR"
+docker compose --env-file .env.prod -f docker-compose.yml -f docker-compose.prod.yml up -d backend 2>&1 | tail -15
+REMOTE
+} | run_remote_sudo --as "$PROD_DEPLOY_USER"
+ok "Backend restart issued"
 
-log "Verifying $VAR_NAME inside container (length only, never the value)"
+log "Waiting 4s for backend to come up"
 sleep 4
-"${SSH[@]}" "
-  PASS=\$(head -1)
-  echo \"\$PASS\" | sudo -S -k -p '' -u $PROD_DEPLOY_USER bash -c '
-    cd $PROD_APP_DIR
-    docker compose -f docker-compose.yml -f docker-compose.prod.yml exec -T backend sh -c \"
-      if [ -n \\\"\\\$$VAR_NAME\\\" ]; then
-        echo \\\"$VAR_NAME length: \\\${#$VAR_NAME}\\\"
-      else
-        echo MISSING
-      fi
-    \"
-  '
-" <<< "$PROD_SUDO_PASS"
+
+log "Verifying $VAR_NAME inside container (length only — never the value)"
+{
+  printf '%s\n' "$PROD_SUDO_PASS"
+  cat <<REMOTE
+cd "$PROD_APP_DIR"
+docker compose -f docker-compose.yml -f docker-compose.prod.yml exec -T backend sh -c '
+  if [ -n "\$$VAR_NAME" ]; then
+    echo "${VAR_NAME} length: \${#$VAR_NAME}"
+  else
+    echo MISSING
+  fi
+'
+REMOTE
+} | run_remote_sudo --as "$PROD_DEPLOY_USER"
 
 log "Recent backend logs"
-"${SSH[@]}" "
-  PASS=\$(head -1)
-  echo \"\$PASS\" | sudo -S -k -p '' -u $PROD_DEPLOY_USER bash -c '
-    cd $PROD_APP_DIR
-    docker compose -f docker-compose.yml -f docker-compose.prod.yml logs --tail=30 backend
-  '
-" <<< "$PROD_SUDO_PASS"
+{
+  printf '%s\n' "$PROD_SUDO_PASS"
+  cat <<REMOTE
+cd "$PROD_APP_DIR"
+docker compose -f docker-compose.yml -f docker-compose.prod.yml logs --tail=20 backend
+REMOTE
+} | run_remote_sudo --as "$PROD_DEPLOY_USER"
 
 ok "Done."
