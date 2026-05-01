@@ -266,6 +266,19 @@ chmod +x ~/apps/tillsammans/deploy.sh
 
 Usage: `~/apps/tillsammans/deploy.sh`
 
+### Rotating or adding a single env var
+
+For one-shot env var changes (rotating VAPID keys, adding `FIREBASE_SERVICE_ACCOUNT`, swapping `JWT_SECRET`), use the helper at `scripts/deploy/set-prod-secret.sh` from your local machine. It SCPs the new line, sudoes to `deploy` on the VPS, atomically replaces or appends the matching `KEY=` line in `.env.prod`, pulls latest from git, and restarts the backend service. See `scripts/deploy/README.md` for setup.
+
+```bash
+# From your local repo checkout (after one-time .env.local config):
+echo "FIREBASE_SERVICE_ACCOUNT='{...}'" > /tmp/firebase.line
+bash scripts/deploy/set-prod-secret.sh /tmp/firebase.line
+rm -f /tmp/firebase.line
+```
+
+The helper verifies the env var landed inside the running container by printing only its **length** — never the value — so the secret never appears in your terminal logs.
+
 ---
 
 ## 6. Auto-Deploy via Webhook
