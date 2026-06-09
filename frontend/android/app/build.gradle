@@ -1,5 +1,21 @@
 apply plugin: 'com.android.application'
 
+// Release signing credentials. Resolution order:
+//   1. Environment variables — scripts/android pulls these from the macOS Keychain.
+//   2. A gitignored keystore.properties (convenient for Android Studio GUI builds).
+// If neither is present (e.g. CI without secrets), release falls back to default
+// signing so debug builds and `assembleDebug` keep working untouched.
+def keystorePropsFile = rootProject.file("keystore.properties")
+def keystoreProps = new Properties()
+if (keystorePropsFile.exists()) {
+    keystorePropsFile.withInputStream { keystoreProps.load(it) }
+}
+def signingStoreFile = System.getenv("COVEY_UPLOAD_KEYSTORE") ?: keystoreProps.getProperty("storeFile") ?: "${rootDir}/covey-upload.jks"
+def signingStorePassword = System.getenv("COVEY_UPLOAD_STORE_PASSWORD") ?: keystoreProps.getProperty("storePassword")
+def signingKeyAlias = System.getenv("COVEY_UPLOAD_KEY_ALIAS") ?: keystoreProps.getProperty("keyAlias") ?: "covey-upload"
+def signingKeyPassword = System.getenv("COVEY_UPLOAD_KEY_PASSWORD") ?: keystoreProps.getProperty("keyPassword") ?: signingStorePassword
+def hasReleaseSigning = signingStorePassword != null && file(signingStoreFile).exists()
+
 android {
     namespace "se.covey.app"
     compileSdk rootProject.ext.compileSdkVersion
@@ -8,7 +24,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,8 +32,21 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        release {
+            if (hasReleaseSigning) {
+                storeFile file(signingStoreFile)
+                storePassword signingStorePassword
+                keyAlias signingKeyAlias
+                keyPassword signingKeyPassword
+            }
+        }
+    }
     buildTypes {
         release {
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

@@ -38,4 +38,14 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Geolocation: the @capacitor/geolocation plugin manifest is empty, so location
+         permissions are NOT auto-merged and must be declared here. Foreground only
+         (location is relayed during an active session) — no ACCESS_BACKGROUND_LOCATION. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Push notifications (Android 13+ runtime permission). Also merged from the FCM
+         plugin manifest, declared here explicitly for clarity. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 </manifest>
