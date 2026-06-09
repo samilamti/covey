@@ -16,7 +16,7 @@ export default defineConfig({
       '@capacitor/core': new URL('./test/__mocks__/@capacitor/core.js', import.meta.url).pathname,
       '@capacitor/splash-screen': new URL('./test/__mocks__/@capacitor/splash-screen.js', import.meta.url).pathname,
       '@capacitor/status-bar': new URL('./test/__mocks__/@capacitor/status-bar.js', import.meta.url).pathname,
-      '@capacitor/push-notifications': new URL('./test/__mocks__/@capacitor/push-notifications.js', import.meta.url).pathname,
+      '@capacitor-firebase/messaging': new URL('./test/__mocks__/@capacitor-firebase/messaging.js', import.meta.url).pathname,
     },
   },
 })

@@ -87,7 +87,7 @@
 - [x] Capacitor 7 project setup (iOS + Android platform projects)
 - [x] API base URL abstraction (`frontend/src/config.js`) for native → production server
 - [x] CORS for Capacitor origins (`capacitor://localhost`, `http://localhost`)
-- [x] Native push registration via `@capacitor/push-notifications` + FCM/APNs backend
+- [x] Native push registration via `@capacitor-firebase/messaging` (FCM tokens, iOS+Android) + FCM/APNs backend
 - [x] Native push token storage (`native_push_tokens` table, migration 009)
 - [x] Firebase Admin SDK integration for native push delivery
 - [x] Service worker skip on native (WKWebView unreliable SW support)
