@@ -37,6 +37,18 @@ async function initNativePlugins() {
   }
 }
 
+/**
+ * Restore the mint-green demo theme on boot if it was previously activated
+ * via the LandingPage easter egg. Persists until the user logs out.
+ */
+function restoreDemoTheme() {
+  try {
+    if (localStorage.getItem('demoMode') === '1') {
+      document.body.classList.add('mint-theme')
+    }
+  } catch {}
+}
+
 function AppContent() {
   const { t } = useTranslation()
   const [connected, setConnected] = useState(false)
@@ -45,6 +57,7 @@ function AppContent() {
 
   useEffect(() => {
     initNativePlugins()
+    restoreDemoTheme()
 
     // Socket connection events
     socket.on('connect', () => setConnected(true))
@@ -87,6 +100,9 @@ function AppContent() {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
+    // Clear the demo easter-egg theme so the next user starts fresh
+    try { localStorage.removeItem('demoMode') } catch {}
+    document.body.classList.remove('mint-theme')
     setUser(null)
     socket.disconnect()
   }

@@ -13,6 +13,16 @@ function generateTestNin() {
   return `${year}${month}${day}${suffix}`
 }
 
+/**
+ * Built-in demo persona — signs in as a deterministic, pre-computed user
+ * via the easter egg (double-tap the logo, then tap login). Same NIN every
+ * time so the demo identity is stable for screenshots and walkthroughs.
+ *
+ * The mint-green theme persists for the session via localStorage and is
+ * applied as a class on <body> in App.jsx during boot.
+ */
+const DEMO_NIN = '199001011234'
+
 export function LandingPage({ onLogin }) {
   const { t } = useTranslation()
   const [nin, setNin] = useState('')
@@ -22,6 +32,25 @@ export function LandingPage({ onLogin }) {
   const pollRef = useRef(null)
   const [inputFocused, setInputFocused] = useState(false)
 
+  // --- Demo easter egg ---
+  // Sequence to activate: tap logo, tap logo, tap Login.
+  // Both logo taps just increment a counter — no timing constraint, so the
+  // user can take their time. The actual demo login is triggered on the
+  // Login button press (handleLogin checks the counter), not on the second
+  // logo tap. This matches the "activate on login" requirement.
+  const [demoArmed, setDemoArmed] = useState(false)
+  const logoTapCountRef = useRef(0)
+
+  const handleLogoTap = () => {
+    logoTapCountRef.current += 1
+    if (logoTapCountRef.current >= 2 && !demoArmed) {
+      // Quietly mark armed; actual activation happens on the next Login tap.
+      // We do not flip the theme yet — that happens at login time so the
+      // user gets a clean "before / after" reveal.
+      setDemoArmed(true)
+    }
+  }
+
   // Clean up polling interval on unmount (e.g. user navigates away mid-login)
   useEffect(() => {
     return () => {
@@ -30,8 +59,22 @@ export function LandingPage({ onLogin }) {
   }, [])
 
   const handleLogin = async () => {
-    // Use entered NIN, or fall back to test number
-    const pn = nin.replace(/\D/g, '') || generateTestNin()
+    // Two paths into the easter egg:
+    //   1. demoArmed (set by double-tapping the logo) — the discoverable, gestural way
+    //   2. typing the magic NIN '999999999999' — script-friendly, used for App Store
+    //      screenshot automation where cliclick into a single text field is far
+    //      more reliable than driving a coordinate-based double-tap on a 64px icon.
+    const enteredNin = nin.replace(/\D/g, '')
+    const triggerDemo = demoArmed || enteredNin === '999999999999'
+    let pn
+    if (triggerDemo) {
+      pn = DEMO_NIN
+      try { localStorage.setItem('demoMode', '1') } catch {}
+      document.body.classList.add('mint-theme')
+      setDemoArmed(true)  // reflect armed state in UI even if it came via the NIN path
+    } else {
+      pn = enteredNin || generateTestNin()
+    }
 
     setStatus('loading')
     setError(null)
@@ -82,16 +125,22 @@ export function LandingPage({ onLogin }) {
     : t('landing.bankidPending')
 
   return (
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col safe-area-top safe-area-bottom safe-area-x">
+    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col safe-area-top safe-area-bottom safe-area-x relative">
       <header class="p-4 flex justify-end">
         <LanguageSelector />
       </header>
 
       <main class="flex-grow flex flex-col items-center justify-center p-4 text-center">
         <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full transition-transform hover:scale-[1.01] duration-300">
-          <div class="flex justify-center mb-6 text-indigo-600">
+          <button
+            type="button"
+            onClick={handleLogoTap}
+            aria-label="Covey"
+            class="block mx-auto mb-6 text-indigo-600 cursor-pointer focus:outline-none"
+            style="touch-action: manipulation; -webkit-user-select: none; user-select: none;"
+          >
             <Users size={64} />
-          </div>
+          </button>
 
           <h1 class="text-3xl font-bold text-gray-900 mb-2">
             {t('landing.title')}

@@ -23,3 +23,51 @@ html {
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
 }
+
+/* ─────────────────────────────────────────────────────────────────
+   Demo / mint-green theme
+   Activated by the LandingPage easter egg (double-tap the Covey
+   logo, then tap login). Intent: a visually-distinct demo mode
+   used for App Store screenshots and product previews. The class
+   is set on <body> so the override cascades into every component.
+   ───────────────────────────────────────────────────────────── */
+body.mint-theme {
+  /* Background gradient (LandingPage + MainLayout shells) */
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%) !important;
+}
+body.mint-theme .from-blue-50            { --tw-gradient-from: #ecfdf5 !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(236 253 245 / 0)) !important; }
+body.mint-theme .to-indigo-50            { --tw-gradient-to:   #d1fae5 !important; }
+/* Brand accents — indigo → emerald */
+body.mint-theme .text-indigo-600         { color: #059669 !important; }
+body.mint-theme .text-indigo-800         { color: #065f46 !important; }
+body.mint-theme .hover\:text-indigo-800:hover { color: #064e3b !important; }
+body.mint-theme .bg-indigo-50            { background-color: #ecfdf5 !important; }
+body.mint-theme .bg-indigo-100           { background-color: #d1fae5 !important; }
+body.mint-theme .bg-indigo-600           { background-color: #059669 !important; }
+body.mint-theme .hover\:bg-indigo-700:hover { background-color: #047857 !important; }
+body.mint-theme .focus\:ring-indigo-500:focus  { --tw-ring-color: #34d399 !important; }
+body.mint-theme .focus\:border-indigo-500:focus { border-color: #34d399 !important; }
+body.mint-theme .ring-indigo-500         { --tw-ring-color: #34d399 !important; }
+body.mint-theme .border-indigo-500       { border-color: #34d399 !important; }
+/* The deep navy login button (#182B56) — Tailwind arbitrary value, target inline style */
+body.mint-theme .bg-\[\#182B56\]         { background-color: #047857 !important; }
+body.mint-theme .hover\:bg-\[\#203a72\]:hover { background-color: #065f46 !important; }
+/* BankID pending banner */
+body.mint-theme .bg-blue-50              { background-color: #d1fae5 !important; }
+body.mint-theme .text-blue-800           { color: #065f46 !important; }
+/* Tiny demo badge that LandingPage renders in the corner */
+.demo-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: #10b981;
+  color: white;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  z-index: 50;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
