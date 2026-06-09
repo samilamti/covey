@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
-import { ShieldCheck, Users, Loader2, ExternalLink } from 'lucide-preact'
+import { ShieldCheck, Loader2, ExternalLink } from 'lucide-preact'
 import { LanguageSelector } from './LanguageSelector'
+import { CoveyMark } from './CoveyMark'
 import { authService } from '../services/auth'
 
 /** Generate a random valid 12-digit NIN for unique test users. */
@@ -136,10 +137,10 @@ export function LandingPage({ onLogin }) {
             type="button"
             onClick={handleLogoTap}
             aria-label="Covey"
-            class="block mx-auto mb-6 text-indigo-600 cursor-pointer focus:outline-none"
+            class="block mx-auto mb-6 cursor-pointer focus:outline-none"
             style="touch-action: manipulation; -webkit-user-select: none; user-select: none;"
           >
-            <Users size={64} />
+            <CoveyMark size={64} />
           </button>
 
           <h1 class="text-3xl font-bold text-gray-900 mb-2">

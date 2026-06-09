@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@capacitor/android": "^7.0.0",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^7.0.0",
     "@capacitor/ios": "^7.0.0",
     "@preact/preset-vite": "^2.9.0",
