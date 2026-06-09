@@ -14,6 +14,12 @@ Hosted on Codeberg: https://codeberg.org/Sami-X-Lamti/Tillsammans
 
 CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline files at `.woodpecker/test.yaml` and `.woodpecker/build.yaml`.
 
+This repo is the **public, code half** of Covey. It lives at `~/Projects/Covey/app` under a project umbrella (`~/Projects/Tillsammans` is a back-compat symlink). See `../CLAUDE.md` for the umbrella overview.
+
+## Operations brain (private — `../ops`)
+
+The non-code half of Covey lives in a separate **private** repo at `../ops` (`~/Projects/Covey/ops`): brand, legal/AB formation, governance policies, funding applications, banking, the Shopify/Printful shop, and the live social-content automation. When a task needs business/brand/legal/shop/social context, look there — `../ops/README.md` maps the domains and `../ops/memory/` holds accumulated project + founder knowledge. **Never** move ops material (legal, funding, banking, secrets) into this public repo.
+
 ## Tech stack
 
 - **Frontend**: Preact 10 + Vite 7 + Tailwind CSS 3 + i18next + Socket.io client + Leaflet
