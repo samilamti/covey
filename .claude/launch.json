@@ -4,7 +4,7 @@
     {
       "name": "frontend",
       "runtimeExecutable": "/Users/hiretsu/.nvm/versions/node/v24.14.1/bin/node",
-      "runtimeArgs": ["/Users/hiretsu/Projects/Tillsammans/frontend/node_modules/vite/bin/vite.js", "--host"],
+      "runtimeArgs": ["node_modules/vite/bin/vite.js", "--host"],
       "port": 5173,
       "cwd": "frontend"
     }
