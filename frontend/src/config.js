@@ -12,4 +12,6 @@ import { Capacitor } from '@capacitor/core'
  * Base URL for all API calls.
  * Empty string on web (relative URLs), full URL on native.
  */
-export const API_BASE = Capacitor.isNativePlatform() ? 'https://covey.se' : ''
+export const API_BASE = Capacitor.isNativePlatform()
+  ? (import.meta.env.DEV ? '' : 'https://covey.se')
+  : ''
