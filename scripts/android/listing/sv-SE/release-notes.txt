@@ -1,0 +1,1 @@
+Första versionen av Covey för Android. Logga in med BankID, skapa en förfrågan och koordinera trygg hemgång i realtid.

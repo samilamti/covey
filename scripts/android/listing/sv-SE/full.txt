@@ -1,0 +1,20 @@
+Covey är en ideell plattform för digital trygghet i vardagen. Med BankID loggar du in som en verifierad person och kan snabbt koordinera verklig trygghet – som att gå hem tillsammans en sen kväll.
+
+Covey är inte ett socialt nätverk. Det finns inga flöden, inga annonser och ingen försäljning av din data. Vårt enda syfte är att du ska kunna få hjälp eller hjälpa någon annan.
+
+SÅ FUNGERAR DET
+• Skapa en förfrågan – beskriv var du startar och vart du ska.
+• Välj vem som ser den – endast liknande personer (samma kön, ålder ±5 år), kvalificerade ledsagare, eller alla verifierade medlemmar.
+• Få sällskap – när någon accepterar startar en aktiv session med realtidskarta, beräknad ankomsttid och chatt.
+• Avsluta tillsammans – båda bekräftar att ni är framme.
+
+VARFÖR COVEY
+• Verifierad identitet – alla loggar in med BankID. Inga anonyma konton, inga trollkonton.
+• Integritet först – din position delas bara med den som hjälper dig, och raderas automatiskt när sessionen avslutas.
+• Ideellt – Covey ägs inte av riskkapital. Vi drivs av social nytta, inte vinst.
+• Öppen källkod – vår kod är öppen för granskning. Inga dolda algoritmer.
+• Tillgängligt – fungerar på allt från äldre Android-enheter till nya telefoner.
+
+Covey (tidigare Tillsammans) är ett medborgarinitiativ. Du är inte produkten.
+
+Läs mer på covey.se

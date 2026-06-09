@@ -10,12 +10,22 @@ _site/
 .env.*
 !.env.example
 !.env.ios.example
+!.env.android.example
 !.env.local.example
 
 # iOS build artifacts (xcarchive, ipa, generated ExportOptions)
 build/ios/
 scripts/ios/.env.ios
 scripts/ios/.venv/
+
+# Android build artifacts + secrets
+build/android/
+scripts/android/.env.android
+scripts/android/.venv/
+
+# Python bytecode cache
+__pycache__/
+*.pyc
 
 # OS
 .DS_Store

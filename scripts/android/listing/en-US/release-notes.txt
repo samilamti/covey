@@ -1,0 +1,1 @@
+First release of Covey for Android. Sign in with BankID, create a request, and coordinate a safe walk home in real time.

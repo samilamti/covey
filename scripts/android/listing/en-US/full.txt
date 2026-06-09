@@ -1,0 +1,20 @@
+Covey is a non-profit platform for everyday digital safety. With BankID you sign in as a verified person and can quickly coordinate real-world safety – like walking home together late at night.
+
+Covey is not a social network. There are no feeds, no ads, and no selling of your data. Our only purpose is to help you get help, or help someone else.
+
+HOW IT WORKS
+• Create a request – describe where you start and where you're going.
+• Choose who sees it – only similar people (same sex, age ±5 years), qualified companions, or all verified members.
+• Get company – when someone accepts, an active session starts with a real-time map, estimated arrival time, and chat.
+• Finish together – both confirm that you've arrived.
+
+WHY COVEY
+• Verified identity – everyone signs in with BankID. No anonymous accounts, no troll accounts.
+• Privacy first – your location is shared only with the person helping you, and is deleted automatically when the session ends.
+• Non-profit – Covey isn't owned by venture capital. We're driven by social good, not profit.
+• Open source – our code is open for review. No hidden algorithms.
+• Accessible – works on everything from older Android devices to new phones.
+
+Covey (formerly Tillsammans) is a citizen initiative. You are not the product.
+
+Learn more at covey.se
