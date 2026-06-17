@@ -38,7 +38,7 @@ If CLAUDE.md needs changes, make them directly. Keep the same style — terse, f
 
 ## 4. Review and update session memory
 
-Read `MEMORY.md` at `C:\Users\samil\.claude\projects\S--Tillsammans\memory\MEMORY.md`.
+Read `MEMORY.md` at `/Users/hiretsu/.claude/projects/-Users-hiretsu-Projects-Covey-app/memory/MEMORY.md`.
 
 Check if anything learned during this implementation should be persisted:
 - New debugging patterns → add to `debugging.md`
@@ -69,7 +69,7 @@ git commit -m "$(cat <<'EOF'
 
 <optional body explaining why, not what>
 
-Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
 EOF
 )"
 ```

@@ -63,6 +63,10 @@ When modifying database schemas, always use `ALTER TABLE` migrations for existin
 
 After any multi-file rename or domain change, run a project-wide grep for the old name to catch stragglers before committing. Example: `grep -r 'oldname' --include='*.jsx' --include='*.js' --include='*.json' --include='*.yaml' --include='*.md' .`
 
+### End-of-session ship (standing reflex)
+
+At the end of every **successful** work session, run the `/ship` skill without being asked: it verifies (full backend+frontend tests **and** an interactive iOS Simulator smoke test), commits to `main`, pushes to Codeberg, and uploads to TestFlight **only when iOS-bundled code changed** (auto-bumping the build number). "Successful" = both gates green; never ship a failing or unverified tree — report why and stop. This is a Claude-run routine, not a hook (the gate needs judgment). See `.claude/skills/ship/SKILL.md`.
+
 ## Current state (Mar 2026)
 
 All 7 implementation phases are complete. The application is feature-complete for its initial scope:
