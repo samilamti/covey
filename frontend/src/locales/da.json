@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "Ligesom mig",
       "sameDemographicsDesc": "Samme køn, lignende alder (±5 år)",
-      "verifiedGuardians": "Tryghedsverificerede personer",
+      "verifiedGuardians": "Kvalificerede ledsagere",
       "verifiedGuardiansDesc": "Ovenstående plus brugere med tryghedspoint ≥ 5",
       "anyMember": "Alle indloggede",
       "anyMemberDesc": "Ingen filtrering"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "Jeg kan se dig!",
       "waitingOutside": "Venter udenfor",
       "delayed": "Jeg er lidt forsinket, men er på vej",
-      "stayThere": "Bliv hvor du er"
+      "stayThere": "Bliv hvor du er",
+      "whereAreYou": "Hvor er du?",
+      "thanks": "Tusind tak!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "Hent alle data, vi har om dig (GDPR).",
     "anonymous": "Anonym",
     "safetyScore": "Tryghedspoint",
-    "guardian": "Verificeret vogter"
+    "guardian": "Kvalificeret ledsager"
   },
   "ratings": {
     "prompt": "Hvordan føltes det? Fortæl om din oplevelse.",

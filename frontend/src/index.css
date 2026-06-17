@@ -49,9 +49,7 @@ body.mint-theme .focus\:ring-indigo-500:focus  { --tw-ring-color: #34d399 !impor
 body.mint-theme .focus\:border-indigo-500:focus { border-color: #34d399 !important; }
 body.mint-theme .ring-indigo-500         { --tw-ring-color: #34d399 !important; }
 body.mint-theme .border-indigo-500       { border-color: #34d399 !important; }
-/* The deep navy login button (#182B56) — Tailwind arbitrary value, target inline style */
-body.mint-theme .bg-\[\#182B56\]         { background-color: #047857 !important; }
-body.mint-theme .hover\:bg-\[\#203a72\]:hover { background-color: #065f46 !important; }
+/* (The login button now uses bg-indigo-600 / hover:bg-indigo-700, covered above.) */
 /* BankID pending banner */
 body.mint-theme .bg-blue-50              { background-color: #d1fae5 !important; }
 body.mint-theme .text-blue-800           { color: #065f46 !important; }

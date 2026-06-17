@@ -71,15 +71,17 @@ export function MainLayout({ user, onLogout }) {
     <div class="min-h-screen bg-gray-50 pb-16 safe-area-x">
       <InstallPrompt />
       {/* Top bar */}
-      <header class="bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center sticky top-0 z-[1001] safe-area-top">
-        <h1 class="text-lg font-bold text-gray-900">Covey</h1>
-        <div class="flex items-center gap-2">
-          <LanguageSelector />
+      <header class="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-[1001] safe-area-top">
+        <div class="max-w-md mx-auto w-full flex justify-between items-center">
+          <h1 class="text-lg font-bold text-gray-900">Covey</h1>
+          <div class="flex items-center gap-2">
+            <LanguageSelector />
+          </div>
         </div>
       </header>
 
-      {/* Main content area */}
-      <main class="p-4">
+      {/* Main content area — capped + centred so cards don't stretch on tablets/large screens */}
+      <main class="p-4 max-w-md mx-auto w-full">
         {renderContent()}
       </main>
 

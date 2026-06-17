@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
-import { ShieldCheck, Shield, Download, Trash2, Save, Award } from 'lucide-preact'
+import { ShieldCheck, Shield, Download, Trash2, Save, Award, LogOut } from 'lucide-preact'
 import { profileService } from '../services/profile'
 
 export function ProfileView({ user, onLogout }) {
@@ -65,45 +65,46 @@ export function ProfileView({ user, onLogout }) {
   }
 
   return (
-    <div>
-      <h2 class="text-xl font-bold mb-4">{t('profile.title')}</h2>
+    <div class="space-y-4">
+      <h2 class="text-xl font-bold">{t('profile.title')}</h2>
 
-      {/* Verified badge */}
-      <div class="flex items-center gap-2 mb-4 text-green-600">
-        <ShieldCheck size={20} />
-        <span class="text-sm font-medium">{t('profile.verified')}</span>
+      {/* Identity & standing */}
+      <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 space-y-3">
+        <div class="flex items-center gap-2 text-green-600">
+          <ShieldCheck size={20} />
+          <span class="text-sm font-medium">{t('profile.verified')}</span>
+        </div>
+
+        {profile && (
+          <>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium text-gray-700">{t('profile.safetyScore')}</span>
+              <span class={`text-lg font-bold ${profile.safetyScore >= 5 ? 'text-green-600' : 'text-gray-600'}`}>
+                {profile.safetyScore}
+              </span>
+            </div>
+            {profile.isGuardian && (
+              <div class="flex items-center gap-2 text-amber-600">
+                <Shield size={20} />
+                <span class="text-sm font-medium">{t('profile.guardian')}</span>
+              </div>
+            )}
+            {profile.badges?.length > 0 && (
+              <div class="flex flex-wrap gap-2">
+                {profile.badges.filter(b => b.visible).map(b => (
+                  <div key={b.badge_key} class="flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-1 rounded-full text-xs">
+                    <Award size={12} />
+                    <span>{t(`progress.badge.${b.badge_key}`)}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </div>
 
-      {/* Safety score & guardian badge */}
-      {profile && (
-        <div class="mb-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="text-sm font-medium text-gray-700">{t('profile.safetyScore')}</span>
-            <span class={`text-lg font-bold ${profile.safetyScore >= 5 ? 'text-green-600' : 'text-gray-600'}`}>
-              {profile.safetyScore}
-            </span>
-          </div>
-          {profile.isGuardian && (
-            <div class="flex items-center gap-2 text-amber-600">
-              <Shield size={20} />
-              <span class="text-sm font-medium">{t('profile.guardian')}</span>
-            </div>
-          )}
-          {profile.badges?.length > 0 && (
-            <div class="flex flex-wrap gap-2 mt-2">
-              {profile.badges.filter(b => b.visible).map(b => (
-                <div key={b.badge_key} class="flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-1 rounded-full text-xs">
-                  <Award size={12} />
-                  <span>{t(`progress.badge.${b.badge_key}`)}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
       {/* Display name */}
-      <div class="mb-4">
+      <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
         <label class="block text-sm font-medium text-gray-700 mb-1">
           {t('profile.displayName')}
         </label>
@@ -124,22 +125,21 @@ export function ProfileView({ user, onLogout }) {
             {t('profile.save')}
           </button>
         </div>
+        {message && (
+          <div
+            class={`mt-3 p-3 rounded-lg text-sm ${
+              message.type === 'success'
+                ? 'bg-green-50 text-green-700'
+                : 'bg-red-50 text-red-600'
+            }`}
+          >
+            {message.text}
+          </div>
+        )}
       </div>
 
-      {message && (
-        <div
-          class={`p-3 rounded-lg mb-4 text-sm ${
-            message.type === 'success'
-              ? 'bg-green-50 text-green-700'
-              : 'bg-red-50 text-red-600'
-          }`}
-        >
-          {message.text}
-        </div>
-      )}
-
-      {/* GDPR actions */}
-      <div class="mt-8 space-y-3">
+      {/* Account actions */}
+      <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 space-y-3">
         <button
           onClick={handleGdprExport}
           class="w-full flex items-center gap-2 px-4 py-3 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
@@ -155,6 +155,7 @@ export function ProfileView({ user, onLogout }) {
           onClick={onLogout}
           class="w-full flex items-center gap-2 px-4 py-3 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
         >
+          <LogOut size={18} />
           {t('app.logout')}
         </button>
 

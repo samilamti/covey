@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "Sådana som jag",
       "sameDemographicsDesc": "Samma kön, liknande ålder (±5 år)",
-      "verifiedGuardians": "Trygghetsverifierade personer",
+      "verifiedGuardians": "Kvalificerade ledsagare",
       "verifiedGuardiansDesc": "Ovan plus användare med trygghetspoäng ≥ 5",
       "anyMember": "Alla inloggade",
       "anyMemberDesc": "Ingen filtrering"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "Jag ser dig!",
       "waitingOutside": "Väntar utanför",
       "delayed": "Jag blir lite sen, men är på väg",
-      "stayThere": "Stanna där du är"
+      "stayThere": "Stanna där du är",
+      "whereAreYou": "Var är du?",
+      "thanks": "Tack så mycket!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "Hämta all data vi har om dig (GDPR).",
     "anonymous": "Anonym",
     "safetyScore": "Trygghetspoäng",
-    "guardian": "Verifierad väktare"
+    "guardian": "Kvalificerad ledsagare"
   },
   "ratings": {
     "prompt": "Hur kändes det? Berätta om din upplevelse.",
@@ -175,7 +177,7 @@
     "button": "Installera"
   },
   "progress": {
-    "title": "Min framsteg",
+    "title": "Mina framsteg",
     "totalPoints": "Poäng",
     "sessionsHelped": "Hjälpt andra",
     "sessionsRequested": "Fått hjälp",

@@ -1,6 +1,8 @@
 /**
- * Gender-neutral standing figure icon.
- * Simple silhouette — person standing still.
+ * "Wait" icon — a clock. Distinct at a glance from the walking figure used
+ * for "Gå", which is the whole point: the two request types must not look alike.
+ * Drawn as a filled ring (so it still reads when the white face blends into a
+ * white card) plus a stem, a 12-o'clock tick, and two hands.
  */
 export function WaitIcon({ size = 48 }) {
   return (
@@ -13,13 +15,17 @@ export function WaitIcon({ size = 48 }) {
       aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
-      {/* Head */}
-      <circle cx="32" cy="10" r="6" />
-      {/* Body */}
-      <path d="M29 18 L29 36 L25 52 L29 53 L32 40 L35 53 L39 52 L35 36 L35 18 Z" />
-      {/* Arms at sides, slightly away from body */}
-      <path d="M27 20 L19 34 L23 36 L29 24 Z" />
-      <path d="M37 20 L45 34 L41 36 L35 24 Z" />
+      {/* Outer ring (the white inner disc carves it into a ring) */}
+      <circle cx="32" cy="34" r="23" />
+      <circle cx="32" cy="34" r="18" fill="#fff" />
+      {/* Top stem / button */}
+      <rect x="29" y="4" width="6" height="6" rx="1.5" />
+      {/* 12 o'clock tick */}
+      <rect x="30.5" y="18" width="3" height="4" rx="1" />
+      {/* Hour hand (up), minute hand (to the right), center pin */}
+      <rect x="30.5" y="23" width="3" height="13" rx="1.5" />
+      <rect x="32" y="32.5" width="13" height="3" rx="1.5" />
+      <circle cx="32" cy="34" r="2.6" />
     </svg>
   )
 }

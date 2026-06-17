@@ -61,8 +61,8 @@ describe('LocationBanner', () => {
   it('uses info colors by default', () => {
     const { container } = render(<LocationBanner error="denied" />)
     const banner = container.firstChild
-    expect(banner.className).toContain('bg-amber-50')
-    expect(banner.className).toContain('border-amber-200')
+    expect(banner.className).toContain('bg-blue-50')
+    expect(banner.className).toContain('border-blue-200')
   })
 
   it('hides retry button when onRetry is not provided', () => {

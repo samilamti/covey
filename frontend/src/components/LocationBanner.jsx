@@ -18,13 +18,15 @@ export function LocationBanner({ error, onRetry, severity = 'info' }) {
     ? t('location.denied')
     : t('location.unavailable')
 
+  // 'warning' (safety-critical) stays red; informational uses a calm blue so it
+  // doesn't compete with the amber rating prompt (amber is reserved for that).
   const colors = severity === 'warning'
     ? 'bg-red-50 border-red-200 text-red-800'
-    : 'bg-amber-50 border-amber-200 text-amber-800'
+    : 'bg-blue-50 border-blue-200 text-blue-800'
 
   const buttonColors = severity === 'warning'
     ? 'text-red-700 hover:bg-red-100'
-    : 'text-amber-700 hover:bg-amber-100'
+    : 'text-blue-700 hover:bg-blue-100'
 
   return (
     <div class={`flex items-center gap-2 rounded-lg border p-3 mb-3 text-sm ${colors}`}>

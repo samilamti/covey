@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "Kaltaiseni",
       "sameDemographicsDesc": "Sama sukupuoli, samanikäinen (±5 vuotta)",
-      "verifiedGuardians": "Turvallisuusvahvistetut henkilöt",
+      "verifiedGuardians": "Pätevät seuralaiset",
       "verifiedGuardiansDesc": "Edellä mainitut ja käyttäjät joiden turvallisuuspisteet ≥ 5",
       "anyMember": "Kaikki kirjautuneet",
       "anyMemberDesc": "Ei suodatusta"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "Näen sinut!",
       "waitingOutside": "Odotan ulkona",
       "delayed": "Olen hieman myöhässä, mutta matkalla",
-      "stayThere": "Pysy paikallasi"
+      "stayThere": "Pysy paikallasi",
+      "whereAreYou": "Missä olet?",
+      "thanks": "Kiitos paljon!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "Hae kaikki sinusta tallennetut tiedot (GDPR).",
     "anonymous": "Nimetön",
     "safetyScore": "Turvallisuuspisteet",
-    "guardian": "Vahvistettu vartija"
+    "guardian": "Pätevä seuralainen"
   },
   "ratings": {
     "prompt": "Miltä tuntui? Kerro kokemuksestasi.",

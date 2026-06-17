@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "Líkt og ég",
       "sameDemographicsDesc": "Sama kyn, svipuð aldur (±5 ár)",
-      "verifiedGuardians": "Öryggisvottaðir einstaklingar",
+      "verifiedGuardians": "Hæfir fylgdarmenn",
       "verifiedGuardiansDesc": "Ofangreint auk notenda með öryggisstig ≥ 5",
       "anyMember": "Allir innskráðir",
       "anyMemberDesc": "Engin síun"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "Ég sé þig!",
       "waitingOutside": "Bíð fyrir utan",
       "delayed": "Ég er dálítið sein/n, en á leiðinni",
-      "stayThere": "Vertu þar sem þú ert"
+      "stayThere": "Vertu þar sem þú ert",
+      "whereAreYou": "Hvar ertu?",
+      "thanks": "Takk fyrir!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "Fáðu öll gögn sem við höfum um þig (GDPR).",
     "anonymous": "Nafnlaus",
     "safetyScore": "Öryggisstig",
-    "guardian": "Staðfestur verndarvörður"
+    "guardian": "Hæfur fylgdarmaður"
   },
   "ratings": {
     "prompt": "Hvernig leist þér? Segðu okkur frá upplifun þinni.",

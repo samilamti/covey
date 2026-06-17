@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "أشخاص مشابهون لي",
       "sameDemographicsDesc": "نفس الجنس، عمر مماثل (±5 سنوات)",
-      "verifiedGuardians": "أشخاص موثقو الأمان",
+      "verifiedGuardians": "مرافقون مؤهَّلون",
       "verifiedGuardiansDesc": "ما سبق بالإضافة إلى مستخدمين بنقاط أمان ≥ 5",
       "anyMember": "جميع المسجلين",
       "anyMemberDesc": "بدون تصفية"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "أستطيع رؤيتك!",
       "waitingOutside": "أنتظر بالخارج",
       "delayed": "تأخرت قليلاً، لكنني في الطريق",
-      "stayThere": "ابقَ مكانك"
+      "stayThere": "ابقَ مكانك",
+      "whereAreYou": "أين أنت؟",
+      "thanks": "شكرًا جزيلاً!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "احصل على جميع البيانات المحفوظة عنك (GDPR).",
     "anonymous": "مجهول",
     "safetyScore": "نقاط الأمان",
-    "guardian": "حارس موثق"
+    "guardian": "مرافق مؤهَّل"
   },
   "ratings": {
     "prompt": "كيف كان شعورك؟ أخبرنا عن تجربتك.",

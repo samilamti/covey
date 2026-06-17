@@ -137,10 +137,10 @@ export function LandingPage({ onLogin }) {
             type="button"
             onClick={handleLogoTap}
             aria-label="Covey"
-            class="block mx-auto mb-6 cursor-pointer focus:outline-none"
+            class="block mx-auto mb-4 cursor-pointer focus:outline-none"
             style="touch-action: manipulation; -webkit-user-select: none; user-select: none;"
           >
-            <CoveyMark size={64} />
+            <CoveyMark size={76} />
           </button>
 
           <h1 class="text-3xl font-bold text-gray-900 mb-2">
@@ -148,7 +148,7 @@ export function LandingPage({ onLogin }) {
           </h1>
 
           <div class={`transition-all duration-300 overflow-hidden ${inputFocused ? 'opacity-0 max-h-0' : 'opacity-100 max-h-40'}`}>
-            <p class="text-sm text-gray-500 italic mb-6">
+            <p class="text-sm text-gray-500 italic mb-4">
               {t('landing.nameMeaning')}
             </p>
           </div>
@@ -159,12 +159,12 @@ export function LandingPage({ onLogin }) {
             </p>
           </div>
 
-          <div class={`transition-all duration-300 overflow-hidden ${inputFocused ? 'opacity-0 max-h-0' : 'opacity-100 max-h-40'}`}>
+          <div class={`flex flex-wrap items-center justify-center gap-x-5 gap-y-1 mb-8 transition-all duration-300 ${inputFocused ? 'opacity-0 max-h-0 !mb-0 overflow-hidden' : 'opacity-100 max-h-40'}`}>
             <a
               href={`${location.protocol}//docs.${location.hostname}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-2"
+              class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800"
             >
               {t('landing.learnMore')}
               <ExternalLink size={14} />
@@ -174,7 +174,7 @@ export function LandingPage({ onLogin }) {
               href={`${location.protocol}//docs.${location.hostname}/sv/trygghetspartners/`}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 mb-8"
+              class="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800"
             >
               {t('landing.partnersLink')}
               <ExternalLink size={14} />
@@ -212,7 +212,7 @@ export function LandingPage({ onLogin }) {
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                class="w-full bg-[#182B56] hover:bg-[#203a72] text-white font-bold py-3 px-4 rounded-lg shadow-md transition-colors duration-200 flex items-center justify-center gap-2 group disabled:opacity-70"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-colors duration-200 flex items-center justify-center gap-2 group disabled:opacity-70"
               >
                 {status === 'loading' ? (
                   <Loader2 size={20} class="animate-spin" />

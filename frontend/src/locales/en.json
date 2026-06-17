@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "People like me",
       "sameDemographicsDesc": "Same sex, similar age (±5 years)",
-      "verifiedGuardians": "Safety-verified people",
+      "verifiedGuardians": "Qualified companions",
       "verifiedGuardiansDesc": "Above plus users with safety score ≥ 5",
       "anyMember": "All logged in",
       "anyMemberDesc": "No filtering"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "I can see you!",
       "waitingOutside": "Waiting outside",
       "delayed": "I'm slightly delayed, but still on my way",
-      "stayThere": "Stay where you are"
+      "stayThere": "Stay where you are",
+      "whereAreYou": "Where are you?",
+      "thanks": "Thank you so much!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "Get all data we have about you (GDPR).",
     "anonymous": "Anonymous",
     "safetyScore": "Safety score",
-    "guardian": "Verified guardian"
+    "guardian": "Qualified companion"
   },
   "ratings": {
     "prompt": "How did it feel? Tell us about your experience.",

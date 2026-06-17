@@ -16,6 +16,7 @@ vi.mock('lucide-preact', () => ({
   Trash2: () => h('span', null, 'Trash2'),
   Save: () => h('span', null, 'Save'),
   Award: () => h('span', null, 'Award'),
+  LogOut: () => h('span', null, 'LogOut'),
 }))
 
 vi.mock('../src/services/profile', () => ({

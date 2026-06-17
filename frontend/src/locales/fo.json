@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "Líka sum eg",
       "sameDemographicsDesc": "Sama kyn, líkur aldur (±5 ár)",
-      "verifiedGuardians": "Tryggisváttaðir persónar",
+      "verifiedGuardians": "Hóskaðir fylgissveinar",
       "verifiedGuardiansDesc": "Omanfyri pluss brúkarar við tryggisstigum ≥ 5",
       "anyMember": "Allir innritaðir",
       "anyMemberDesc": "Eingin síling"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "Eg síggji teg!",
       "waitingOutside": "Bíði uttanfyri",
       "delayed": "Eg verði eitt sindur seinkaður/ð, men eri á veg",
-      "stayThere": "Verð har tú ert"
+      "stayThere": "Verð har tú ert",
+      "whereAreYou": "Hvar ert tú?",
+      "thanks": "Túsund takk!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "Heinta øll dáta, vit hava um teg (GDPR).",
     "anonymous": "Ónnevndur",
     "safetyScore": "Tryggisstigutal",
-    "guardian": "Váttaður varðmaður"
+    "guardian": "Hóskaður fylgissveinur"
   },
   "ratings": {
     "prompt": "Hvussu kendi tað? Fortel okkum um tína roynlu.",

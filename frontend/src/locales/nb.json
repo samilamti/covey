@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "Slike som meg",
       "sameDemographicsDesc": "Samme kjønn, lignende alder (±5 år)",
-      "verifiedGuardians": "Trygghetsverifiserte personer",
+      "verifiedGuardians": "Kvalifiserte ledsagere",
       "verifiedGuardiansDesc": "Over pluss brukere med trygghetspoeng ≥ 5",
       "anyMember": "Alle innloggede",
       "anyMemberDesc": "Ingen filtrering"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "Jeg ser deg!",
       "waitingOutside": "Venter utenfor",
       "delayed": "Jeg blir litt forsinket, men er på vei",
-      "stayThere": "Bli der du er"
+      "stayThere": "Bli der du er",
+      "whereAreYou": "Hvor er du?",
+      "thanks": "Tusen takk!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "Hent all informasjon vi har om deg (GDPR).",
     "anonymous": "Anonym",
     "safetyScore": "Trygghetspoeng",
-    "guardian": "Verifisert vokter"
+    "guardian": "Kvalifisert ledsager"
   },
   "ratings": {
     "prompt": "Hvordan føltes det? Fortell om opplevelsen din.",

@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "Sullii mu láhkái",
       "sameDemographicsDesc": "Seamma sohkabealli, lahka ahki (±5 jagi)",
-      "verifiedGuardians": "Sihkarvuođaduođaštuvvon olbmot",
+      "verifiedGuardians": "Dohkkehuvvon guoimmit",
       "verifiedGuardiansDesc": "Bajábeale ja geavaheddjiid sihkarvuođačuoggáiguin ≥ 5",
       "anyMember": "Buot sisačálihan",
       "anyMemberDesc": "Ii sile"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "Mun oainnán du!",
       "waitingOutside": "Vuordán olgun",
       "delayed": "Lean veahá maŋŋel, muhto johtimin",
-      "stayThere": "Báze doppe gos leat"
+      "stayThere": "Báze doppe gos leat",
+      "whereAreYou": "Gos leat?",
+      "thanks": "Giitu!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "Oaččo buot dieđuid maid mis leat du birra (GDPR).",
     "anonymous": "Anonyma",
     "safetyScore": "Sihkarvuođačuoggát",
-    "guardian": "Duođaštuvvon gáhtti"
+    "guardian": "Dohkkehuvvon guoibmi"
   },
   "ratings": {
     "prompt": "Mo dovddai? Muital iežat vásáhusas.",

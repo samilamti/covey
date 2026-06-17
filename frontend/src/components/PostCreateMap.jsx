@@ -31,7 +31,7 @@ export function PostCreateMap({ position, onBack }) {
 
           const icon = L.divIcon({
             className: 'post-create-marker',
-            html: '<div style="width:16px;height:16px;border-radius:50%;background:#4f46e5;border:3px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.3)"></div>',
+            html: '<div style="width:16px;height:16px;border-radius:50%;background:#182b56;border:3px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.3)"></div>',
             iconSize: [16, 16],
             iconAnchor: [8, 8],
           })

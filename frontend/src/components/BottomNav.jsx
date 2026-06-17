@@ -13,7 +13,8 @@ export function BottomNav({ currentPath, onNavigate }) {
   ]
 
   return (
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center h-16 z-50 safe-area-bottom">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 h-16 z-50 safe-area-bottom">
+      <div class="max-w-md mx-auto h-full flex justify-around items-center">
       {tabs.map((tab) => {
         const isActive = currentPath === tab.path || currentPath.startsWith(tab.path + '/')
         const Icon = tab.icon
@@ -30,6 +31,7 @@ export function BottomNav({ currentPath, onNavigate }) {
           </button>
         )
       })}
+      </div>
     </nav>
   )
 }

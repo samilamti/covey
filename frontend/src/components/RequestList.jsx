@@ -206,9 +206,10 @@ export function RequestList({ currentUserId }) {
 
   return (
     <div>
-      {/* Pending ratings — above the heading for prominence */}
-      {pendingRatings.map((pr) => (
-        <RatingBanner key={pr.request_id} pendingRating={pr} onRated={handleRated} />
+      {/* Pending ratings — on the list view only (not while creating a request),
+          and dismissible so they don't dominate the screen. */}
+      {showCreate !== true && pendingRatings.map((pr) => (
+        <RatingBanner key={pr.request_id} pendingRating={pr} onRated={handleRated} onDismiss={handleRated} />
       ))}
 
       {/* Header + create button */}

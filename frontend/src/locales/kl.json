@@ -89,7 +89,7 @@
     "tiers": {
       "sameDemographics": "Uanga-tusaat",
       "sameDemographicsDesc": "Suiaassuseq assigiinngitsut, ukiut assigiinngitsut (±5)",
-      "verifiedGuardians": "Nalinginnartunik uppernarsarneqarsimasut",
+      "verifiedGuardians": "Naleqquttut ilagisat",
       "verifiedGuardiansDesc": "Siumunneruvoq aamma atorfillit naapertuutissanit ≥ 5",
       "anyMember": "Tamarmik iserisimaffinni",
       "anyMemberDesc": "Immikkoortitsineq ajorpoq"
@@ -122,7 +122,9 @@
       "iCanSeeYou": "Takusarpagit!",
       "waitingOutside": "Silami utaqqipputit",
       "delayed": "Kingusinnerpunga, aggerpungali",
-      "stayThere": "Sumiinnerpit inissiani"
+      "stayThere": "Sumiinnerpit inissiani",
+      "whereAreYou": "Sumiippit?",
+      "thanks": "Qujanaq!"
     }
   },
   "profile": {
@@ -138,7 +140,7 @@
     "gdprExportDesc": "Illit pillutit dáta tamaat piguk (GDPR).",
     "anonymous": "Ateqanngitsoq",
     "safetyScore": "Naapertuutissaq",
-    "guardian": "Uppernarsarneqarsimasut sapinngisamik"
+    "guardian": "Naleqquttoq ilagisaq"
   },
   "ratings": {
     "prompt": "Qanoq imiippit? Pilersaarusiorfiguk.",

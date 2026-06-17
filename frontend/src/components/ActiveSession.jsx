@@ -214,7 +214,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
       }
     }
 
-    updateMarker('me', myLocation, '#4f46e5')
+    updateMarker('me', myLocation, '#182b56')
     updateMarker('other', otherLocation, '#059669')
 
     // Show display name tooltips when within proximity threshold
@@ -302,14 +302,14 @@ export function ActiveSession({ request, currentUserId, onClose }) {
     setMessageText('')
   }
 
-  const quickMessages = [
-    { key: 'onMyWay', text: t('messages.quick.onMyWay') },
-    { key: 'almostThere', text: t('messages.quick.almostThere') },
-    { key: 'iCanSeeYou', text: t('messages.quick.iCanSeeYou') },
-    { key: 'waitingOutside', text: t('messages.quick.waitingOutside') },
-    { key: 'delayed', text: t('messages.quick.delayed') },
-    { key: 'stayThere', text: t('messages.quick.stayThere') },
-  ]
+  // Quick messages are role-aware. The helper travels to the requester, so
+  // "on my way / almost there / running late / stay there" are helper→requester.
+  // The requester waits, so they get "waiting outside / thanks". "I can see you"
+  // and "where are you?" suit either side.
+  const quickKeys = isRequester
+    ? ['waitingOutside', 'iCanSeeYou', 'whereAreYou', 'thanks']
+    : ['onMyWay', 'almostThere', 'delayed', 'stayThere', 'iCanSeeYou', 'whereAreYou']
+  const quickMessages = quickKeys.map((key) => ({ key, text: t(`messages.quick.${key}`) }))
 
   const handleInitiateDone = async () => {
     try {
@@ -379,9 +379,11 @@ export function ActiveSession({ request, currentUserId, onClose }) {
   const isTerminal = ['completed', 'safety_confirmed', 'cancelled', 'expired'].includes(status)
 
   return (
-    <div class="fixed inset-0 bg-white z-50 flex flex-col">
-      {/* Header */}
-      <div class="bg-indigo-600 text-white px-4 py-3 flex items-center justify-between">
+    <div class="fixed inset-0 bg-white z-[1100] flex flex-col">
+      {/* Header — sits above the app header (z-1001) and bottom nav so the
+          live session is a true full-screen takeover and the close button
+          isn't occluded by the app chrome. */}
+      <div class="bg-indigo-600 text-white px-4 py-3 flex items-center justify-between safe-area-top">
         <div>
           <h3 class="font-semibold">{t(`requests.types.${request.type}`)}</h3>
           <p class="text-xs text-indigo-200">
