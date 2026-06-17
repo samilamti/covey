@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <!-- Critical for correct scaling on old Android phones -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- maximum-scale + user-scalable=no stop WKWebView from auto-zooming toward
+         a focused input (and getting stuck zoomed when that input unmounts mid-flow,
+         e.g. submitting the create-request form). Safari ignores user-scalable for
+         pinch (accessibility), so web users can still zoom. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <!-- PWA-ready -->
     <meta name="theme-color" content="#1e293b" />
     <meta name="description" content="Covey – slipp gå hem ensam. Hitta tryggt sällskap i din närhet." />

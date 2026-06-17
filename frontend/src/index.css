@@ -12,6 +12,14 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Kill double-tap-to-zoom without disabling pinch-zoom on the web. Effective
+   touch-action is computed from the whole ancestor chain, so a body-level rule
+   covers every descendant and the gaps between elements that per-element rules
+   would miss. Pairs with the no-zoom viewport meta for the native WKWebView. */
+body {
+  touch-action: manipulation;
+}
+
 /* Safe-area insets for notch/Dynamic Island/home indicator */
 .safe-area-top {
   padding-top: env(safe-area-inset-top, 0px);
