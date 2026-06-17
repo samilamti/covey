@@ -68,7 +68,7 @@ export function MainLayout({ user, onLogout }) {
   }
 
   return (
-    <div class="min-h-screen bg-gray-50 pb-16 safe-area-x">
+    <div class="min-h-screen bg-gray-50 pb-20 safe-area-x">
       <InstallPrompt />
       {/* Top bar */}
       <header class="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-[1001] safe-area-top">

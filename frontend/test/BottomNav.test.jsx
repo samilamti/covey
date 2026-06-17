@@ -10,9 +10,8 @@ vi.mock('react-i18next', () => ({
 }))
 
 vi.mock('lucide-preact', () => ({
-  HelpCircle: (props) => h('span', null, 'HelpCircle'),
-  User: (props) => h('span', null, 'User'),
   Trophy: (props) => h('span', null, 'Trophy'),
+  CircleUser: (props) => h('span', null, 'CircleUser'),
 }))
 
 vi.mock('../src/context/FeatureFlagContext', () => ({
@@ -52,9 +51,10 @@ describe('BottomNav', () => {
     const { getAllByRole } = render(
       <BottomNav currentPath="/requests" onNavigate={vi.fn()} />
     )
+    // Active/inactive colour lives on the icon-pill + label spans inside each tab.
     const buttons = getAllByRole('button')
-    expect(buttons[0].className).toContain('text-indigo-600')
-    expect(buttons[1].className).toContain('text-gray-400')
+    expect(buttons[0].innerHTML).toContain('text-indigo-600')
+    expect(buttons[1].innerHTML).toContain('text-gray-400')
   })
 
   it('calls onNavigate with /profile when profile tab clicked', async () => {
