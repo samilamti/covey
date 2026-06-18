@@ -4,6 +4,8 @@ import { ShieldCheck, Loader2, ExternalLink } from 'lucide-preact'
 import { LanguageSelector } from './LanguageSelector'
 import { CoveyMark } from './CoveyMark'
 import { authService } from '../services/auth'
+import { useFeatureFlag } from '../context/FeatureFlagContext'
+import { BankIDLogin } from './BankIDLogin'
 
 /** Generate a random valid 12-digit NIN for unique test users. */
 function generateTestNin() {
@@ -26,6 +28,9 @@ const DEMO_NIN = '199001011234'
 
 export function LandingPage({ onLogin }) {
   const { t } = useTranslation()
+  // Real BankID v6 (Secure Start, QR + autostart) when the flag is on;
+  // the personnummer/stub flow below stays for local dev (flag off).
+  const bankidEnabled = useFeatureFlag('BANKID_AUTH')
   const [nin, setNin] = useState('')
   const [status, setStatus] = useState('idle') // idle, loading, pending, error
   const [hintCode, setHintCode] = useState(null)
@@ -181,6 +186,10 @@ export function LandingPage({ onLogin }) {
             </a>
           </div>
 
+          {bankidEnabled ? (
+            <BankIDLogin onLogin={onLogin} />
+          ) : (
+            <>
           {error && (
             <div class="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
               {error}
@@ -222,6 +231,8 @@ export function LandingPage({ onLogin }) {
                 <span>{t('landing.loginButton')}</span>
               </button>
             </form>
+          )}
+            </>
           )}
         </div>
       </main>

@@ -10,7 +10,9 @@
     "bankidCancel": "Inloggningen avbröts.",
     "bankidExpired": "Tidsgränsen gick ut. Försök igen!",
     "learnMore": "Läs mer om Covey",
-    "partnersLink": "Trygghetspartners"
+    "partnersLink": "Trygghetspartners",
+    "bankidScan": "Skanna QR-koden med BankID-appen",
+    "bankidOpenHere": "Öppna BankID på den här enheten"
   },
   "language": {
     "select": "Välj språk",

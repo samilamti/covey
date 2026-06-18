@@ -10,7 +10,9 @@
     "bankidCancel": "Innritanin varð avbrotin.",
     "bankidExpired": "Tíðin rann út. Royn aftur!",
     "learnMore": "Les meira um Covey",
-    "partnersLink": "Trygdarpartnarar"
+    "partnersLink": "Trygdarpartnarar",
+    "bankidScan": "Skanna QR-kotuna við BankID-appini",
+    "bankidOpenHere": "Lat upp BankID á hesi eindini"
   },
   "language": {
     "select": "Vel mál",

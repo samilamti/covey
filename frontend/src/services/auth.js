@@ -23,6 +23,26 @@ export const authService = {
     return res.json();
   },
 
+  async qr(orderRef) {
+    const res = await fetch(`${API_URL}/qr`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderRef }),
+    });
+    if (!res.ok) throw new Error('QR failed');
+    return res.json();
+  },
+
+  async cancel(orderRef) {
+    const res = await fetch(`${API_URL}/cancel`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderRef }),
+    });
+    if (!res.ok) throw new Error('Cancel failed');
+    return res.json();
+  },
+
   async verify(token) {
     const res = await fetch(`${API_URL}/verify`, {
       method: 'POST',

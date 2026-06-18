@@ -10,7 +10,9 @@
     "bankidCancel": "Logowanie zostało anulowane.",
     "bankidExpired": "Czas minął. Spróbuj ponownie!",
     "learnMore": "Dowiedz się więcej o Covey",
-    "partnersLink": "Partnerzy bezpieczeństwa"
+    "partnersLink": "Partnerzy bezpieczeństwa",
+    "bankidScan": "Zeskanuj kod QR aplikacją BankID",
+    "bankidOpenHere": "Otwórz BankID na tym urządzeniu"
   },
   "language": {
     "select": "Wybierz język",

@@ -10,7 +10,9 @@
     "bankidCancel": "Iseqqissaarneq unitsinneqarpoq.",
     "bankidExpired": "Piffissaq naappoq. Misileqqigit!",
     "learnMore": "Covey pillugu atuaqqigit",
-    "partnersLink": "Peqatigiit"
+    "partnersLink": "Peqatigiit",
+    "bankidScan": "QR-koodi BankID-appimik skannaruk",
+    "bankidOpenHere": "BankID mobilimi una ammaruk"
   },
   "language": {
     "select": "Oqaatsit toqqaruk",

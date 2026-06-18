@@ -10,7 +10,9 @@
     "bankidCancel": "تم إلغاء تسجيل الدخول.",
     "bankidExpired": "انتهت المهلة. حاول مرة أخرى!",
     "learnMore": "اقرأ المزيد عن Covey",
-    "partnersLink": "شركاء الأمان"
+    "partnersLink": "شركاء الأمان",
+    "bankidScan": "امسح رمز QR باستخدام تطبيق BankID",
+    "bankidOpenHere": "افتح BankID على هذا الجهاز"
   },
   "language": {
     "select": "اختر اللغة",

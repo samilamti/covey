@@ -19,7 +19,9 @@ import { createContext } from 'preact'
 import { useContext, useEffect, useState } from 'preact/hooks'
 import { getFeatureFlags } from '../services/features'
 
-const FeatureFlagContext = createContext({})
+// Default shape matches the provider value so useFeatureFlag() is safe even
+// if a consumer renders outside the provider (flags default to all-false).
+const FeatureFlagContext = createContext({ flags: {}, loaded: false })
 
 /**
  * Provider that fetches feature flags once on mount.

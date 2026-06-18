@@ -10,7 +10,9 @@
     "bankidCancel": "Sisačáliheapmi heaittihuvvui.",
     "bankidExpired": "Áigemearri nohkai. Geahččal ođđasit!",
     "learnMore": "Loga eanet Covey birra",
-    "partnersLink": "Guoimmit"
+    "partnersLink": "Guoimmit",
+    "bankidScan": "Skánne QR-koda BankID-appain",
+    "bankidOpenHere": "Raba BankID dán neavttas"
   },
   "language": {
     "select": "Vállje giela",

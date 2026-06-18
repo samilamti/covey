@@ -10,7 +10,9 @@
     "bankidCancel": "Вхід скасовано.",
     "bankidExpired": "Час вичерпано. Спробуйте ще раз!",
     "learnMore": "Дізнатися більше про Covey",
-    "partnersLink": "Партнери безпеки"
+    "partnersLink": "Партнери безпеки",
+    "bankidScan": "Відскануйте QR-код у застосунку BankID",
+    "bankidOpenHere": "Відкрити BankID на цьому пристрої"
   },
   "language": {
     "select": "Оберіть мову",

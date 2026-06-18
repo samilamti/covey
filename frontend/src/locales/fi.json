@@ -10,7 +10,9 @@
     "bankidCancel": "Kirjautuminen peruutettiin.",
     "bankidExpired": "Aikaraja umpeutui. Yritä uudelleen!",
     "learnMore": "Lue lisää Coveysta",
-    "partnersLink": "Turvallisuuskumppanit"
+    "partnersLink": "Turvallisuuskumppanit",
+    "bankidScan": "Skannaa QR-koodi BankID-sovelluksella",
+    "bankidOpenHere": "Avaa BankID tällä laitteella"
   },
   "language": {
     "select": "Valitse kieli",

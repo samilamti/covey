@@ -88,7 +88,7 @@ All 7 implementation phases are complete. The application is feature-complete fo
 
 - **Capacitor native apps**: iOS + Android via Capacitor 7, native push (FCM/APNs), CORS, API base URL, keyboard fix ✅
 
-**Not yet done**: Real BankID **RP agreement** (production gate — the v6 provider is built and validated against the free test env, see `docs/bankid-test.md`; only the paid agreement + production Secure Start UI remain), branding, accessibility audit, partner point redemption. See `docs/roadmap.md` "Future" section.
+**Not yet done**: Real BankID **RP agreement** (production gate — the v6 provider **and** the production Secure Start login UI (animated QR + autostart, in `LandingPage`/`BankIDLogin.jsx`, behind `FEATURE_BANKID_AUTH`) are built and validated against the free test env, see `docs/bankid-test.md`; only the paid RP agreement + live on-device verification remain), branding, accessibility audit, partner point redemption. See `docs/roadmap.md` "Future" section.
 
 ### Claude Code skills
 

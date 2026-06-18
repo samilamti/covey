@@ -10,7 +10,9 @@
     "bankidCancel": "Login was cancelled.",
     "bankidExpired": "Time ran out. Try again!",
     "learnMore": "Learn more about Covey",
-    "partnersLink": "Safety partners"
+    "partnersLink": "Safety partners",
+    "bankidScan": "Scan the QR code with the BankID app",
+    "bankidOpenHere": "Open BankID on this device"
   },
   "language": {
     "select": "Select language",
