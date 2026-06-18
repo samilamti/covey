@@ -88,7 +88,7 @@ All 7 implementation phases are complete. The application is feature-complete fo
 
 - **Capacitor native apps**: iOS + Android via Capacitor 7, native push (FCM/APNs), CORS, API base URL, keyboard fix ✅
 
-**Not yet done**: Real BankID RP agreement, branding, accessibility audit, partner point redemption. See `docs/roadmap.md` "Future" section.
+**Not yet done**: Real BankID **RP agreement** (production gate — the v6 provider is built and validated against the free test env, see `docs/bankid-test.md`; only the paid agreement + production Secure Start UI remain), branding, accessibility audit, partner point redemption. See `docs/roadmap.md` "Future" section.
 
 ### Claude Code skills
 
@@ -133,7 +133,7 @@ Scaffolding skills encode project conventions (route ordering, 4-file feature fl
 ## Architecture patterns
 
 - **Feature flags**: `FEATURE_*` env vars, backend registry in `src/features.js`, frontend context in `src/context/FeatureFlagContext.jsx`
-- **Auth**: Provider pattern in `src/auth/` — stub provider simulates BankID with time-based states and error simulation via NIN prefix (`000*` = cancel, `111*` = expired). JWT via jose (HS256, 24h expiry). The `collect` endpoint upserts the user into the DB and puts the real UUID (not the hash) in the JWT as `userId`. The `verify` endpoint validates the token AND checks the user exists in the DB. The `authenticate` middleware rejects tokens where `userId` is not a valid UUID format. **API field name**: The login endpoint expects `nin` as the API field name.
+- **Auth**: Provider pattern in `src/auth/` — stub provider simulates BankID with time-based states and error simulation via NIN prefix (`000*` = cancel, `111*` = expired). JWT via jose (HS256, 24h expiry). The `collect` endpoint upserts the user into the DB and puts the real UUID (not the hash) in the JWT as `userId`. The `verify` endpoint validates the token AND checks the user exists in the DB. The `authenticate` middleware rejects tokens where `userId` is not a valid UUID format. **API field name**: The login endpoint expects `nin` as the API field name. The **real provider** (`providers/bankid.js`) implements BankID v6 Secure Start (mTLS, autostart + animated QR, no personnummer in `/auth` — identity comes from `completionData`); both providers share the `initAuth/collect/cancel` interface (now async). Auth rate limiting is **per-route**: strict `authRateLimit` on `/login` + `/verify`, looser `apiRateLimit` on the status-polling `/collect` + `/qr` (a real BankID auth polls for 30s+). See `docs/bankid-test.md`.
 - **Notifications**: Provider pattern — mock provider records sent notifications for test assertions. Real provider uses `web-push` library with VAPID keys (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_CONTACT` env vars). Falls back to mock if VAPID keys not configured. Two notification triggers: (1) `notifyNewRequest()` sends push to all eligible responders when a request is created; (2) `notifyRequestAccepted()` sends push to the requester when someone accepts their request. Both fire from HTTP and Socket paths. Uses `findEligibleForRequest()` for new-request targeting (eligibility tier SQL, `DISTINCT ON (user_id)`) and `findByUserWithLang()` for accept targeting (all subscriptions for a specific user with preferred language). JS-level defense-in-depth in `notifyNewRequest()` deduplicates by `user_id` and excludes the requester. Notification bodies are hardcoded in all 12 languages (push runs outside browser context, no i18next). Fire-and-forget: errors are logged but never block request creation or acceptance. Frontend `VITE_VAPID_PUBLIC_KEY` is a build-time arg in `frontend/Dockerfile`.
 - **Database**: Single `001_initial` migration creates all tables, plus `003_session_messages` for in-session messaging, `004_done_pending` for mutual completion flow, and `005_nullable_requester` for GDPR cleanup (makes `requester_id` nullable). No production data yet. `community_id` on `assistance_requests` is nullable (freestanding requests). **DB credentials are dynamic** — they come from `.env.local` via Docker Compose env vars (`$POSTGRES_USER`, `$POSTGRES_DB`), NOT hardcoded as `postgres`/`tillsammans`. Always read from the container environment.
 - **Workers**: In-process `setInterval` (no job queue) — request expiration (60s) + GDPR cleanup (daily hard-delete of accounts soft-deleted >30 days). Startup cleanup deletes terminal requests (`completed`, `safety_confirmed`, `cancelled`, `expired`) before the server accepts traffic.
@@ -199,7 +199,8 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 ### Backend
 - `backend/src/auth/router.js` — Auth routes (login, collect, cancel, verify, logout)
 - `backend/src/auth/providers/stub.js` — BankID stub (time-based flow, error simulation)
-- `backend/src/auth/providers/bankid.js` — Real BankID placeholder
+- `backend/src/auth/providers/bankid.js` — Real BankID provider: v6 REST API (Secure Start, mTLS, animated QR), test-env ready behind `AUTH_PROVIDER=bankid` + `FEATURE_BANKID_AUTH`. See `docs/bankid-test.md`.
+- `backend/src/auth/bankid-dev-page.js` — Dev-only page (GET `/api/auth/bankid/dev`) to validate the real BankID flow by scanning a test BankID
 - `backend/src/auth/jwt.js` — JWT sign/verify using jose
 - `backend/src/auth/middleware.js` — Express `authenticate` middleware
 - `backend/src/features.js` — Feature flag registry

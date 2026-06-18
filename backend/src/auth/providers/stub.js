@@ -21,10 +21,13 @@ const orders = new Map()
 
 /**
  * Initiate a BankID authentication order.
- * @param {string} nin - 12-digit NIN
+ * Accepts either a NIN string (legacy/tests) or the provider params object
+ * `{ nin }` that the router passes to every provider.
+ * @param {string|{ nin?: string }} arg
  * @returns {{ orderRef: string, autoStartToken: string }}
  */
-export function initAuth(nin) {
+export function initAuth(arg) {
+  const nin = typeof arg === 'string' ? arg : arg && arg.nin
   const orderRef = `stub-${crypto.randomUUID()}`
   const autoStartToken = `stub-ast-${crypto.randomUUID()}`
 

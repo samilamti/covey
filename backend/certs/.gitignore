@@ -1,0 +1,7 @@
+# BankID RP certificates — never commit.
+# The TEST certs are public, but keeping them out of git avoids secret-scanner
+# noise and keeps the prod cert path clean. Recreate the test material with:
+#   scripts/bankid/setup-test-cert.sh
+*
+!.gitignore
+!README.md
