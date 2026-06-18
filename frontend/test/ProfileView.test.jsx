@@ -19,6 +19,12 @@ vi.mock('lucide-preact', () => ({
   LogOut: () => h('span', null, 'LogOut'),
 }))
 
+// Language selector moved into the profile/settings tab; stub it so this unit
+// test doesn't pull in its icon + flag dependencies.
+vi.mock('../src/components/LanguageSelector', () => ({
+  LanguageSelector: () => h('div', null, 'LanguageSelector'),
+}))
+
 vi.mock('../src/services/profile', () => ({
   profileService: {
     get: vi.fn().mockResolvedValue({ user: { safetyScore: 3, isGuardian: false } }),

@@ -111,7 +111,9 @@
     "etaArriving": "Prawie na miejscu!",
     "viewRequests": "Pokaż prośby",
     "waitingForHelp": "Twoja prośba została wysłana!",
-    "backToList": "Powrót do listy"
+    "backToList": "Powrót do listy",
+    "all": "Wszystkie",
+    "createShort": "Nowe"
   },
   "messages": {
     "title": "Wiadomości",

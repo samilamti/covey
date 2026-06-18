@@ -111,7 +111,9 @@
     "etaArriving": "Nesten fremme!",
     "viewRequests": "Vis forespørsler",
     "waitingForHelp": "Forespørselen din er sendt!",
-    "backToList": "Tilbake til listen"
+    "backToList": "Tilbake til listen",
+    "all": "Alle",
+    "createShort": "Ny"
   },
   "messages": {
     "title": "Meldinger",

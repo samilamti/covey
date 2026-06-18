@@ -106,9 +106,9 @@ describe('RequestList', () => {
   it('shows create request form by default when no open requests', async () => {
     const { getByText } = render(<RequestList currentUserId="user-a" />)
     await waitFor(() => {
-      // Header shows "view requests" toggle, form shows "Ny förfrågan" header
-      expect(getByText('requests.viewRequests')).toBeTruthy()
-      expect(getByText('requests.create')).toBeTruthy()
+      // Create mode: breadcrumb shows "→ Ny" and the toggle offers "Alla"
+      expect(getByText('requests.createShort')).toBeTruthy()
+      expect(getByText('requests.all')).toBeTruthy()
     })
   })
 
@@ -124,25 +124,25 @@ describe('RequestList', () => {
       expect(getByText('requests.openRequests')).toBeTruthy()
       // Toggle button should offer "create" (we're in list view)
       expect(getByText('requests.create')).toBeTruthy()
-      expect(queryByText('requests.viewRequests')).toBeNull()
+      expect(queryByText('requests.all')).toBeNull()
     })
   })
 
   it('toggles between create form and request list', async () => {
     const { getByText, queryByText } = render(<RequestList currentUserId="user-a" />)
-    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
+    await waitFor(() => expect(getByText('requests.all')).toBeTruthy())
 
-    // Click "view requests" to hide create form
-    fireEvent.click(getByText('requests.viewRequests'))
+    // Click "Alla" to hide create form and show the list
+    fireEvent.click(getByText('requests.all'))
     await waitFor(() => {
       expect(getByText('requests.create')).toBeTruthy() // now shows "Ny förfrågan" button
-      expect(queryByText('requests.viewRequests')).toBeNull()
+      expect(queryByText('requests.all')).toBeNull()
     })
 
     // Click "Ny förfrågan" to show create form again
     fireEvent.click(getByText('requests.create'))
     await waitFor(() => {
-      expect(getByText('requests.viewRequests')).toBeTruthy()
+      expect(getByText('requests.all')).toBeTruthy()
     })
   })
 
@@ -168,8 +168,8 @@ describe('RequestList', () => {
     }] })
     const { getByText, getAllByText } = render(<RequestList currentUserId="user-a" />)
     // Toggle to list view to avoid duplicate LocationBanner from CreateRequest
-    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
-    fireEvent.click(getByText('requests.viewRequests'))
+    await waitFor(() => expect(getByText('requests.all')).toBeTruthy())
+    fireEvent.click(getByText('requests.all'))
     await waitFor(() => {
       expect(getAllByText('location.denied').length).toBeGreaterThanOrEqual(1)
     })
@@ -184,8 +184,8 @@ describe('RequestList', () => {
       eligibility_tier: 'any_member', created_at: new Date().toISOString(),
     }] })
     const { getByText, getAllByText } = render(<RequestList currentUserId="user-a" />)
-    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
-    fireEvent.click(getByText('requests.viewRequests'))
+    await waitFor(() => expect(getByText('requests.all')).toBeTruthy())
+    fireEvent.click(getByText('requests.all'))
     await waitFor(() => {
       expect(getAllByText('location.unavailable').length).toBeGreaterThanOrEqual(1)
     })
@@ -201,8 +201,8 @@ describe('RequestList', () => {
       eligibility_tier: 'any_member', created_at: new Date().toISOString(),
     }] })
     const { getByText, getAllByText } = render(<RequestList currentUserId="user-a" />)
-    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
-    fireEvent.click(getByText('requests.viewRequests'))
+    await waitFor(() => expect(getByText('requests.all')).toBeTruthy())
+    fireEvent.click(getByText('requests.all'))
     await waitFor(() => {
       const btns = getAllByText('location.retry')
       fireEvent.click(btns[0])
@@ -263,7 +263,7 @@ describe('RequestList', () => {
 
     // User manually toggles to create form
     fireEvent.click(getByText('requests.create'))
-    await waitFor(() => expect(getByText('requests.viewRequests')).toBeTruthy())
+    await waitFor(() => expect(getByText('requests.all')).toBeTruthy())
 
     // Simulate a socket-driven refresh (triggers loadAll again)
     const { socket } = await import('../src/socket')
@@ -272,7 +272,7 @@ describe('RequestList', () => {
 
     // Create form should still be visible (not flipped back to list)
     await waitFor(() => {
-      expect(getByText('requests.viewRequests')).toBeTruthy()
+      expect(getByText('requests.all')).toBeTruthy()
     })
   })
 

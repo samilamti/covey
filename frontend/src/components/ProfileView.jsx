@@ -2,6 +2,7 @@ import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { ShieldCheck, Shield, Download, Trash2, Save, Award, LogOut } from 'lucide-preact'
 import { profileService } from '../services/profile'
+import { LanguageSelector } from './LanguageSelector'
 
 export function ProfileView({ user, onLogout }) {
   const { t } = useTranslation()
@@ -136,6 +137,12 @@ export function ProfileView({ user, onLogout }) {
             {message.text}
           </div>
         )}
+      </div>
+
+      {/* Language */}
+      <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">{t('profile.language')}</label>
+        <LanguageSelector />
       </div>
 
       {/* Account actions */}

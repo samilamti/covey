@@ -68,9 +68,10 @@ describe('MainLayout', () => {
     consoleErrorSpy.mockRestore()
   })
 
-  it('renders "Covey" header', () => {
-    const { getByText } = render(<MainLayout user={user} onLogout={vi.fn()} />)
-    expect(getByText('Covey')).toBeTruthy()
+  it('does not render a chrome header (Covey name + language moved out)', () => {
+    const { queryByText } = render(<MainLayout user={user} onLogout={vi.fn()} />)
+    expect(queryByText('Covey')).toBeNull()
+    expect(queryByText('LanguageSelector')).toBeNull()
   })
 
   it('renders RequestList by default', () => {

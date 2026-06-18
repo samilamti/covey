@@ -111,7 +111,9 @@
     "etaArriving": "Næstan frammi!",
     "viewRequests": "Vís umbøðir",
     "waitingForHelp": "Umbøðin tín er send!",
-    "backToList": "Aftur til listuna"
+    "backToList": "Aftur til listuna",
+    "all": "Øll",
+    "createShort": "Nýtt"
   },
   "messages": {
     "title": "Boð",

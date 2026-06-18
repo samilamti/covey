@@ -111,7 +111,9 @@
     "etaArriving": "Næstum kominn!",
     "viewRequests": "Skoða beiðnir",
     "waitingForHelp": "Beiðni þín hefur verið send!",
-    "backToList": "Til baka á listann"
+    "backToList": "Til baka á listann",
+    "all": "Allar",
+    "createShort": "Nýtt"
   },
   "messages": {
     "title": "Skilaboð",

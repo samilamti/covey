@@ -111,7 +111,9 @@
     "etaArriving": "Qanittumi!",
     "viewRequests": "Qinnuteqaatit takugit",
     "waitingForHelp": "Qinnuteqaat nassiunneqarpoq!",
-    "backToList": "Uteriarfigisinnaavatit"
+    "backToList": "Uteriarfigisinnaavatit",
+    "all": "Tamarmik",
+    "createShort": "Nutaaq"
   },
   "messages": {
     "title": "Allagaat",

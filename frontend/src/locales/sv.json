@@ -111,7 +111,9 @@
     "etaArriving": "Nästan framme!",
     "viewRequests": "Visa förfrågningar",
     "waitingForHelp": "Din förfrågan är skickad!",
-    "backToList": "Tillbaka till listan"
+    "backToList": "Tillbaka till listan",
+    "all": "Alla",
+    "createShort": "Ny"
   },
   "messages": {
     "title": "Meddelanden",

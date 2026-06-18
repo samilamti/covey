@@ -111,7 +111,9 @@
     "etaArriving": "Майже на місці!",
     "viewRequests": "Переглянути запити",
     "waitingForHelp": "Ваш запит надіслано!",
-    "backToList": "Назад до списку"
+    "backToList": "Назад до списку",
+    "all": "Усі",
+    "createShort": "Нове"
   },
   "messages": {
     "title": "Повідомлення",

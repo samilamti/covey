@@ -111,7 +111,9 @@
     "etaArriving": "Melkein perillä!",
     "viewRequests": "Näytä pyynnöt",
     "waitingForHelp": "Pyyntösi on lähetetty!",
-    "backToList": "Takaisin listaan"
+    "backToList": "Takaisin listaan",
+    "all": "Kaikki",
+    "createShort": "Uusi"
   },
   "messages": {
     "title": "Viestit",

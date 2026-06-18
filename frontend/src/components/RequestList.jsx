@@ -212,16 +212,29 @@ export function RequestList({ currentUserId }) {
         <RatingBanner key={pr.request_id} pendingRating={pr} onRated={handleRated} onDismiss={handleRated} />
       ))}
 
-      {/* Header + create button */}
+      {/* Header — breadcrumb + toggle */}
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-bold">{t('requests.title')}</h2>
+        {showCreate ? (
+          <h2 class="text-xl font-bold flex items-center gap-1.5">
+            <button
+              onClick={() => setShowCreate(false)}
+              class="text-gray-400 hover:text-gray-600 font-bold"
+            >
+              {t('requests.title')}
+            </button>
+            <span class="text-gray-300 font-normal">→</span>
+            <span>{t('requests.createShort')}</span>
+          </h2>
+        ) : (
+          <h2 class="text-xl font-bold">{t('requests.title')}</h2>
+        )}
         {showCreate ? (
           <button
             onClick={() => setShowCreate(false)}
             class="flex items-center gap-1 text-indigo-600 text-sm font-medium"
           >
             <List size={16} />
-            {t('requests.viewRequests')}
+            {t('requests.all')}
           </button>
         ) : (
           <button
@@ -234,13 +247,10 @@ export function RequestList({ currentUserId }) {
         )}
       </div>
 
-      {/* Create request form */}
+      {/* Create request form — merged into the page (no inner card) */}
       {showCreate === true && (
         <div class="mb-4">
-          <CreateRequest
-            onCreated={handleCreated}
-            onClose={() => setShowCreate(false)}
-          />
+          <CreateRequest onCreated={handleCreated} />
         </div>
       )}
 

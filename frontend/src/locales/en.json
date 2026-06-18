@@ -111,7 +111,9 @@
     "etaArriving": "Almost there!",
     "viewRequests": "View requests",
     "waitingForHelp": "Your request has been sent!",
-    "backToList": "Back to list"
+    "backToList": "Back to list",
+    "all": "All",
+    "createShort": "New"
   },
   "messages": {
     "title": "Messages",

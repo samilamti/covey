@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { BottomNav } from './BottomNav'
 import { ProfileView } from './ProfileView'
 import { RequestList } from './RequestList'
-import { LanguageSelector } from './LanguageSelector'
 import { InstallPrompt } from './InstallPrompt'
 import { ProgressDashboard } from './ProgressDashboard'
 import { socket } from '../socket'
@@ -68,19 +67,12 @@ export function MainLayout({ user, onLogout }) {
   }
 
   return (
-    <div class="min-h-screen bg-gray-50 pb-20 safe-area-x">
+    <div class="min-h-screen bg-gray-50 pb-20 safe-area-x safe-area-top">
       <InstallPrompt />
-      {/* Top bar */}
-      <header class="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-[1001] safe-area-top">
-        <div class="max-w-md mx-auto w-full flex justify-between items-center">
-          <h1 class="text-lg font-bold text-gray-900">Covey</h1>
-          <div class="flex items-center gap-2">
-            <LanguageSelector />
-          </div>
-        </div>
-      </header>
 
-      {/* Main content area — capped + centred so cards don't stretch on tablets/large screens */}
+      {/* Main content area — capped + centred so cards don't stretch on tablets/large screens.
+          The chrome header (name + language) was removed to reclaim space; language now
+          lives in the profile/settings tab. */}
       <main class="p-4 max-w-md mx-auto w-full">
         {renderContent()}
       </main>

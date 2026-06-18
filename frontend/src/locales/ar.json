@@ -111,7 +111,9 @@
     "etaArriving": "على وشك الوصول!",
     "viewRequests": "عرض الطلبات",
     "waitingForHelp": "تم إرسال طلبك!",
-    "backToList": "العودة إلى القائمة"
+    "backToList": "العودة إلى القائمة",
+    "all": "الكل",
+    "createShort": "جديد"
   },
   "messages": {
     "title": "الرسائل",

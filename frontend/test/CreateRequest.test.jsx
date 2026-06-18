@@ -66,9 +66,9 @@ describe('CreateRequest', () => {
     consoleErrorSpy.mockRestore()
   })
 
-  it('renders the form header', () => {
+  it('renders the submit button', () => {
     const { getByText } = render(<CreateRequest />)
-    expect(getByText('requests.create')).toBeTruthy()
+    expect(getByText('requests.send')).toBeTruthy()
   })
 
   it('renders walk and wait type buttons', () => {

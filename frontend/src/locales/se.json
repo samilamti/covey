@@ -111,7 +111,9 @@
     "etaArriving": "Measta boahtán!",
     "viewRequests": "Čájet bivdduid",
     "waitingForHelp": "Du bivddu lea sáddejuvvon!",
-    "backToList": "Máhccat listtui"
+    "backToList": "Máhccat listtui",
+    "all": "Buot",
+    "createShort": "Ođđa"
   },
   "messages": {
     "title": "Dieđut",

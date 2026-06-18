@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
-import { Send, MapPin, X } from 'lucide-preact'
+import { Send, MapPin } from 'lucide-preact'
 import { requestService } from '../services/requests'
 import { LocationBanner } from './LocationBanner'
 import { useGeolocation } from '../hooks/useGeolocation'
@@ -16,7 +16,7 @@ import { EveryoneIcon } from './icons/EveryoneIcon'
  * User selects a type (walk/wait), writes an optional message,
  * and optionally sets pickup coordinates.
  */
-export function CreateRequest({ onCreated, onClose }) {
+export function CreateRequest({ onCreated }) {
   const { t } = useTranslation()
   const [type, setType] = useState('walk')
   const [eligibilityTier, setEligibilityTier] = useState('same_demographics')
@@ -49,18 +49,7 @@ export function CreateRequest({ onCreated, onClose }) {
   }
 
   return (
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-5">
-      {/* Header */}
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-bold text-gray-900">{t('requests.create')}</h3>
-        {onClose && (
-          <button onClick={onClose} class="text-gray-400 hover:text-gray-600">
-            <X size={20} />
-          </button>
-        )}
-      </div>
-
-      <form onSubmit={handleSubmit} class="space-y-4">
+    <form onSubmit={handleSubmit} class="space-y-4">
         {/* Request type */}
         <div class="flex gap-3">
           {[
@@ -161,7 +150,6 @@ export function CreateRequest({ onCreated, onClose }) {
           <Send size={16} />
           {loading ? t('app.loading') : t('requests.send')}
         </button>
-      </form>
-    </div>
+    </form>
   )
 }
