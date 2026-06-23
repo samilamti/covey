@@ -51,7 +51,7 @@ export function LanguageSelector() {
   const currentLang = languages.find((l) => l.code === i18n.language)
 
   return (
-    <div class="relative inline-block text-left" ref={dropdownRef}>
+    <div class="relative text-left" ref={dropdownRef}>
       <button
         type="button"
         class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 items-center gap-2"
@@ -64,7 +64,7 @@ export function LanguageSelector() {
       </button>
 
       {isOpen && (
-        <div class="origin-top-right absolute right-0 mt-2 w-52 max-h-64 overflow-y-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+        <div class="absolute left-0 right-0 mt-2 max-h-64 overflow-y-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
           <div class="py-1" role="menu" aria-orientation="vertical">
             {languages.map((lng) => {
               const FlagComponent = lng.flag

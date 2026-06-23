@@ -2,6 +2,7 @@ import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { ShieldCheck, Shield, Download, Trash2, Save, Award, LogOut } from 'lucide-preact'
 import { profileService } from '../services/profile'
+import { gdprService } from '../services/gdpr'
 import { LanguageSelector } from './LanguageSelector'
 
 export function ProfileView({ user, onLogout }) {
@@ -37,11 +38,7 @@ export function ProfileView({ user, onLogout }) {
 
   const handleGdprExport = async () => {
     try {
-      const res = await fetch('/api/gdpr/export', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      })
-      if (!res.ok) throw new Error()
-      const data = await res.json()
+      const data = await gdprService.exportData()
       // Download as JSON file
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
       const url = URL.createObjectURL(blob)
