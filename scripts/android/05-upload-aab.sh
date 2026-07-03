@@ -19,6 +19,12 @@ source "$SCRIPT_DIR/lib/play-api.sh"
 PKG="$PACKAGE_NAME"
 TRACK="${TRACK:-alpha}"
 STATUS="${RELEASE_STATUS:-completed}"
+# The ?changesNotSentForReview=true commit flag is INCONSISTENT across apps:
+# some draft apps require it, others reject it (Covey's first upload 2026-06-26
+# returned 400 "must not be set" and committed only with the flag OMITTED).
+# The commit error message is authoritative — if the commit fails, do exactly
+# what it says and flip this env var accordingly.
+CHANGES_NOT_SENT_FOR_REVIEW="${CHANGES_NOT_SENT_FOR_REVIEW:-false}"
 
 log "Opening edit..."
 EDIT=$(play_post "/applications/$PKG/edits" '' | json_field "['id']")
@@ -53,6 +59,12 @@ log "Assigning versionCode $VC to track '$TRACK' (status: $STATUS)..."
 play_put "/applications/$PKG/edits/$EDIT/tracks/$TRACK" "$TRACK_BODY" >/dev/null
 ok "Track updated"
 
-log "Committing edit (sends the release for review)..."
-play_post "/applications/$PKG/edits/$EDIT:commit" '' >/dev/null
+COMMIT_PATH="/applications/$PKG/edits/$EDIT:commit"
+if [[ "$CHANGES_NOT_SENT_FOR_REVIEW" == "true" ]]; then
+  COMMIT_PATH="$COMMIT_PATH?changesNotSentForReview=true"
+  log "Committing edit (changes NOT auto-sent — press 'Send for review' in Console)..."
+else
+  log "Committing edit (sends the release for review)..."
+fi
+play_post "$COMMIT_PATH" '' >/dev/null
 ok "Committed. Build $VC is on the '$TRACK' track — check Play Console for review status."
