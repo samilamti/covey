@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:177563027976:android:8c3ea07ca173bbfa7fdfbd",
+        "android_client_info": {
+          "package_name": "se.covey"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcIFy2F8MZA9iF21RZIJrgw7mWAFMfF8g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:177563027976:android:1a8a9c81dff820f77fdfbd",
         "android_client_info": {
           "package_name": "se.covey.app"

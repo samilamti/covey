@@ -17,10 +17,10 @@ def signingKeyPassword = System.getenv("COVEY_UPLOAD_KEY_PASSWORD") ?: keystoreP
 def hasReleaseSigning = signingStorePassword != null && file(signingStoreFile).exists()
 
 android {
-    namespace "se.covey.app"
+    namespace "se.covey"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "se.covey.app"
+        applicationId "se.covey"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,4 +1,4 @@
-package se.covey.app;
+package se.covey;
 
 import com.getcapacitor.BridgeActivity;
 
