@@ -15,6 +15,8 @@ _site/
 
 # iOS build artifacts (xcarchive, ipa, generated ExportOptions)
 build/ios/
+# Xcode DerivedData from xcodebuild -derivedDataPath frontend/build
+frontend/build/
 scripts/ios/.env.ios
 scripts/ios/.venv/
 

@@ -301,7 +301,6 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 
 - Leaflet is loaded via dynamic import but its CSS comes from unpkg CDN (should be bundled)
 - Frontend build produces a ~251KB chunk (Vite warns at 200KB) — consider manual chunking
-- `authService` is imported in `App.jsx` but the module at `frontend/src/services/auth.js` needs to exist (was part of LandingPage flow)
 - No integration tests that require a running database — all current tests are unit/component level
 - Real web-push provider implemented; VAPID keys wired through `docker-compose.yml` + `frontend/Dockerfile` build arg (generate keys with `npx web-push generate-vapid-keys`)
 - Socket broadcasts (`request:new`) go to all room members without eligibility pre-filtering — ineligible requests may briefly flash before the next API refresh filters them out. Push notifications, however, ARE eligibility-filtered (SQL query in `findEligibleForRequest()`)
