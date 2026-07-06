@@ -2,6 +2,15 @@
 
 Small helpers for managing the GleSYS production VPS without doing manual SSH gymnastics. Designed to be reusable for any future env-var rotation or one-shot prod operation.
 
+## `prod-exec.sh` — run a command or script as root on the VPS
+
+```bash
+bash scripts/deploy/prod-exec.sh 'docker ps; free -m'   # inline command
+bash scripts/deploy/prod-exec.sh -f some-script.sh      # send a local script
+```
+
+Reads the same `.env.local` as the other helpers. Auth via ssh-agent (`ssh-add --apple-use-keychain ~/.ssh/covey.se` once — the passphrase persists in the login keychain). Builds the stdin stream with the sudo password as line 1 and the script as lines 2+, avoiding the heredoc-as-sudo-password bug described below.
+
 ## `set-prod-secret.sh` — inject or rotate a single env-var line
 
 Idempotently writes one `KEY='value'` line into `~/apps/tillsammans/.env.prod` on the VPS, then restarts the backend service so it picks up the new value. Existing lines for the same `KEY=` are replaced; everything else in `.env.prod` is preserved.
