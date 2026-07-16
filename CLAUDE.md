@@ -32,7 +32,7 @@ The non-code half of Covey lives in a separate **private** repo at `../ops` (`~/
 
 - Must work on Chrome 60+ / iOS 10+ (old Android devices)
 - Low-resource VPS (PostgreSQL pool max 10 connections)
-- PWA delivery (no app stores)
+- PWA-first delivery (the original no-app-store constraint); native iOS/Android shells now also ship via Capacitor — TestFlight live, Play closed testing pending
 - Preact, not React (3KB vs 40KB)
 - Socket.io polling-first transport (old browser compatibility)
 
@@ -67,7 +67,7 @@ After any multi-file rename or domain change, run a project-wide grep for the ol
 
 At the end of every **successful** work session, run the `/ship` skill without being asked: it verifies (full backend+frontend tests **and** an interactive iOS Simulator smoke test), commits to `main`, pushes to Codeberg, and uploads to TestFlight **only when iOS-bundled code changed** (auto-bumping the build number). "Successful" = both gates green; never ship a failing or unverified tree — report why and stop. This is a Claude-run routine, not a hook (the gate needs judgment). See `.claude/skills/ship/SKILL.md`.
 
-## Current state (Mar 2026)
+## Current state (Jul 2026)
 
 All 7 implementation phases are complete. The application is feature-complete for its initial scope:
 
@@ -88,7 +88,7 @@ All 7 implementation phases are complete. The application is feature-complete fo
 
 - **Capacitor native apps**: iOS + Android via Capacitor 7, native push (FCM/APNs), CORS, API base URL, keyboard fix ✅
 
-**Not yet done**: Real BankID **RP agreement** (production gate — the v6 provider **and** the production Secure Start login UI (animated QR + autostart, in `LandingPage`/`BankIDLogin.jsx`, behind `FEATURE_BANKID_AUTH`) are built and validated against the free test env, see `docs/bankid-test.md`; only the paid RP agreement + live on-device verification remain), branding, accessibility audit, partner point redemption. See `docs/roadmap.md` "Future" section.
+**Not yet done**: Real BankID **RP agreement** (production gate — the v6 provider **and** the production Secure Start login UI (animated QR + autostart, in `LandingPage`/`BankIDLogin.jsx`, behind `FEATURE_BANKID_AUTH`) are built and validated against the free test env, see `docs/bankid-test.md`; only the paid RP agreement + live on-device verification remain — connection-path research + recommendation (Criipto/Idura broker, ~750 kr/mo) is in `../ops/tech/bankid-connection-options.md`), branding, accessibility audit, partner point redemption. See `docs/roadmap.md` "Future" section.
 
 ### Claude Code skills
 
@@ -284,6 +284,10 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `scripts/ios/all.sh` — End-to-end pipeline: prereqs → install/build → Xcode patches → bundle ID + push capability registration → archive → export → TestFlight upload via App Store Connect API.
 - `scripts/ios/.env.ios.example` — Template for the gitignored ASC API key + bundle config.
 - See `scripts/ios/lib/` for the JWT signer, curl wrapper, and asset upload helper.
+
+### Android deployment automation
+- `scripts/android/` — numbered pipeline (`00-prereqs.sh` … `05-upload-aab.sh`, `06-screenshots.sh`, `all.sh`): Firebase config → keystore → signed AAB (+ universal APK) → Play listing → upload. Store package is `se.covey`.
+- Manual prerequisites (Play Console app entry + API-access service account) and usage: `scripts/android/README.md`. Listing copy in `scripts/android/PLAY_LISTING.md`.
 
 ### Documentation
 - `docs/roadmap.md` — 7-phase plan + future items
