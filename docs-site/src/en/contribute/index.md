@@ -6,21 +6,20 @@ layout: layouts/page.njk
 description: Different ways to contribute to the Covey project.
 ---
 
-Covey is powered by volunteers and open source. Regardless of your background, there are ways to help out.
+Covey is open source, and outside contributions make the service better. Regardless of your background, there are ways to help out.
 
 ## Find your way to contribute
 
 - **[Developers](/en/contribute/developers/)** -- Security review, frontend, accessibility and integrations.
-- **[Legal](/en/contribute/legal/)** -- GDPR, user agreements, organisational form and licensing questions.
+- **[Legal](/en/contribute/legal/)** -- GDPR, user agreements, governance and licensing questions.
 - **[Students](/en/contribute/students/)** -- Theses, university contacts and documentation.
 - **[Entrepreneurs](/en/contribute/entrepreneurs/)** -- Funding, partnerships and organisational development.
-- **[Financially](/en/contribute/financially/)** -- Donate to operations and development.
 - **[Non-technical](/en/contribute/non-technical/)** -- Beta testing and word of mouth.
 - **[Quick actions](/en/contribute/quick-actions/)** -- Only got five minutes? You can still make a big difference.
 
 ## Why contribute?
 
-Covey is a non-profit civic initiative. Every contribution -- whether it is code, legal advice, a social media share or a donation -- helps make everyday life safer for more people.
+Covey distributes no dividends -- any surplus goes back into the service. Every contribution, whether it is code, legal advice or a social media share, helps make everyday life safer for more people.
 
 ## Get started
 

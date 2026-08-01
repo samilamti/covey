@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Ulike mater a bidra til Covey-prosjektet.
 ---
 
-Covey drives av frivillige og apen kildekode. Uansett bakgrunn finnes det mater a hjelpe til.
+Covey er åpen kildekode, og bidrag utenfra gjør tjenesten bedre. Uansett din bakgrunn finnes det måter å hjelpe til på.
 
 ## Finn din mate a bidra
 
@@ -14,13 +14,12 @@ Covey drives av frivillige og apen kildekode. Uansett bakgrunn finnes det mater 
 - **[Juridisk](/nb/bidra/juridisk/)** -- GDPR, brukeravtaler, organisasjonsform og lisensering.
 - **[Studenter](/nb/bidra/student/)** -- Masteroppgaver, universitetskontakter og dokumentasjon.
 - **[Entreprenorer](/nb/bidra/entreprenor/)** -- Finansiering, partnerskap og organisasjonsbygging.
-- **[Okonomisk](/nb/bidra/okonomisk/)** -- Doner til drift og utvikling.
 - **[Ikke-teknisk](/nb/bidra/ikke-teknisk/)** -- Betatesting og jungeltelegrafen.
 - **[Raske bidrag](/nb/bidra/raske-bidrag/)** -- Fem minutter? Gjor stor forskjell likevel.
 
 ## Hvorfor bidra?
 
-Covey er et ideelt innbyggerinitiativ. Hvert bidrag -- enten det er kode, juridisk radgivning, en deling i sosiale medier eller en donasjon -- hjelper til a gjore hverdagen tryggere for flere.
+Covey drives uten utbytteutdeling, overskudd går tilbake inn i virksomheten. Hvert bidrag, uansett om det er kode, juridisk rådgivning eller en deling i sosiale medier, bidrar til å gjøre hverdagen tryggere for flere.
 
 ## Kom i gang
 

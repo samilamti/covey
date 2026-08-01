@@ -18,7 +18,7 @@ Enginn kóði sem stefnir persónuvernd eða öryggi notenda í hættu verður s
 
 ## 3. Gagnsæi
 
-Allar ákvarðanir eru teknar opinskátt. Frumkóðinn okkar er opinn, umræður okkar eru opinberar og fjármál okkar eru gagnsæ.
+Allar ákvarðanir eru teknar á opinn hátt. Frumkóði okkar er opinn og umræður okkar eru opinberar.
 
 ## 4. Gæði
 

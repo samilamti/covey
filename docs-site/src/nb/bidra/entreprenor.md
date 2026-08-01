@@ -12,7 +12,7 @@ Har du erfaring med a bygge og skalere organisasjoner? Vi trenger din strategisk
 
 ### Barekraft og finansiering
 
-Vi er ideelle, men trenger ressurser til drift og utvikling.
+Vi drives uten utbytteutdeling, men trenger ressurser for drift og utvikling.
 
 - Hjelp oss a finne finansieringsmodeller som ikke kompromisser med personvernpolicyen var.
 - Identifiser kostnadseffektive losninger for drift og infrastruktur.

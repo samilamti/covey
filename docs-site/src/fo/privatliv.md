@@ -64,7 +64,7 @@ Tú kanst strika kontona tína gjøgnum **Vangamynd → Strika konto**. Gongdin:
 
 ## Ongin rakning, ongin lýsing
 
-Covey brúkar ongar rakningarkøkur, ongar greiningarverkty frá triðjapørtum og onga lýsing. Vit selja aldrin dáta. Skipanin verður fjármáluð gjøgnum gávur og sjálvbodið arbeiði.
+Covey nýtir ongar sporingskipsfílur, ongar greiningar frá triðjapartum og onga lýsing. Vit selja ongantíð dáta. Tænastan er ókeypis at brúka, og inntøkuhátturin byggir ongantíð á tínar upplýsingar.
 
 ## Samband
 

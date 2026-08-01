@@ -67,7 +67,6 @@ Simple env-var-based feature flags. No database, no admin UI, no external servic
 | `FEATURE_BANKID_AUTH` | `false` | Use real BankID API vs stub provider |
 | `FEATURE_PUSH_NOTIFICATIONS` | `false` | Web Push API vs mock provider |
 | `FEATURE_GEOLOCATION` | `false` | Location sharing during sessions |
-| `FEATURE_COMMUNITIES` | `false` | Safety communities feature |
 
 Backend reads `FEATURE_*` from process env. Frontend fetches flags via `GET /api/features` on load. Flags change between deployments, not at runtime.
 
@@ -116,11 +115,10 @@ When a new assistance request is created (via HTTP `POST /api/requests` or Socke
 ```
 Request created → notifyNewRequest() [fire-and-forget]
   ├── findEligibleForRequest() — single SQL query:
-  │   ├── JOIN push_subscriptions × users × community_members
+  │   ├── JOIN push_subscriptions × users
   │   ├── Eligibility tier filtering (same_demographics / verified_guardians / any_member)
   │   ├── Exclude requester, exclude soft-deleted users
-  │   ├── DISTINCT ON (user_id) — 1 subscription per user (most recent)
-  │   └── For community-scoped: restrict to approved members
+  │   └── DISTINCT ON (user_id) — 1 subscription per user (most recent)
   ├── JS defense-in-depth: deduplicate by user_id + exclude requester
   ├── Localize body per user's preferred_lang (12 languages, hardcoded)
   └── Promise.allSettled() — one failure doesn't block others
@@ -128,18 +126,19 @@ Request created → notifyNewRequest() [fire-and-forget]
 
 The notification payload includes `title`, `body`, `url` (`/requests`), and `requestId`. The service worker's existing `push` event handler shows a native OS notification. Clicking it opens/focuses the app at the requests page.
 
-## Community Security Model
+## Request Visibility & Safety Model
 
-Communities are protected against adversarial member targeting:
+Open requests are protected against adversarial targeting:
 
 | Threat | Mitigation |
 |--------|------------|
-| Enumerate members | Member lists visible to fellow members only. Non-members see name + member count. |
-| Scrape community locations | Nearby endpoint returns `area_name` (e.g., "Sodermalm"), NOT lat/lng coordinates. |
-| Join communities to surveil | Join requires admin approval. Admins approve/reject requests. |
-| Identify real names | Display names are user-chosen pseudonyms. BankID name is NOT auto-populated. |
-| Cross-reference users | Profile endpoint returns display name + verified badge only to non-self viewers. |
-| Accept requests to approach targets | Audit trail links BankID-verified identities. Safety check-in after session. |
+| Browse people to target | There is no people directory and no search for users — only open requests are listable. |
+| Scrape pickup locations | Open listings round coordinates to ~3 decimals (~111 m); the destination is suppressed entirely until a request is accepted. |
+| Reach an ineligible target | Eligibility tiers are enforced in SQL *before* a request is visible, plus an accept-time guard (defence in depth). Default tier is the most restrictive: same sex, birth year ±5. |
+| Identify real names | Display names are user-chosen pseudonyms. The BankID name is stored separately and never auto-populated. |
+| Cross-reference users | The profile endpoint returns display name + verified badge only to non-self viewers. |
+| Accept requests to approach targets | Audit trail links BankID-verified identities. Mutual completion plus a safety check-in after the session. |
+| Retain movement history | `location_updates` is purged by a database trigger when a request reaches a terminal state — deletion is a schema property, not a cron job. |
 
 ## Assistance Request Lifecycle
 
@@ -159,8 +158,6 @@ All tables are created in a single initial migration (`001_initial`):
 
 - `migrations` — tracks executed migrations
 - `users` — BankID-verified users (NIN stored as SHA-256 hash only)
-- `communities` — safety communities with geographic center (not exposed to clients)
-- `community_members` — join table with approval workflow (`pending` → `approved`)
 - `assistance_requests` — the core feature (walk, escort, check_in)
 - `location_updates` — ephemeral location data during active sessions
 - `push_subscriptions` — Web Push API subscriptions
@@ -183,7 +180,6 @@ All secrets live in the root `.env` file (never committed). Docker Compose inter
 | `FEATURE_BANKID_AUTH` | backend | Enable real BankID (default: `false`) |
 | `FEATURE_PUSH_NOTIFICATIONS` | backend | Enable Web Push (default: `false`) |
 | `FEATURE_GEOLOCATION` | backend | Enable location sharing (default: `false`) |
-| `FEATURE_COMMUNITIES` | backend | Enable communities (default: `false`) |
 | `VAPID_PUBLIC_KEY` | backend, frontend (build arg) | Web Push VAPID public key |
 | `VAPID_PRIVATE_KEY` | backend | Web Push VAPID private key |
 | `VAPID_CONTACT` | backend | VAPID contact email (default: `mailto:sentinel@covey.se`) |

@@ -193,3 +193,31 @@ This document records key decisions made during the project's development, with 
 **Decision**: The raw NIN (Swedish personnummer) is never stored in the database. Only a SHA-256 hash is kept for lookup purposes.
 
 **Rationale**: The Swedish NIN is highly sensitive PII. Storing only the hash means a database breach doesn't directly expose NINs. The JWT carries the NIN transiently for the session duration. The 30-day soft-delete cooling period + hard-delete worker ensures right to erasure compliance.
+
+## Mission-locked AB, not a non-profit association (supersedes earlier framing)
+
+**Decision**: Covey is operated by **Covey AB**, a Swedish limited company (org.nr 559589-1572,
+registered 2026-06-08), whose articles of association direct surplus back into the business
+rather than to dividends. No non-profit association or foundation was formed.
+
+**Rationale**: The project began as a citizen initiative and earlier decision entries above
+describe it as a "non-profit project" — that framing is superseded, and the rationales are left
+unedited because they record why those choices were made at the time. The commitments that
+actually mattered are unchanged and are now structural rather than aspirational: no advertising,
+no data monetization, no sponsored matching, open source, documented decisions. A dividend-free
+AB keeps those commitments while remaining able to hold a BankID relying-party agreement, employ
+people, receive innovation funding and take investment — none of which an ideell förening does
+comfortably. Public-facing copy across all 12 locales was updated accordingly; the phrase
+"non-profit" should not reappear in user-facing text.
+
+## Communities feature removed
+
+**Decision**: The community feature (admin-approved membership, community-scoped requests,
+nearby discovery, admin panel) was removed from the codebase. Requests are freestanding and
+broadcast to the `requests:open` room.
+
+**Rationale**: Communities added a social-graph layer that pulled the product toward being a
+social network — the exact thing Covey defines itself against. Removing it made the product
+simpler and the privacy story stronger: there is no persistent group membership to leak, no
+member list to expose, and no moderation surface to police. Documentation that still described
+communities (including the community threat model in `architecture.md`) was removed with it.

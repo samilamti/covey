@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Iešguđetlágan vuogit váikkuhit Covey-prošektii.
 ---
 
-Covey doaimmahuvvo eaktodáhtolaš bargiin ja rabas gálduin. Beroškeahttá du duogážis, gávdnojit vuogit veahkehit.
+Covey lea rabas koda, ja olggobeale ovdanbuktin dahká bálvalusa buorebun. Du duogážis ii leat mearkkašupmi, lea álo geaidnu veahkehit.
 
 ## Gávnna du vuogi váikkuhit
 
@@ -14,13 +14,12 @@ Covey doaimmahuvvo eaktodáhtolaš bargiin ja rabas gálduin. Beroškeahttá du 
 - **[Juridihkka](/se/váikkuhit/juridihkka/)** -- GDPR, geavahaneavttut, organisašuvdnahápmi ja liseanssagažaldagat.
 - **[Studeanttat](/se/váikkuhit/studeanttat/)** -- Loahppabarggumat, universitehtaoktavuođat ja dokumentašuvdna.
 - **[Fitnodagat](/se/váikkuhit/fitnodagat/)** -- Ruhtadeapmi, ovttasbargu ja organisašuvdnahuksen.
-- **[Ekonomalaččat](/se/váikkuhit/ekonomalaččat/)** -- Adde attáldaga doaibmanbijuid ja ovddideapmái.
 - **[Ii-teknihkalaš](/se/váikkuhit/ii-teknihkalaš/)** -- Betatesten, máhcahat ja njálmmálaš sáttabargu.
 - **[Jođánis dahkut](/se/váikkuhit/jođánis-dahkut/)** -- Vihtta minuhta? Dagat stuorra erohusa goitge.
 
 ## Manin váikkuhit?
 
-Covey lea ii-dietnasulmmoš riikkavulošálgu. Juohke oassi -- leago dat kodat, juridihkalaš rávvagat, juogadeapmi sosiála mediain dahje attáldat -- veahkeha dahkat árgabeaivvi oadjebasabbon eambbosiidda.
+Covey ii juoge vuoitto, báhcán ruđat mannet ruovttoluotta doibmii. Juohke doarjja, leš dat koda, juridihkalaš rávven dahje juohkin sosiála medias, veahkeha dahkat árgabeaivvi sihkkarabbun eambbosiidda.
 
 ## Álggat
 

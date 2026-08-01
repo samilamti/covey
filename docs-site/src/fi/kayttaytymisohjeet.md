@@ -18,7 +18,7 @@ Koodia, joka vaarantaa käyttäjien yksityisyyden tai turvallisuuden, ei hyväks
 
 ## 3. Läpinäkyvyys
 
-Kaikki päätökset tehdään avoimesti. Lähdekoodimme on avointa, keskustelumme ovat julkisia ja taloutemme on läpinäkyvää.
+Kaikki päätökset tehdään avoimesti. Lähdekoodimme on avoin ja keskustelumme ovat julkisia.
 
 ## 4. Laatu
 

@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Mismunandi leiðir til að leggja sitt af mörkum í Covey-verkefninu.
 ---
 
-Covey er rekið af sjálfboðaliðum og opnum hugbúnaði. Óháð bakgrunni þínum eru leiðir til að hjálpa.
+Covey er opinn hugbúnaður, og framlög utan frá gera þjónustuna betri. Óháð bakgrunni þínum eru leiðir til að hjálpa til.
 
 ## Finndu þína leið til að leggja til
 
@@ -14,13 +14,12 @@ Covey er rekið af sjálfboðaliðum og opnum hugbúnaði. Óháð bakgrunni þ�
 - **[Lögfræði](/is/leggja-til/logfraedi/)** -- GDPR, notkunarskilmálar, skipulagsform og leyfismál.
 - **[Nemendur](/is/leggja-til/nemendur/)** -- Lokaverkefni, háskólatengiliðir og skjölun.
 - **[Frumkvöðlar](/is/leggja-til/frumkvodlar/)** -- Fjármögnun, samstarf og skipulagsuppbygging.
-- **[Fjárhagslegt](/is/leggja-til/fjarhagslegur/)** -- Styrktu rekstur og þróun.
 - **[Ótæknilegt](/is/leggja-til/otaeknilegt/)** -- Beta-prófanir og munnleg kynning.
 - **[Fljótleg framlag](/is/leggja-til/fljotleg-framlog/)** -- Fimm mínútur? Skipta þær engu að síður miklu máli.
 
 ## Af hverju að leggja til?
 
-Covey er borgaralegt frumkvæði sem er ekki rekið í hagnaðarskyni. Sérhvert framlag -- hvort sem það er kóði, lögfræðiráðgjöf, deiling á samfélagsmiðlum eða framlag -- hjálpar til við að gera hversdagslífið öruggara fyrir fleiri.
+Covey er rekið án arðgreiðslu, afgangur rennur aftur inn í starfsemina. Sérhvert framlag, hvort sem það er kóði, lögfræðiráðgjöf eða deiling á samfélagsmiðlum, hjálpar til við að gera daglegt líf öruggara fyrir fleiri.
 
 ## Byrjaðu
 

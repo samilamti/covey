@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Olika sätt att bidra till Covey-projektet.
 ---
 
-Covey drivs av frivilliga och öppen källkod. Oavsett din bakgrund finns det sätt att hjälpa till.
+Covey är öppen källkod, och bidrag utifrån gör tjänsten bättre. Oavsett din bakgrund finns det sätt att hjälpa till.
 
 ## Hitta ditt sätt att bidra
 
@@ -14,13 +14,12 @@ Covey drivs av frivilliga och öppen källkod. Oavsett din bakgrund finns det s�
 - **[Juridik](/sv/bidra/juridik/)** — GDPR, användaravtal, organisationsform och licensfrågor.
 - **[Studenter](/sv/bidra/student/)** — Examensarbeten, universitetskontakter och dokumentation.
 - **[Entreprenörer](/sv/bidra/entreprenor/)** — Finansiering, partnerskap och organisationsbygge.
-- **[Ekonomiskt](/sv/bidra/ekonomiskt/)** — Donera till drift och utveckling.
 - **[Icke-teknisk](/sv/bidra/icke-teknisk/)** — Betatestning och mun-till-mun.
 - **[Snabba insatser](/sv/bidra/snabba-insatser/)** — Fem minuter? Gör stor skillnad ändå.
 
 ## Varför bidra?
 
-Covey är ett icke-vinstdrivande medborgarinitiativ. Varje bidrag — oavsett om det är kod, juridisk rådgivning, en delning i sociala medier eller en donation — hjälper till att göra vardagen tryggare för fler.
+Covey drivs utan vinstutdelning — överskott går tillbaka in i verksamheten. Varje bidrag, oavsett om det är kod, juridisk rådgivning eller en delning i sociala medier, hjälper till att göra vardagen tryggare för fler.
 
 ## Kom igång
 

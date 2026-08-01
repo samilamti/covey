@@ -153,20 +153,6 @@
     "uk": "Підприємці",
     "en": "Entrepreneurs"
   },
-  "contribute-financial": {
-    "sv": "Ekonomiskt",
-    "nb": "Økonomisk",
-    "da": "Økonomisk",
-    "fi": "Taloudellisesti",
-    "ar": "مالياً",
-    "is": "Fjárhagslegt",
-    "pl": "Finansowo",
-    "fo": "Fíggjarliga",
-    "kl": "Aningaasaqarnermi",
-    "se": "Ekonomalaččat",
-    "uk": "Фінансово",
-    "en": "Financially"
-  },
   "contribute-nontechnical": {
     "sv": "Icke-teknisk",
     "nb": "Ikke-teknisk",

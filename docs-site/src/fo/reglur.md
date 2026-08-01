@@ -18,7 +18,7 @@ Ongur kóði, sum hættar privatlívinum ella ørygginum hjá brúkarum, verður
 
 ## 3. Sjónleiki
 
-Øll avgerðir verða tiknar opið. Keldukóðin er opnur, umrøðurnar eru almennar og fíggjarstøðan er sjónlig.
+Allar avgerðir verða tiknar opið. Okkara keldukota er opin og okkara kjak er alment.
 
 ## 4. Góðmenskt
 

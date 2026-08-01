@@ -3,20 +3,20 @@ title: About Covey
 pageId: home
 order: 1
 layout: layouts/page.njk
-description: Covey is a safe, open and non-profit platform where citizens help each other in everyday life.
+description: Covey is a safe, open platform where citizens help each other in everyday life.
 ---
 
 ## Our vision
 
 To create a safe, independent and decentralised platform where citizens can help each other in everyday life, verified through national electronic identification.
 
-Covey (formerly Tillsammans) is a civic initiative that lets you quickly and safely coordinate everyday safety -- such as walking home together in the evening.
+Covey (formerly Tillsammans) lets you quickly and safely coordinate everyday safety -- such as walking home together in the evening.
 
 ## Why Covey?
 
 ### You are not the product
 
-Unlike social media platforms that make money by selling your attention to advertisers, Covey makes no money. Our sole purpose is to help you get assistance or help someone else.
+Unlike social media platforms, we do not make money from your attention. No advertising, no data sales, no sponsored matching. Our sole purpose is to help you get assistance or help someone else.
 
 ### Verified identity
 
@@ -26,9 +26,9 @@ By using BankID, we eliminate troll accounts and fraud. You know that the person
 
 Our code is open for review. Anyone can see how we handle data. There are no hidden algorithms controlling what you see.
 
-### Non-profit
+### No dividends
 
-Covey is not owned by venture capitalists. We are governed by our users and our mission: social good, not economic growth.
+Covey is run by Covey AB, a Swedish limited company that distributes no dividends. Any surplus is reinvested in the service. The mission is written into the articles of association, the code is open and the decisions are documented.
 
 ## Key features
 

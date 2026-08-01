@@ -58,7 +58,7 @@ BankID-nafnið þitt sést ekki af öðrum notendum. Þess í stað velur þú s
 
 ## Engin rakning, engar auglýsingar
 
-Covey notar engin rakningarkökur, engar greiningar frá þriðja aðila og engar auglýsingar. Við seljum aldrei gögn. Vettvangurinn er fjármagnaður með framlögum og sjálfboðavinnu.
+Covey notar engar rakningarkökur, engar greiningar frá þriðja aðila og engar auglýsingar. Við seljum aldrei gögn. Þjónustan er ókeypis í notkun og tekjumódelið byggir aldrei á upplýsingum þínum.
 
 ## Hafa samband
 

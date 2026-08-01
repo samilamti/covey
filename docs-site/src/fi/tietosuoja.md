@@ -66,7 +66,7 @@ Voit poistaa tilisi kohdasta **Profiili --> Poista tili**. Prosessi:
 
 ## Ei seurantaa, ei mainoksia
 
-Covey ei käytä seurantaevästeitä, kolmannen osapuolen analytiikkaa eikä mainoksia. Emme koskaan myy tietoja. Alusta rahoitetaan lahjoituksilla ja vapaaehtoistyöllä.
+Covey ei käytä seurantakeksejä, kolmannen osapuolen analytiikkaa eikä mainoksia. Emme koskaan myy dataa. Palvelu on ilmainen käyttää, eikä tulomalli koskaan perustu tietoihisi.
 
 ## Yhteystiedot
 

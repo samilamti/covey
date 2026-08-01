@@ -15,6 +15,6 @@ Du behöver inte kunna koda för att göra skillnad. Faktum är att din input ä
 - Rapportera olämpligt innehåll för att hålla plattformen trygg.
 
 ### Sprid budskapet
-- Berätta för grannar, vänner och släktingar om Medborgarstöd.
+- Berätta för grannar, vänner och släktingar om Covey.
 - Hjälp äldre eller mindre teknikvana personer i din närhet att komma igång.
 - Dela våra inlägg i sociala medier.

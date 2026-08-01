@@ -58,7 +58,7 @@ Możesz usunąć swoje konto przez **Profil → Usuń konto**. Proces wygląda n
 
 ## Brak śledzenia, brak reklam
 
-Covey nie używa plików cookie śledzących, analityki firm trzecich ani reklam. Nigdy nie sprzedajemy danych. Platforma jest finansowana z darowizn i pracy wolontariuszy.
+Covey nie używa śledzących plików cookie, analiz stron trzecich ani reklam. Nigdy nie sprzedajemy danych. Usługa jest darmowa w użyciu, a model przychodów nigdy nie opiera się na Twoich danych.
 
 ## Kontakt
 

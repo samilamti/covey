@@ -22,8 +22,8 @@ Vi tager brugernes privatliv yderst alvorligt og saelger aldrig data.
 - Udarbejd tydelige og retfaerdige brugervilkar, der beskytter bade platformen og den enkelte.
 - Formuler holdbare juridiske regler for platformen.
 
-### Organisationsform og licensering
+### Selskabsledelse og licensering
 
-- Giv rad om drift af nonprofitforeninger eller fonde.
+- Giv råd omkring selskabsledelse, der holder missionen låst i vedtægterne.
 - Sikre korrekt handtering af abne kildekodslicenser.
 - Handtering af immaterielle rettigheder.

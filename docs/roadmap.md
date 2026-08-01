@@ -13,7 +13,7 @@
 
 ### Phase 0 — Foundation: Feature Flags & Testing ✅
 - [x] Feature flag system (`FEATURE_*` env vars) — backend registry + frontend context
-- [x] Rewrite `001_initial` migration with full database schema (users, communities, requests, etc.)
+- [x] Rewrite `001_initial` migration with full database schema (users, requests, etc.)
 - [x] Backend test framework (`node:test`, built into Node 22) — 18 tests
 - [x] Frontend test framework (`vitest` + `@testing-library/preact`) — 41 tests
 
@@ -34,18 +34,16 @@
 - [x] Users repository with SHA-256 hashed NIN (raw PNO never stored)
 - [x] Socket.io JWT authentication middleware
 
-### Phase 3 — User Profiles & Safety Communities ✅
-- [x] Community data model with admin-approved join workflow
+### Phase 3 — User Profiles ✅
+- [x] Pseudonymous display-name profiles
 - [x] Security hardening: no exposed coordinates, pseudonymous display names, member lists only visible to fellow members
-- [x] Nearby community discovery via Haversine formula (no PostGIS)
-- [x] Community admin panel (approve/reject join requests)
 - [x] User profiles with user-chosen display names (not auto-populated from BankID)
 - [x] Client-side state-based routing in `MainLayout`
 
 ### Phase 4 — Assistance Requests (Core Feature) ✅
 - [x] Assistance request lifecycle: open → accepted → active → completed → safety_confirmed
 - [x] Request types: walk, escort, check_in
-- [x] Real-time request broadcasting via Socket.io to community rooms
+- [x] Real-time request broadcasting via Socket.io to the open-requests room
 - [x] Geolocation sharing during active sessions (ephemeral, purged on completion)
 - [x] Safety check-in: requester confirms safe arrival after session
 - [x] Request expiration worker (60s interval, 30-minute timeout)
@@ -81,7 +79,7 @@
 - [x] Beta notice banner added to `MainLayout.jsx` (11 languages, sessionStorage-dismissible)
 - [x] `.env.example` production env template created
 - [x] `docs/deployment.md` — GleSYS VPS setup + deploy guide
-- [x] Hosting provider chosen: GleSYS (Stockholm, ~€20/mo)
+- [x] Hosting provider chosen: GleSYS (Swedish datacentre, ~€20/mo)
 
 ### Capacitor Native Apps ✅
 - [x] Capacitor 7 project setup (iOS + Android platform projects)
@@ -105,7 +103,7 @@
 - [ ] WCAG 2.1 AA accessibility audit
 - [ ] Staging environment
 - [ ] Monitoring and logging (structured logging, error tracking)
-- [ ] Register non-profit organization
+- [x] Register the company — Covey AB, org.nr 559589-1572, registered 2026-06-08
 - [ ] Privacy policy and terms of service
 - [x] Open-source license selection and publication
 - [ ] Bundle Leaflet CSS locally (currently from unpkg CDN)
@@ -120,7 +118,7 @@
 Phase 0 (Foundation) ───┬──→ Phase 1 (i18n)          ✅
                         ├──→ Phase 2 (Auth + JWT)     ✅
                         │        │
-                        │        ├──→ Phase 3 (Profiles + Communities)  ✅
+                        │        ├──→ Phase 3 (Profiles)               ✅
                         │        │        │
                         │        │        └──→ Phase 4 (Assistance Requests)  ✅
                         │        │                 │
@@ -134,7 +132,7 @@ Phase 0 (Foundation) ───┬──→ Phase 1 (i18n)          ✅
 ## Context
 
 ### What this project is
-Tillsammans ("Together") is a **non-profit digital safety platform** where verified Swedish citizens can temporarily connect for real-world safety coordination — such as walking home at night. It is **not** a social network: no chat, no likes, no feeds. Users authenticate via BankID (Swedish national e-ID). The initiative operates as a non-profit; no ads, no data monetization.
+Covey (formerly "Tillsammans") is a **digital safety platform** where verified Swedish citizens can temporarily connect for real-world safety coordination — such as walking home at night. It is **not** a social network: no feeds, no likes, no followers, and no way to search for people (only for open requests). Messaging exists only inside an active session and ends with it. Users authenticate via BankID (Swedish national e-ID). Covey is run by **Covey AB**, a Swedish limited company that distributes no dividends — surplus is reinvested in the service; no ads, no data monetization, no sponsored matching.
 
 ### Technical constraints
 - Must work on **old Android devices** (Chrome 60+, Android 5+) and all iPhones (iOS 10+)

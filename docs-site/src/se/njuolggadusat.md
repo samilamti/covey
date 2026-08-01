@@ -18,7 +18,7 @@ Ii oktage kodat mii áitta geavaheddjiin priváhtavuhtii dahje oadjebasvuhtii do
 
 ## 3. Čađatčielggasvuohta
 
-Buot mearrádusat dahkkojuvvojit rabasttit. Min gáldokodat leat rabasttit, min ságastallamat leat almmolaččat ja min ruhtadilli lea čađatčielgas.
+Buot mearrádusat dahkkojuvvojit rabas. Min koda lea rabas ja min ságastallamat leat almmolaččat.
 
 ## 4. Kvalitehta
 

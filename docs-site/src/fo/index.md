@@ -3,20 +3,20 @@ title: Um Covey
 pageId: home
 order: 1
 layout: layouts/page.njk
-description: Covey er ein trygg, opin og ikki-vinningsdrivandi skipan, har borgarar hjálpa hvørjum øðrum í gerandisdegnum.
+description: Covey er ein trygg og opin pallur, har borgarar hjálpa hvørjum øðrum í gerandisdegnum.
 ---
 
 ## Okkara sjón
 
 At skapa eina trygga, óheftaða og dreifða skipan, har borgarar kunnu hjálpa hvørjum øðrum í gerandisdegnum, staðfest við landskjalsviðurkenningu.
 
-Covey (áður Tillsammans) er eitt borgaratiltøk, sum gevur tær møguleikan at skjótt og tryggt samskipa gerandisdagsøryggi -- sum at ganga heim saman um kvøldið.
+Covey (áður Tillsammans) gevur tær møguleika at skjótt og trygt samskipa gerandisdagstrygd, sum at ganga heim saman um kvøldið.
 
 ## Hví Covey?
 
 ### Tú ert ikki vøran
 
-Ólíkt sosialu miðlunum, sum tena pengar á at selja athygli tína til lýsingarveitar, tener Covey ongar pengar. Einasta endamálið er, at tú fært hjálp ella hjálpir øðrum.
+Í mun til sosialar miðlar, tæna vit ongan pening upp á títt uppmerksemi. Ongin lýsing, eingin dátahandil, ongar sponsoraðar samsvøranir. Okkara einasta mál er, at tú skalt kunna fáa hjálp ella hjálpa onkrum øðrum.
 
 ### Staðfest samleiki
 
@@ -26,9 +26,9 @@ Við at brúka BankID útiheldur vit trollkontur og svindl. Tú veitst, at pers�
 
 Keldukóðin hjá okkum er opnur fyri gransking. Hvør sum er kann síggja, hvussu vit viðgerast dáta. Ongar loyndar algorithmar stýra, hvat tú sært.
 
-### Ikki-vinningsdrivandi
+### Uttan vinningsbýti
 
-Covey er ikki eigt av áløgukapitaliskum. Vit verðum stýrð av brúkarum okkara og endamáli okkara: samfelagsligum góða, ikki búskaparligum vøkstri.
+Covey verður rikið av Covey AB, einum svenskum partafelag uttan vinningsbýti. Avlop verður endurínlagt í virksemið. Endamálið stendur í viðtøkunum, kotan er opin og avgerðirnar eru skjalprógvaðar.
 
 ## Høvuðseiginleikar
 

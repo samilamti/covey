@@ -64,7 +64,7 @@ Kontot peersinnaavat **Profili → Konto peersinnaanermut**. Aaqqiissutaasut:
 
 ## Malitseqanngitsoq, lýsinganngitsoq
 
-Covey-p malitseqanngitsoq cookie-nik, analyseqanngitsoq aamma lýsinganngitsoq atuippoq. Daatat tunineqarsinnaanngillat. Attaveqarfik tunisitsisarnerit aamma piginnaanissartik suliaqarlutik atuineqarsinnaapput.
+Covey-p tracking cookies-inik atorneqanngilaq, pingasunillu sullissisunit nalunaarsukkanik atorneqarani reklamenilluunniit. Datatit qaqortumik tunisassarinngilagut. Sullissineq akeqanngilaq, isertitaqarnissarlu aaqqissuussaq isumassarsiorfigisimanngilaq inuit paasissutissaat.
 
 ## Attavigineq
 

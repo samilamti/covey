@@ -18,7 +18,7 @@ Utrzymujemy kulturalny ton. Nie tolerujemy ataków osobistych ani dyskryminacji.
 
 ## 3. Przejrzystość
 
-Wszystkie decyzje podejmowane są otwarcie. Nasz kod źródłowy jest otwarty, nasze dyskusje są publiczne, a nasze finanse są przejrzyste.
+Wszystkie decyzje podejmowane są otwarcie. Nasz kod źródłowy jest otwarty, a nasze dyskusje są publiczne.
 
 ## 4. Jakość
 

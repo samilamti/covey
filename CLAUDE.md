@@ -6,7 +6,7 @@ Claude has full access to the project folder, including running any commands and
 
 ## What this project is
 
-Tillsammans ("Together") is a non-profit digital safety platform for Swedish citizens. Users authenticate via BankID and can temporarily coordinate real-world safety — such as walking home at night. It is NOT a social network. Domain: covey.se. Owner: Sami Lamti.
+Covey (formerly "Tillsammans") is a digital safety platform for Swedish citizens, run by Covey AB — a Swedish limited company that distributes no dividends. Users authenticate via BankID and can temporarily coordinate real-world safety — such as walking home at night. It is NOT a social network. Domain: covey.se. Owner: Sami Lamti.
 
 ## Repository
 
@@ -74,7 +74,7 @@ All 7 implementation phases are complete. The application is feature-complete fo
 - **Phase 0**: Feature flags, testing infrastructure, full DB schema ✅
 - **Phase 1**: 12 languages with Swedish as canonical source ✅
 - **Phase 2**: JWT auth with BankID stub provider ✅
-- **Phase 3**: Communities + profiles + admin panel ✅
+- **Phase 3**: Pseudonymous profiles ✅
 - **Phase 4**: Assistance request lifecycle + real-time + geolocation ✅
 - **Phase 5**: Push notifications (mock + real) + service worker ✅
 - **Phase 6**: Rate limiting + GDPR export/delete + input validation ✅
@@ -135,11 +135,11 @@ Scaffolding skills encode project conventions (route ordering, 4-file feature fl
 - **Feature flags**: `FEATURE_*` env vars, backend registry in `src/features.js`, frontend context in `src/context/FeatureFlagContext.jsx`
 - **Auth**: Provider pattern in `src/auth/` — stub provider simulates BankID with time-based states and error simulation via NIN prefix (`000*` = cancel, `111*` = expired). JWT via jose (HS256, 24h expiry). The `collect` endpoint upserts the user into the DB and puts the real UUID (not the hash) in the JWT as `userId`. The `verify` endpoint validates the token AND checks the user exists in the DB. The `authenticate` middleware rejects tokens where `userId` is not a valid UUID format. **API field name**: The login endpoint expects `nin` as the API field name. The **real provider** (`providers/bankid.js`) implements BankID v6 Secure Start (mTLS, autostart + animated QR, no personnummer in `/auth` — identity comes from `completionData`); both providers share the `initAuth/collect/cancel` interface (now async). Auth rate limiting is **per-route**: strict `authRateLimit` on `/login` + `/verify`, looser `apiRateLimit` on the status-polling `/collect` + `/qr` (a real BankID auth polls for 30s+). See `docs/bankid-test.md`.
 - **Notifications**: Provider pattern — mock provider records sent notifications for test assertions. Real provider uses `web-push` library with VAPID keys (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_CONTACT` env vars). Falls back to mock if VAPID keys not configured. Two notification triggers: (1) `notifyNewRequest()` sends push to all eligible responders when a request is created; (2) `notifyRequestAccepted()` sends push to the requester when someone accepts their request. Both fire from HTTP and Socket paths. Uses `findEligibleForRequest()` for new-request targeting (eligibility tier SQL, `DISTINCT ON (user_id)`) and `findByUserWithLang()` for accept targeting (all subscriptions for a specific user with preferred language). JS-level defense-in-depth in `notifyNewRequest()` deduplicates by `user_id` and excludes the requester. Notification bodies are hardcoded in all 12 languages (push runs outside browser context, no i18next). Fire-and-forget: errors are logged but never block request creation or acceptance. Frontend `VITE_VAPID_PUBLIC_KEY` is a build-time arg in `frontend/Dockerfile`.
-- **Database**: Single `001_initial` migration creates all tables, plus `003_session_messages` for in-session messaging, `004_done_pending` for mutual completion flow, and `005_nullable_requester` for GDPR cleanup (makes `requester_id` nullable). No production data yet. `community_id` on `assistance_requests` is nullable (freestanding requests). **DB credentials are dynamic** — they come from `.env.local` via Docker Compose env vars (`$POSTGRES_USER`, `$POSTGRES_DB`), NOT hardcoded as `postgres`/`tillsammans`. Always read from the container environment.
+- **Database**: Single `001_initial` migration creates all tables, plus `003_session_messages` for in-session messaging, `004_done_pending` for mutual completion flow, and `005_nullable_requester` for GDPR cleanup (makes `requester_id` nullable). No production data yet. **DB credentials are dynamic** — they come from `.env.local` via Docker Compose env vars (`$POSTGRES_USER`, `$POSTGRES_DB`), NOT hardcoded as `postgres`/`tillsammans`. Always read from the container environment.
 - **Workers**: In-process `setInterval` (no job queue) — request expiration (60s) + GDPR cleanup (daily hard-delete of accounts soft-deleted >30 days). Startup cleanup deletes terminal requests (`completed`, `safety_confirmed`, `cancelled`, `expired`) before the server accepts traffic.
 - **Rate limiting**: In-memory sliding window rate limiter — auth (10 req/min), API (100 req/min), nearby discovery (5 req/min)
-- **Socket.io events**: Community room subscriptions + `requests:open` room for freestanding requests, request lifecycle (create/accept/done/done-accept/done-reject/cancel), location relay between requester and helper, session messaging (`message:send` → `message:received`/`message:sent`)
-- **Freestanding requests**: Assistance requests can exist without a community (`community_id` is nullable). Freestanding requests broadcast to the `requests:open` room which all authenticated users auto-join. Community-scoped requests still broadcast to `community:${id}` rooms.
+- **Socket.io events**: `requests:open` room for open requests, request lifecycle (create/accept/done/done-accept/done-reject/cancel), location relay between requester and helper, session messaging (`message:send` → `message:received`/`message:sent`)
+- **Open requests**: All assistance requests are freestanding — there is no group-scoping layer. They broadcast to the `requests:open` room which all authenticated users auto-join.
 - **Eligibility tiers**: Three levels control who can accept requests — `same_demographics` (same sex, birth year ±5), `verified_guardians` (demographics OR safety score ≥ 5), `any_member` (no filtering). Default is `same_demographics`. Pre-filtering in SQL prevents users from seeing requests they can't accept. Accept-time guard provides defense-in-depth.
 - **Stub safety scores**: `STUB_SAFETY_SCORES` env var (`nin:score,nin:score`) sets in-memory overrides applied at stub login. Stored in `Map<userId, score>` in `ratings.js`, checked before DB query. Enables testing `verified_guardians` tier without real rating history.
 - **Session messaging**: In-session chat between requester and helper via Socket.io. Messages persisted to `session_messages` table. Rate limited (2s per user per request). Six pre-filled quick messages provided. Included in GDPR export.
@@ -160,9 +160,9 @@ Scaffolding skills encode project conventions (route ordering, 4-file feature fl
 - **RTL**: Arabic only (handled by i18next culture detector)
 - **Test coverage**: Locale key parity test ensures all 12 files have the same keys as `sv.json`
 
-## Security model for communities
+## Request visibility & safety model
 
-Communities use admin-approved joins, pseudonymous display names, no exposed coordinates (area_name instead), member lists visible to members only. See `docs/architecture.md` for the full threat model.
+There is no people directory and no user search — only open requests are listable. Eligibility tiers are enforced in SQL before a request is visible (plus an accept-time guard); open listings round coordinates to ~111 m and suppress the destination until acceptance; display names are user-chosen pseudonyms. See `docs/architecture.md` for the full threat model.
 
 ## GDPR considerations
 
@@ -204,18 +204,17 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `backend/src/auth/jwt.js` — JWT sign/verify using jose
 - `backend/src/auth/middleware.js` — Express `authenticate` middleware
 - `backend/src/features.js` — Feature flag registry
-- `backend/src/migrate.js` — Full schema migration (users, communities, requests, etc.)
-- `backend/src/handlers.js` — Socket.io handlers (community rooms, request events, location relay)
+- `backend/src/migrate.js` — Full schema migration (users, requests, etc.)
+- `backend/src/handlers.js` — Socket.io handlers (open-requests room, request events, location relay)
 - `backend/src/api.js` — Express API router mounting all routes with rate limiters
 - `backend/src/index.js` — App entry point (Express + Socket.io + workers)
-- `backend/src/routes/communities.js` — Community CRUD + security
 - `backend/src/routes/requests.js` — Assistance request lifecycle
 - `backend/src/routes/profile.js` — User profile CRUD
 - `backend/src/routes/notifications.js` — Push subscription management (web + native)
 - `backend/src/repositories/native-push.js` — Native push token CRUD + eligibility queries
 - `backend/src/routes/points.js` — Points summary, history, badges, visibility toggle
 - `backend/src/routes/gdpr.js` — Data export + account deletion
-- `backend/src/repositories/` — Database access (users, communities, requests, push-subscriptions, ratings, messages)
+- `backend/src/repositories/` — Database access (users, requests, push-subscriptions, ratings, messages)
 - `backend/src/repositories/messages.js` — Session message CRUD (create, findByRequest, findByUser)
 - `backend/src/repositories/ratings.js` — Safety ratings + stub score overrides
 - `backend/src/repositories/points.js` — Points ledger, badges, pair cooldowns, GDPR export
@@ -252,10 +251,6 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `frontend/src/components/LocationBanner.jsx` — Geolocation error feedback banner (info/warning severity)
 - `frontend/src/hooks/useGeolocation.js` — Centralized geolocation hook (getCurrentPosition/watchPosition, error mapping, retry, visibilitychange refresh)
 - `frontend/src/utils/geo.js` — Haversine distance + formatting utilities
-- `frontend/src/components/CommunityList.jsx` — Community browser + create community form
-- `frontend/src/components/CommunityDetail.jsx` — Community info + member list
-- `frontend/src/components/NearbyDiscovery.jsx` — Geolocation-based discovery
-- `frontend/src/components/AdminPanel.jsx` — Approve/reject join requests
 - `frontend/src/components/ProfileView.jsx` — Profile + GDPR + visible badges
 - `frontend/src/components/ProgressDashboard.jsx` — Personal points, badges grid, activity history (feature-flagged)
 - `frontend/src/components/LanguageSelector.jsx` — 12 languages, Sami SVG flag
@@ -310,7 +305,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - Socket broadcasts (`request:new`) go to all room members without eligibility pre-filtering — ineligible requests may briefly flash before the next API refresh filters them out. Push notifications, however, ARE eligibility-filtered (SQL query in `findEligibleForRequest()`)
 - Stub safety score overrides are in-memory only — lost on container restart (re-populated on next login)
 - Traefik v3.6 required for Docker Engine 29+ compatibility (v3.2 hardcodes Docker API v1.24, Engine 29 requires v1.44+). Production uses HTTP-01 ACME challenge (more reliable than TLS-ALPN-01)
-- Community feature code still exists but community documentation has been removed from docs-site (terminology shift: "verified guardian" → "qualified companion")
+- The community feature was removed from the codebase; remaining docs describing it have been cleaned up (see `docs/decisions.md`). Terminology shift still pending in places: "verified guardian" → "qualified companion"
 
 ## Development notes
 
@@ -352,9 +347,9 @@ The i18n detection order is `['querystring', 'localStorage', 'cookie']` — deli
 
 ### Express route ordering
 
-Routes with path parameters (e.g., `/:id`) must be registered AFTER static-path routes (e.g., `/open`, `/community/:cid`). Otherwise Express matches the static segment as a parameter value. Example: `GET /api/requests/open` must be defined before `GET /api/requests/:id`.
+Routes with path parameters (e.g., `/:id`) must be registered AFTER static-path routes (e.g., `/open`). Otherwise Express matches the static segment as a parameter value. Example: `GET /api/requests/open` must be defined before `GET /api/requests/:id`.
 
-Extended routes like `/:id/messages` must also be registered before bare `/:id` — Express evaluates routes in registration order and `/:id` would match first, consuming the `/messages` suffix. Current order in `requests.js`: `/open` → `/community/:cid` → `/:id/messages` → `/:id/done/accept` → `/:id/done/reject` → `/:id/done` → `/:id` → `/:id/accept` etc.
+Extended routes like `/:id/messages` must also be registered before bare `/:id` — Express evaluates routes in registration order and `/:id` would match first, consuming the `/messages` suffix. Current order in `requests.js`: `/open` → `/:id/messages` → `/:id/done/accept` → `/:id/done/reject` → `/:id/done` → `/:id` → `/:id/accept` etc.
 
 ### Production middleware
 
@@ -363,7 +358,7 @@ Extended routes like `/:id/messages` must also be registered before bare `/:id` 
 
 ### Eligibility pre-filtering in SQL
 
-Request listing queries (`findOpenFreestanding`, `findByCommunity`) use JOINs with the `users` table to filter by eligibility tier in a single query — no N+1 problem. The helper's `sex`, `birth_year`, and `safetyScore` are passed as query parameters. The SQL WHERE clause handles all three tiers with OR conditions. This is more efficient than loading all open requests and filtering in JS, and prevents users from seeing requests they can't accept.
+The request listing query (`findOpenFreestanding`) uses JOINs with the `users` table to filter by eligibility tier in a single query — no N+1 problem. The helper's `sex`, `birth_year`, and `safetyScore` are passed as query parameters. The SQL WHERE clause handles all three tiers with OR conditions. This is more efficient than loading all open requests and filtering in JS, and prevents users from seeing requests they can't accept.
 
 ### Schema changes with no production data
 

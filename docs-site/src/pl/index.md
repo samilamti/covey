@@ -3,20 +3,20 @@ title: O Covey
 pageId: home
 order: 1
 layout: layouts/page.njk
-description: Covey to bezpieczna, otwarta i non-profit platforma, na której obywatele pomagają sobie nawzajem w codziennym życiu.
+description: Covey to bezpieczna i otwarta platforma, gdzie obywatele pomagają sobie nawzajem w życiu codziennym.
 ---
 
 ## Nasza wizja
 
 Stworzenie bezpiecznej, niezależnej i zdecentralizowanej platformy, na której obywatele mogą pomagać sobie nawzajem w codziennym życiu, z weryfikacją przez krajową identyfikację elektroniczną.
 
-Covey (dawniej Tillsammans) to inicjatywa obywatelska, która pozwala szybko i bezpiecznie koordynować codzienne bezpieczeństwo — na przykład wspólne wracanie do domu wieczorem.
+Covey (wcześniej Tillsammans) daje możliwość szybkiego i bezpiecznego koordynowania codziennego bezpieczeństwa, na przykład wspólnego powrotu do domu wieczorem.
 
 ## Dlaczego Covey?
 
 ### Nie jesteś produktem
 
-W przeciwieństwie do mediów społecznościowych, które zarabiają na sprzedaży Twojej uwagi reklamodawcom, Covey nie zarabia pieniędzy. Naszym jedynym celem jest pomóc Ci uzyskać wsparcie lub pomóc komuś innemu.
+W przeciwieństwie do mediów społecznościowych, nie zarabiamy na Twojej uwadze. Bez reklam, bez handlu danymi, bez sponsorowanych dopasowań. Naszym jedynym celem jest to, abyś mógł otrzymać pomoc lub pomóc komuś innemu.
 
 ### Zweryfikowana tożsamość
 
@@ -26,9 +26,9 @@ Dzięki BankID eliminujemy fałszywe konta i oszustwa. Wiesz, że osoba, z któr
 
 Nasz kod jest otwarty do wglądu. Każdy może zobaczyć, jak przetwarzamy dane. Nie ma ukrytych algorytmów kontrolujących to, co widzisz.
 
-### Non-profit
+### Bez podziału zysków
 
-Covey nie jest własnością funduszy venture capital. Kierujemy się naszymi użytkownikami i naszą misją: dobro społeczne, a nie wzrost gospodarczy.
+Covey jest prowadzony przez Covey AB, szwedzką spółkę akcyjną bez podziału zysków. Nadwyżki są reinwestowane w działalność. Misja jest określona w statucie, kod jest otwarty, a decyzje są dokumentowane.
 
 ## Główne funkcje
 

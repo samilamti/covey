@@ -22,8 +22,8 @@ Atuisoqarsinnaanngitsut namminersorneritik pingaarutilerpput aamma daatat tunisi
 - Nalinginnaasumik aamma ajunngilluinnarsumik atuisoqarsinnaanngitsut avtalit pilersitsinerlugit.
 - Attaveqarfinnut inatsisit.
 
-### Organisatión aamma lisensineq
+### Suleqatigiinnermut aqussineq aamma licens-iliineq
 
-- Aningaasarsiornissamut aaqqissuussaanngitsunik suliaqarnerit.
+- Suleqatigiinnermut aqussinermut siunnersuutit, taakku anguniagaq aktieselskabip aalajangersakkaarutaanut ilanngunnissaat qulakkeertarput.
 - Ammarluinnaq lisensit.
 - Hugverkimik illersorneq.

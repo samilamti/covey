@@ -12,7 +12,7 @@ Hefur þú reynslu af að byggja upp og stækka skipulagsheildir? Við þurfum s
 
 ### Sjálfbærni og fjármögnun
 
-Við erum ekki rekin í hagnaðarskyni, en þurfum auðlindir til reksturs og þróunar.
+Við erum rekin án arðgreiðslu, en þurfum fjármagn til reksturs og þróunar.
 
 - Hjálpaðu okkur að finna fjármögnunarleiðir sem ekki skerða persónuverndarstefnu okkar.
 - Greindu hagkvæmar lausnir fyrir rekstur og innviði.
