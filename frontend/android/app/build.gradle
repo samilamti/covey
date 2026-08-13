@@ -20,7 +20,7 @@ android {
     namespace "se.covey"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "se.covey"
+        applicationId "se.covey.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -44,7 +44,10 @@ shot() { sleep 1.5; "$ADB" exec-out screencap -p > "$OUT/$1.png"; ok "  captured
 
 log "Installing + launching..."
 "$ADB" install -r -g "$APK" >/dev/null
-"$ADB" shell am start -n "$PACKAGE_NAME/.MainActivity" >/dev/null
+# NOTE: applicationId (se.covey.app) and namespace (se.covey) differ, so the
+# activity class is se.covey.MainActivity, not "$PACKAGE_NAME".MainActivity.
+# A relative ".MainActivity" here would resolve against the applicationId and fail.
+"$ADB" shell am start -n "$PACKAGE_NAME/se.covey.MainActivity" >/dev/null
 sleep 6
 shot "01-landing"
 

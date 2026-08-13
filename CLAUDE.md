@@ -286,7 +286,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - See `scripts/ios/lib/` for the JWT signer, curl wrapper, and asset upload helper.
 
 ### Android deployment automation
-- `scripts/android/` — numbered pipeline (`00-prereqs.sh` … `05-upload-aab.sh`, `06-screenshots.sh`, `all.sh`): Firebase config → keystore → signed AAB (+ universal APK) → Play listing → upload. Store package is `se.covey`.
+- `scripts/android/` — numbered pipeline (`00-prereqs.sh` … `05-upload-aab.sh`, `06-screenshots.sh`, `all.sh`): Firebase config → keystore → signed AAB (+ universal APK) → Play listing → upload. Store package is `se.covey.app` (Play `applicationId`); the Java `namespace` stays `se.covey`, so the activity class is `se.covey.MainActivity`.
 - Manual prerequisites (Play Console app entry + API-access service account) and usage: `scripts/android/README.md`. Listing copy in `scripts/android/PLAY_LISTING.md`.
 
 ### Documentation
