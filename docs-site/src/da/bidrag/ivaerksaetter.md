@@ -12,7 +12,7 @@ Har du erfaring med at opbygge og skalere organisationer? Vi har brug for din st
 
 ### Baeredygtighed og finansiering
 
-Vi er nonprofit, men har brug for ressourcer til drift og udvikling.
+Vi drives uden udbytteudbetaling, men har brug for ressourcer til drift og udvikling.
 
 - Hjaelp os med at finde finansieringsmodeller, der ikke kompromitterer vores privatlivspolitik.
 - Identificer omkostningseffektive losninger til drift og infrastruktur.

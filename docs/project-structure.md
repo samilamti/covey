@@ -59,16 +59,11 @@ frontend/
 │   │   ├── RequestCard.jsx         # Individual request card
 │   │   ├── CreateRequest.jsx       # Create request form
 │   │   ├── ActiveSession.jsx       # Active session with live location
-│   │   ├── CommunityList.jsx       # Community list
-│   │   ├── CommunityDetail.jsx     # Community detail + members
-│   │   ├── NearbyDiscovery.jsx     # Discover nearby communities
-│   │   ├── AdminPanel.jsx          # Community admin (approve/reject)
 │   │   ├── ProfileView.jsx         # User profile + GDPR actions
 │   │   └── ProgressDashboard.jsx   # Personal points & badges (feature-flagged)
 │   ├── services/
 │   │   ├── auth.js                 # Auth API client
 │   │   ├── features.js             # Feature flag client
-│   │   ├── communities.js          # Community API client
 │   │   ├── profile.js              # Profile API client
 │   │   ├── requests.js             # Request API client
 │   │   ├── points.js               # Points & progress API client
@@ -116,7 +111,7 @@ backend/
     ├── pool.js             # PostgreSQL connection pool (pg, max 10)
     ├── migrate.js          # Migration runner (single 001_initial with all tables)
     ├── features.js         # Feature flag registry (reads FEATURE_* env vars)
-    ├── handlers.js         # Socket.io event handlers (auth, communities, requests, location)
+    ├── handlers.js         # Socket.io event handlers (auth, requests, location)
     ├── auth/
     │   ├── index.js        # Re-exports authRouter, authenticate
     │   ├── router.js       # Auth Express router
@@ -126,7 +121,6 @@ backend/
     │       ├── stub.js     # Comprehensive BankID stub (time-based, error simulation)
     │       └── bankid.js   # Real BankID provider (feature-flagged)
     ├── routes/
-    │   ├── communities.js  # Community CRUD + join workflow
     │   ├── profile.js      # User profile endpoints
     │   ├── requests.js     # Assistance request lifecycle
     │   ├── notifications.js # Push subscription + test endpoints
@@ -134,7 +128,6 @@ backend/
     │   └── gdpr.js         # GDPR data export + deletion
     ├── repositories/
     │   ├── users.js        # User DB operations
-    │   ├── communities.js  # Community DB operations
     │   ├── requests.js     # Request DB operations
     │   ├── points.js       # Points ledger, badges, pair cooldowns
     │   └── push-subscriptions.js  # Push subscription DB ops

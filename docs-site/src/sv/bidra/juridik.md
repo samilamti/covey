@@ -22,8 +22,8 @@ Vi tar användarnas integritet på största allvar och säljer aldrig data.
 - Ta fram tydliga och rättvisa användarvillkor som skyddar både plattformen och individen.
 - Formulera hållbara juridiska regler för plattformen.
 
-### Organisationsform och licensiering
+### Bolagsstyrning och licensiering
 
-- Ge råd kring drift av icke-vinstdrivande föreningar eller stiftelser.
+- Ge råd kring bolagsstyrning som håller uppdraget låst i bolagsordningen.
 - Säkerställ korrekt hantering av öppen källkodslicenser.
 - Hantering av immateriella rättigheter.

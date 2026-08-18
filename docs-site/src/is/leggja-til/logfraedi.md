@@ -22,8 +22,8 @@ Við tökum persónuvernd notenda afar alvarlega og seljum aldrei gögn.
 - Gerðu skýra og sanngjarna notkunarskilmála sem vernda bæði vettvanginn og einstaklinginn.
 - Móta sjálfbærar lagalegar reglur fyrir vettvanginn.
 
-### Skipulagsform og leyfi
+### Fyrirtækjastjórnun og leyfisveitingar
 
-- Ráðleggðu um rekstur sjálfseignarstofnana eða félagasamtaka.
+- Veita ráðgjöf um fyrirtækjastjórnun sem heldur verkefninu læstu í samþykktum.
 - Tryggðu rétta meðhöndlun opinna hugbúnaðarleyfa.
 - Meðhöndlun hugverkaréttinda.

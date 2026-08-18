@@ -12,7 +12,7 @@ Masz doświadczenie w budowaniu i skalowaniu organizacji? Potrzebujemy Twojego s
 
 ### Zrównoważony rozwój i finansowanie
 
-Jesteśmy organizacją non-profit, ale potrzebujemy zasobów na utrzymanie i rozwój.
+Działamy bez podziału zysków, ale potrzebujemy zasobów do działania i rozwoju.
 
 - Pomóż nam znaleźć modele finansowania, które nie kompromitują naszej polityki prywatności.
 - Zidentyfikuj efektywne kosztowo rozwiązania dla utrzymania i infrastruktury.

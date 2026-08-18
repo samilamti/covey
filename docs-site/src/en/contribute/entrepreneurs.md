@@ -12,7 +12,7 @@ Do you have experience building and scaling organisations? We need your strategi
 
 ### Sustainability and funding
 
-We are non-profit, but we need resources for operations and development.
+We distribute no dividends, but we need resources for operations and development.
 
 - Help us find funding models that do not compromise our privacy policy.
 - Identify cost-effective solutions for operations and infrastructure.

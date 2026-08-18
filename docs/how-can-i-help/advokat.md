@@ -11,9 +11,9 @@ Vi tar användarnas integritet på största allvar och säljer ingen data.
 
 ### Användaravtal och Regler
 - Ta fram tydliga och rättvisa användarvillkor som skyddar både plattformen och individen.
-- Hjälp oss formulera regler för communityt som är hållbara juridiskt.
+- Hjälp oss formulera regler för användargemenskapen som är hållbara juridiskt.
 
 ### Organisationsform och Licensiering
-- Ge råd kring drift av icke-vinstdrivande föreningar eller stiftelser.
+- Ge råd kring bolagsstyrning som håller uppdraget låst i bolagsordningen.
 - Säkerställa korrekt hantering av Open Source-licenser (vi vill vara fullt transparenta).
 - Hantering av immateriella rättigheter.

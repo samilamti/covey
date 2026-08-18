@@ -64,7 +64,7 @@ Don sáhtát sihkkut du konto **Profila → Sihko konto** bokte. Proseassa:
 
 ## Ii čuovvun, ii almmustahttin
 
-Covey ii geavat čuovvungávkesiid, ii goalmmátoassi analyseremiid iige almmustahttimiid. Mii eat goassege vuovdde dieđuid. Lávdadat ruhtaduvvo attáldagain ja eaktodáhtolaš barguin.
+Covey ii geavat čuovguncookies, ii goalmmát oasi analysaid iige rekláma. Mii eat goassege vuovdde dieđuid. Bálvalus lea nuvttá geavahit, ja boahtomodealla ii goassege vuođđuduvvo du dieđuide.
 
 ## Oktavuohta
 

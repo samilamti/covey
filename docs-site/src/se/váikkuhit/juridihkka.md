@@ -22,8 +22,8 @@ Mii váldit geavaheddjiiid priváhtavuođa hui duođalaččat eat ge goassege vu
 - Ráhkadehtet čielga ja vuoiggalaš geavahaneavttuid mat suddjejit sihke lávdadaga ja ovttaskas olbmo.
 - Hábmejit bistevaš juridihkalaš njuolggadusaid lávdadahkii.
 
-### Organisašuvdnahápmi ja lisenseren
+### Searvedoaimmahat ja liseanssa
 
-- Addet ráđi ii-dietnasulmmoš servviid dahje vuođđudusaid doaimmahemiin.
+- Rádde searvedoaimmahaga birra mii doallá barggu čállejuvvon searvvi njuolggadusain.
 - Dáhkidehtet rievttes meannudeami rabas gáldu liseansaiguin.
 - Immaterialárbeáhttuvuoigatvuođaid meannudeapmi.

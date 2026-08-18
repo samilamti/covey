@@ -12,7 +12,7 @@ Har du erfarenhet av att bygga och skala organisationer? Vi behöver ditt strate
 
 ### Hållbarhet och finansiering
 
-Vi är icke-vinstdrivande, men behöver resurser för drift och utveckling.
+Vi drivs utan vinstutdelning, men behöver resurser för drift och utveckling.
 
 - Hjälp oss hitta finansieringsmodeller som inte kompromissar med vår integritetspolicy.
 - Identifiera kostnadseffektiva lösningar för drift och infrastruktur.

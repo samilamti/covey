@@ -22,8 +22,8 @@ Vit taka privatlívið hjá brúkarum møstu álvarligan og selja aldrin dáta.
 - Ger greiðar og rættvísar brúkaravilkár, sum verja bæði skipanina og einstaklingin.
 - Sníða varandiligt løgfrøðiligt regelverkið fyri skipanina.
 
-### Felagsskipan og lisensering
+### Felagsstýring og loyvisgevan
 
-- Gev ráð um rekstur av ikki-vinningsdrivandi feløgum ella stovnum.
+- Ráðgeva um felagsstýring, sum heldur endamálinum læst í viðtøkunum.
 - Trygg rættan handtering av opinkeldulisensum.
 - Handtering av hugverk.

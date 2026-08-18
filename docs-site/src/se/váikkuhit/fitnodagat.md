@@ -12,7 +12,7 @@ Leago dus vásáhus organisašuvnnaid hukset ja skálet? Mii dárbbašit du stra
 
 ### Bistilvuohta ja ruhtadeapmi
 
-Mii eat leat dietnasulmmoš, muhto mii dárbbašit resurssaid doaibmanbijuid ja ovddideapmái.
+Mii eat juoge vuoitto, muhto dárbbašit resurssaid doibmii ja ovdánahttimii.
 
 - Veahkehehttet min gávdnat ruhtadanmodeallaid mat eai heađušte min priváhtavuohtapolitihka.
 - Dovddastehtet gollusefektiivvalaš čovdosiid doaibmanbijuid ja infrastruktuvrra várás.

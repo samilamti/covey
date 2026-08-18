@@ -18,7 +18,7 @@ No code that compromises user privacy or safety will be accepted. Protecting our
 
 ## 3. Transparency
 
-All decisions are made openly. Our source code is open, our discussions are public and our finances are transparent.
+All decisions are made openly. Our source code is open and our discussions are public.
 
 ## 4. Quality
 

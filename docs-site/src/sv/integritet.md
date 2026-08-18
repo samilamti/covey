@@ -64,7 +64,7 @@ Du kan radera ditt konto via **Profil → Radera konto**. Processen:
 
 ## Ingen spårning, ingen reklam
 
-Covey använder inga spårningscookies, inga analyser från tredje part och ingen reklam. Vi säljer aldrig data. Plattformen finansieras genom donationer och frivilligt arbete.
+Covey använder inga spårningscookies, inga analyser från tredje part och ingen reklam. Vi säljer aldrig data. Tjänsten är gratis att använda, och intäktsmodellen bygger aldrig på dina uppgifter.
 
 ## Kontakt
 

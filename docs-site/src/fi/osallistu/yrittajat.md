@@ -12,7 +12,7 @@ Onko sinulla kokemusta organisaatioiden rakentamisesta ja skaalaamisesta? Tarvit
 
 ### Kestävyys ja rahoitus
 
-Olemme voittoa tavoittelemattomia, mutta tarvitsemme resursseja käyttöön ja kehitykseen.
+Toimimme ilman voitonjakoa, mutta tarvitsemme resursseja toimintaan ja kehitykseen.
 
 - Auta meitä löytämään rahoitusmalleja, jotka eivät vaaranna tietosuojakäytäntöämme.
 - Tunnista kustannustehokkaita ratkaisuja käyttöön ja infrastruktuuriin.

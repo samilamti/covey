@@ -64,7 +64,7 @@ You can delete your account via **Profile -> Delete account**. The process:
 
 ## No tracking, no advertising
 
-Covey uses no tracking cookies, no third-party analytics and no advertising. We never sell data. The platform is funded through donations and volunteer work.
+Covey uses no tracking cookies, no third-party analytics and no advertising. We never sell data. The service is free to use, and the revenue model will never be built on your information.
 
 ## Contact
 

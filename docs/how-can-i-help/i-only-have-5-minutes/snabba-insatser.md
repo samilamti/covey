@@ -5,7 +5,7 @@
 ## Snabba insatser
 
 1.  **Dela i sociala medier** 📱
-    - Skriv en kort tweet eller inlägg på LinkedIn: "Kolla in Medborgarstöd – en öppen plattform för trygg grannsamverkan!" (Länka till oss).
+    - Skriv en kort tweet eller inlägg på LinkedIn: "Kolla in Covey – en öppen plattform för trygg hemgång!" (Länka till oss).
 
 2.  **Rapportera en bugg eller ett stavfel** 🐛
     - Hittade du något som ser konstigt ut? Skicka in en snabb "Issue" eller hör av dig direkt.

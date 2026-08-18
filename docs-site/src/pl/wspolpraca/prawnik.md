@@ -22,8 +22,8 @@ Traktujemy prywatność użytkowników niezwykle poważnie i nigdy nie sprzedaje
 - Opracuj jasne i uczciwe warunki korzystania, które chronią zarówno platformę, jak i jednostkę.
 - Sformułuj trwałe zasady prawne dla platformy.
 
-### Forma organizacyjna i licencjonowanie
+### Ład korporacyjny i licencjonowanie
 
-- Doradź w zakresie prowadzenia stowarzyszeń lub fundacji non-profit.
+- Udzielaj porad dotyczących ładu korporacyjnego, które utrzymują misję zapisaną w statucie spółki.
 - Zapewnij prawidłowe zarządzanie licencjami open source.
 - Zarządzanie prawami własności intelektualnej.

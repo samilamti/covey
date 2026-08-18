@@ -7,7 +7,7 @@ This document defines the key terms, concepts, and domain language used througho
 ## Core concepts
 
 ### Assistance request
-A time-limited, real-world safety coordination request — e.g., "I need someone to walk home with." Created by a **requester**, fulfilled by a **helper**. Can be **freestanding** (no community) or **community-scoped**. Has a lifecycle: `open` → `accepted` → `active` → `completed` → `safety_confirmed`. Can also be `cancelled` or `expired`.
+A time-limited, real-world safety coordination request — e.g., "I need someone to walk home with." Created by a **requester**, fulfilled by a **helper**. Has a lifecycle: `open` → `accepted` → `active` → `completed` → `safety_confirmed`. Can also be `cancelled` or `expired`.
 
 ### Requester
 The person who creates an assistance request. They are seeking safety support (e.g., a walking companion). A requester cannot accept their own request.
@@ -18,11 +18,8 @@ The person who accepts and fulfills an assistance request. Must pass eligibility
 ### Session
 The active phase of an assistance request, from acceptance through completion. During a session, requester and helper can exchange messages and share live location. The term "session" is used informally — the database model is still `assistance_requests` with status transitions.
 
-### Community
-A group of users with a shared context (e.g., a neighbourhood, workplace, university). Communities use admin-approved joins and pseudonymous display names. Requests can be scoped to a community, limiting visibility to its members.
-
 ### Freestanding request
-An assistance request created without a community (`community_id` is NULL). Visible to all authenticated users via the `requests:open` Socket.io room and the `GET /api/requests/open` endpoint. Contrasts with **community-scoped requests** which are only visible to community members.
+An assistance request visible to all authenticated users (subject to eligibility filtering) via the `requests:open` Socket.io room and the `GET /api/requests/open` endpoint. All requests are freestanding — there is no group-scoping layer.
 
 ---
 
@@ -98,7 +95,6 @@ Server-side groupings for targeted event broadcasting:
 |------|---------|
 | `user:${userId}` | Personal room — targeted events (accept notifications, location updates, messages) |
 | `requests:open` | All authenticated users — freestanding request broadcasts |
-| `community:${id}` | Community members — community-scoped request broadcasts |
 
 ### Session messaging
 In-session chat between requester and helper. Messages are persisted to the `session_messages` table. Only available in `accepted` or `active` sessions. Rate limited (1 message per 2 seconds per user per request). Includes 6 pre-filled **quick messages** for common situations.
@@ -149,7 +145,7 @@ Database schema setup via `src/migrate.js`. Runs inline before server start (`aw
 User account deletion uses a two-phase approach: `POST /api/gdpr/delete` marks the account as deleted (soft delete). A daily worker hard-deletes accounts that have been soft-deleted for >30 days. This provides a cooling-off period for accidental deletions.
 
 ### Data export
-`GET /api/gdpr/export` returns all user data: profile, community memberships, assistance requests, session messages, ratings, and push subscriptions. Required by GDPR Article 20 (right to data portability).
+`GET /api/gdpr/export` returns all user data: profile, assistance requests, session messages, ratings, and push subscriptions. Required by GDPR Article 20 (right to data portability).
 
 ### Coordinate rounding
 Open request listings round `pickup_lat`/`pickup_lng` to 3 decimal places (~111 metres). Destination coordinates are suppressed entirely (returned as NULL). Full precision coordinates are only available to session participants.

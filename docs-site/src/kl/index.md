@@ -3,20 +3,20 @@ title: Covey pillugu
 pageId: home
 order: 1
 layout: layouts/page.njk
-description: Covey atuisoqarsinnaanngitsumik, ammarluinnaq aamma aningaasarsiornissamut aaqqissuussaanngitsumik attaveqarfik, inuit akornanni ikiorsinnaassuteqarfiuvoq.
+description: Covey tassaavoq platformi toqqissisimanartoq ammasorlu, inuit ulluinnarni ikioqatigiiffiat.
 ---
 
 ## Isumaliut
 
 Ataatsimiititalereersinnaasumik, nammineq aamma immikkoortitaasinnaasumik attaveqarfimmi atuisoqarsinnaanngilaq, inuit ullormut tamanut ikiorsinnaassuteqarsinnaapput, nunami nalunaaqutsillu aqqutigalugit nalunaarsortaasut.
 
-Covey (siullermik Tillsammans) inuit peqatigiiffiat, nalinginnaasumik sukumiisumillu ullormut tamanut aaqqiissutaasinnaalluni -- soorlu unnukkut ataatsimut angerlarsimalluni.
+Covey (aallartikkami Tillsammans) periarfissiivoq toqqissisimaartumik sukkanngitsumillu ulluinnarni isumannaatsuunissamut periusissanik pilersaarusiornissamut, soorlu unnukkut aallaqatigiinnissamut.
 
 ## Sooq Covey?
 
 ### Illit pisinnaanngikkit tunisassiaq
 
-Peqatigiiffinni ataatsimut ilaatigut aningaasersinnaanngitsumik pisinnaanngikkit, Covey aningaasersinnaanngitsumilluunniit. Siunertaq ataasiinnaq taanna: ikiorneqarsinnaassutit imaluunniit allat ikiorsinnaagakkit.
+Sociale mediennut naleqqiullugu, ilinnut soqutiginninnitsinnut aningaasarsiornertaqanngilagut. Reklameqanngilagut, dataanillu niuertarata. Aningaasaliisunik aaqqissuisoqaratalu. Anguniagaraarput kisiat, ikiorserneqarsinnaasutit imaluunniit allamik ikiuisinnaasutit.
 
 ### Nalunaarsortaasutit uppernarsarneqarsimasut
 
@@ -26,9 +26,9 @@ BankID-ip atuineratigut, atuisoqarsinnaanngitsunik aamma unipkaalerujussuartunik
 
 Koodit ammarluinnarpput misissuineqarsinnaallutik. Kinaassaaq takujumaarsinnaavorq, qanoq daatat atuisakkit. Algoritmer angigassarsinnaanngitsut sumiinngilaq.
 
-### Aningaasarsiornissamut aaqqissuussaanngitsoq
+### Kingunertanik agguaassinatik
 
-Covey piginneqanngillaq aningaasanik nassitseqartumit. Atuisoqarsinnaanngitsumit suliniuterput: inuiaqatigiinnut iluaqutsineq, aningaasarsiornerinnaanngitsoq.
+Covey aallaavigalugu ingerlanneqarpoq Covey AB-mit, taanna Sverige-mi aktieselskabiuvoq kingunertanik agguaassaqanngitsoq. Sinneqartoorutit ingerlatamut investereqqittarput. Suleqatigiinnerup anguniagaa aktieselskabip aalajangersakkaarutaanut ilanngunneqarsimavoq, kode ammasuuvoq aamma aalajangiinerit allanneqarsimapput.
 
 ## Pissusilersuutit
 

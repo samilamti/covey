@@ -66,7 +66,7 @@ Du kan slette kontoen din via **Profil -> Slett konto**. Prosessen:
 
 ## Ingen sporing, ingen reklame
 
-Covey bruker ingen sporingscookies, ingen tredjepartsanalyser og ingen reklame. Vi selger aldri data. Plattformen finansieres gjennom donasjoner og frivillig arbeid.
+Covey bruker ingen sporingscookies, ingen analyser fra tredjeparter og ingen reklame. Vi selger aldri data. Tjenesten er gratis å bruke, og inntektsmodellen bygger aldri på dine opplysninger.
 
 ## Kontakt
 

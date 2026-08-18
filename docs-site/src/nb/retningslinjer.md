@@ -18,7 +18,7 @@ Ingen kode som setter brukeres personvern eller sikkerhet i fare vil bli aksepte
 
 ## 3. Transparens
 
-Alle beslutninger tas apent. Kildekoden var er apen, diskusjonene vare er offentlige og okonomien var er transparent.
+Alle beslutninger fattes åpent. Vår kildekode er åpen og våre diskusjoner er offentlige.
 
 ## 4. Kvalitet
 

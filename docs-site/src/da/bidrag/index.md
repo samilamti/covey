@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Forskellige mader at bidrage til Covey-projektet.
 ---
 
-Covey drives af frivillige og aben kildekode. Uanset din baggrund er der mader at hjaelpe pa.
+Covey er open source, og bidrag udefra gør tjenesten bedre. Uanset din baggrund er der måder at hjælpe til på.
 
 ## Find din made at bidrage
 
@@ -14,13 +14,12 @@ Covey drives af frivillige og aben kildekode. Uanset din baggrund er der mader a
 - **[Juridisk](/da/bidrag/juridisk/)** -- GDPR, brugeraftaler, organisationsform og licensering.
 - **[Studerende](/da/bidrag/studerende/)** -- Specialer, universitetskontakter og dokumentation.
 - **[Ivaerksaettere](/da/bidrag/ivaerksaetter/)** -- Finansiering, partnerskaber og organisationsopbygning.
-- **[Okonomisk](/da/bidrag/okonomisk/)** -- Doner til drift og udvikling.
 - **[Ikke-teknisk](/da/bidrag/ikke-teknisk/)** -- Betatestning og mund-til-mund.
 - **[Hurtige indsatser](/da/bidrag/hurtige-indsatser/)** -- Fem minutter? Gor alligevel stor forskel.
 
 ## Hvorfor bidrage?
 
-Covey er et nonprofitborgerinitiativ. Hvert bidrag -- hvad enten det er kode, juridisk radgivning, en deling pa sociale medier eller en donation -- hjaelper med at gore hverdagen tryggere for flere.
+Covey drives uden udbytteudbetaling, overskud går tilbage ind i virksomheden. Hvert bidrag, uanset om det er kode, juridisk rådgivning eller en deling på sociale medier, hjælper med at gøre hverdagen tryggere for flere.
 
 ## Kom i gang
 

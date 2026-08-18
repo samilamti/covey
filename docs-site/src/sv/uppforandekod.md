@@ -18,7 +18,7 @@ Ingen kod som äventyrar användares integritet eller säkerhet kommer att accep
 
 ## 3. Transparens
 
-Alla beslut fattas öppet. Vår källkod är öppen, våra diskussioner är offentliga och vår ekonomi är transparent.
+Alla beslut fattas öppet. Vår källkod är öppen och våra diskussioner är offentliga.
 
 ## 4. Kvalitet
 

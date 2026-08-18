@@ -22,8 +22,8 @@ Otamme käyttäjien yksityisyyden erittäin vakavasti emmekä koskaan myy tietoj
 - Laadi selkeät ja oikeudenmukaiset käyttöehdot, jotka suojaavat sekä alustaa että yksilöä.
 - Muotoile kestäviä juridisia sääntöjä alustalle.
 
-### Organisaatiomuoto ja lisensointi
+### Hallinnointi ja lisensointi
 
-- Neuvo voittoa tavoittelemattomien yhdistysten tai säätiöiden hallinnossa.
+- Anna neuvoja hallinnointiin, joka pitää tehtävän lukittuna yhtiöjärjestykseen.
 - Varmista avoimen lähdekoodin lisenssien oikea käsittely.
 - Immateriaalioikeuksien hallinta.

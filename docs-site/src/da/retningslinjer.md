@@ -18,7 +18,7 @@ Ingen kode, der braenger brugeres privatliv eller sikkerhed i fare, vil blive ac
 
 ## 3. Transparens
 
-Alle beslutninger traeffes abent. Vores kildekode er aben, vores diskussioner er offentlige, og vores okonomi er transparent.
+Alle beslutninger træffes åbent. Vores kildekode er åben, og vores diskussioner er offentlige.
 
 ## 4. Kvalitet
 

@@ -3,20 +3,20 @@ title: Om Covey
 pageId: home
 order: 1
 layout: layouts/page.njk
-description: Covey er en trygg, apen og ideell plattform der innbyggere hjelper hverandre i hverdagen.
+description: Covey er en trygg og åpen plattform der borgere hjelper hverandre i hverdagen.
 ---
 
 ## Var visjon
 
 A skape en trygg, uavhengig og desentralisert plattform der innbyggere kan hjelpe hverandre i hverdagen, verifisert med nasjonal e-legitimasjon.
 
-Covey (tidligere Tillsammans) er et innbyggerinitiativ som gir deg muligheten til raskt og trygt a koordinere hverdagssikkerhet -- som a ga hjem sammen om kvelden.
+Covey (tidligere Tillsammans) gir deg mulighet til raskt og trygt å koordinere hverdagslig sikkerhet, som å gå hjem sammen på kvelden.
 
 ## Hvorfor Covey?
 
 ### Du er ikke produktet
 
-I motsetning til sosiale medier som tjener penger pa a selge oppmerksomheten din til annonsorer, tjener Covey ingen penger. Vart eneste mal er at du skal kunne fa hjelp eller hjelpe noen andre.
+I motsetning til sosiale medier tjener vi ingen penger på din oppmerksomhet. Ingen reklame, ingen datahandel, ingen sponsede matchinger. Vårt eneste mål er at du skal kunne få hjelp eller hjelpe noen andre.
 
 ### Verifisert identitet
 
@@ -26,9 +26,9 @@ Ved a bruke BankID eliminerer vi trollkontoer og svindel. Du vet at personen du 
 
 Koden var er apen for granskning. Hvem som helst kan se hvordan vi handterer data. Det finnes ingen skjulte algoritmer som styrer hva du ser.
 
-### Ideell
+### Uten utbytteutdeling
 
-Covey eies ikke av risikokapitalister. Vi styres av brukerne vare og formalet vart: samfunnsnytte, ikke okonomisk vekst.
+Covey drives av Covey AB, et svensk aksjeselskap uten utbytteutdeling. Overskudd reinvesteres i virksomheten. Oppdraget står i vedtektene, koden er åpen og beslutningene er dokumenterte.
 
 ## Hovedfunksjoner
 

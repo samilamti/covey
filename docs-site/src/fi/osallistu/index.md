@@ -6,7 +6,7 @@ layout: layouts/page.njk
 description: Erilaisia tapoja osallistua Covey-projektiin.
 ---
 
-Coveyta ylläpitävät vapaaehtoiset ja avoin lähdekoodi. Taustastasi riippumatta on tapoja auttaa.
+Covey on avointa lähdekoodia, ja ulkopuoliset panokset tekevät palvelusta paremman. Taustastasi riippumatta on olemassa tapoja auttaa.
 
 ## Löydä oma tapasi osallistua
 
@@ -14,13 +14,12 @@ Coveyta ylläpitävät vapaaehtoiset ja avoin lähdekoodi. Taustastasi riippumat
 - **[Laki](/fi/osallistu/laki/)** -- GDPR, käyttöehdot, organisaatiomuoto ja lisenssikysymykset.
 - **[Opiskelijat](/fi/osallistu/opiskelijat/)** -- Opinnäytetyöt, yliopistokontaktit ja dokumentaatio.
 - **[Yrittäjät](/fi/osallistu/yrittajat/)** -- Rahoitus, kumppanuudet ja organisaation rakentaminen.
-- **[Taloudellisesti](/fi/osallistu/taloudellisesti/)** -- Lahjoita käyttöön ja kehitykseen.
 - **[Ei-tekninen](/fi/osallistu/ei-tekninen/)** -- Betatestaus ja suusta suuhun.
 - **[Nopeat teot](/fi/osallistu/nopeat-teot/)** -- Viisi minuuttia? Tee silti suuri ero.
 
 ## Miksi osallistua?
 
-Covey on voittoa tavoittelematon kansalaisaloite. Jokainen panos -- oli se koodia, juridista neuvontaa, jako sosiaalisessa mediassa tai lahjoitus -- auttaa tekemään arjesta turvallisempaa useammille.
+Covey toimii ilman voitonjakoa, ylijäämät palautuvat takaisin toimintaan. Jokainen panos, olipa se sitten koodia, lakineuvontaa tai jakaminen sosiaalisessa mediassa, auttaa tekemään arjesta turvallisempaa useammille.
 
 ## Aloita
 

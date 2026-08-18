@@ -22,8 +22,8 @@ We take user privacy very seriously and never sell data.
 - Draft clear and fair terms of service that protect both the platform and the individual.
 - Formulate sustainable legal rules for the platform.
 
-### Organisational form and licensing
+### Governance and licensing
 
-- Advise on running non-profit associations or foundations.
+- Advise on governance that keeps the mission locked in the articles of association.
 - Ensure correct handling of open-source licences.
 - Handle intellectual property matters.

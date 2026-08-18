@@ -12,7 +12,7 @@ Hevur tú royndir av at byggja og meira felagsskipanir? Vit tørva strategiska h
 
 ### Varandiheit og fígging
 
-Vit eru ikki-vinningsdrivandi, men tørva úrslitir til rekstur og menning.
+Vit verða rikin uttan vinningsbýti, men hava tørv á tilfeingi til rakstur og menning.
 
 - Hjálp okkum at finna fíggingsliðir, sum ikki kompromittera privatlívspolitikkina hjá okkum.
 - Eyðmerk kostnaðargóðar loysnigar fyri rekstur og infrastruktúr.

@@ -58,7 +58,6 @@ Control feature availability via environment variables. All default to `false`:
 export FEATURE_BANKID_AUTH=false          # Use real BankID vs stub
 export FEATURE_PUSH_NOTIFICATIONS=false   # Web Push API vs mock
 export FEATURE_GEOLOCATION=false          # Location sharing
-export FEATURE_COMMUNITIES=false          # Safety communities
 ```
 
 The frontend fetches flags from `GET /api/features` on load.

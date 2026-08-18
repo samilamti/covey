@@ -12,7 +12,7 @@ Organisatióninik sananissaanut ilisimasat? Strategiskimik isumaliuteqarnerit t�
 
 ### Varanneq aamma aningaasarsiorneq
 
-Aningaasarsiornissamut aaqqissuussaanngitsugut, kisiannili rekstrunut aamma menninermut tørvut.
+Kingunertanik agguaassinata ingerlanneqarpugut, sulianullili ingerlatsinermut ineriartortitsinermullu aningaasanik pisariaqartitsivugut.
 
 - Aningaasarsiornerit namminersornerillu nassuiarsinnaangilagut.
 - Rekstrunut aamma infrastruktúrinut.

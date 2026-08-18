@@ -1,4 +1,4 @@
-# Projektplan: Medborgarstöd (CitizenAid)
+# Projektplan: Covey
 
 ## 1. Vision
 Att skapa en trygg, oberoende och decentraliserad plattform där medborgare kan hjälpa varandra i vardagen, verifierat med nationell e-legitimation (t.ex. BankID).
@@ -12,8 +12,8 @@ Att skapa en trygg, oberoende och decentraliserad plattform där medborgare kan 
 ## 3. Huvudfunktioner
 - **Verifierad inloggning:** Integration med BankID.
 - **Hjälpförfrågningar:** Användare kan be om hjälp med vardagssysslor.
-- **Trygghetscommunity:** Lokala grupper för samverkan.
-- **Icke-vinstdrivande:** Drivs som ett gemensamt medborgarinitiativ.
+- **Öppna förfrågningar:** Ingen gruppstruktur — förfrågningar syns för behöriga i närheten.
+- **Utan vinstutdelning:** Drivs av Covey AB, ett svenskt aktiebolag där överskott återinvesteras i verksamheten.
 
 ## 4. Tidsplan
 - **Fas 1:** Prototyp och byggsystem (Nuvarande).
@@ -23,7 +23,7 @@ Att skapa en trygg, oberoende och decentraliserad plattform där medborgare kan 
 
 ---
 
-## 👶 Enkel version (För 13-åringar)
+## Enkelt förklarat
 Vi vill bygga en app där grannar och folk i samma stad kan hjälpa varandra. Det kan handla om att låna en borrmaskin, få hjälp att bära en soffa eller bara kolla om någon behöver sällskap. 
 
 **Det speciella:** Du loggar in med BankID så att vi vet att alla är de dom säger att de är. Det gör det tryggt för alla!

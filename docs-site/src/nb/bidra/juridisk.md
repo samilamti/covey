@@ -22,8 +22,8 @@ Vi tar brukernes personvern pa storste alvor og selger aldri data.
 - Utarbeid tydelige og rettferdige brukervilkar som beskytter bade plattformen og individet.
 - Formuler holdbare juridiske regler for plattformen.
 
-### Organisasjonsform og lisensiering
+### Selskapsstyring og lisensiering
 
-- Gi rad om drift av ideelle foreninger eller stiftelser.
+- Gi råd rundt selskapsstyring som holder oppdraget låst i vedtektene.
 - Sikre korrekt handtering av apne kildekodslisenser.
 - Handtering av immaterielle rettigheter.

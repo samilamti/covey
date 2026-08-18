@@ -18,7 +18,7 @@ Koodit inuit namminersorneritik imaluunniit aaqqiissutaasutik navianartumik siun
 
 ## 3. Ammarluinnaq
 
-Isumaliutit tamarmik ammarluinnarmik aalajangiisoqarput. Koodit ammarluinnarpput, oqallittarnerit tamarmik ammarluinnarpput aamma aningaasaqarnerit takutinnarpput.
+Aalajangiinerit tamarmik ammasumik suliarineqartarput. Kildekodeq ammasuuvoq aamma oqallinnerit tamanut saqqummiussisarput.
 
 ## 4. Pissusilersuutit
 
