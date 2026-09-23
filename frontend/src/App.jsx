@@ -26,10 +26,17 @@ async function initNativePlugins() {
   try {
     const { SplashScreen } = await import('@capacitor/splash-screen')
     const { StatusBar, Style } = await import('@capacitor/status-bar')
-    // Dark status bar to match #1e293b theme
-    await StatusBar.setStyle({ style: Style.Dark })
+    // Style naming is inverted from the intuition: Style.Dark means LIGHT text
+    // (for a dark background) and Style.Light means DARK text.
+    // Android paints its own dark #1e293b bar, so light text is right there.
+    // iOS has no bar background — the status bar sits directly on the light app
+    // chrome (bg-gray-50), where light text rendered the clock and battery
+    // invisible, so it needs dark text instead.
     if (Capacitor.getPlatform() === 'android') {
+      await StatusBar.setStyle({ style: Style.Dark })
       await StatusBar.setBackgroundColor({ color: '#1e293b' })
+    } else {
+      await StatusBar.setStyle({ style: Style.Light })
     }
     await SplashScreen.hide()
   } catch (err) {
