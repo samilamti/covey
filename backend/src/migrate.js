@@ -278,6 +278,46 @@ const migrations = [
       CREATE INDEX IF NOT EXISTS idx_native_push_user ON native_push_tokens(user_id);
     `,
   },
+  {
+    name: '010_ratings_outlive_requests',
+    sql: `
+      -- Ratings and points are about a person, not a session, so they must
+      -- survive deleteTerminal(). Until now both tables referenced
+      -- assistance_requests with ON DELETE CASCADE, so every startup cleanup
+      -- wiped every user's safety score and the whole points ledger.
+      -- After this, deleting a finished request only unlinks its ratings/points
+      -- (request_id -> NULL). Account deletion still removes them via the
+      -- rater_id / rated_id / user_id CASCADE to users.
+      --
+      -- UNIQUE(request_id, rater_id) and UNIQUE(user_id, request_id) stay
+      -- meaningful: a new row always carries a live request_id (the FK demands
+      -- it), and NULLs only appear once that request no longer exists to be
+      -- rated again.
+      ALTER TABLE ratings       ALTER COLUMN request_id DROP NOT NULL;
+      ALTER TABLE points_ledger ALTER COLUMN request_id DROP NOT NULL;
+
+      -- Re-point the FKs only when they are not already SET NULL, so the
+      -- boot-time "verify" re-run is a no-op instead of a table re-validation.
+      DO $$
+      DECLARE c record;
+      BEGIN
+        FOR c IN
+          SELECT con.conname, con.conrelid::regclass::text AS tbl
+          FROM pg_constraint con
+          WHERE con.contype = 'f'
+            AND con.confrelid = 'assistance_requests'::regclass
+            AND con.conrelid IN ('ratings'::regclass, 'points_ledger'::regclass)
+            AND con.confdeltype <> 'n'
+        LOOP
+          EXECUTE format('ALTER TABLE %I DROP CONSTRAINT %I', c.tbl, c.conname);
+          EXECUTE format(
+            'ALTER TABLE %I ADD CONSTRAINT %I FOREIGN KEY (request_id) '
+            'REFERENCES assistance_requests(id) ON DELETE SET NULL',
+            c.tbl, c.conname);
+        END LOOP;
+      END $$;
+    `,
+  },
 ]
 
 /**
@@ -311,8 +351,17 @@ export async function migrate() {
       console.log(`  verify  ${migration.name}`)
       continue
     }
-    await client.query(migration.sql)
-    await client.query('INSERT INTO migrations (name) VALUES ($1)', [migration.name])
+    // Apply the migration and record it in ONE transaction, so a crash in
+    // between can never leave the schema changed but unrecorded.
+    await client.query('BEGIN')
+    try {
+      await client.query(migration.sql)
+      await client.query('INSERT INTO migrations (name) VALUES ($1)', [migration.name])
+      await client.query('COMMIT')
+    } catch (err) {
+      await client.query('ROLLBACK')
+      throw err
+    }
     console.log(`  ran   ${migration.name}`)
   }
 

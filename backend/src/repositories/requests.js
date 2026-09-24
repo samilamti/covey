@@ -221,7 +221,9 @@ export async function expireOldRequests() {
 
 /**
  * Delete all requests in terminal statuses.
- * Safe for startup cleanup — CASCADE handles session_messages and ratings.
+ * Safe for startup cleanup — CASCADE removes session_messages; ratings and
+ * points_ledger rows survive with request_id set to NULL (migration 010), so
+ * safety scores and points are not reset.
  * Location updates already auto-deleted by DB trigger on terminal status.
  * @returns {Promise<number>} Number of deleted requests
  */
