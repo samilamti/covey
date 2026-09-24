@@ -12,8 +12,20 @@
 #
 # Usage:
 #   source scripts/ios/lib/asc-asset-upload.sh
-#   ASSET_ID=$(asc_upload_asset "/appScreenshots" "$create_body_json" "/path/to/file.png")
+#   ASSET_ID=$(asc_upload_asset "/appScreenshots" "$create_body_json" "/path/to/file.png") || exit 1
 #   echo "$ASSET_ID"
+#
+# Returns non-zero, and prints no id, if ANY step fails. Callers must check it:
+# the function runs inside $(...), where bash does not apply set -e.
+#
+# Two traps this is written around:
+#   * The chunk URLs point at Apple's asset store, not the ASC API. They must get
+#     ONLY the headers the operation lists; the ASC bearer token earns a bare 400.
+#   * The reservation JSON goes to Python through a FILE. An earlier version piped
+#     it in while also feeding the Python script through a heredoc on the same
+#     stdin. The heredoc wins, the JSON never arrives, no bytes are uploaded, the
+#     commit PATCH fails, and the error was swallowed. Every "uploaded" asset was
+#     left AWAITING_UPLOAD (found 2026-09-24).
 
 set -euo pipefail
 
@@ -29,51 +41,53 @@ asc_upload_asset() {
   local PY="$SCRIPT_DIR_LOCAL/../.venv/bin/python3"
   [[ -x "$PY" ]] || PY="python3"
 
-  # 1. Create the asset
-  local create_response asset_id
-  create_response=$(asc_post "$create_path" "$create_body")
-  asset_id=$(printf '%s' "$create_response" | "$PY" -c 'import json,sys; print(json.load(sys.stdin)["data"]["id"])')
+  local resp_file
+  resp_file=$(mktemp "${TMPDIR:-/tmp}/asc-reserve.XXXXXX")
 
-  # 2. Upload each chunk
-  printf '%s' "$create_response" | "$PY" - "$file_path" <<'PY' >/dev/null
-import json, sys, subprocess, os
-data = json.load(sys.stdin)
-file_path = sys.argv[1]
-ops = data["data"]["attributes"]["uploadOperations"]
-with open(file_path, "rb") as f:
-    blob = f.read()
+  # 1. Reserve
+  if ! asc_post "$create_path" "$create_body" > "$resp_file"; then
+    rm -f "$resp_file"; return 1
+  fi
+  local asset_id asset_type
+  asset_id=$("$PY" -c 'import json,sys; print(json.load(open(sys.argv[1]))["data"]["id"])' "$resp_file") \
+    || { rm -f "$resp_file"; return 1; }
+  asset_type=$("$PY" -c 'import json,sys; print(json.load(open(sys.argv[1]))["data"]["type"])' "$resp_file") \
+    || { rm -f "$resp_file"; return 1; }
+
+  # 2. PUT each chunk, checking the HTTP status (curl exits 0 on a 4xx/5xx)
+  if ! "$PY" - "$resp_file" "$file_path" <<'PY'
+import json, subprocess, sys
+data = json.load(open(sys.argv[1]))
+blob = open(sys.argv[2], "rb").read()
+ops = data["data"]["attributes"]["uploadOperations"] or []
+if not ops:
+    sys.exit("asc_upload_asset: reservation returned no uploadOperations")
 for op in ops:
-    chunk = blob[op["offset"]:op["offset"]+op["length"]]
+    chunk = blob[op["offset"]:op["offset"] + op["length"]]
     headers = []
-    for h in op.get("requestHeaders", []):
-        headers.append("-H")
-        headers.append(f'{h["name"]}: {h["value"]}')
-    cmd = ["curl", "-sS", "--globoff", "-X", op["method"], op["url"], *headers, "--data-binary", "@-"]
+    for h in op.get("requestHeaders") or []:
+        headers += ["-H", f'{h["name"]}: {h["value"]}']
+    cmd = ["curl", "-sS", "--globoff", "-o", "/dev/null", "-w", "%{http_code}",
+           "-X", op["method"], op["url"], *headers, "--data-binary", "@-"]
     r = subprocess.run(cmd, input=chunk, capture_output=True)
-    if r.returncode != 0:
-        sys.stderr.write(f"chunk upload failed: {r.stderr.decode()}\n")
-        sys.exit(1)
+    code = r.stdout.decode().strip()
+    if r.returncode != 0 or not code.startswith("2"):
+        sys.exit(f"asc_upload_asset: chunk at offset {op['offset']} → HTTP {code} {r.stderr.decode().strip()}")
 PY
+  then
+    rm -f "$resp_file"; return 1
+  fi
+  rm -f "$resp_file"
 
-  # 3. Compute MD5 + commit
-  local md5_hex
+  # 3. Commit with the MD5 checksum
+  local md5_hex commit_body
   md5_hex=$(md5 -q "$file_path")
-
-  local commit_body
-  commit_body=$("$PY" -c "
-import json
-print(json.dumps({
-  'data': {
-    'type': '$(printf '%s' "$create_response" | "$PY" -c 'import json,sys; print(json.load(sys.stdin)["data"]["type"])')',
-    'id': '$asset_id',
-    'attributes': { 'uploaded': True, 'sourceFileChecksum': '$md5_hex' }
-  }
-}))
-")
-
-  local resource_path
-  resource_path=$(printf '%s' "$create_response" | "$PY" -c 'import json,sys; t=json.load(sys.stdin)["data"]["type"]; print(f"/{t}")')
-  asc_patch "${resource_path}/${asset_id}" "$commit_body" >/dev/null
+  commit_body=$("$PY" -c '
+import json, sys
+print(json.dumps({"data": {"type": sys.argv[1], "id": sys.argv[2],
+  "attributes": {"uploaded": True, "sourceFileChecksum": sys.argv[3]}}}))
+' "$asset_type" "$asset_id" "$md5_hex")
+  asc_patch "/${asset_type}/${asset_id}" "$commit_body" >/dev/null || return 1
 
   printf '%s' "$asset_id"
 }
