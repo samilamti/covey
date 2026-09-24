@@ -34,6 +34,10 @@ cat > "$EXPORT_OPTS" <<PLIST
 	<true/>
 	<key>stripSwiftSymbols</key>
 	<true/>
+	<!-- Defaults to true, which lets xcodebuild silently bump the build number
+	     when ASC already has it. Keep the archive the single source of truth. -->
+	<key>manageAppVersionAndBuildNumber</key>
+	<false/>
 </dict>
 </plist>
 PLIST
