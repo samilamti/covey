@@ -279,6 +279,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `scripts/ios/all.sh` — End-to-end pipeline: prereqs → install/build → Xcode patches → bundle ID + push capability registration → archive → export → TestFlight upload via App Store Connect API.
 - `scripts/ios/.env.ios.example` — Template for the gitignored ASC API key + bundle config.
 - See `scripts/ios/lib/` for the JWT signer, curl wrapper, and asset upload helper.
+- `scripts/ios/08-screenshots.sh` captures the 5 App Store screenshots unattended against a **local** stack (PGlite + stub-auth backend mirroring production's `/api/features`, dedicated "Covey Screenshots" iPhone 16 Plus simulator, 1290×2796). It builds with `VITE_SCREENSHOT_MODE=1`, which compiles in `frontend/src/screenshot-mode.js` so `scripts/ios/screenshots/capture.mjs` can drive the app with no taps; `lib/assert-no-screenshot-mode.sh` fails steps 01/06 and Android 03 if that code ever reaches a release bundle. Upload with `11-upload-screenshots.sh` (dry-run by default, `--apply --replace` to swap the live set, verifies Apple's copies).
 
 ### Android deployment automation
 - `scripts/android/` — numbered pipeline (`00-prereqs.sh` … `05-upload-aab.sh`, `06-screenshots.sh`, `all.sh`): Firebase config → keystore → signed AAB (+ universal APK) → Play listing → upload. Store package is `se.covey.app` (Play `applicationId`); the Java `namespace` stays `se.covey`, so the activity class is `se.covey.MainActivity`.

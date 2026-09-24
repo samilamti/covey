@@ -59,3 +59,4 @@ if [[ -z "$IPA_PATH" ]]; then
 fi
 
 ok "IPA exported: $IPA_PATH ($(du -sh "$IPA_PATH" | awk '{print $1}'))"
+"$SCRIPT_DIR/lib/assert-no-screenshot-mode.sh" "$IPA_PATH"

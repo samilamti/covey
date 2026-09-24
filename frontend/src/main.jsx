@@ -3,6 +3,14 @@ import { Capacitor } from '@capacitor/core'
 import { App } from './App'
 import './i18n'
 import './index.css'
+import { startScreenshotMode } from './screenshot-mode'
+
+// Screenshot builds only (scripts/ios/08-screenshots.sh). The check is on a
+// build-time constant, so in every other build this line and the whole
+// screenshot-mode module are removed by the bundler.
+if (import.meta.env.VITE_SCREENSHOT_MODE === '1') {
+  startScreenshotMode(import.meta.env.VITE_SCREENSHOT_DIRECTOR)
+}
 
 render(<App />, document.getElementById('app'))
 

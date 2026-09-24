@@ -37,6 +37,9 @@ async function sendTokenToBackend(token, platform) {
  * (iOS waits for APNs registration) is never missed.
  */
 export async function registerNativePush() {
+  // Screenshot builds must not raise the notification prompt over the shots,
+  // or register a device token with a throwaway local backend.
+  if (import.meta.env.VITE_SCREENSHOT_MODE === '1') return
   const { FirebaseMessaging } = await import('@capacitor-firebase/messaging')
   const { Capacitor } = await import('@capacitor/core')
   const platform = Capacitor.getPlatform() // 'ios' | 'android'

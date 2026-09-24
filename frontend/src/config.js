@@ -13,5 +13,15 @@ import { Capacitor } from '@capacitor/core'
  * Empty string on web (relative URLs), full URL on native.
  */
 export const API_BASE = Capacitor.isNativePlatform()
-  ? (import.meta.env.DEV ? '' : 'https://covey.se')
+  ? (import.meta.env.DEV ? '' : nativeApiBase())
   : ''
+
+/**
+ * Production API on native. A screenshot build (VITE_SCREENSHOT_MODE=1, made only
+ * by scripts/ios/08-screenshots.sh) talks to a local backend instead, so capture
+ * never touches production data.
+ */
+function nativeApiBase() {
+  if (import.meta.env.VITE_SCREENSHOT_MODE === '1') return import.meta.env.VITE_SCREENSHOT_API_BASE
+  return 'https://covey.se'
+}

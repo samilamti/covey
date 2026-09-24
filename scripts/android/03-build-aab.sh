@@ -27,6 +27,7 @@ ok "Web bundle built"
 log "Syncing into the Android project (cap sync)..."
 ( cd "$FRONTEND_DIR" && npx cap sync android >/dev/null )
 ok "Capacitor sync done"
+"$SCRIPT_DIR/../ios/lib/assert-no-screenshot-mode.sh" "$FRONTEND_DIR/dist" "$ANDROID_PROJECT/app/src/main/assets/public"
 
 log "Building signed release AAB + universal APK (gradlew bundleRelease assembleRelease)..."
 ( cd "$ANDROID_PROJECT" && ./gradlew bundleRelease assembleRelease --console=plain )

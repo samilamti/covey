@@ -19,6 +19,7 @@ ok "Built dist/ ($(du -sh dist | awk '{print $1}'))"
 log "Syncing web bundle into iOS project (npx cap sync ios)..."
 npx cap sync ios
 ok "Capacitor sync complete"
+"$SCRIPT_DIR/lib/assert-no-screenshot-mode.sh" "$PROJECT_ROOT/frontend/dist" "$PROJECT_ROOT/frontend/ios/App/App/public"
 
 log "Installing CocoaPods for iOS..."
 cd "$PROJECT_ROOT/frontend/ios/App"
