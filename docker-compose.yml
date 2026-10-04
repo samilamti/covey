@@ -87,13 +87,21 @@ services:
   webhook:
     build: ./deploy/webhook
     restart: unless-stopped
+    # Run as the host user that owns the repo, in the docker socket's group, so
+    # git works without "dubious ownership" errors and deploys leave the files
+    # owned by that user rather than root.
+    user: "${DEPLOY_UID:-1001}:${DOCKER_GID:-988}"
     environment:
       DEPLOY_WEBHOOK_SECRET: ${DEPLOY_WEBHOOK_SECRET:-}
+      REPO: ${DEPLOY_REPO_DIR:-/home/deploy/apps/tillsammans}
+      HOME: /tmp
     volumes:
       - ./deploy/webhook/hooks.json:/etc/webhook/hooks.json:ro
       - ./deploy/webhook/deploy.sh:/scripts/deploy.sh:ro
       - /var/run/docker.sock:/var/run/docker.sock
-      - .:/repo
+      # Same absolute path as on the host: compose resolves bind mounts to
+      # absolute paths that the host's docker daemon then opens.
+      - .:${DEPLOY_REPO_DIR:-/home/deploy/apps/tillsammans}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.webhook.rule=Host(`${DOMAIN}`) && Path(`/hooks/deploy`)"

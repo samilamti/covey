@@ -313,7 +313,7 @@ docker compose --env-file .env.prod \
 2. `test.yaml` runs backend + frontend tests
 3. `build.yaml` (depends on test) sends an HMAC-signed POST to `https://covey.se/hooks/deploy`
 4. The webhook container verifies the signature and runs `deploy.sh`
-5. `deploy.sh` acquires a flock, runs `git pull` + `docker compose up --build -d`
+5. `deploy/webhook/deploy.sh` acquires a flock, resets the checkout to `origin/main` (not `git pull`, which breaks after a history rewrite), rebuilds `backend frontend docs` under the pinned project name `tillsammans`, then waits until `/api/health` returns `{"ok":true}`. The hook responds immediately; the deploy's output is in `docker logs tillsammans-webhook-1`.
 
 ### Test manually
 

@@ -8,15 +8,20 @@ depends_on:
 steps:
   - name: trigger-deploy
     image: alpine
+    environment:
+      DEPLOY_WEBHOOK_SECRET:
+        from_secret: deploy_webhook_secret
     commands:
       - apk add --no-cache curl openssl
+      - test -n "$DEPLOY_WEBHOOK_SECRET" || { echo "deploy_webhook_secret is not set"; exit 1; }
       - |
         BODY='{"ref":"main","trigger":"woodpecker"}'
         SIGNATURE=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac "$DEPLOY_WEBHOOK_SECRET" | awk '{print $2}')
-        curl -fsSL \
-          -X POST \
+        RESPONSE=$(curl -fsS -X POST \
           -H "Content-Type: application/json" \
           -H "X-Webhook-Signature: sha256=$SIGNATURE" \
           -d "$BODY" \
-          "https://covey.se/hooks/deploy"
-    secrets: [deploy_webhook_secret]
+          "https://covey.se/hooks/deploy")
+        echo "$RESPONSE"
+        # webhook answers 200 even when the signature is wrong, so check the body.
+        [ "$RESPONSE" = "Deploy triggered" ]

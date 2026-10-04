@@ -2,8 +2,9 @@
   {
     "id": "deploy",
     "execute-command": "/scripts/deploy.sh",
-    "command-working-directory": "/repo",
-    "include-command-output-in-response": true,
+    "command-working-directory": "/tmp",
+    "http-methods": ["POST"],
+    "include-command-output-in-response": false,
     "response-message": "Deploy triggered",
     "trigger-rule": {
       "match": {
