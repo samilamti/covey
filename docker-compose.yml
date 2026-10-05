@@ -95,9 +95,11 @@ services:
       DEPLOY_WEBHOOK_SECRET: ${DEPLOY_WEBHOOK_SECRET:-}
       REPO: ${DEPLOY_REPO_DIR:-/home/deploy/apps/tillsammans}
       HOME: /tmp
+    # hooks.json and deploy.sh are read from the repo mount, never bind-mounted
+    # as single files: a file mount pins the inode, and git replaces files on
+    # reset, so the container would keep running the old script.
+    command: ["-hooks", "${DEPLOY_REPO_DIR:-/home/deploy/apps/tillsammans}/deploy/webhook/hooks.json", "-template", "-verbose"]
     volumes:
-      - ./deploy/webhook/hooks.json:/etc/webhook/hooks.json:ro
-      - ./deploy/webhook/deploy.sh:/scripts/deploy.sh:ro
       - /var/run/docker.sock:/var/run/docker.sock
       # Same absolute path as on the host: compose resolves bind mounts to
       # absolute paths that the host's docker daemon then opens.
