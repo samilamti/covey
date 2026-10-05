@@ -23,4 +23,4 @@ Covey toimii ilman voitonjakoa, ylijäämät palautuvat takaisin toimintaan. Jok
 
 ## Aloita
 
-Kaikki lähdekoodi löytyy [Codebergista](https://codeberg.org/Sami-X-Lamti/Tillsammans). Avaa tiketti, lähetä pull request tai ota meihin suoraan yhteyttä.
+Kaikki lähdekoodi löytyy [GitHubista](https://github.com/samilamti/covey). Avaa tiketti, lähetä pull request tai ota meihin suoraan yhteyttä.

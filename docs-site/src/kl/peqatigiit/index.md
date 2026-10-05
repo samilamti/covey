@@ -14,4 +14,4 @@ Peqatigiit aqutsisoqarfimmi Covey-p isumaqatigiissutaanik inuiaqatigiinni aalaja
 
 ## Peqataanissamut
 
-Peqataasunngorusuppat? Attaveqatigissinnaavatsigut [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans) aqqutigalugu.
+Peqataasunngorusuppat? Attaveqatigissinnaavatsigut [GitHub](https://github.com/samilamti/covey) aqqutigalugu.

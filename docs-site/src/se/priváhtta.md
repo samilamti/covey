@@ -68,4 +68,4 @@ Covey ii geavat čuovguncookies, ii goalmmát oasi analysaid iige rekláma. Mii 
 
 ## Oktavuohta
 
-Jus dus leat gažaldagat min dieđumeannudeami birra, váldde minguin oktavuođa [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans) bokte.
+Jus dus leat gažaldagat min dieđumeannudeami birra, váldde minguin oktavuođa [github.com/samilamti/covey](https://github.com/samilamti/covey) bokte.

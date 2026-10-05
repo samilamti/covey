@@ -8,7 +8,7 @@ description: Oppalašgeahčastat Covey teknihkalaš arkitektuvrras ja hábmenáv
 
 ## Rabas gáldu
 
-Buot Covey gáldokodat leat rabasttit olahanlaččat [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans):s. Guhtege sáhttá geahčadit, oassálastit ja hukset viidáseappot koda alde.
+Buot Covey gáldokodat leat rabasttit olahanlaččat [GitHub](https://github.com/samilamti/covey):s. Guhtege sáhttá geahčadit, oassálastit ja hukset viidáseappot koda alde.
 
 ## Arkitektuvraoppalašgeahčastat
 
@@ -55,7 +55,7 @@ Duogášdagut (gáibádusaid áigemeari nohkan, GDPR-sihkkun) čađahuvvojit ske
 
 ## CI/CD
 
-Kodarepo leat Codeberg:s Woodpecker CI:in automáhtalaš testemiiguin ja huksemiiguin. Juohke push čađaha backend- ja frontend-testtaid ja duohtasta ahte produkšuvdnahuksen doaibmá.
+Kodarepo leat GitHub:s GitHub Actions:in automáhtalaš testemiiguin ja huksemiiguin. Juohke push čađaha backend- ja frontend-testtaid ja duohtasta ahte produkšuvdnahuksen doaibmá.
 
 ## Oadjebasmearrádusat
 

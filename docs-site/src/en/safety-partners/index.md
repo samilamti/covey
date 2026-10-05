@@ -14,4 +14,4 @@ Safety Partners are organisations and companies that share Covey's vision of a s
 
 ## Become a partner
 
-Does your organisation want to support safety in society? Contact us via [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Does your organisation want to support safety in society? Contact us via [GitHub](https://github.com/samilamti/covey).

@@ -14,4 +14,4 @@ description: Stofnanir og fyrirtæki sem styðja öryggisverkefni Covey.
 
 ## Vertu samstarfsaðili
 
-Vill stofnun þín styðja öryggi í samfélaginu? Hafðu samband í gegnum [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Vill stofnun þín styðja öryggi í samfélaginu? Hafðu samband í gegnum [GitHub](https://github.com/samilamti/covey).

@@ -23,4 +23,4 @@ Covey er rekið án arðgreiðslu, afgangur rennur aftur inn í starfsemina. Sé
 
 ## Byrjaðu
 
-Allur frumkóði er á [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Opnaðu mál, sendu pull request eða hafðu beint samband.
+Allur frumkóði er á [GitHub](https://github.com/samilamti/covey). Opnaðu mál, sendu pull request eða hafðu beint samband.

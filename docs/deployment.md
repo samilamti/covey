@@ -131,7 +131,7 @@ Wait for DNS propagation before deploying (check with `dig covey.se`).
 ssh deploy@<VPS_IP>
 mkdir -p ~/apps
 cd ~/apps
-git clone https://codeberg.org/Sami-X-Lamti/Tillsammans.git tillsammans
+git clone https://github.com/samilamti/covey.git tillsammans
 cd tillsammans
 ```
 
@@ -283,7 +283,7 @@ The helper verifies the env var landed inside the running container by printing 
 
 ## 6. Auto-Deploy via Webhook
 
-Pushes to `main` auto-deploy after Woodpecker CI tests pass. A lightweight webhook listener runs as a Docker service, triggered by the CI pipeline.
+Pushes to `main` auto-deploy after the GitHub Actions gate passes. A lightweight webhook listener runs as a Docker service, triggered by the `deploy` job in `.github/workflows/ci.yml`.
 
 ### One-time setup
 
@@ -295,13 +295,13 @@ echo "DEPLOY_WEBHOOK_SECRET=$SECRET"
 # 2. Add to .env.prod on the VPS
 echo "DEPLOY_WEBHOOK_SECRET=$SECRET" >> ~/apps/tillsammans/.env.prod
 
-# 3. Add as a Woodpecker secret in Codeberg repo settings:
-#    - Name: deploy_webhook_secret
-#    - Value: <the same secret>
-#    - Events: push
+# 3. Add it as a GitHub Actions repo secret, piped straight from the box so the
+#    value never lands in a terminal or in argv (run this on your Mac):
+#    ssh -n deploy@<VPS_IP> "grep ^DEPLOY_WEBHOOK_SECRET= ~/apps/tillsammans/.env.prod | cut -d= -f2- | tr -d '\r\n'" \
+#      | gh secret set DEPLOY_WEBHOOK_SECRET --repo samilamti/covey
 
 # 4. Rebuild the stack (this one last manual deploy bootstraps the webhook)
-cd ~/apps/tillsammans && git pull origin main
+cd ~/apps/tillsammans && git fetch origin main && git reset --hard origin/main
 docker compose --env-file .env.prod \
   -f docker-compose.yml -f docker-compose.prod.yml \
   up --build -d
@@ -309,9 +309,9 @@ docker compose --env-file .env.prod \
 
 ### How it works
 
-1. Push to `main` triggers Woodpecker CI
-2. `test.yaml` runs backend + frontend tests
-3. `build.yaml` (depends on test) sends an HMAC-signed POST to `https://covey.se/hooks/deploy`
+1. Push to `main` triggers the GitHub Actions workflow `.github/workflows/ci.yml`
+2. The `gate` job runs backend tests (against a Postgres service), frontend tests, and the frontend + docs builds
+3. The `deploy` job (needs `gate`, push to `main` only) sends an HMAC-signed POST to `https://covey.se/hooks/deploy`
 4. The webhook container verifies the signature and runs `deploy.sh`
 5. `deploy/webhook/deploy.sh` acquires a flock, resets the checkout to `origin/main` (not `git pull`, which breaks after a history rewrite), rebuilds `backend frontend docs` under the pinned project name `tillsammans`, then waits until `/api/health` returns `{"ok":true}`. The hook responds immediately; the deploy's output is in `docker logs tillsammans-webhook-1`.
 

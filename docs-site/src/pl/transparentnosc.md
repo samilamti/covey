@@ -8,7 +8,7 @@ description: Przegląd architektury technicznej i decyzji projektowych Covey.
 
 ## Otwarty kod źródłowy
 
-Cały kod źródłowy Covey jest publicznie dostępny na [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Każdy może go przejrzeć, wnieść wkład i rozwijać dalej.
+Cały kod źródłowy Covey jest publicznie dostępny na [GitHub](https://github.com/samilamti/covey). Każdy może go przejrzeć, wnieść wkład i rozwijać dalej.
 
 ## Przegląd architektury
 
@@ -55,7 +55,7 @@ Zadania w tle (wygasanie próśb, usuwanie GDPR) działają jako zaplanowane pro
 
 ## CI/CD
 
-Repozytorium kodu jest hostowane na Codeberg z Woodpecker CI do automatycznych testów i budowania. Każde wypchnięcie uruchamia testy backendu i frontendu oraz weryfikuje, czy kompilacja produkcyjna działa poprawnie.
+Repozytorium kodu jest hostowane na GitHubie z GitHub Actions do automatycznych testów i budowania. Każde wypchnięcie uruchamia testy backendu i frontendu oraz weryfikuje, czy kompilacja produkcyjna działa poprawnie.
 
 ## Decyzje bezpieczeństwa
 

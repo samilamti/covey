@@ -12,7 +12,7 @@ Even with limited time, you can make a big difference. Here are actions that mov
 
 1. **Share on social media** -- Write a short post: "Check out Covey -- an open platform for safe neighbourhood cooperation!" and link to [covey.se](https://covey.se).
 
-2. **Report a bug** -- Found something that looks off? Submit an issue on [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans/issues).
+2. **Report a bug** -- Found something that looks off? Submit an issue on [GitHub](https://github.com/samilamti/covey/issues).
 
 3. **Tell a friend** -- Next time you grab a coffee, mention the project to someone who might be interested.
 

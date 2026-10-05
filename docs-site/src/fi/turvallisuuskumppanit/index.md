@@ -14,4 +14,4 @@ Turvallisuuskumppanit ovat organisaatioita ja yrityksiä, jotka jakavat Coveyn v
 
 ## Ryhdy kumppaniksi
 
-Haluaako organisaatiosi tukea turvallisuutta yhteiskunnassa? Ota yhteyttä [Codebergissä](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Haluaako organisaatiosi tukea turvallisuutta yhteiskunnassa? Ota yhteyttä [GitHubissa](https://github.com/samilamti/covey).

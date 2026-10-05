@@ -68,4 +68,4 @@ Covey uses no tracking cookies, no third-party analytics and no advertising. We 
 
 ## Contact
 
-If you have questions about our data processing, contact us at [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+If you have questions about our data processing, contact us at [github.com/samilamti/covey](https://github.com/samilamti/covey).

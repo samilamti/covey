@@ -12,10 +12,10 @@ Rajallisella ajallakin voit tehdä suuren eron. Tässä ovat toimet, jotka viev�
 
 1. **Jaa sosiaalisessa mediassa** -- Kirjoita lyhyt julkaisu: "Tutustukaa Coveyhin -- avoin alusta turvalliseen naapuriyhteistyöhön!" ja linkitä osoitteeseen [covey.se](https://covey.se).
 
-2. **Ilmoita virheestä** -- Löysitkö jotain outoa? Lähetä tiketti [Codebergiin](https://codeberg.org/Sami-X-Lamti/Tillsammans/issues).
+2. **Ilmoita virheestä** -- Löysitkö jotain outoa? Lähetä tiketti [GitHubiin](https://github.com/samilamti/covey/issues).
 
 3. **Kerro ystävälle** -- Seuraavan kerran kahvitauolla mainitse projekti jollekulle, jota se voisi kiinnostaa.
 
-4. **Sano hei** -- Hyppää mukaan ja sano hei Codebergissa. Se osoittaa kiinnostusta ja tukee projektia.
+4. **Sano hei** -- Hyppää mukaan ja sano hei GitHubissa. Se osoittaa kiinnostusta ja tukee projektia.
 
 Kiitos ajastasi -- jokainen minuutti merkitsee!

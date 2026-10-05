@@ -14,4 +14,4 @@ Tryghedspartnere er organisationer og virksomheder, der deler Coveys vision om e
 
 ## Bliv partner
 
-Vil din organisation støtte tryghed i samfundet? Kontakt os via [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Vil din organisation støtte tryghed i samfundet? Kontakt os via [GitHub](https://github.com/samilamti/covey).

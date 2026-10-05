@@ -12,7 +12,7 @@ description: Har du bara fem minuter? Så kan du hjälpa Covey.
 
 1. **Dela i sociala medier** — Skriv ett kort inlägg: "Kolla in Covey — en öppen plattform för trygg grannsamverkan!" och länka till [covey.se](https://covey.se).
 
-2. **Rapportera en bugg** — Hittade du något som ser konstigt ut? Skicka in ett ärende på [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans/issues).
+2. **Rapportera en bugg** — Hittade du något som ser konstigt ut? Skicka in ett ärende på [GitHub](https://github.com/samilamti/covey/issues).
 
 3. **Berätta för en vän** — Nästa gång du fikar, nämn projektet för någon som kan vara intresserad.
 

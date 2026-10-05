@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: Tests and builds
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+            docs-site/package-lock.json
+
+      - name: Backend tests
+        working-directory: backend
+        env:
+          # Without DATABASE_URL the DB tests skip silently (116 instead of 120).
+          DATABASE_URL: postgres://test:test@localhost:5432/test
+          JWT_SECRET: test-secret-for-ci
+          AUTH_PROVIDER: stub
+          FEATURE_BANKID_AUTH: "false"
+          FEATURE_PUSH_NOTIFICATIONS: "false"
+          FEATURE_GEOLOCATION: "false"
+        run: |
+          npm ci
+          npm test
+
+      - name: Frontend tests
+        working-directory: frontend
+        run: |
+          npm ci
+          npm test
+
+      - name: Frontend build
+        working-directory: frontend
+        run: npm run build
+
+      - name: Docs build
+        working-directory: docs-site
+        run: |
+          npm ci
+          npm run build
+
+  deploy:
+    name: Deploy to covey.se
+    needs: gate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the deploy webhook
+        env:
+          DEPLOY_WEBHOOK_SECRET: ${{ secrets.DEPLOY_WEBHOOK_SECRET }}
+        run: |
+          test -n "$DEPLOY_WEBHOOK_SECRET" || { echo "DEPLOY_WEBHOOK_SECRET is not set"; exit 1; }
+          BODY='{"ref":"main","trigger":"github-actions"}'
+          SIGNATURE=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac "$DEPLOY_WEBHOOK_SECRET" | awk '{print $2}')
+          RESPONSE=$(curl -fsS -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-Webhook-Signature: sha256=$SIGNATURE" \
+            -d "$BODY" \
+            "https://covey.se/hooks/deploy")
+          echo "$RESPONSE"
+          # The webhook answers 200 even when the signature is wrong, so check the body.
+          [ "$RESPONSE" = "Deploy triggered" ]
+
+  audit:
+    name: npm audit (advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Audit backend, frontend and docs
+        run: |
+          rc=0
+          for dir in backend frontend docs-site; do
+            echo "::group::$dir"
+            (cd "$dir" && npm audit --audit-level=high) || rc=1
+            echo "::endgroup::"
+          done
+          exit $rc

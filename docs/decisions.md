@@ -158,6 +158,8 @@ This document records key decisions made during the project's development, with 
 
 **Rationale**: Codeberg is a non-profit, open-source-aligned Git hosting platform — a natural fit for this non-profit project. Woodpecker CI is Codeberg's integrated CI solution. Pipeline configs live in `.woodpecker/*.yaml`.
 
+**Superseded (2026-10-05)**: moved to GitHub (https://github.com/samilamti/covey, public) with GitHub Actions (`.github/workflows/ci.yml`). Codeberg changed its Terms of Use to disallow AI-generated content, and much of this codebase is written with Claude. The Codeberg repo is archived, not deleted.
+
 ## Frontend Localization Stack
 
 **Decision**: Use `i18next` with `react-i18next` and `i18next-browser-languagedetector`.

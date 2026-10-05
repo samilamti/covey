@@ -8,7 +8,7 @@ description: Yleiskatsaus Coveyn tekniseen arkkitehtuuriin ja suunnittelupäät�
 
 ## Avoin lähdekoodi
 
-Kaikki Coveyn lähdekoodi on avoimesti saatavilla [Codebergissa](https://codeberg.org/Sami-X-Lamti/Tillsammans). Kuka tahansa voi tarkastella, osallistua ja rakentaa koodin pohjalta.
+Kaikki Coveyn lähdekoodi on avoimesti saatavilla [GitHubissa](https://github.com/samilamti/covey). Kuka tahansa voi tarkastella, osallistua ja rakentaa koodin pohjalta.
 
 ## Arkkitehtuurin yleiskatsaus
 
@@ -55,7 +55,7 @@ Taustatehtävät (pyyntöjen vanheneminen, GDPR-poisto) ajetaan ajastettuina pro
 
 ## CI/CD
 
-Koodirepo sijaitsee Codebergissa ja käyttää Woodpecker CI:tä automatisoituihin testeihin ja rakennuksiin. Jokainen push ajaa backend- ja frontend-testit sekä varmistaa, että tuotantorakennelma toimii.
+Koodirepo sijaitsee GitHubissa ja käyttää GitHub Actions:tä automatisoituihin testeihin ja rakennuksiin. Jokainen push ajaa backend- ja frontend-testit sekä varmistaa, että tuotantorakennelma toimii.
 
 ## Turvallisuuspäätökset
 

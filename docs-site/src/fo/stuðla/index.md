@@ -23,4 +23,4 @@ Covey verður rikið uttan vinningsbýti, avlop fer aftur inn í virksemið. Hv�
 
 ## Byrja
 
-Allur keldukóðin er á [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Opna eitt mál, send eitt pull request ella settu teg í samband beinleiðis.
+Allur keldukóðin er á [GitHub](https://github.com/samilamti/covey). Opna eitt mál, send eitt pull request ella settu teg í samband beinleiðis.

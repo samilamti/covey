@@ -14,4 +14,4 @@ Guoimmit leat organisašuvnnat ja fitnodagat mat juogadit Covey oainnu oadjebas 
 
 ## Šatta guoibmin
 
-Háliidat go du organisašuvdna doarjut oadjebasvuođa servodagas? Váldde oktavuođa [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans) bokte.
+Háliidat go du organisašuvdna doarjut oadjebasvuođa servodagas? Váldde oktavuođa [GitHub](https://github.com/samilamti/covey) bokte.

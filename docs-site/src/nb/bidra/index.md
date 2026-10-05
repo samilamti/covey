@@ -23,4 +23,4 @@ Covey drives uten utbytteutdeling, overskudd går tilbake inn i virksomheten. Hv
 
 ## Kom i gang
 
-All kildekode finnes pa [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Apne en sak, send en pull request eller kontakt oss direkte.
+All kildekode finnes pa [GitHub](https://github.com/samilamti/covey). Apne en sak, send en pull request eller kontakt oss direkte.

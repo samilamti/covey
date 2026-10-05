@@ -8,9 +8,9 @@
 
 ## Repository
 
-Hosted on Codeberg: https://codeberg.org/Sami-X-Lamti/Tillsammans
+Hosted on GitHub: https://github.com/samilamti/covey
 
-CI/CD via Woodpecker CI at `ci.codeberg.org` (requires manual onboarding).
+CI/CD via GitHub Actions (`.github/workflows/ci.yml`): tests and builds on every push and pull request, then an auto-deploy to covey.se on push to `main` (see `docs/deployment.md`).
 
 ## Local development (without Docker)
 

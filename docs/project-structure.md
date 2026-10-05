@@ -11,9 +11,7 @@ Tillsammans/
 ├── .env.local                  # Local dev overrides (DOMAIN=localhost)
 ├── .gitignore                  # Ignores node_modules, dist, .env, etc.
 ├── test-locally.ps1            # PowerShell helper: starts local stack
-├── .woodpecker/                # Woodpecker CI pipeline configs
-│   ├── test.yaml               # Test pipeline (backend + frontend)
-│   └── build.yaml              # Docker build validation
+├── .github/workflows/ci.yml    # GitHub Actions: tests + builds, deploy webhook, npm audit
 ├── docs/                       # This documentation
 ├── frontend/                   # Preact + Vite + Tailwind
 └── backend/                    # Express + Socket.io + PostgreSQL

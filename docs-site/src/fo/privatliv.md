@@ -68,4 +68,4 @@ Covey nýtir ongar sporingskipsfílur, ongar greiningar frá triðjapartum og on
 
 ## Samband
 
-Hevur tú spurningar um dátuhandfaringina hjá okkum, settu teg í samband við okkum á [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Hevur tú spurningar um dátuhandfaringina hjá okkum, settu teg í samband við okkum á [github.com/samilamti/covey](https://github.com/samilamti/covey).

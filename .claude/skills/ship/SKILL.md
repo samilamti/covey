@@ -1,6 +1,6 @@
 ---
 name: ship
-description: End-of-session ship routine — verify (full backend+frontend tests AND an interactive iOS Simulator smoke test), then commit to main, push to Codeberg, and upload to TestFlight ONLY when iOS-bundled code changed. Run at the end of every successful work session — when Sami signals wrap-up ("done for today", "wrap up", "ship it", "archive") or when asked to commit-and-ship. This is a Claude-run routine, not a hook: the "successful session" gate requires judgment (tests + a hands-on simulator check) the harness cannot perform.
+description: End-of-session ship routine — verify (full backend+frontend tests AND an interactive iOS Simulator smoke test), then commit to main, push to GitHub (deploys via Actions), and upload to TestFlight ONLY when iOS-bundled code changed. Run at the end of every successful work session — when Sami signals wrap-up ("done for today", "wrap up", "ship it", "archive") or when asked to commit-and-ship. This is a Claude-run routine, not a hook: the "successful session" gate requires judgment (tests + a hands-on simulator check) the harness cannot perform.
 ---
 
 Standing reflex (Sami's instruction, 2026-06-17): at the end of each **successful** session,

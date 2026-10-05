@@ -68,4 +68,4 @@ Covey använder inga spårningscookies, inga analyser från tredje part och inge
 
 ## Kontakt
 
-Om du har frågor om vår databehandling, kontakta oss via [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Om du har frågor om vår databehandling, kontakta oss via [github.com/samilamti/covey](https://github.com/samilamti/covey).

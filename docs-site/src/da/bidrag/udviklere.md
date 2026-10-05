@@ -40,4 +40,4 @@ Appen skal fungere pa alt fra gamle Android-enheder til nye iPhones.
 
 ## Kom i gang
 
-Kildekoden findes pa [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Klon repoen, laes udviklerdokumentationen og abn din forste sag.
+Kildekoden findes pa [GitHub](https://github.com/samilamti/covey). Klon repoen, laes udviklerdokumentationen og abn din forste sag.

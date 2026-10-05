@@ -10,9 +10,9 @@ Covey (formerly "Tillsammans") is a digital safety platform for Swedish citizens
 
 ## Repository
 
-Hosted on Codeberg: https://codeberg.org/Sami-X-Lamti/Tillsammans
+Hosted on GitHub (public): https://github.com/samilamti/covey. Moved off Codeberg on 2026-10-05, because Codeberg's Terms of Use no longer allow AI-generated content; the old repo `codeberg.org/Sami-X-Lamti/Tillsammans` is archived (read-only), never deleted.
 
-CI/CD: Woodpecker CI at ci.codeberg.org (requires manual onboarding). Pipeline files at `.woodpecker/test.yaml` and `.woodpecker/build.yaml`.
+CI/CD: GitHub Actions, `.github/workflows/ci.yml`. On every push and PR the `gate` job runs backend tests against a `postgres:16` service, frontend tests, the frontend build and the docs build (all `npm ci`). On push to `main` only, the `deploy` job then POSTs an HMAC-signed request to `https://covey.se/hooks/deploy` (repo secret `DEPLOY_WEBHOOK_SECRET`, same value as in the box's `.env.prod`) and fails unless the body is exactly `Deploy triggered`; the box's webhook container then runs `deploy/webhook/deploy.sh` (fetch + reset to `origin/main`, rebuild backend/frontend/docs). Confirm a deploy with `docker logs tillsammans-webhook-1` on the box ("Deploy finished: healthy"). An `audit` job runs `npm audit --audit-level=high` as advisory only.
 
 This repo is the **public, code half** of Covey. It lives at `~/Projects/Covey/app` under a project umbrella (`~/Projects/Tillsammans` is a back-compat symlink). See `../CLAUDE.md` for the umbrella overview.
 
@@ -65,7 +65,7 @@ After any multi-file rename or domain change, run a project-wide grep for the ol
 
 ### End-of-session ship (standing reflex)
 
-At the end of every **successful** work session, run the `/ship` skill without being asked: it verifies (full backend+frontend tests **and** an interactive iOS Simulator smoke test), commits to `main`, pushes to Codeberg, and uploads to TestFlight **only when iOS-bundled code changed** (auto-bumping the build number). "Successful" = both gates green; never ship a failing or unverified tree — report why and stop. This is a Claude-run routine, not a hook (the gate needs judgment). See `.claude/skills/ship/SKILL.md`.
+At the end of every **successful** work session, run the `/ship` skill without being asked: it verifies (full backend+frontend tests **and** an interactive iOS Simulator smoke test), commits to `main`, pushes to GitHub (which deploys covey.se via Actions), and uploads to TestFlight **only when iOS-bundled code changed** (auto-bumping the build number). "Successful" = both gates green; never ship a failing or unverified tree — report why and stop. This is a Claude-run routine, not a hook (the gate needs judgment). See `.claude/skills/ship/SKILL.md`.
 
 ## Current state (Jul 2026)
 
@@ -78,7 +78,7 @@ All 7 implementation phases are complete. The application is feature-complete fo
 - **Phase 4**: Assistance request lifecycle + real-time + geolocation ✅
 - **Phase 5**: Push notifications (mock + real) + service worker ✅
 - **Phase 6**: Rate limiting + GDPR export/delete + input validation ✅
-- **Phase 7**: Woodpecker CI pipelines ✅
+- **Phase 7**: CI pipelines ✅ (Woodpecker on Codeberg, replaced by GitHub Actions 2026-10-05)
 
 - **Beta prep**: Production hardening, real web-push, VAPID wiring, deployment guide ✅
 
@@ -268,8 +268,8 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - `docs-site/src/assets/img/partners/` — Partner logos
 
 ### CI/CD
-- `.woodpecker/test.yaml` — Backend + frontend tests + build (Postgres service)
-- `.woodpecker/build.yaml` — Docker Compose build on push to main
+- `.github/workflows/ci.yml` — `gate` (backend tests on a Postgres service, frontend tests, frontend + docs builds), `deploy` (signed webhook to covey.se, push to main only), advisory `audit`
+- `deploy/webhook/` — the box side: `hooks.json` + `deploy.sh`, run by the `webhook` container
 
 ### Deployment helpers
 - `scripts/deploy/set-prod-secret.sh` — Idempotent helper to inject/rotate a single env var on the prod VPS (SSH + sudo + atomic .env.prod rewrite + backend restart). See `scripts/deploy/README.md`.

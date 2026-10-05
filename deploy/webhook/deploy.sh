@@ -1,5 +1,5 @@
 #!/bin/bash
-# Auto-deploy, run by the webhook container when Woodpecker posts a signed request.
+# Auto-deploy, run by the webhook container when GitHub Actions posts a signed request.
 #
 # The container mounts the repo at the SAME absolute path it has on the host
 # (REPO), because docker compose resolves bind-mount sources to absolute paths

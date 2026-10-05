@@ -14,4 +14,4 @@ Partnerzy bezpieczeństwa to organizacje i firmy, które podzielają wizję Cove
 
 ## Zostań partnerem
 
-Czy Twoja organizacja chce wspierać bezpieczeństwo w społeczeństwie? Skontaktuj się z nami przez [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Czy Twoja organizacja chce wspierać bezpieczeństwo w społeczeństwie? Skontaktuj się z nami przez [GitHub](https://github.com/samilamti/covey).

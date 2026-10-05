@@ -23,4 +23,4 @@ Covey kingunertanik agguaassinatik ingerlanneqarpoq, sinneqartoorutillu ingerlat
 
 ## Aallartinneq
 
-Koodit tamarmik [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans)-imi. Aammassugaq ammaruk, pull request-imik nassiuk imaluunniit attavigisigut.
+Koodit tamarmik [GitHub](https://github.com/samilamti/covey)-imi. Aammassugaq ammaruk, pull request-imik nassiuk imaluunniit attavigisigut.

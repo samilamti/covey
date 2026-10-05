@@ -40,4 +40,4 @@ Sovelluksen tulee toimia kaikessa vanhoista Android-laitteista uusimpiin iPhonei
 
 ## Aloita
 
-Lähdekoodi löytyy [Codebergista](https://codeberg.org/Sami-X-Lamti/Tillsammans). Kloonaa repo, lue kehittäjädokumentaatio ja avaa ensimmäinen tikettisi.
+Lähdekoodi löytyy [GitHubista](https://github.com/samilamti/covey). Kloonaa repo, lue kehittäjädokumentaatio ja avaa ensimmäinen tikettisi.

@@ -8,7 +8,7 @@ description: En översikt av Coveys tekniska arkitektur och designbeslut.
 
 ## Öppen källkod
 
-All Coveys källkod är öppet tillgänglig på [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Vem som helst kan granska, bidra till och bygga vidare på koden.
+All Coveys källkod är öppet tillgänglig på [GitHub](https://github.com/samilamti/covey). Vem som helst kan granska, bidra till och bygga vidare på koden.
 
 ## Arkitekturöversikt
 
@@ -55,7 +55,7 @@ Bakgrundsuppgifter (utgång av förfrågningar, GDPR-radering) körs som schemal
 
 ## CI/CD
 
-Kodrepot hostas på Codeberg med Woodpecker CI för automatiserade tester och byggen. Varje push kör backend- och frontendtester samt verifierar att produktionsbygget fungerar.
+Kodrepot hostas på GitHub med GitHub Actions för automatiserade tester och byggen. Varje push kör backend- och frontendtester samt verifierar att produktionsbygget fungerar.
 
 ## Säkerhetsbeslut
 

@@ -12,7 +12,7 @@ Maiddái gáržžes áigemearis sáhtát dahkat stuorra erohusa. Dás leat dahku
 
 1. **Juogat sosiála mediain** -- Čále oanehis poasta: "Geahča Covey -- rabas lávdadat oadjebas ránnjáovttasbargui!" ja liŋke [covey.se](https://covey.se):i.
 
-2. **Dieđit bearrái** -- Gávnnahin go juoidá mii orru earáláganin? Sádde ášši [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans/issues):i.
+2. **Dieđit bearrái** -- Gávnnahin go juoidá mii orru earáláganin? Sádde ášši [GitHub](https://github.com/samilamti/covey/issues):i.
 
 3. **Muital ustibiidda** -- Boahtte háve go juhkaba gáfe, namut prošeavtta muhtin geasa gii sáhttá leat beroštan.
 

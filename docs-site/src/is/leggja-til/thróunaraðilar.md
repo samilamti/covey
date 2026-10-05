@@ -40,4 +40,4 @@ Forritið verður að virka á öllu frá gömlum Android-tækjum til nýjustu i
 
 ## Byrjaðu
 
-Frumkóðinn er á [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Klónaðu geymsluhúsið, lestu þróunarskjölunina og opnaðu fyrsta málið þitt.
+Frumkóðinn er á [GitHub](https://github.com/samilamti/covey). Klónaðu geymsluhúsið, lestu þróunarskjölunina og opnaðu fyrsta málið þitt.

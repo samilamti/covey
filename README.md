@@ -12,7 +12,7 @@ Tjänsten drivs av **Covey AB**, ett svenskt aktiebolag utan vinstutdelning: öv
 återinvesteras i verksamheten. Ingen reklam, ingen datahandel, inga sponsrade matchningar.
 
 - **Live:** [covey.se](https://covey.se) · **Dokumentation:** [docs.covey.se](https://docs.covey.se)
-- **Källkod:** [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans)
+- **Källkod:** [github.com/samilamti/covey](https://github.com/samilamti/covey)
   (projektet hette tidigare *Tillsammans*)
 
 ## Så fungerar det

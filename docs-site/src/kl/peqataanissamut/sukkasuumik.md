@@ -12,7 +12,7 @@ Piffissaq killilik atuinermi assut ikiorsinnaavutit. Suliassarsiornissat suliass
 
 1. **Sosialamiutanik nassiunneq** -- Nalinginnaasumik allaallutit: "Covey-mik takusinnaavutit -- ammarluinnaq attaveqarfik aaqqiissutaasumik inuiaqatigiinnut!" aamma [covey.se](https://covey.se)-mut.
 
-2. **Buggimik nalunaarutigiuk** -- Ajornartumik nassarsimavit? Aammassugaq [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans/issues)-imut nassiuk.
+2. **Buggimik nalunaarutigiuk** -- Ajornartumik nassarsimavit? Aammassugaq [GitHub](https://github.com/samilamti/covey/issues)-imut nassiuk.
 
 3. **Ilaamut oqaruk** -- Kaffimiortillutit, suliassaqarfik oqaaseqarsinnaavoq.
 

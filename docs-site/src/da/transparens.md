@@ -8,7 +8,7 @@ description: Et overblik over Coveys tekniske arkitektur og designvalg.
 
 ## Aben kildekode
 
-Al Coveys kildekode er abent tilgaengelig pa [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Hvem som helst kan gennemga, bidrage til og bygge videre pa koden.
+Al Coveys kildekode er abent tilgaengelig pa [GitHub](https://github.com/samilamti/covey). Hvem som helst kan gennemga, bidrage til og bygge videre pa koden.
 
 ## Arkitekturoverblik
 
@@ -55,7 +55,7 @@ Baggrundsopgaver (udlob af anmodninger, GDPR-sletning) korer som planlagte proce
 
 ## CI/CD
 
-Koderepoen hostes pa Codeberg med Woodpecker CI til automatiserede tests og builds. Hvert push korer backend- og frontendtests samt verificerer, at produktionsbygget fungerer.
+Koderepoen hostes pa GitHub med GitHub Actions til automatiserede tests og builds. Hvert push korer backend- og frontendtests samt verificerer, at produktionsbygget fungerer.
 
 ## Sikkerhedsbeslutninger
 

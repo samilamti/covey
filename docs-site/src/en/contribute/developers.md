@@ -40,4 +40,4 @@ The app must work on everything from old Android devices to the latest iPhones.
 
 ## Get started
 
-The source code is available on [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Clone the repository, read the developer documentation and open your first issue.
+The source code is available on [GitHub](https://github.com/samilamti/covey). Clone the repository, read the developer documentation and open your first issue.

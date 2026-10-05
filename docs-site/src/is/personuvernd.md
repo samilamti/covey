@@ -62,4 +62,4 @@ Covey notar engar rakningarkökur, engar greiningar frá þriðja aðila og enga
 
 ## Hafa samband
 
-Ef þú hefur spurningar um gagnavinnslu okkar, hafðu samband á [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Ef þú hefur spurningar um gagnavinnslu okkar, hafðu samband á [github.com/samilamti/covey](https://github.com/samilamti/covey).

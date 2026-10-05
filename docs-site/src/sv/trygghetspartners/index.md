@@ -14,4 +14,4 @@ Trygghetspartners är organisationer och företag som delar Coveys vision om ett
 
 ## Bli partner
 
-Vill din organisation stödja tryggheten i samhället? Kontakta oss via [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Vill din organisation stödja tryggheten i samhället? Kontakta oss via [GitHub](https://github.com/samilamti/covey).

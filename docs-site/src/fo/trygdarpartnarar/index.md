@@ -14,4 +14,4 @@ Trygdarpartnarar eru feløg og fyritøkur, ið deila Covey sýn um eitt tryggari
 
 ## Blív partnari
 
-Vil felagið títt stuðla at trygd í samfelagnum? Tak samband við [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Vil felagið títt stuðla at trygd í samfelagnum? Tak samband við [GitHub](https://github.com/samilamti/covey).

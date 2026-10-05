@@ -40,4 +40,4 @@ Appin skal virka á øllum, frá gomlum Android-tólum til nýggjastu iPhones.
 
 ## Byrja
 
-Keldukóðin er á [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Klona goymslan, les forritaraskrivirnar og opna tín fyrsta mál.
+Keldukóðin er á [GitHub](https://github.com/samilamti/covey). Klona goymslan, les forritaraskrivirnar og opna tín fyrsta mál.

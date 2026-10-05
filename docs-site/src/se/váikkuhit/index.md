@@ -23,4 +23,4 @@ Covey ii juoge vuoitto, báhcán ruđat mannet ruovttoluotta doibmii. Juohke doa
 
 ## Álggat
 
-Buot gáldokodat leat [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans):s. Raba ášši, sádde pull request dahje váldde minguin oktavuođa njuolga.
+Buot gáldokodat leat [GitHub](https://github.com/samilamti/covey):s. Raba ášši, sádde pull request dahje váldde minguin oktavuođa njuolga.

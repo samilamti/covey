@@ -68,4 +68,4 @@ Covey не використовує відстежувальні файли cook
 
 ## Контакт
 
-Якщо у вас є питання щодо обробки даних, зв'яжіться з нами через [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Якщо у вас є питання щодо обробки даних, зв'яжіться з нами через [github.com/samilamti/covey](https://github.com/samilamti/covey).

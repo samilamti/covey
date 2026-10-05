@@ -23,4 +23,4 @@ Covey distributes no dividends -- any surplus goes back into the service. Every 
 
 ## Get started
 
-All source code is available on [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Open an issue, send a pull request or get in touch directly.
+All source code is available on [GitHub](https://github.com/samilamti/covey). Open an issue, send a pull request or get in touch directly.

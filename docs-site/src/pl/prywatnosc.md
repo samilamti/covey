@@ -62,4 +62,4 @@ Covey nie używa śledzących plików cookie, analiz stron trzecich ani reklam. 
 
 ## Kontakt
 
-Jeśli masz pytania dotyczące przetwarzania danych, skontaktuj się z nami przez [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Jeśli masz pytania dotyczące przetwarzania danych, skontaktuj się z nami przez [github.com/samilamti/covey](https://github.com/samilamti/covey).

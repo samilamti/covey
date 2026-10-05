@@ -27,11 +27,11 @@ backend:
 ```
 Add after the existing `FEATURE_*` lines (around line 30-34).
 
-#### 3. `.woodpecker/test.yaml` — Add to backend-test environment
+#### 3. `.github/workflows/ci.yml` — Add to the "Backend tests" step env
 ```yaml
-- name: backend-test
-  environment:
-    FEATURE_<FLAG_NAME>: "false"
+      - name: Backend tests
+        env:
+          FEATURE_<FLAG_NAME>: "false"
 ```
 Add after the existing `FEATURE_*` lines.
 
@@ -59,6 +59,6 @@ const isEnabled = useFeatureFlag('<FLAG_NAME>')
 ## Checklist
 - [ ] Added to `DEFAULTS` in `backend/src/features.js`
 - [ ] Added to `docker-compose.yml` backend environment
-- [ ] Added to `.woodpecker/test.yaml` backend-test environment
+- [ ] Added to `.github/workflows/ci.yml` "Backend tests" step env
 - [ ] Optionally added to `docker-compose.local.yml` if needed in local dev
 - [ ] Verified: `curl -sk https://localhost/api/features` shows the new flag after stack restart

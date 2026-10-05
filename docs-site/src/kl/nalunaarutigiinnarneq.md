@@ -8,7 +8,7 @@ description: Covey-p teknikkeqarfigisaanik aamma pilersaarusiorfigisaanik takuti
 
 ## Ammarluinnaq koodit
 
-Covey-p koodit tamarmik ammarluinnarpput [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans)-imi. Kinaassaaq misissuisinnaavaa, ilaasortaasinnaalluni aammalu sillimasinnaallugu.
+Covey-p koodit tamarmik ammarluinnarpput [GitHub](https://github.com/samilamti/covey)-imi. Kinaassaaq misissuisinnaavaa, ilaasortaasinnaalluni aammalu sillimasinnaallugu.
 
 ## Pisortat yvirlit
 
@@ -55,7 +55,7 @@ Bakgrunnimik suliassat (qinnuteqaatit naammassinerit, GDPR-peernerit) Node-p nam
 
 ## CI/CD
 
-Koodit Codeberg-imi Woodpecker CI-millu testit aamma buildingit nammineq. Push tamarmik backend- aamma frontend-testit atuisinnaapput aamma productionsbuildingit uppernarsaanerlugit.
+Koodit GitHub-imi GitHub Actions-millu testit aamma buildingit nammineq. Push tamarmik backend- aamma frontend-testit atuisinnaapput aamma productionsbuildingit uppernarsaanerlugit.
 
 ## Aaqqiissutaasut isumaliutit
 

@@ -40,4 +40,4 @@ App tamarmik atuisoqarsinnaatitaassavoq, suliassarsiorsinnaanngitsuniit nutaanul
 
 ## Aallartinneq
 
-Koodit [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans)-imi nassiunneqarsimasut. Klonarsiguk, sulisartut skjalertallit atuarsinnaassavat aamma siullermik aammassugaq ammarsinnaallugu.
+Koodit [GitHub](https://github.com/samilamti/covey)-imi nassiunneqarsimasut. Klonarsiguk, sulisartut skjalertallit atuarsinnaassavat aamma siullermik aammassugaq ammarsinnaallugu.

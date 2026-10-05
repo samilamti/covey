@@ -14,4 +14,4 @@ description: المنظمات والشركات التي تدعم مهمة Covey 
 
 ## كن شريكًا
 
-هل تريد منظمتك دعم الأمان في المجتمع؟ تواصل معنا عبر [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+هل تريد منظمتك دعم الأمان في المجتمع؟ تواصل معنا عبر [GitHub](https://github.com/samilamti/covey).

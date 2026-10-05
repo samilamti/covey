@@ -12,7 +12,7 @@ Nawet z ograniczonym czasem możesz zrobić dużą różnicę. Oto działania, k
 
 1. **Udostępnij w mediach społecznościowych** — Napisz krótki post: "Sprawdź Covey — otwartą platformę do bezpiecznej współpracy sąsiedzkiej!" i dołącz link do [covey.se](https://covey.se).
 
-2. **Zgłoś błąd** — Znalazłeś coś, co wygląda dziwnie? Zgłoś problem na [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans/issues).
+2. **Zgłoś błąd** — Znalazłeś coś, co wygląda dziwnie? Zgłoś problem na [GitHub](https://github.com/samilamti/covey/issues).
 
 3. **Opowiedz znajomemu** — Następnym razem przy kawie wspomnij o projekcie komuś, kto może być zainteresowany.
 

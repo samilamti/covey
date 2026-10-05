@@ -23,4 +23,4 @@ Covey працює без розподілу прибутку, надлишки 
 
 ## Як почати
 
-Увесь вихідний код знаходиться на [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Відкрийте тікет, надішліть pull request або зв'яжіться з нами напряму.
+Увесь вихідний код знаходиться на [GitHub](https://github.com/samilamti/covey). Відкрийте тікет, надішліть pull request або зв'яжіться з нами напряму.

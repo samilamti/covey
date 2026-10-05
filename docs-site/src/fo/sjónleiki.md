@@ -8,7 +8,7 @@ description: Eitt yvirlit yvir tøkniligu bygnaðina og málsvarnar-avgerðir hj
 
 ## Opin kelda
 
-Allur keldukóðin hjá Covey er opið tøkur á [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Hvør sum er kann granska, veita framlag til og byggja á kóðanum.
+Allur keldukóðin hjá Covey er opið tøkur á [GitHub](https://github.com/samilamti/covey). Hvør sum er kann granska, veita framlag til og byggja á kóðanum.
 
 ## Bygnaðaryvirlit
 
@@ -55,7 +55,7 @@ Bakgrundsarbeiðsuppgávur (útrenna bønir, GDPR-strikking) koyra sum skemalagd
 
 ## CI/CD
 
-Keldukóðagoymslan verður hostað á Codeberg við Woodpecker CI fyri sjálvvirkandi royndir og bygd. Hvørt push koyrir backend- og frontend-royndir og staðfestir, at framleiðslubygdið virkar.
+Keldukóðagoymslan verður hostað á GitHub við GitHub Actions fyri sjálvvirkandi royndir og bygd. Hvørt push koyrir backend- og frontend-royndir og staðfestir, at framleiðslubygdið virkar.
 
 ## Trygdaravgerðir
 

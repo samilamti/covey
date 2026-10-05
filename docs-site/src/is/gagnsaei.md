@@ -8,7 +8,7 @@ description: Yfirlit yfir tæknilega arkitektúr og hönnunarákvarðanir Covey.
 
 ## Opinn hugbúnaður
 
-Allur frumkóði Covey er opinberlega aðgengilegur á [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Hver sem er getur skoðað, lagt til og byggt ofan á kóðann.
+Allur frumkóði Covey er opinberlega aðgengilegur á [GitHub](https://github.com/samilamti/covey). Hver sem er getur skoðað, lagt til og byggt ofan á kóðann.
 
 ## Yfirlit yfir arkitektúr
 
@@ -55,7 +55,7 @@ Bakgrunnsverk (útrunnin beiðni, GDPR-eyðing) keyra sem áætluð ferli í sam
 
 ## CI/CD
 
-Kóðageymsluhúsið er hýst á Codeberg með Woodpecker CI fyrir sjálfvirk próf og smíðar. Hver push keyrir backend- og frontend-próf og staðfestir að framleiðslusmíðin virki.
+Kóðageymsluhúsið er hýst á GitHub með GitHub Actions fyrir sjálfvirk próf og smíðar. Hver push keyrir backend- og frontend-próf og staðfestir að framleiðslusmíðin virki.
 
 ## Öryggisákvarðanir
 

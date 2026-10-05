@@ -68,4 +68,4 @@ Covey-p tracking cookies-inik atorneqanngilaq, pingasunillu sullissisunit naluna
 
 ## Attavigineq
 
-Daatat qanoq atuisakkit pillugu apeqqutissaqarpit, attavigisigut [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans)-imi.
+Daatat qanoq atuisakkit pillugu apeqqutissaqarpit, attavigisigut [github.com/samilamti/covey](https://github.com/samilamti/covey)-imi.

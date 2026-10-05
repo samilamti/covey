@@ -40,4 +40,4 @@ Appen ska fungera på allt från gamla Android-enheter till nya iPhones.
 
 ## Kom igång
 
-Källkoden finns på [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Klona repot, läs utvecklardokumentationen och öppna ditt första ärende.
+Källkoden finns på [GitHub](https://github.com/samilamti/covey). Klona repot, läs utvecklardokumentationen och öppna ditt första ärende.

@@ -70,4 +70,4 @@ Covey ei käytä seurantakeksejä, kolmannen osapuolen analytiikkaa eikä mainok
 
 ## Yhteystiedot
 
-Jos sinulla on kysyttävää tietojenkäsittelystämme, ota yhteyttä osoitteessa [codeberg.org/Sami-X-Lamti/Tillsammans](https://codeberg.org/Sami-X-Lamti/Tillsammans).
+Jos sinulla on kysyttävää tietojenkäsittelystämme, ota yhteyttä osoitteessa [github.com/samilamti/covey](https://github.com/samilamti/covey).

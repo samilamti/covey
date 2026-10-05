@@ -23,4 +23,4 @@ Covey drivs utan vinstutdelning — överskott går tillbaka in i verksamheten. 
 
 ## Kom igång
 
-All källkod finns på [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Öppna ett ärende, skicka en pull request eller kontakta oss direkt.
+All källkod finns på [GitHub](https://github.com/samilamti/covey). Öppna ett ärende, skicka en pull request eller kontakta oss direkt.

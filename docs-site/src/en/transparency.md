@@ -8,7 +8,7 @@ description: An overview of Covey's technical architecture and design decisions.
 
 ## Open source
 
-All of Covey's source code is publicly available on [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Anyone can review, contribute to and build upon the code.
+All of Covey's source code is publicly available on [GitHub](https://github.com/samilamti/covey). Anyone can review, contribute to and build upon the code.
 
 ## Architecture overview
 
@@ -55,7 +55,7 @@ Background tasks (request expiration, GDPR deletion) run as scheduled processes 
 
 ## CI/CD
 
-The code repository is hosted on Codeberg with Woodpecker CI for automated tests and builds. Every push runs backend and frontend tests and verifies that the production build succeeds.
+The code repository is hosted on GitHub with GitHub Actions for automated tests and builds. Every push runs backend and frontend tests and verifies that the production build succeeds.
 
 ## Security decisions
 

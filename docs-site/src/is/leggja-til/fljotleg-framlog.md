@@ -12,7 +12,7 @@ Jafnvel með takmarkaðan tíma getur þú skipt miklu máli. Hér eru aðgerði
 
 1. **Deildu á samfélagsmiðlum** -- Skrifaðu stutta færslu: "Skoðið Covey -- opinn vettvangur fyrir öruggt samstarf nágranna!" og tengdu á [covey.se](https://covey.se).
 
-2. **Tilkynntu villu** -- Fannst þú eitthvað sem lítur skringilega út? Sendu inn mál á [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans/issues).
+2. **Tilkynntu villu** -- Fannst þú eitthvað sem lítur skringilega út? Sendu inn mál á [GitHub](https://github.com/samilamti/covey/issues).
 
 3. **Segðu vini** -- Næst þegar þú ert á kaffi, nefndu verkefnið fyrir einhverjum sem gæti haft áhuga.
 

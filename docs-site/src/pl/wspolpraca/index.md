@@ -23,4 +23,4 @@ Covey działa bez podziału zysków, nadwyżki wracają do działalności. Każd
 
 ## Jak zacząć
 
-Cały kod źródłowy znajduje się na [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Otwórz zgłoszenie, wyślij pull request lub skontaktuj się z nami bezpośrednio.
+Cały kod źródłowy znajduje się na [GitHub](https://github.com/samilamti/covey). Otwórz zgłoszenie, wyślij pull request lub skontaktuj się z nami bezpośrednio.

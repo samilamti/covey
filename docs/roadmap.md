@@ -69,6 +69,7 @@
 - [x] Woodpecker CI test pipeline (`.woodpecker/test.yaml`)
 - [x] Woodpecker CI build validation pipeline (`.woodpecker/build.yaml`)
 - [x] Request Woodpecker CI onboarding at `ci.codeberg.org` (manual step)
+- [x] Moved to GitHub + GitHub Actions (`.github/workflows/ci.yml`), 2026-10-05: Codeberg's Terms of Use no longer allow AI-generated content
 
 ### Beta Deployment Preparation ✅
 - [x] Production hardening: Express trust proxy for Traefik, Helmet CSP for Leaflet/Socket.io
@@ -144,7 +145,7 @@ Covey (formerly "Tillsammans") is a **digital safety platform** where verified S
 Sami Lamti — sami.lamti@gmail.com
 
 ### Repository
-https://codeberg.org/Sami-X-Lamti/Tillsammans
+https://github.com/samilamti/covey (moved from Codeberg, now archived, on 2026-10-05)
 
 ### Domain
 covey.se (configured in `.env`)

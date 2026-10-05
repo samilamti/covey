@@ -18,7 +18,7 @@ output_mode: content
 
 Also check these commonly missed locations:
 - `CLAUDE.md` and any `.md` docs
-- `.woodpecker/*.yaml` CI configs
+- `.github/workflows/*.yml` CI configs
 - `docker-compose*.yml` files
 - `frontend/public/sw.js`
 

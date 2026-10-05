@@ -40,4 +40,4 @@ Aplikacja musi działać na wszystkim, od starych urządzeń z Androidem po najn
 
 ## Jak zacząć
 
-Kod źródłowy znajduje się na [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans). Sklonuj repozytorium, przeczytaj dokumentację deweloperską i otwórz swoje pierwsze zgłoszenie.
+Kod źródłowy znajduje się na [GitHub](https://github.com/samilamti/covey). Sklonuj repozytorium, przeczytaj dokumentację deweloperską i otwórz swoje pierwsze zgłoszenie.

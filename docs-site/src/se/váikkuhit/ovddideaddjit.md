@@ -40,4 +40,4 @@ Appa galgá doaibmat buot alde, boarráset Android-rusttegin rájes ođđaseamos
 
 ## Álggat
 
-Gáldokodat leat [Codeberg](https://codeberg.org/Sami-X-Lamti/Tillsammans):s. Klonee repo, loga ovddideaddjidokumentašuvnna ja raba vuosttaš ášši.
+Gáldokodat leat [GitHub](https://github.com/samilamti/covey):s. Klonee repo, loga ovddideaddjidokumentašuvnna ja raba vuosttaš ášši.
