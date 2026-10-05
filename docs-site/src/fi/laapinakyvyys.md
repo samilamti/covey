@@ -55,7 +55,7 @@ Taustatehtävät (pyyntöjen vanheneminen, GDPR-poisto) ajetaan ajastettuina pro
 
 ## CI/CD
 
-Koodirepo sijaitsee GitHubissa ja käyttää GitHub Actions:tä automatisoituihin testeihin ja rakennuksiin. Jokainen push ajaa backend- ja frontend-testit sekä varmistaa, että tuotantorakennelma toimii.
+Koodirepo sijaitsee GitHubissa ja käyttää GitHub Actionsia automatisoituihin testeihin ja rakennuksiin. Jokainen push ajaa backend- ja frontend-testit sekä varmistaa, että tuotantorakennelma toimii.
 
 ## Turvallisuuspäätökset
 
