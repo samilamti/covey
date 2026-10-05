@@ -11,6 +11,16 @@ bash scripts/deploy/prod-exec.sh -f some-script.sh      # send a local script
 
 Reads the same `.env.local` as the other helpers. Auth via ssh-agent (`ssh-add --apple-use-keychain ~/.ssh/covey.se` once — the passphrase persists in the login keychain). Builds the stdin stream with the sudo password as line 1 and the script as lines 2+, avoiding the heredoc-as-sudo-password bug described below.
 
+## `rotate-webhook-secret.sh` — rotate the auto-deploy HMAC key
+
+```bash
+ssh-add --apple-use-keychain ~/.ssh/covey_deploy
+bash scripts/deploy/rotate-webhook-secret.sh             # rotate, then re-run the last deploy job
+bash scripts/deploy/rotate-webhook-secret.sh --no-rerun  # rotate only
+```
+
+Generates the new `DEPLOY_WEBHOOK_SECRET` on the box, swaps it into `.env.prod`, recreates the `webhook` container, checks the old key is refused, then pipes the new value straight into the GitHub repo secret (never through a terminal or argv). Runs as `deploy` with no sudo. Header comment has the details.
+
 ## `set-prod-secret.sh` — inject or rotate a single env-var line
 
 Idempotently writes one `KEY='value'` line into `~/apps/tillsammans/.env.prod` on the VPS, then restarts the backend service so it picks up the new value. Existing lines for the same `KEY=` are replaced; everything else in `.env.prod` is preserved.
