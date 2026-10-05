@@ -44,9 +44,12 @@ docker compose -p "$PROJECT" --env-file .env.prod \
 
 # Compare the body, not the status: while the backend is down Traefik falls
 # through to the frontend, which answers /api/health with index.html and a 200.
+# --connect-to sends the request to the traefik container: from inside this
+# container the box's own public IP is unreachable, but going through Traefik
+# with the real hostname still tests routing and the certificate.
 log "Waiting for the API..."
 for i in $(seq 1 30); do
-    if [ "$(curl -s --max-time 5 https://covey.se/api/health)" = '{"ok":true}' ]; then
+    if [ "$(curl -s --max-time 5 --connect-to covey.se:443:traefik:443 https://covey.se/api/health)" = '{"ok":true}' ]; then
         log "=== Deploy finished: healthy after $((i * 2))s ==="
         exit 0
     fi
