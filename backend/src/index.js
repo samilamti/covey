@@ -11,6 +11,7 @@ import { migrate } from './migrate.js'
 import * as reqRepo from './repositories/requests.js'
 import { log } from './logger.js'
 import { httpLogger, errorLogger } from './middleware/logging.js'
+import { requestId } from './middleware/request-id.js'
 
 // --- Run migrations before anything else ---
 // Guarantees all tables exist before the server accepts traffic or workers query the DB.
@@ -77,6 +78,7 @@ app.use(helmet({
 }))
 app.use(cors({ origin: corsOriginCheck }))
 app.use(express.json())
+app.use(requestId())
 app.use(httpLogger())
 
 // --- Routes ---

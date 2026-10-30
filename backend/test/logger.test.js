@@ -84,3 +84,67 @@ describe('logger (json mode)', () => {
     assert.ok(parsed.stack.includes('Error: kapow'))
   })
 })
+
+describe('logger (request context propagation)', () => {
+  let log
+  let requestContext
+  before(async () => {
+    delete process.env.LOG_FORMAT
+    // Fresh module graph again, but IMPORTANT: both the logger and the
+    // context module must come from the same import so they share one
+    // AsyncLocalStorage instance. Using a query-string tag only on the
+    // logger does that — logger.js resolves `../request-context.js` once.
+    log = (await import('../src/logger.js?mode=ctx')).log
+    requestContext = (await import('../src/request-context.js')).requestContext
+  })
+
+  it('merges request_id from the active store into every line', () => {
+    requestContext.run({ requestId: 'r-1' }, () => {
+      log.info('hello')
+      log.info('started', { port: 3000 })
+    })
+    assert.equal(stdout[0], '[info] hello {"request_id":"r-1"}\n')
+    assert.equal(stdout[1], '[info] started {"request_id":"r-1","port":3000}\n')
+  })
+
+  it('lets an explicit meta.request_id override the context', () => {
+    requestContext.run({ requestId: 'from-ctx' }, () => {
+      log.info('explicit', { request_id: 'override' })
+    })
+    assert.ok(stdout[0].includes('"request_id":"override"'))
+    assert.ok(!stdout[0].includes('from-ctx'))
+  })
+
+  it('still works when there is no active store', () => {
+    log.info('bare')
+    assert.equal(stdout[0], '[info] bare\n')
+  })
+
+  it('attaches request_id when log.error unwraps an Error', () => {
+    requestContext.run({ requestId: 'r-err' }, () => {
+      log.error(new Error('nope'))
+    })
+    assert.ok(stderr[0].includes('"request_id":"r-err"'))
+    assert.ok(stderr[0].includes('"stack"'))
+  })
+})
+
+describe('logger (request context + json mode)', () => {
+  let log
+  let requestContext
+  before(async () => {
+    process.env.LOG_FORMAT = 'json'
+    log = (await import('../src/logger.js?mode=ctx-json')).log
+    requestContext = (await import('../src/request-context.js')).requestContext
+  })
+  after(() => { delete process.env.LOG_FORMAT })
+
+  it('includes request_id as a top-level field', () => {
+    requestContext.run({ requestId: 'r-json' }, () => {
+      log.info('x', { foo: 1 })
+    })
+    const parsed = JSON.parse(stdout[0])
+    assert.equal(parsed.request_id, 'r-json')
+    assert.equal(parsed.foo, 1)
+  })
+})

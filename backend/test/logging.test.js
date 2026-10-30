@@ -140,6 +140,35 @@ describe('httpLogger (json mode)', () => {
   })
 })
 
+describe('httpLogger + requestId middleware (chained)', () => {
+  it('emits the request id on the access log line', async () => {
+    delete process.env.LOG_HTTP
+    delete process.env.LOG_FORMAT
+    const { httpLogger } = await import('../src/middleware/logging.js?mode=http-chain')
+    const { requestId } = await import('../src/middleware/request-id.js?mode=chain')
+
+    const req = mockReq({
+      method: 'GET',
+      path: '/api/requests',
+      headers: { 'x-request-id': 'r-chain-1' },
+    })
+    const res = finishableRes()
+    res.setHeader = (name, value) => { res._rawHeaders = res._rawHeaders || {}; res._rawHeaders[name.toLowerCase()] = value }
+    res.statusCode = 200
+
+    // requestId wraps next() in a store; httpLogger's finish listener
+    // runs synchronously when we emit('finish') below, inside that store.
+    requestId()(req, res, () => {
+      httpLogger()(req, res, () => {})
+      res.emit('finish')
+    })
+
+    assert.equal(stdout.length, 1)
+    assert.ok(stdout[0].includes('"request_id":"r-chain-1"'))
+    assert.ok(stdout[0].includes('"path":"/api/requests"'))
+  })
+})
+
 describe('errorLogger', () => {
   let errorLogger
   before(async () => {
