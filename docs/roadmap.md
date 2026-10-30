@@ -107,7 +107,7 @@
 - [x] Register the company — Covey AB, org.nr 559589-1572, registered 2026-06-08
 - [ ] Privacy policy and terms of service
 - [x] Open-source license selection and publication
-- [ ] Bundle Leaflet CSS locally (currently from unpkg CDN)
+- [x] Bundle Leaflet CSS locally (static `import 'leaflet/dist/leaflet.css'` in map components, CDN link injection removed)
 - [ ] Code-split large frontend chunk (258KB → manual chunks)
 - [ ] Integration tests with running database
 - [ ] End-to-end tests (Playwright)

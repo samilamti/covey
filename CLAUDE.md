@@ -299,7 +299,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 
 ## Known issues / technical debt
 
-- Leaflet is loaded via dynamic import but its CSS comes from unpkg CDN (should be bundled)
+- Leaflet JS stays lazy via `await import('leaflet')`; its CSS is bundled locally via static `import 'leaflet/dist/leaflet.css'` in each map component (MapView, PostCreateMap, ActiveSession)
 - Frontend build produces a ~251KB chunk (Vite warns at 200KB) — consider manual chunking
 - No integration tests that require a running database — all current tests are unit/component level
 - Real web-push provider implemented; VAPID keys wired through `docker-compose.yml` + `frontend/Dockerfile` build arg (generate keys with `npx web-push generate-vapid-keys`)

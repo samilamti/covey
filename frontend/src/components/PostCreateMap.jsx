@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft } from 'lucide-preact'
+import 'leaflet/dist/leaflet.css'
 
 /**
  * PostCreateMap — shows a Leaflet map centered on the requester's
@@ -15,12 +16,6 @@ export function PostCreateMap({ position, onBack }) {
     const initMap = async () => {
       try {
         const L = await import('leaflet')
-        if (!document.querySelector('link[href*="leaflet"]')) {
-          const link = document.createElement('link')
-          link.rel = 'stylesheet'
-          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
-          document.head.appendChild(link)
-        }
 
         if (mapRef.current && !mapInstance.current) {
           const map = L.map(mapRef.current).setView([position.lat, position.lng], 15)

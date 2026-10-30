@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { CheckCircle, Phone, MapPin, X, Clock, MessageCircle, Send } from 'lucide-preact'
+import 'leaflet/dist/leaflet.css'
 import { socket } from '../socket'
 import { requestService } from '../services/requests'
 import { haversineKm } from '../utils/geo'
@@ -53,12 +54,6 @@ export function ActiveSession({ request, currentUserId, onClose }) {
       try {
         const L = await import('leaflet')
         leafletRef.current = L
-        if (!document.querySelector('link[href*="leaflet"]')) {
-          const link = document.createElement('link')
-          link.rel = 'stylesheet'
-          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
-          document.head.appendChild(link)
-        }
 
         if (mapRef.current && !mapInstance.current) {
           const center = request.pickup_lat && request.pickup_lng

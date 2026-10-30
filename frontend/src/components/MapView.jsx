@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { MapPin, Navigation } from 'lucide-preact'
+import 'leaflet/dist/leaflet.css'
 import { useFeatureFlag } from '../context/FeatureFlagContext'
 
 /**
@@ -23,13 +24,6 @@ export function MapView() {
     const initMap = async () => {
       try {
         L = await import('leaflet')
-        // Import Leaflet CSS
-        if (!document.querySelector('link[href*="leaflet"]')) {
-          const link = document.createElement('link')
-          link.rel = 'stylesheet'
-          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
-          document.head.appendChild(link)
-        }
 
         if (mapRef.current && !mapInstance.current) {
           // Default to Stockholm center
