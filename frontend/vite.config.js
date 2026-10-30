@@ -33,6 +33,21 @@ export default defineConfig({
     target: 'baseline-widely-available',
     // Keep chunks reasonably sized for slow connections
     chunkSizeWarningLimit: 200,
+    rollupOptions: {
+      output: {
+        // Split heavy third-party deps into their own chunks so the main
+        // app bundle stays small and these cache separately across deploys.
+        // Keep the preact runtime in the entry chunk — it's tiny (~15 KB)
+        // and splitting it adds a round-trip for every single page load.
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (id.includes('i18next')) return 'i18n'
+          if (id.includes('socket.io')) return 'socket'
+          if (id.includes('lucide-preact')) return 'icons'
+          if (id.includes('qrcode-generator')) return 'qrcode'
+        },
+      },
+    },
   },
   server: {
     // In dev, proxy API + socket calls to backend

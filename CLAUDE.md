@@ -300,7 +300,7 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 ## Known issues / technical debt
 
 - Leaflet JS stays lazy via `await import('leaflet')`; its CSS is bundled locally via static `import 'leaflet/dist/leaflet.css'` in each map component (MapView, PostCreateMap, ActiveSession)
-- Frontend build produces a ~251KB chunk (Vite warns at 200KB) — consider manual chunking
+- Frontend build is manually chunked via `rollupOptions.output.manualChunks` in `frontend/vite.config.js`: i18next → `i18n`, socket.io-client → `socket`, lucide-preact → `icons`, qrcode-generator → `qrcode`. Main app chunk sits ~154 KB (gz ~47 KB), under the 200 KB Vite warning
 - No integration tests that require a running database — all current tests are unit/component level
 - Real web-push provider implemented; VAPID keys wired through `docker-compose.yml` + `frontend/Dockerfile` build arg (generate keys with `npx web-push generate-vapid-keys`)
 - Socket broadcasts (`request:new`) go to all room members without eligibility pre-filtering — ineligible requests may briefly flash before the next API refresh filters them out. Push notifications, however, ARE eligibility-filtered (SQL query in `findEligibleForRequest()`)

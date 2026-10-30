@@ -108,10 +108,10 @@
 - [ ] Privacy policy and terms of service
 - [x] Open-source license selection and publication
 - [x] Bundle Leaflet CSS locally (static `import 'leaflet/dist/leaflet.css'` in map components, CDN link injection removed)
-- [ ] Code-split large frontend chunk (258KB → manual chunks)
+- [x] Code-split large frontend chunk via `rollupOptions.output.manualChunks` (main index 304 KB → 154 KB; i18n/socket/icons/qrcode each in their own chunk; no chunk now exceeds the 200 KB warning threshold)
 - [ ] Integration tests with running database
 - [ ] End-to-end tests (Playwright)
-- [ ] Create `frontend/src/services/auth.js` API client (currently inline in components)
+- [x] `frontend/src/services/auth.js` API client (already in use from `LandingPage`, `BankIDLogin`, and `App.jsx`)
 
 ## Phase Dependency Graph
 
