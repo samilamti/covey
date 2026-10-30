@@ -6,6 +6,7 @@
  */
 
 import { db } from '../pool.js'
+import { log } from '../logger.js'
 
 const INTERVAL_MS = 24 * 60 * 60 * 1000 // 24 hours
 
@@ -23,7 +24,7 @@ async function cleanup() {
 
     if (users.length === 0) return
 
-    console.log(`GDPR cleanup: purging ${users.length} user(s)`)
+    log.info('gdpr_cleanup_purging', { count: users.length })
 
     for (const user of users) {
       const userId = user.id
@@ -49,10 +50,10 @@ async function cleanup() {
       // Finally, permanently delete the user
       await db.query('DELETE FROM users WHERE id = $1', [userId])
 
-      console.log(`  Purged user: ${userId}`)
+      log.info('gdpr_cleanup_user_purged', { user_id: userId })
     }
   } catch (err) {
-    console.error('GDPR cleanup error:', err.message)
+    log.error('gdpr_cleanup_error', { error: err.message })
   }
 }
 
@@ -66,5 +67,5 @@ export function startGdprCleanupWorker() {
     cleanup()
     setInterval(cleanup, INTERVAL_MS)
   }, 5_000)
-  console.log('GDPR cleanup worker started (daily, first run in 5s)')
+  log.info('gdpr_cleanup_worker_started', { interval_ms: INTERVAL_MS, first_run_delay_ms: 5000 })
 }

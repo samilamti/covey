@@ -103,7 +103,7 @@
 - [ ] Replace placeholder PNGs with professional branding
 - [ ] WCAG 2.1 AA accessibility audit
 - [ ] Staging environment
-- [ ] Monitoring and logging (structured logging, error tracking)
+- [ ] Monitoring and logging (structured logging, error tracking) — structured logger added in `backend/src/logger.js` (`LOG_FORMAT=json` for 12-factor JSON lines, text otherwise); wired into `index.js` startup, the expiration worker, and the GDPR cleanup worker. Call-site sweep across routes/handlers/services + an error-tracker (Sentry/GlitchTip) decision remain
 - [x] Register the company — Covey AB, org.nr 559589-1572, registered 2026-06-08
 - [ ] Privacy policy and terms of service
 - [x] Open-source license selection and publication

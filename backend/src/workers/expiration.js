@@ -7,6 +7,7 @@
  */
 
 import * as reqRepo from '../repositories/requests.js'
+import { log } from '../logger.js'
 
 const INTERVAL_MS = 60_000
 
@@ -20,7 +21,7 @@ export function startExpirationWorker(io) {
     try {
       const expired = await reqRepo.expireOldRequests()
       if (expired.length > 0) {
-        console.log(`Expired ${expired.length} request(s)`)
+        log.info('requests_expired', { count: expired.length })
         if (io) {
           for (const req of expired) {
             // Always notify the open requests room (for list updates)
@@ -42,9 +43,9 @@ export function startExpirationWorker(io) {
         }
       }
     } catch (err) {
-      console.error('Expiration worker error:', err.message)
+      log.error('expiration_worker_error', { error: err.message })
     }
   }, INTERVAL_MS)
 
-  console.log('Expiration worker started (60s interval)')
+  log.info('expiration_worker_started', { interval_ms: INTERVAL_MS })
 }

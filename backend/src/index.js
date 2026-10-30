@@ -9,6 +9,7 @@ import { startExpirationWorker } from './workers/expiration.js'
 import { startGdprCleanupWorker } from './workers/gdpr-cleanup.js'
 import { migrate } from './migrate.js'
 import * as reqRepo from './repositories/requests.js'
+import { log } from './logger.js'
 
 // --- Run migrations before anything else ---
 // Guarantees all tables exist before the server accepts traffic or workers query the DB.
@@ -19,10 +20,10 @@ await migrate()
 try {
   const deletedCount = await reqRepo.deleteTerminal()
   if (deletedCount > 0) {
-    console.log(`Startup cleanup: deleted ${deletedCount} terminal request(s)`)
+    log.info('startup_cleanup', { deleted: deletedCount })
   }
 } catch (err) {
-  console.error('Startup cleanup error:', err.message)
+  log.error('startup_cleanup_error', { error: err.message })
 }
 
 const app = express()
@@ -85,7 +86,7 @@ app.get('/api/health', (_req, res) => res.json({ ok: true }))
 // --- Start ---
 const PORT = process.env.PORT || 3000
 httpServer.listen(PORT, () => {
-  console.log(`Backend running on port ${PORT}`)
+  log.info('backend_listening', { port: Number(PORT) })
   // Start background workers (tables guaranteed to exist after migrate())
   startExpirationWorker(io)
   startGdprCleanupWorker()
