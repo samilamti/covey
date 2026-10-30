@@ -14,6 +14,13 @@ import { httpLogger, errorLogger } from './middleware/logging.js'
 import { requestId } from './middleware/request-id.js'
 import { db } from './pool.js'
 import { readyHandler } from './routes/health.js'
+import { getBuildInfo } from './build-info.js'
+
+// --- Identify this build at startup ---
+// Operators grep the log stream to see which version/commit is running
+// after a deploy; cheaper and less racy than hitting an endpoint right after
+// `docker compose up`. Emitted before any work so it anchors the stream.
+log.info('backend_build', getBuildInfo())
 
 // --- Run migrations before anything else ---
 // Guarantees all tables exist before the server accepts traffic or workers query the DB.
