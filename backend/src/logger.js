@@ -11,10 +11,12 @@
  * call sites.
  */
 
-const JSON_MODE = process.env.LOG_FORMAT === 'json'
-
 function emit(level, msg, meta) {
-  const line = JSON_MODE
+  // Read the env every call so a middleware mounted via a cached import
+  // still respects a test's local LOG_FORMAT override. Cost is one string
+  // compare per log line, which is noise next to the JSON.stringify.
+  const jsonMode = process.env.LOG_FORMAT === 'json'
+  const line = jsonMode
     ? JSON.stringify({ ts: new Date().toISOString(), level, msg, ...(meta || {}) })
     : meta && Object.keys(meta).length > 0
       ? `[${level}] ${msg} ${JSON.stringify(meta)}`

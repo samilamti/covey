@@ -10,6 +10,7 @@ import { startGdprCleanupWorker } from './workers/gdpr-cleanup.js'
 import { migrate } from './migrate.js'
 import * as reqRepo from './repositories/requests.js'
 import { log } from './logger.js'
+import { httpLogger, errorLogger } from './middleware/logging.js'
 
 // --- Run migrations before anything else ---
 // Guarantees all tables exist before the server accepts traffic or workers query the DB.
@@ -76,12 +77,18 @@ app.use(helmet({
 }))
 app.use(cors({ origin: corsOriginCheck }))
 app.use(express.json())
+app.use(httpLogger())
 
 // --- Routes ---
 app.use('/api', apiRouter)
 
 // --- Health check (used by docker-compose and load balancers) ---
 app.get('/api/health', (_req, res) => res.json({ ok: true }))
+
+// --- Safety-net error handler (routes catch their own with specific events;
+// this covers anything that still leaks through so operators see a structured
+// line instead of Express's default HTML). ---
+app.use(errorLogger())
 
 // --- Start ---
 const PORT = process.env.PORT || 3000
