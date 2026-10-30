@@ -12,6 +12,7 @@ import * as pointsRepo from '../repositories/points.js'
 import * as nativePushRepo from '../repositories/native-push.js'
 import { isEnabled } from '../features.js'
 import { db } from '../pool.js'
+import { log } from '../logger.js'
 
 export const gdprRouter = Router()
 
@@ -82,7 +83,7 @@ gdprRouter.get('/export', async (req, res) => {
       pointsAndBadges: pointsData,
     })
   } catch (err) {
-    console.error('GDPR export error:', err.message)
+    log.error(err, { event: 'gdpr_export_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to export data' })
   }
 })
@@ -102,7 +103,7 @@ gdprRouter.post('/delete', async (req, res) => {
       message: 'Account marked for deletion. All data will be permanently removed after 30 days.',
     })
   } catch (err) {
-    console.error('GDPR delete error:', err.message)
+    log.error(err, { event: 'gdpr_delete_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to delete account' })
   }
 })

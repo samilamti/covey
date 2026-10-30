@@ -14,6 +14,7 @@ import { checkEligibility } from './services/eligibility.js'
 import { notifyNewRequest, notifyRequestAccepted } from './services/notifications.js'
 import { isEnabled } from './features.js'
 import * as pointsRepo from './repositories/points.js'
+import { log } from './logger.js'
 
 /**
  * Register Socket.io middleware and event handlers.
@@ -42,7 +43,7 @@ export function registerSocketHandlers(io) {
   })
 
   io.on('connection', (socket) => {
-    console.log(`Socket connected: ${socket.id} (user: ${socket.user.name})`)
+    log.info('socket_connected', { socket: socket.id, user: socket.user.userId })
 
     // Join user's personal room for targeted events
     socket.join(`user:${socket.user.userId}`)
@@ -78,7 +79,7 @@ export function registerSocketHandlers(io) {
         // Push-notify eligible responders (fire-and-forget)
         notifyNewRequest(request).catch(() => {})
       } catch (err) {
-        console.error('Socket request:create error:', err.message)
+        log.error(err, { event: 'socket_request_create_failed', user: socket.user.userId })
         socket.emit('error', { message: 'Failed to create request' })
       }
     })
@@ -125,7 +126,7 @@ export function registerSocketHandlers(io) {
         // Push notification to requester (fire-and-forget)
         notifyRequestAccepted(request).catch(() => {})
       } catch (err) {
-        console.error('Socket request:accept error:', err.message)
+        log.error(err, { event: 'socket_request_accept_failed', user: socket.user.userId })
       }
     })
 
@@ -157,7 +158,7 @@ export function registerSocketHandlers(io) {
                 requestId: completed.id,
                 requesterId: completed.requester_id,
                 helperId: completed.helper_id,
-              }).catch(err => console.error('Points award error:', err.message))
+              }).catch(err => log.error(err, { event: 'socket_points_award_failed' }))
             }
           }
           return
@@ -181,7 +182,7 @@ export function registerSocketHandlers(io) {
           })
         }
       } catch (err) {
-        console.error('Socket request:complete error:', err.message)
+        log.error(err, { event: 'socket_request_complete_failed', user: socket.user.userId })
       }
     })
 
@@ -214,10 +215,10 @@ export function registerSocketHandlers(io) {
             requestId: request.id,
             requesterId: request.requester_id,
             helperId: request.helper_id,
-          }).catch(err => console.error('Points award error:', err.message))
+          }).catch(err => log.error(err, { event: 'socket_points_award_failed' }))
         }
       } catch (err) {
-        console.error('Socket request:done-accept error:', err.message)
+        log.error(err, { event: 'socket_request_done_accept_failed', user: socket.user.userId })
       }
     })
 
@@ -244,7 +245,7 @@ export function registerSocketHandlers(io) {
         io.to(`user:${existing.done_initiated_by}`).emit('request:done-rejected', { requestId })
         io.to(`user:${socket.user.userId}`).emit('request:done-rejected', { requestId })
       } catch (err) {
-        console.error('Socket request:done-reject error:', err.message)
+        log.error(err, { event: 'socket_request_done_reject_failed', user: socket.user.userId })
       }
     })
 
@@ -273,7 +274,7 @@ export function registerSocketHandlers(io) {
           io.to(`user:${existing.helper_id}`).emit('request:done-cancelled', { requestId })
         }
       } catch (err) {
-        console.error('Socket request:done-cancel error:', err.message)
+        log.error(err, { event: 'socket_request_done_cancel_failed', user: socket.user.userId })
       }
     })
 
@@ -294,7 +295,7 @@ export function registerSocketHandlers(io) {
           io.to(`user:${request.helper_id}`).emit('request:cancelled', { requestId })
         }
       } catch (err) {
-        console.error('Socket request:cancel error:', err.message)
+        log.error(err, { event: 'socket_request_cancel_failed', user: socket.user.userId })
       }
     })
 
@@ -339,7 +340,7 @@ export function registerSocketHandlers(io) {
           })
         }
       } catch (err) {
-        console.error('Socket location:update error:', err.message)
+        log.error(err, { event: 'socket_location_update_failed', user: socket.user.userId })
       }
     })
 
@@ -404,12 +405,12 @@ export function registerSocketHandlers(io) {
         // Acknowledge to sender
         socket.emit('message:sent', payload)
       } catch (err) {
-        console.error('Socket message:send error:', err.message)
+        log.error(err, { event: 'socket_message_send_failed', user: socket.user.userId })
       }
     })
 
     socket.on('disconnect', (reason) => {
-      console.log(`Socket disconnected: ${socket.id} (${reason})`)
+      log.info('socket_disconnected', { socket: socket.id, reason })
     })
   })
 }

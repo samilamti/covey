@@ -7,6 +7,7 @@ import { authenticate } from '../auth/index.js'
 import { isEnabled } from '../features.js'
 import * as pointsRepo from '../repositories/points.js'
 import { BADGE_DEFS } from '../points-config.js'
+import { log } from '../logger.js'
 
 export const pointsRouter = Router()
 
@@ -34,7 +35,7 @@ pointsRouter.get('/', async (req, res) => {
       badgesTotal: BADGE_DEFS.length,
     })
   } catch (err) {
-    console.error('Points summary error:', err.message)
+    log.error(err, { event: 'points_summary_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to get points' })
   }
 })
@@ -49,7 +50,7 @@ pointsRouter.get('/history', async (req, res) => {
     const history = await pointsRepo.getPointsHistory(req.user.userId, { limit, offset })
     res.json({ history })
   } catch (err) {
-    console.error('Points history error:', err.message)
+    log.error(err, { event: 'points_history_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to get history' })
   }
 })
@@ -72,7 +73,7 @@ pointsRouter.get('/badges', async (req, res) => {
     })
     res.json({ badges })
   } catch (err) {
-    console.error('Points badges error:', err.message)
+    log.error(err, { event: 'points_badges_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to get badges' })
   }
 })
@@ -96,7 +97,7 @@ pointsRouter.put('/badges/:badgeKey/visibility', async (req, res) => {
     }
     res.json({ ok: true })
   } catch (err) {
-    console.error('Badge visibility error:', err.message)
+    log.error(err, { event: 'badge_visibility_failed', user: req.user.userId, badgeKey: req.params.badgeKey })
     res.status(500).json({ error: 'Failed to update badge' })
   }
 })

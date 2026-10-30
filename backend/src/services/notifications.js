@@ -8,6 +8,7 @@
 
 import webPush from 'web-push'
 import { isEnabled } from '../features.js'
+import { log } from '../logger.js'
 import * as pushRepo from '../repositories/push-subscriptions.js'
 import * as nativePushRepo from '../repositories/native-push.js'
 
@@ -18,7 +19,7 @@ const mockProvider = {
   async send(subscription, payload) {
     const entry = { subscription, payload, sentAt: new Date().toISOString() }
     sentNotifications.push(entry)
-    console.log(`[mock-push] Notification sent to ${subscription.endpoint}:`, payload.title || payload)
+    log.info('mock_push_sent', { endpoint: subscription.endpoint, title: payload.title || null })
   },
   getSentNotifications() {
     return [...sentNotifications]
@@ -37,7 +38,7 @@ function getRealProvider() {
     const vapidContact = process.env.VAPID_CONTACT || 'mailto:sentinel@covey.se'
 
     if (!vapidPublic || !vapidPrivate) {
-      console.warn('VAPID keys not configured, falling back to mock provider')
+      log.warn('vapid_keys_missing_using_mock')
       realProvider = mockProvider
       return realProvider
     }
@@ -103,7 +104,7 @@ async function getFcmMessaging() {
 
   const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
   if (!serviceAccount) {
-    console.warn('[push] FIREBASE_SERVICE_ACCOUNT not set, native push disabled')
+    log.warn('firebase_service_account_missing_native_push_disabled')
     fcmMessaging = false
     return null
   }
@@ -117,7 +118,7 @@ async function getFcmMessaging() {
     fcmMessaging = admin.default.messaging()
     return fcmMessaging
   } catch (err) {
-    console.error('[push] Firebase init failed:', err.message)
+    log.error(err, { event: 'firebase_init_failed' })
     fcmMessaging = false
     return null
   }
@@ -220,10 +221,13 @@ export async function notifyRequestAccepted(request) {
     const results = await Promise.allSettled(promises)
     const failed = results.filter((r) => r.status === 'rejected')
     if (failed.length > 0) {
-      console.warn(`[push] ${failed.length}/${promises.length} accept notifications failed`)
+      log.warn('push_accept_notifications_partial_failure', {
+        failed: failed.length,
+        total: promises.length,
+      })
     }
   } catch (err) {
-    console.error('[push] notifyRequestAccepted error:', err.message)
+    log.error(err, { event: 'notify_request_accepted_failed' })
   }
 }
 
@@ -296,9 +300,12 @@ export async function notifyNewRequest(request) {
     const results = await Promise.allSettled(promises)
     const failed = results.filter((r) => r.status === 'rejected')
     if (failed.length > 0) {
-      console.warn(`[push] ${failed.length}/${promises.length} notifications failed`)
+      log.warn('push_new_request_notifications_partial_failure', {
+        failed: failed.length,
+        total: promises.length,
+      })
     }
   } catch (err) {
-    console.error('[push] notifyNewRequest error:', err.message)
+    log.error(err, { event: 'notify_new_request_failed' })
   }
 }

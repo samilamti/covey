@@ -6,6 +6,7 @@ import { Router } from 'express'
 import { authenticate } from '../auth/index.js'
 import * as ratingRepo from '../repositories/ratings.js'
 import * as reqRepo from '../repositories/requests.js'
+import { log } from '../logger.js'
 
 export const ratingRouter = Router()
 
@@ -19,7 +20,7 @@ ratingRouter.get('/pending', async (req, res) => {
     const pending = await ratingRepo.findPendingRatings(req.user.userId)
     res.json({ pending })
   } catch (err) {
-    console.error('Pending ratings error:', err.message)
+    log.error(err, { event: 'pending_ratings_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to get pending ratings' })
   }
 })
@@ -67,7 +68,7 @@ ratingRouter.post('/', async (req, res) => {
 
     res.status(201).json({ rating })
   } catch (err) {
-    console.error('Submit rating error:', err.message)
+    log.error(err, { event: 'submit_rating_failed', requestId })
     res.status(500).json({ error: 'Failed to submit rating' })
   }
 })

@@ -12,6 +12,7 @@ import { checkEligibility } from '../services/eligibility.js'
 import { notifyNewRequest, notifyRequestAccepted } from '../services/notifications.js'
 import { isEnabled } from '../features.js'
 import * as pointsRepo from '../repositories/points.js'
+import { log } from '../logger.js'
 
 export const requestRouter = Router()
 
@@ -50,7 +51,7 @@ requestRouter.post('/', async (req, res) => {
 
     res.status(201).json({ request })
   } catch (err) {
-    console.error('Create request error:', err.message)
+    log.error(err, { event: 'create_request_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to create request' })
   }
 })
@@ -63,7 +64,7 @@ requestRouter.get('/', async (req, res) => {
     const requests = await reqRepo.findByUser(req.user.userId)
     res.json({ requests })
   } catch (err) {
-    console.error('List requests error:', err.message)
+    log.error(err, { event: 'list_requests_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to list requests' })
   }
 })
@@ -85,7 +86,7 @@ requestRouter.get('/open', async (req, res) => {
     })
     res.json({ requests })
   } catch (err) {
-    console.error('Open requests error:', err.message)
+    log.error(err, { event: 'list_open_requests_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to list open requests' })
   }
 })
@@ -106,7 +107,7 @@ requestRouter.get('/:id/messages', async (req, res) => {
     const messages = await msgRepo.findByRequest(req.params.id)
     res.json({ messages })
   } catch (err) {
-    console.error('Messages error:', err.message)
+    log.error(err, { event: 'list_messages_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to load messages' })
   }
 })
@@ -120,7 +121,7 @@ requestRouter.get('/:id', async (req, res) => {
     if (!request) return res.status(404).json({ error: 'Request not found' })
     res.json({ request })
   } catch (err) {
-    console.error('Request detail error:', err.message)
+    log.error(err, { event: 'request_detail_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to get request' })
   }
 })
@@ -162,7 +163,7 @@ requestRouter.post('/:id/accept', async (req, res) => {
 
     res.json({ request })
   } catch (err) {
-    console.error('Accept error:', err.message)
+    log.error(err, { event: 'accept_request_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to accept request' })
   }
 })
@@ -176,7 +177,7 @@ requestRouter.post('/:id/start', async (req, res) => {
     if (!request) return res.status(409).json({ error: 'Request not ready to start' })
     res.json({ request })
   } catch (err) {
-    console.error('Start error:', err.message)
+    log.error(err, { event: 'start_request_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to start session' })
   }
 })
@@ -218,12 +219,12 @@ requestRouter.post('/:id/done/accept', async (req, res) => {
         requestId: request.id,
         requesterId: request.requester_id,
         helperId: request.helper_id,
-      }).catch(err => console.error('Points award error:', err.message))
+      }).catch(err => log.error(err, { event: 'points_award_failed' }))
     }
 
     res.json({ request })
   } catch (err) {
-    console.error('Done accept error:', err.message)
+    log.error(err, { event: 'done_accept_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to accept done' })
   }
 })
@@ -260,7 +261,7 @@ requestRouter.post('/:id/done/reject', async (req, res) => {
 
     res.json({ request })
   } catch (err) {
-    console.error('Done reject error:', err.message)
+    log.error(err, { event: 'done_reject_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to reject done' })
   }
 })
@@ -299,7 +300,7 @@ requestRouter.post('/:id/done/cancel', async (req, res) => {
 
     res.json({ request })
   } catch (err) {
-    console.error('Done cancel error:', err.message)
+    log.error(err, { event: 'done_cancel_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to cancel done' })
   }
 })
@@ -334,7 +335,7 @@ requestRouter.post('/:id/done', async (req, res) => {
               requestId: completed.id,
               requesterId: completed.requester_id,
               helperId: completed.helper_id,
-            }).catch(err => console.error('Points award error:', err.message))
+            }).catch(err => log.error(err, { event: 'points_award_failed' }))
           }
           return res.json({ request: completed })
         }
@@ -369,7 +370,7 @@ requestRouter.post('/:id/done', async (req, res) => {
 
     res.json({ request })
   } catch (err) {
-    console.error('Done initiate error:', err.message)
+    log.error(err, { event: 'done_initiate_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to initiate done' })
   }
 })
@@ -405,7 +406,7 @@ requestRouter.post('/:id/complete', async (req, res) => {
 
     res.json({ request })
   } catch (err) {
-    console.error('Complete error:', err.message)
+    log.error(err, { event: 'complete_request_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to complete session' })
   }
 })
@@ -419,7 +420,7 @@ requestRouter.post('/:id/confirm-safety', async (req, res) => {
     if (!request) return res.status(409).json({ error: 'Request not completed' })
     res.json({ request })
   } catch (err) {
-    console.error('Confirm safety error:', err.message)
+    log.error(err, { event: 'confirm_safety_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to confirm safety' })
   }
 })
@@ -433,7 +434,7 @@ requestRouter.post('/:id/cancel', async (req, res) => {
     if (!request) return res.status(409).json({ error: 'Request cannot be cancelled' })
     res.json({ request })
   } catch (err) {
-    console.error('Cancel error:', err.message)
+    log.error(err, { event: 'cancel_request_failed', requestId: req.params.id })
     res.status(500).json({ error: 'Failed to cancel request' })
   }
 })

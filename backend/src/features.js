@@ -10,6 +10,8 @@
  *   if (isEnabled('BANKID_AUTH')) { ... }
  */
 
+import { log } from './logger.js'
+
 const DEFAULTS = {
   BANKID_AUTH: false,
   PUSH_NOTIFICATIONS: false,
@@ -31,7 +33,7 @@ for (const [key, defaultValue] of Object.entries(DEFAULTS)) {
  */
 export function isEnabled(flag) {
   if (!(flag in flags)) {
-    console.warn(`Unknown feature flag: ${flag}`)
+    log.warn('unknown_feature_flag', { flag })
     return false
   }
   return flags[flag] === true

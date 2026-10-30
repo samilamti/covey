@@ -25,6 +25,7 @@ import * as userRepo from '../repositories/users.js'
 import { setScoreOverride } from '../repositories/ratings.js'
 import { parseBirthYear, parseSex } from './nin.js'
 import { devLoginPage } from './bankid-dev-page.js'
+import { log } from '../logger.js'
 
 /**
  * Stub safety score overrides from STUB_SAFETY_SCORES env var.
@@ -53,9 +54,7 @@ function getProvider() {
     if (isEnabled('BANKID_AUTH')) {
       return bankidProvider
     }
-    console.warn(
-      'AUTH_PROVIDER=bankid but FEATURE_BANKID_AUTH is disabled — falling back to stub'
-    )
+    log.warn('bankid_provider_requested_but_flag_disabled_falling_back_to_stub')
   }
 
   return stubProvider
@@ -99,7 +98,7 @@ authRouter.post('/login', authRateLimit, async (req, res) => {
     })
     res.json({ orderRef, autoStartToken })
   } catch (err) {
-    console.error('Login error:', err.message)
+    log.error(err, { event: 'auth_login_failed' })
     res.status(500).json({ error: 'Authentication service unavailable' })
   }
 })
@@ -164,7 +163,7 @@ authRouter.post('/collect', apiRateLimit, async (req, res) => {
     // Pending or failed
     res.json(result)
   } catch (err) {
-    console.error('Collect error:', err.message)
+    log.error(err, { event: 'auth_collect_failed' })
     res.status(500).json({ error: 'Authentication service unavailable' })
   }
 })
@@ -185,7 +184,7 @@ authRouter.post('/cancel', apiRateLimit, async (req, res) => {
     await provider.cancel(orderRef)
     res.json({ ok: true })
   } catch (err) {
-    console.error('Cancel error:', err.message)
+    log.error(err, { event: 'auth_cancel_failed' })
     res.status(500).json({ error: 'Authentication service unavailable' })
   }
 })

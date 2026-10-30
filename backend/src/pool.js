@@ -1,4 +1,5 @@
 import pg from 'pg'
+import { log } from './logger.js'
 
 const { Pool } = pg
 
@@ -13,6 +14,6 @@ export const db = new Pool({
 
 // Verify connection on startup
 db.query('SELECT 1').catch((err) => {
-  console.error('Database connection failed:', err.message)
+  log.error(err, { event: 'db_connect_failed_at_boot' })
   process.exit(1)
 })

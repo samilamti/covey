@@ -8,6 +8,7 @@ import { isEnabled } from '../features.js'
 import * as pushRepo from '../repositories/push-subscriptions.js'
 import * as nativePushRepo from '../repositories/native-push.js'
 import { sendNotification, getSentNotifications } from '../services/notifications.js'
+import { log } from '../logger.js'
 
 export const notificationRouter = Router()
 
@@ -32,7 +33,7 @@ notificationRouter.post('/subscribe', async (req, res) => {
     })
     res.json({ ok: true })
   } catch (err) {
-    console.error('Subscribe error:', err.message)
+    log.error(err, { event: 'push_subscribe_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to subscribe' })
   }
 })
@@ -51,7 +52,7 @@ notificationRouter.delete('/subscribe', async (req, res) => {
     await pushRepo.remove(req.user.userId, endpoint)
     res.json({ ok: true })
   } catch (err) {
-    console.error('Unsubscribe error:', err.message)
+    log.error(err, { event: 'push_unsubscribe_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to unsubscribe' })
   }
 })
@@ -77,7 +78,7 @@ notificationRouter.post('/subscribe-native', async (req, res) => {
     })
     res.json({ ok: true })
   } catch (err) {
-    console.error('Native subscribe error:', err.message)
+    log.error(err, { event: 'native_push_subscribe_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to subscribe' })
   }
 })
@@ -96,7 +97,7 @@ notificationRouter.delete('/subscribe-native', async (req, res) => {
     await nativePushRepo.remove(req.user.userId, token)
     res.json({ ok: true })
   } catch (err) {
-    console.error('Native unsubscribe error:', err.message)
+    log.error(err, { event: 'native_push_unsubscribe_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to unsubscribe' })
   }
 })
@@ -117,7 +118,7 @@ notificationRouter.post('/test', async (req, res) => {
     }
     res.json({ sent: subs.length })
   } catch (err) {
-    console.error('Test notification error:', err.message)
+    log.error(err, { event: 'test_notification_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to send test notification' })
   }
 })

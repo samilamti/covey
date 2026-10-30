@@ -12,6 +12,7 @@ import * as userRepo from '../repositories/users.js'
 import * as ratingRepo from '../repositories/ratings.js'
 import * as pointsRepo from '../repositories/points.js'
 import { isEnabled } from '../features.js'
+import { log } from '../logger.js'
 
 export const profileRouter = Router()
 
@@ -49,7 +50,7 @@ profileRouter.get('/', async (req, res) => {
       },
     })
   } catch (err) {
-    console.error('Get profile error:', err.message)
+    log.error(err, { event: 'get_profile_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to get profile' })
   }
 })
@@ -81,7 +82,7 @@ profileRouter.put('/', async (req, res) => {
       },
     })
   } catch (err) {
-    console.error('Update profile error:', err.message)
+    log.error(err, { event: 'update_profile_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to update profile' })
   }
 })
@@ -97,7 +98,7 @@ profileRouter.delete('/', async (req, res) => {
     }
     res.json({ ok: true, message: 'Account will be permanently deleted after 30 days.' })
   } catch (err) {
-    console.error('Delete profile error:', err.message)
+    log.error(err, { event: 'delete_profile_failed', user: req.user.userId })
     res.status(500).json({ error: 'Failed to delete account' })
   }
 })
@@ -129,7 +130,7 @@ profileRouter.get('/:userId', async (req, res) => {
       },
     })
   } catch (err) {
-    console.error('Get public profile error:', err.message)
+    log.error(err, { event: 'get_public_profile_failed', targetUser: req.params.userId })
     res.status(500).json({ error: 'Failed to get profile' })
   }
 })
