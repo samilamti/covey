@@ -187,9 +187,14 @@ docker compose \
 docker compose --env-file .env.prod \
   -f docker-compose.yml -f docker-compose.prod.yml ps
 
-# Backend health
+# Backend health (liveness — process is answering)
 curl -s https://covey.se/api/health
 # Expected: {"ok":true}
+
+# Backend readiness (deeper — pings the DB with a short timeout)
+curl -s -w "\nHTTP %{http_code}\n" https://covey.se/api/health/ready
+# Expected: {"ok":true,"db":"ok"} with HTTP 200
+# On DB outage: {"ok":false,"db":"error"} with HTTP 503
 
 # TLS certificate
 curl -vI https://covey.se 2>&1 | grep "subject:"

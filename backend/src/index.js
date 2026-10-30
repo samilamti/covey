@@ -12,6 +12,8 @@ import * as reqRepo from './repositories/requests.js'
 import { log } from './logger.js'
 import { httpLogger, errorLogger } from './middleware/logging.js'
 import { requestId } from './middleware/request-id.js'
+import { db } from './pool.js'
+import { readyHandler } from './routes/health.js'
 
 // --- Run migrations before anything else ---
 // Guarantees all tables exist before the server accepts traffic or workers query the DB.
@@ -84,8 +86,14 @@ app.use(httpLogger())
 // --- Routes ---
 app.use('/api', apiRouter)
 
-// --- Health check (used by docker-compose and load balancers) ---
+// --- Health checks ---
+// `/api/health` is pure liveness: the deploy script byte-compares the body
+// against the literal string `{"ok":true}`, so this response must stay
+// exactly this shape.
 app.get('/api/health', (_req, res) => res.json({ ok: true }))
+// `/api/health/ready` is readiness: pings the DB with a short timeout so a
+// load balancer can tell when the backend is up but its dependency is gone.
+app.get('/api/health/ready', readyHandler({ pool: db }))
 
 // --- Safety-net error handler (routes catch their own with specific events;
 // this covers anything that still leaks through so operators see a structured
