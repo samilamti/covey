@@ -42,6 +42,12 @@ export function httpLogger({ skip = DEFAULT_SKIP } = {}) {
 
 /**
  * Express error-handling middleware (4-arg signature). Keep it last.
+ *
+ * The 500 body includes `request_id` when the request-id middleware ran
+ * upstream, so a user who screenshots the error can quote the id and an
+ * operator can grep straight to the matching `http_error` log line. The id
+ * is already on the `X-Request-Id` response header, but a header is invisible
+ * to a user staring at an error dialog.
  */
 export function errorLogger() {
   // eslint-disable-next-line no-unused-vars
@@ -53,6 +59,8 @@ export function errorLogger() {
       ...(req.user?.userId ? { user: req.user.userId } : {}),
     })
     if (res.headersSent) return
-    res.status(500).json({ error: 'internal_error' })
+    const body = { error: 'internal_error' }
+    if (req.requestId) body.request_id = req.requestId
+    res.status(500).json(body)
   }
 }

@@ -210,4 +210,22 @@ describe('errorLogger', () => {
     errorLogger()(err, req, res, () => {})
     assert.ok(stderr[0].includes('"user":"u-9"'))
   })
+
+  it('includes request_id in the 500 body when set upstream', () => {
+    const err = new Error('boom')
+    const req = mockReq({ method: 'POST', path: '/api/requests', requestId: 'r-err-1' })
+    const res = finishableRes()
+    errorLogger()(err, req, res, () => {})
+    assert.equal(res.statusCode, 500)
+    assert.deepEqual(res.body, { error: 'internal_error', request_id: 'r-err-1' })
+  })
+
+  it('omits request_id from the body when the request-id middleware did not run', () => {
+    const err = new Error('boom')
+    const req = mockReq({ method: 'POST', path: '/api/requests' })
+    const res = finishableRes()
+    errorLogger()(err, req, res, () => {})
+    assert.equal(res.statusCode, 500)
+    assert.deepEqual(res.body, { error: 'internal_error' })
+  })
 })
