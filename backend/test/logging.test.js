@@ -89,6 +89,14 @@ describe('httpLogger', () => {
     assert.equal(stdout.length, 0)
   })
 
+  it('skips /api/health/ready by default (same reasoning: polled every few seconds, logs its own failure)', () => {
+    const req = mockReq({ method: 'GET', path: '/api/health/ready' })
+    const res = finishableRes()
+    httpLogger()(req, res, () => {})
+    res.emit('finish')
+    assert.equal(stdout.length, 0)
+  })
+
   it('honours a custom skip set', () => {
     const req = mockReq({ method: 'GET', path: '/api/ping' })
     const res = finishableRes()

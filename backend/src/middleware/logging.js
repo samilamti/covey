@@ -12,13 +12,16 @@
  * errors with specific event names; this only runs when they don't.
  *
  * Both honour `LOG_HTTP=off` for quiet local runs. The access logger skips
- * `/api/health` by default because load balancers hammer it every few seconds.
+ * `/api/health` AND `/api/health/ready` by default because load balancers
+ * poll both every few seconds; the readiness probe already logs a dedicated
+ * `readiness_db_ping_failed` line on failure, so an access-log entry per
+ * poll would be ~17k lines of pure noise a day without adding any signal.
  */
 
 import { log } from '../logger.js'
 
 const DISABLED = process.env.LOG_HTTP === 'off'
-const DEFAULT_SKIP = new Set(['/api/health'])
+const DEFAULT_SKIP = new Set(['/api/health', '/api/health/ready'])
 
 export function httpLogger({ skip = DEFAULT_SKIP } = {}) {
   return function httpLoggerMiddleware(req, res, next) {
