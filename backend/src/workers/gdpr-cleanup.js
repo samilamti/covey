@@ -57,7 +57,9 @@ async function cleanup() {
       log.info('gdpr_cleanup_user_purged', { user_id: userId })
     }
   } catch (err) {
-    log.error('gdpr_cleanup_error', { error: err.message })
+    // Pass the Error so the stack reaches the log aggregator; a cleanup pass
+    // that aborts partway through needs a trace to diagnose.
+    log.error(err, { event: 'gdpr_cleanup_failed' })
   }
 }
 

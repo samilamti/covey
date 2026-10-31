@@ -43,7 +43,9 @@ export function startExpirationWorker(io) {
         }
       }
     } catch (err) {
-      log.error('expiration_worker_error', { error: err.message })
+      // Pass the Error so the stack reaches the log aggregator; a tick that
+      // repeatedly fails is the kind of thing you want a trace for.
+      log.error(err, { event: 'expiration_worker_failed' })
     }
   }, INTERVAL_MS)
 

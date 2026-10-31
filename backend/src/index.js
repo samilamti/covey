@@ -39,7 +39,9 @@ try {
     log.info('startup_cleanup', { deleted: deletedCount })
   }
 } catch (err) {
-  log.error('startup_cleanup_error', { error: err.message })
+  // Pass the Error instance so the stack is preserved and the event tag is
+  // stable for a log aggregator, matching every other error line.
+  log.error(err, { event: 'startup_cleanup_failed' })
 }
 
 const app = express()
