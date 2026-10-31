@@ -10,6 +10,7 @@ import { ratingRouter } from './routes/ratings.js'
 import { pointsRouter } from './routes/points.js'
 import { safetyRouter } from './routes/safety.js'
 import { adminRouter } from './routes/admin.js'
+import { versionHandler } from './routes/version.js'
 import { apiRateLimit } from './middleware/rateLimit.js'
 
 export const apiRouter = Router()
@@ -18,6 +19,11 @@ export const apiRouter = Router()
 apiRouter.get('/features', (_req, res) => {
   res.json({ flags: getAllFlags() })
 })
+
+// --- Build info (public, no auth required) ---
+// Mirrors the `backend_build` line emitted at startup so clients and operators
+// can read which version/commit is live without shell access to the box.
+apiRouter.get('/version', versionHandler())
 
 // --- Auth routes (login, verify, etc.) ---
 // Rate limiting is applied per-route inside authRouter: strict authRateLimit on
