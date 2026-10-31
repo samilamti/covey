@@ -1,7 +1,28 @@
-import { describe, it } from 'node:test'
+import { describe, it, before, after, beforeEach } from 'node:test'
 import assert from 'node:assert/strict'
 import { rateLimit } from '../src/middleware/rateLimit.js'
 import { mockReq, mockRes } from './helpers.js'
+
+// Capture stdout/stderr around the structured warn log the limiter now emits
+// when a request is blocked.
+let origStdout
+let origStderr
+const stdout = []
+const stderr = []
+
+before(() => {
+  origStdout = process.stdout.write.bind(process.stdout)
+  origStderr = process.stderr.write.bind(process.stderr)
+  process.stdout.write = (chunk) => { stdout.push(String(chunk)); return true }
+  process.stderr.write = (chunk) => { stderr.push(String(chunk)); return true }
+})
+
+after(() => {
+  process.stdout.write = origStdout
+  process.stderr.write = origStderr
+})
+
+beforeEach(() => { stdout.length = 0; stderr.length = 0 })
 
 describe('rateLimit middleware', () => {
   it('allows requests within the limit', () => {
@@ -74,5 +95,59 @@ describe('rateLimit middleware', () => {
     let called = false
     mw(mockReq({ ip: '40.0.0.2' }), res, () => { called = true })
     assert.equal(called, true)
+  })
+
+  it('emits a warn log line when a request is blocked', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 1, name: 'auth' })
+    // First request passes, no log yet.
+    mw(mockReq({ ip: '50.0.0.1', method: 'POST', path: '/api/auth/login' }), mockRes(), () => {})
+    assert.equal(stderr.length, 0)
+    // Second is blocked and should log.
+    const res = mockRes()
+    mw(mockReq({ ip: '50.0.0.1', method: 'POST', path: '/api/auth/login' }), res, () => {})
+    assert.equal(res.statusCode, 429)
+    assert.equal(stderr.length, 1, 'exactly one warn line per blocked request')
+    const line = stderr[0]
+    assert.ok(line.startsWith('[warn] rate_limit_exceeded'))
+    assert.ok(line.includes('"event":"rate_limit_exceeded"'))
+    assert.ok(line.includes('"limiter":"auth"'))
+    assert.ok(line.includes('"limit":1'))
+    assert.ok(line.includes('"window_ms":60000'))
+    assert.ok(line.includes('"method":"POST"'))
+    assert.ok(line.includes('"path":"/api/auth/login"'))
+    // Key is deliberately NOT logged: no IP, no user id leaks here.
+    assert.ok(!line.includes('50.0.0.1'), 'the key (IP here) is not logged')
+  })
+
+  it('does not log when a request is allowed', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 5 })
+    mw(mockReq({ ip: '51.0.0.1' }), mockRes(), () => {})
+    mw(mockReq({ ip: '51.0.0.1' }), mockRes(), () => {})
+    assert.equal(stderr.length, 0)
+    assert.equal(stdout.length, 0)
+  })
+
+  it('defaults the limiter name to "rate_limit" when none is given', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 1 })
+    mw(mockReq({ ip: '52.0.0.1' }), mockRes(), () => {})
+    mw(mockReq({ ip: '52.0.0.1' }), mockRes(), () => {})
+    assert.equal(stderr.length, 1)
+    assert.ok(stderr[0].includes('"limiter":"rate_limit"'))
+  })
+
+  it('is silenced by LOG_HTTP=off', () => {
+    const prior = process.env.LOG_HTTP
+    process.env.LOG_HTTP = 'off'
+    try {
+      const mw = rateLimit({ windowMs: 60_000, max: 1, name: 'quiet' })
+      mw(mockReq({ ip: '53.0.0.1' }), mockRes(), () => {})
+      const res = mockRes()
+      mw(mockReq({ ip: '53.0.0.1' }), res, () => {})
+      assert.equal(res.statusCode, 429, 'still enforces the limit')
+      assert.equal(stderr.length, 0, 'but emits no log line')
+    } finally {
+      if (prior === undefined) delete process.env.LOG_HTTP
+      else process.env.LOG_HTTP = prior
+    }
   })
 })
