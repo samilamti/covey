@@ -48,19 +48,30 @@ export function httpLogger({ skip = DEFAULT_SKIP } = {}) {
  * operator can grep straight to the matching `http_error` log line. The id
  * is already on the `X-Request-Id` response header, but a header is invisible
  * to a user staring at an error dialog.
+ *
+ * An error that carries its own 4xx status keeps it: `express.json()` raises
+ * 400 on a malformed body and 413 on an oversized one, and turning those into
+ * a 500 with a stack trace would blame the server for a bad client request.
+ * They log as a one-line `http_client_error` warning instead.
  */
 export function errorLogger() {
   // eslint-disable-next-line no-unused-vars
   return function errorLoggerMiddleware(err, req, res, _next) {
-    log.error(err, {
-      event: 'http_error',
+    const meta = {
       method: req.method,
       path: req.path,
       ...(req.user?.userId ? { user: req.user.userId } : {}),
-    })
+    }
+    const status = err.status || err.statusCode
+    const clientError = status >= 400 && status < 500
+    if (clientError) {
+      log.warn('http_client_error', { event: 'http_client_error', status, type: err.type || null, ...meta })
+    } else {
+      log.error(err, { event: 'http_error', ...meta })
+    }
     if (res.headersSent) return
-    const body = { error: 'internal_error' }
+    const body = { error: clientError ? err.type || 'bad_request' : 'internal_error' }
     if (req.requestId) body.request_id = req.requestId
-    res.status(500).json(body)
+    res.status(clientError ? status : 500).json(body)
   }
 }

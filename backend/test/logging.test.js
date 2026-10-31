@@ -228,4 +228,20 @@ describe('errorLogger', () => {
     assert.equal(res.statusCode, 500)
     assert.deepEqual(res.body, { error: 'internal_error' })
   })
+
+  // Shapes of the errors express.json() raises (body-parser sets status + type).
+  for (const [status, type] of [[400, 'entity.parse.failed'], [413, 'entity.too.large']]) {
+    it(`keeps a ${status} from the body parser instead of turning it into a 500`, () => {
+      const err = Object.assign(new Error('bad body'), { status, statusCode: status, type, expose: true })
+      const req = mockReq({ method: 'POST', path: '/api/requests', requestId: 'r-4xx' })
+      const res = finishableRes()
+      errorLogger()(err, req, res, () => {})
+      assert.equal(res.statusCode, status)
+      assert.deepEqual(res.body, { error: type, request_id: 'r-4xx' })
+      assert.equal(stderr.length, 1)
+      assert.ok(stderr[0].startsWith('[warn] http_client_error'))
+      assert.ok(stderr[0].includes(`"status":${status}`))
+      assert.ok(!stderr[0].includes('"stack"'), 'a client error is not logged with a stack')
+    })
+  }
 })

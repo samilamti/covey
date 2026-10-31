@@ -86,9 +86,11 @@ app.use(helmet({
   },
 }))
 app.use(cors({ origin: corsOriginCheck }))
-app.use(express.json())
+// requestId and httpLogger go before the body parser, so a malformed or
+// oversized body still gets an id and an access-log line.
 app.use(requestId())
 app.use(httpLogger())
+app.use(express.json())
 
 // --- Routes ---
 app.use('/api', apiRouter)
