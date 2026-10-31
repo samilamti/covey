@@ -49,6 +49,13 @@ export function mockRes() {
       res._headers[name.toLowerCase()] = value
       return res
     },
+    setHeader(name, value) {
+      res._headers[name.toLowerCase()] = value
+      return res
+    },
+    getHeader(name) {
+      return res._headers[name.toLowerCase()]
+    },
     end() {
       return res
     },

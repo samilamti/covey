@@ -156,6 +156,61 @@ describe('rateLimit middleware', () => {
     assert.deepEqual(res.body, { error: 'Too many requests, please try again later' })
   })
 
+  it('sets X-RateLimit-* headers on every allowed response', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 3 })
+    const res = mockRes()
+    mw(mockReq({ ip: '60.0.0.1' }), res, () => {})
+    assert.equal(res._headers['x-ratelimit-limit'], '3')
+    // First call counts, so 2 of 3 remain.
+    assert.equal(res._headers['x-ratelimit-remaining'], '2')
+    // Reset == 0 while the window is empty before this call; the oldest
+    // timestamp is read before the current request is pushed, so a brand new
+    // key reports 0 seconds (nothing to wait for).
+    assert.equal(res._headers['x-ratelimit-reset'], '0')
+  })
+
+  it('decrements remaining on each successful request', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 5 })
+    const seen = []
+    for (let i = 0; i < 4; i++) {
+      const res = mockRes()
+      mw(mockReq({ ip: '60.0.0.2' }), res, () => {})
+      seen.push(res._headers['x-ratelimit-remaining'])
+    }
+    assert.deepEqual(seen, ['4', '3', '2', '1'])
+  })
+
+  it('reports remaining=0 and Retry-After on a blocked response', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 1 })
+    mw(mockReq({ ip: '60.0.0.3' }), mockRes(), () => {})
+    const res = mockRes()
+    mw(mockReq({ ip: '60.0.0.3' }), res, () => {})
+    assert.equal(res.statusCode, 429)
+    assert.equal(res._headers['x-ratelimit-limit'], '1')
+    assert.equal(res._headers['x-ratelimit-remaining'], '0')
+    // Reset is a whole number of seconds, positive while the window still
+    // holds the earlier timestamp.
+    const reset = Number(res._headers['x-ratelimit-reset'])
+    assert.ok(Number.isInteger(reset) && reset >= 1 && reset <= 60, `reset was ${reset}`)
+    assert.equal(res._headers['retry-after'], String(reset),
+      'Retry-After matches X-RateLimit-Reset on a blocked response')
+  })
+
+  it('allowed responses do not carry Retry-After', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 2 })
+    const res = mockRes()
+    mw(mockReq({ ip: '60.0.0.4' }), res, () => {})
+    assert.equal(res._headers['retry-after'], undefined)
+  })
+
+  it('tolerates a response mock without setHeader (shape of older tests)', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 2 })
+    const bareRes = { statusCode: 200, body: null, status(c) { this.statusCode = c; return this }, json(d) { this.body = d; return this } }
+    let called = false
+    assert.doesNotThrow(() => mw(mockReq({ ip: '60.0.0.5' }), bareRes, () => { called = true }))
+    assert.equal(called, true)
+  })
+
   it('is silenced by LOG_HTTP=off', () => {
     const prior = process.env.LOG_HTTP
     process.env.LOG_HTTP = 'off'

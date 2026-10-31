@@ -10,6 +10,16 @@
  * middleware ties the two lines together — so an operator can tell WHICH
  * limiter fired and reach the full context without the limiter itself ever
  * logging an IP. Set `LOG_HTTP=off` to silence it alongside the access log.
+ *
+ * Every response — allowed OR blocked — carries three advisory headers so a
+ * well-behaved client can throttle itself before it gets a 429:
+ *   X-RateLimit-Limit      total allowed in the window
+ *   X-RateLimit-Remaining  how many more this key can send in the current window
+ *   X-RateLimit-Reset      seconds until the oldest counted request falls out
+ *                          of the window (i.e. when one slot frees up); 0 when
+ *                          there is nothing to wait for
+ * Blocked responses also set a standard `Retry-After: <seconds>` header so
+ * clients that honour the spec can back off without reading our vendor header.
  */
 
 import { log } from '../logger.js'
@@ -57,6 +67,12 @@ export function rateLimit({ windowMs, max, keyFn, message, name } = {}) {
     // Remove timestamps outside the window
     data.timestamps = data.timestamps.filter((t) => now - t < window)
 
+    // Compute reset: how many whole seconds until the oldest counted
+    // timestamp drops out of the window (i.e. when the next slot opens).
+    // Zero when the window is empty — there is nothing to wait for.
+    const oldest = data.timestamps[0]
+    const resetSecs = oldest ? Math.max(0, Math.ceil((oldest + window - now) / 1000)) : 0
+
     if (data.timestamps.length >= limit) {
       if (process.env.LOG_HTTP !== 'off') {
         log.warn('rate_limit_exceeded', {
@@ -67,6 +83,13 @@ export function rateLimit({ windowMs, max, keyFn, message, name } = {}) {
           method: req.method,
           path: req.path,
         })
+      }
+      // Advisory headers plus the standard Retry-After so a spec-compliant
+      // client can back off without parsing our vendor header. On a 429
+      // remaining is always 0.
+      setRateLimitHeaders(res, limit, 0, resetSecs)
+      if (typeof res.setHeader === 'function') {
+        res.setHeader('Retry-After', String(resetSecs))
       }
       // Mirror the errorLogger convention: surface the correlation id in the
       // body too so a user who screenshots a 429 can quote something that an
@@ -79,8 +102,21 @@ export function rateLimit({ windowMs, max, keyFn, message, name } = {}) {
     }
 
     data.timestamps.push(now)
+    // This request counts, so remaining is one less than it would have been.
+    setRateLimitHeaders(res, limit, Math.max(0, limit - data.timestamps.length), resetSecs)
     next()
   }
+}
+
+/**
+ * Write the three advisory `X-RateLimit-*` headers if the response supports it.
+ * Guarded against test mocks that may not implement setHeader.
+ */
+function setRateLimitHeaders(res, limit, remaining, resetSecs) {
+  if (typeof res.setHeader !== 'function') return
+  res.setHeader('X-RateLimit-Limit', String(limit))
+  res.setHeader('X-RateLimit-Remaining', String(remaining))
+  res.setHeader('X-RateLimit-Reset', String(resetSecs))
 }
 
 /**
