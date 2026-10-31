@@ -37,8 +37,11 @@ export default defineConfig({
       output: {
         // Split heavy third-party deps into their own chunks so the main
         // app bundle stays small and these cache separately across deploys.
-        // Keep the preact runtime in the entry chunk — it's tiny (~15 KB)
-        // and splitting it adds a round-trip for every single page load.
+        // Preact itself is not named here, but it does NOT stay in the entry
+        // chunk: Rollup pulls it into `i18n` because react-i18next imports it
+        // (the `icons` chunk then imports it from there). That load order has
+        // no cycle and renders fine; rebuild and check the chunk imports if
+        // you add a rule here, since a cycle between chunks breaks at runtime.
         manualChunks(id) {
           if (!id.includes('node_modules')) return
           if (id.includes('i18next')) return 'i18n'

@@ -40,18 +40,14 @@ services:
       # Firebase service-account JSON on a single line. Empty by default so
       # backend tests + local stacks don't require a Firebase project.
       FIREBASE_SERVICE_ACCOUNT: ${FIREBASE_SERVICE_ACCOUNT:-}
-    # Probes /api/health/ready (DB ping) so `docker compose ps` reports when
-    # the DB connection is actually serving. Uses node's built-in fetch so no
-    # extra tooling has to land in the image. start_period gives migrations
-    # time to run before the first probe counts. `restart: unless-stopped`
-    # above does NOT recycle on unhealthy (restart fires on exit only), so
-    # this is purely a visibility signal.
-    healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
-      interval: 15s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
+    # Deliberately NO healthcheck here. Traefik's Docker provider drops any
+    # container whose health is "starting" or "unhealthy" from routing, and
+    # this backend's router shares the Host with the frontend's catch-all, so
+    # /api and /socket.io would fall through to nginx and get index.html with
+    # a 200: for ~15 s after every deploy, and for as long as a DB blip lasts.
+    # Probe /api/health/ready from outside instead. Re-adding one needs
+    # --providers.docker.allowEmptyServices=true on Traefik (503, not
+    # fall-through) and a short start_interval.
     depends_on:
       db:
         condition: service_healthy
