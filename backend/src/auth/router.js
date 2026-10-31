@@ -56,7 +56,9 @@ function getProvider() {
     if (isEnabled('BANKID_AUTH')) {
       return bankidProvider
     }
-    log.warn('bankid_provider_requested_but_flag_disabled_falling_back_to_stub')
+    log.warn('bankid_provider_requested_but_flag_disabled_falling_back_to_stub', {
+      event: 'bankid_provider_requested_but_flag_disabled_falling_back_to_stub',
+    })
   }
 
   return stubProvider

@@ -28,7 +28,7 @@ async function cleanup() {
 
     if (users.length === 0) return
 
-    log.info('gdpr_cleanup_purging', { count: users.length })
+    log.info('gdpr_cleanup_purging', { event: 'gdpr_cleanup_purging', count: users.length })
 
     for (const user of users) {
       const userId = user.id
@@ -54,7 +54,7 @@ async function cleanup() {
       // Finally, permanently delete the user
       await db.query('DELETE FROM users WHERE id = $1', [userId])
 
-      log.info('gdpr_cleanup_user_purged', { user_id: userId })
+      log.info('gdpr_cleanup_user_purged', { event: 'gdpr_cleanup_user_purged', user_id: userId })
     }
   } catch (err) {
     // Pass the Error so the stack reaches the log aggregator; a cleanup pass
@@ -73,5 +73,9 @@ export function startGdprCleanupWorker() {
     cleanup()
     setInterval(cleanup, INTERVAL_MS)
   }, 5_000)
-  log.info('gdpr_cleanup_worker_started', { interval_ms: INTERVAL_MS, first_run_delay_ms: 5000 })
+  log.info('gdpr_cleanup_worker_started', {
+    event: 'gdpr_cleanup_worker_started',
+    interval_ms: INTERVAL_MS,
+    first_run_delay_ms: 5000,
+  })
 }

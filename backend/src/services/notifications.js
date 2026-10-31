@@ -19,7 +19,11 @@ const mockProvider = {
   async send(subscription, payload) {
     const entry = { subscription, payload, sentAt: new Date().toISOString() }
     sentNotifications.push(entry)
-    log.info('mock_push_sent', { endpoint: subscription.endpoint, title: payload.title || null })
+    log.info('mock_push_sent', {
+      event: 'mock_push_sent',
+      endpoint: subscription.endpoint,
+      title: payload.title || null,
+    })
   },
   getSentNotifications() {
     return [...sentNotifications]
@@ -38,7 +42,7 @@ function getRealProvider() {
     const vapidContact = process.env.VAPID_CONTACT || 'mailto:sentinel@covey.se'
 
     if (!vapidPublic || !vapidPrivate) {
-      log.warn('vapid_keys_missing_using_mock')
+      log.warn('vapid_keys_missing_using_mock', { event: 'vapid_keys_missing_using_mock' })
       realProvider = mockProvider
       return realProvider
     }
@@ -104,7 +108,9 @@ async function getFcmMessaging() {
 
   const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
   if (!serviceAccount) {
-    log.warn('firebase_service_account_missing_native_push_disabled')
+    log.warn('firebase_service_account_missing_native_push_disabled', {
+      event: 'firebase_service_account_missing_native_push_disabled',
+    })
     fcmMessaging = false
     return null
   }
@@ -222,6 +228,7 @@ export async function notifyRequestAccepted(request) {
     const failed = results.filter((r) => r.status === 'rejected')
     if (failed.length > 0) {
       log.warn('push_accept_notifications_partial_failure', {
+        event: 'push_accept_notifications_partial_failure',
         failed: failed.length,
         total: promises.length,
       })
@@ -301,6 +308,7 @@ export async function notifyNewRequest(request) {
     const failed = results.filter((r) => r.status === 'rejected')
     if (failed.length > 0) {
       log.warn('push_new_request_notifications_partial_failure', {
+        event: 'push_new_request_notifications_partial_failure',
         failed: failed.length,
         total: promises.length,
       })

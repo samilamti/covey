@@ -21,7 +21,7 @@ import { getBuildInfo } from './build-info.js'
 // Operators grep the log stream to see which version/commit is running
 // after a deploy; cheaper and less racy than hitting an endpoint right after
 // `docker compose up`. Emitted before any work so it anchors the stream.
-log.info('backend_build', getBuildInfo())
+log.info('backend_build', { event: 'backend_build', ...getBuildInfo() })
 
 // --- Refuse to run production without the personnummer HMAC key ---
 // Without it every login would store a reversible SHA-256 (auth/nin-hash.js).
@@ -36,7 +36,7 @@ await migrate()
 try {
   const deletedCount = await reqRepo.deleteTerminal()
   if (deletedCount > 0) {
-    log.info('startup_cleanup', { deleted: deletedCount })
+    log.info('startup_cleanup', { event: 'startup_cleanup', deleted: deletedCount })
   }
 } catch (err) {
   // Pass the Error instance so the stack is preserved and the event tag is
@@ -119,7 +119,7 @@ app.use(errorLogger())
 // --- Start ---
 const PORT = process.env.PORT || 3000
 httpServer.listen(PORT, () => {
-  log.info('backend_listening', { port: Number(PORT) })
+  log.info('backend_listening', { event: 'backend_listening', port: Number(PORT) })
   // Start background workers (tables guaranteed to exist after migrate())
   startExpirationWorker(io)
   startGdprCleanupWorker()

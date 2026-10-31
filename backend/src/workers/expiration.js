@@ -21,7 +21,7 @@ export function startExpirationWorker(io) {
     try {
       const expired = await reqRepo.expireOldRequests()
       if (expired.length > 0) {
-        log.info('requests_expired', { count: expired.length })
+        log.info('requests_expired', { event: 'requests_expired', count: expired.length })
         if (io) {
           for (const req of expired) {
             // Always notify the open requests room (for list updates)
@@ -49,5 +49,5 @@ export function startExpirationWorker(io) {
     }
   }, INTERVAL_MS)
 
-  log.info('expiration_worker_started', { interval_ms: INTERVAL_MS })
+  log.info('expiration_worker_started', { event: 'expiration_worker_started', interval_ms: INTERVAL_MS })
 }

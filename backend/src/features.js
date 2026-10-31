@@ -33,7 +33,7 @@ for (const [key, defaultValue] of Object.entries(DEFAULTS)) {
  */
 export function isEnabled(flag) {
   if (!(flag in flags)) {
-    log.warn('unknown_feature_flag', { flag })
+    log.warn('unknown_feature_flag', { event: 'unknown_feature_flag', flag })
     return false
   }
   return flags[flag] === true
