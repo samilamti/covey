@@ -17,6 +17,7 @@ import { db } from './pool.js'
 import { readyHandler } from './routes/health.js'
 import { getBuildInfo } from './build-info.js'
 import { createShutdown } from './shutdown.js'
+import { attachProcessErrorHandlers } from './process-errors.js'
 
 // --- Identify this build at startup ---
 // Operators grep the log stream to see which version/commit is running
@@ -133,3 +134,11 @@ httpServer.listen(PORT, () => {
 const shutdown = createShutdown({ httpServer, io, log })
 process.on('SIGTERM', () => shutdown('SIGTERM'))
 process.on('SIGINT', () => shutdown('SIGINT'))
+
+// --- Fatal error handlers ---
+// A sync throw in a worker/timer/socket handler or an unhandled rejection
+// would otherwise exit with a bare Node stack trace, bypassing the structured
+// `event:` tags the rest of the backend emits. Route both through the shared
+// logger with stable tags and reuse the graceful shutdown so in-flight
+// requests still get drained.
+attachProcessErrorHandlers({ log, shutdown })
