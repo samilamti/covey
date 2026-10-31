@@ -11,6 +11,7 @@
   {% for l in languages %}
     <link rel="alternate" hreflang="{{ l.code }}" href="{{ site.url }}{{ pageId | localizedUrl(l.code) }}">
   {% endfor %}
+  <link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ pageId | localizedUrl('sv') }}">
 
   {# Open Graph #}
   <meta property="og:title" content="{{ title }} — {{ site.title }}">

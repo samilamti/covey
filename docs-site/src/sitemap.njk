@@ -12,6 +12,7 @@ eleventyExcludeFromCollections: true
     {%- for l in languages %}
     <xhtml:link rel="alternate" hreflang="{{ l.code }}" href="{{ site.url }}{{ page.data.pageId | localizedUrl(l.code) }}" />
     {%- endfor %}
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ page.data.pageId | localizedUrl('sv') }}" />
   </url>
 {%- endif %}
 {%- endfor %}
