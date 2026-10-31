@@ -44,7 +44,18 @@ export function registerSocketHandlers(io) {
   })
 
   io.on('connection', (socket) => {
-    log.info('socket_connected', { socket: socket.id, user: socket.user.userId })
+    log.info('socket_connected', { event: 'socket_connected', socket: socket.id, user: socket.user.userId })
+
+    // Shared meta for every error line emitted during this socket's lifetime.
+    // The connect log line already carries both fields, so threading them
+    // through here lets an operator grep `socket:<id>` to find one socket's
+    // whole conversation across unrelated events (request:create, location
+    // update, message send, etc.) without touching every call site.
+    const sockMeta = (event) => ({
+      event,
+      socket: socket.id,
+      user: socket.user.userId,
+    })
 
     // Join user's personal room for targeted events
     socket.join(`user:${socket.user.userId}`)
@@ -82,7 +93,7 @@ export function registerSocketHandlers(io) {
         // Push-notify eligible responders (fire-and-forget)
         notifyNewRequest(request).catch(() => {})
       } catch (err) {
-        log.error(err, { event: 'socket_request_create_failed', user: socket.user.userId })
+        log.error(err, sockMeta('socket_request_create_failed'))
         socket.emit('error', { message: 'Failed to create request' })
       }
     })
@@ -129,7 +140,7 @@ export function registerSocketHandlers(io) {
         // Push notification to requester (fire-and-forget)
         notifyRequestAccepted(request).catch(() => {})
       } catch (err) {
-        log.error(err, { event: 'socket_request_accept_failed', user: socket.user.userId })
+        log.error(err, sockMeta('socket_request_accept_failed'))
       }
     })
 
@@ -161,7 +172,7 @@ export function registerSocketHandlers(io) {
                 requestId: completed.id,
                 requesterId: completed.requester_id,
                 helperId: completed.helper_id,
-              }).catch(err => log.error(err, { event: 'socket_points_award_failed' }))
+              }).catch(err => log.error(err, sockMeta('socket_points_award_failed')))
             }
           }
           return
@@ -185,7 +196,7 @@ export function registerSocketHandlers(io) {
           })
         }
       } catch (err) {
-        log.error(err, { event: 'socket_request_complete_failed', user: socket.user.userId })
+        log.error(err, sockMeta('socket_request_complete_failed'))
       }
     })
 
@@ -218,10 +229,10 @@ export function registerSocketHandlers(io) {
             requestId: request.id,
             requesterId: request.requester_id,
             helperId: request.helper_id,
-          }).catch(err => log.error(err, { event: 'socket_points_award_failed' }))
+          }).catch(err => log.error(err, sockMeta('socket_points_award_failed')))
         }
       } catch (err) {
-        log.error(err, { event: 'socket_request_done_accept_failed', user: socket.user.userId })
+        log.error(err, sockMeta('socket_request_done_accept_failed'))
       }
     })
 
@@ -248,7 +259,7 @@ export function registerSocketHandlers(io) {
         io.to(`user:${existing.done_initiated_by}`).emit('request:done-rejected', { requestId })
         io.to(`user:${socket.user.userId}`).emit('request:done-rejected', { requestId })
       } catch (err) {
-        log.error(err, { event: 'socket_request_done_reject_failed', user: socket.user.userId })
+        log.error(err, sockMeta('socket_request_done_reject_failed'))
       }
     })
 
@@ -277,7 +288,7 @@ export function registerSocketHandlers(io) {
           io.to(`user:${existing.helper_id}`).emit('request:done-cancelled', { requestId })
         }
       } catch (err) {
-        log.error(err, { event: 'socket_request_done_cancel_failed', user: socket.user.userId })
+        log.error(err, sockMeta('socket_request_done_cancel_failed'))
       }
     })
 
@@ -298,7 +309,7 @@ export function registerSocketHandlers(io) {
           io.to(`user:${request.helper_id}`).emit('request:cancelled', { requestId })
         }
       } catch (err) {
-        log.error(err, { event: 'socket_request_cancel_failed', user: socket.user.userId })
+        log.error(err, sockMeta('socket_request_cancel_failed'))
       }
     })
 
@@ -343,7 +354,7 @@ export function registerSocketHandlers(io) {
           })
         }
       } catch (err) {
-        log.error(err, { event: 'socket_location_update_failed', user: socket.user.userId })
+        log.error(err, sockMeta('socket_location_update_failed'))
       }
     })
 
@@ -410,12 +421,17 @@ export function registerSocketHandlers(io) {
         // Acknowledge to sender
         socket.emit('message:sent', payload)
       } catch (err) {
-        log.error(err, { event: 'socket_message_send_failed', user: socket.user.userId })
+        log.error(err, sockMeta('socket_message_send_failed'))
       }
     })
 
     socket.on('disconnect', (reason) => {
-      log.info('socket_disconnected', { socket: socket.id, reason })
+      log.info('socket_disconnected', {
+        event: 'socket_disconnected',
+        socket: socket.id,
+        user: socket.user.userId,
+        reason,
+      })
     })
   })
 }
