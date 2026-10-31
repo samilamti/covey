@@ -16,6 +16,7 @@ import { requestId } from './middleware/request-id.js'
 import { db } from './pool.js'
 import { readyHandler } from './routes/health.js'
 import { getBuildInfo } from './build-info.js'
+import { createShutdown } from './shutdown.js'
 
 // --- Identify this build at startup ---
 // Operators grep the log stream to see which version/commit is running
@@ -124,3 +125,11 @@ httpServer.listen(PORT, () => {
   startExpirationWorker(io)
   startGdprCleanupWorker()
 })
+
+// --- Graceful shutdown ---
+// Docker sends SIGTERM when a container stops; without a handler, in-flight
+// requests are dropped and the browser sees a 502 across a deploy. SIGINT is
+// the local Ctrl-C case. See src/shutdown.js for the sequence.
+const shutdown = createShutdown({ httpServer, io, log })
+process.on('SIGTERM', () => shutdown('SIGTERM'))
+process.on('SIGINT', () => shutdown('SIGINT'))
