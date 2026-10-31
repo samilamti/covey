@@ -18,6 +18,14 @@ import { readyHandler } from './routes/health.js'
 import { getBuildInfo } from './build-info.js'
 import { createShutdown } from './shutdown.js'
 import { attachProcessErrorHandlers } from './process-errors.js'
+import { assertProductionEnv } from './env-check.js'
+
+// --- Refuse to boot with an unsafe production env ---
+// Every secret has a dev fallback so a laptop boots without a .env file;
+// in production that fallback is a footgun (e.g. JWT_SECRET falling back to
+// the well-known dev literal). Fail fast here with a readable message rather
+// than silently signing forged-able tokens.
+const envChecked = assertProductionEnv()
 
 // --- Identify this build at startup ---
 // Operators grep the log stream to see which version/commit is running
@@ -28,6 +36,13 @@ log.info('backend_build', { event: 'backend_build', ...getBuildInfo() })
 // --- Refuse to run production without the personnummer HMAC key ---
 // Without it every login would store a reversible SHA-256 (auth/nin-hash.js).
 assertNinHashKey()
+
+// Record which production env checks ran, so a reader of the startup stream
+// can tell the safety net fired even though no error landed. Empty outside
+// production — intentional, no noise for dev/test runs.
+if (envChecked.length > 0) {
+  log.info('env_check_passed', { event: 'env_check_passed', vars: envChecked })
+}
 
 // --- Run migrations before anything else ---
 // Guarantees all tables exist before the server accepts traffic or workers query the DB.
