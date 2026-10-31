@@ -68,7 +68,14 @@ export function rateLimit({ windowMs, max, keyFn, message, name } = {}) {
           path: req.path,
         })
       }
-      return res.status(429).json({ error: msg })
+      // Mirror the errorLogger convention: surface the correlation id in the
+      // body too so a user who screenshots a 429 can quote something that an
+      // operator can grep straight to the matching log lines. The id is also
+      // on the X-Request-Id response header, but a header is invisible to a
+      // user staring at an error message.
+      const body = { error: msg }
+      if (req.requestId) body.request_id = req.requestId
+      return res.status(429).json(body)
     }
 
     data.timestamps.push(now)

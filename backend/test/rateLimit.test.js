@@ -135,6 +135,27 @@ describe('rateLimit middleware', () => {
     assert.ok(stderr[0].includes('"limiter":"rate_limit"'))
   })
 
+  it('surfaces request_id in the 429 body when the request-id middleware ran', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 1 })
+    mw(mockReq({ ip: '54.0.0.1', requestId: 'r-rl-1' }), mockRes(), () => {})
+    const res = mockRes()
+    mw(mockReq({ ip: '54.0.0.1', requestId: 'r-rl-1' }), res, () => {})
+    assert.equal(res.statusCode, 429)
+    assert.deepEqual(res.body, {
+      error: 'Too many requests, please try again later',
+      request_id: 'r-rl-1',
+    })
+  })
+
+  it('omits request_id when the request-id middleware did not run', () => {
+    const mw = rateLimit({ windowMs: 60_000, max: 1 })
+    mw(mockReq({ ip: '55.0.0.1' }), mockRes(), () => {})
+    const res = mockRes()
+    mw(mockReq({ ip: '55.0.0.1' }), res, () => {})
+    assert.equal(res.statusCode, 429)
+    assert.deepEqual(res.body, { error: 'Too many requests, please try again later' })
+  })
+
   it('is silenced by LOG_HTTP=off', () => {
     const prior = process.env.LOG_HTTP
     process.env.LOG_HTTP = 'off'
