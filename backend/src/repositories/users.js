@@ -42,26 +42,28 @@ export async function findById(id) {
 
 /**
  * Upsert a user from auth data. Creates on first login, updates last_login_at on subsequent logins.
- * @param {object} authData - { ninHash, givenName, surname }
+ * `verified` reflects THIS login: true only when the real BankID provider
+ * completed it (see services/verification.js), so a stub login clears it.
+ * @param {object} authData - { ninHash, givenName, surname, birthYear, sex, verified }
  * @returns {Promise<object>} The user row
  */
-export async function upsertFromAuth({ ninHash, givenName, surname, birthYear, sex }) {
+export async function upsertFromAuth({ ninHash, givenName, surname, birthYear, sex, verified = false }) {
   const { rows } = await db.query(
     `INSERT INTO users (nin_hash, given_name, surname, birth_year, sex, verified, last_login_at)
-     VALUES ($1, $2, $3, $4, $5, TRUE, NOW())
+     VALUES ($1, $2, $3, $4, $5, $6, NOW())
      ON CONFLICT (nin_hash)
      DO UPDATE SET
        given_name = EXCLUDED.given_name,
        surname = EXCLUDED.surname,
        birth_year = COALESCE(EXCLUDED.birth_year, users.birth_year),
        sex = COALESCE(EXCLUDED.sex, users.sex),
-       verified = TRUE,
+       verified = EXCLUDED.verified,
        last_login_at = NOW(),
        updated_at = NOW()
      RETURNING id, nin_hash, display_name, given_name, surname,
                birth_year, sex, verified, preferred_lang,
                created_at, updated_at, last_login_at`,
-    [ninHash, givenName, surname, birthYear || null, sex || null]
+    [ninHash, givenName, surname, birthYear || null, sex || null, verified === true]
   )
   return rows[0]
 }

@@ -24,6 +24,7 @@ import * as bankidProvider from './providers/bankid.js'
 import * as userRepo from '../repositories/users.js'
 import { setScoreOverride } from '../repositories/ratings.js'
 import { parseBirthYear, parseSex } from './nin.js'
+import { verifiedForLogin } from '../services/verification.js'
 import { devLoginPage } from './bankid-dev-page.js'
 import { log } from '../logger.js'
 
@@ -131,6 +132,7 @@ authRouter.post('/collect', apiRateLimit, async (req, res) => {
         surname: result.user.surname,
         birthYear,
         sex,
+        verified: verifiedForLogin(provider === bankidProvider),
       })
 
       // Apply stub safety score override if configured

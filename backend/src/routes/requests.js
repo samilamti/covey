@@ -9,6 +9,7 @@ import * as msgRepo from '../repositories/messages.js'
 import * as userRepo from '../repositories/users.js'
 import * as ratingRepo from '../repositories/ratings.js'
 import { checkEligibility } from '../services/eligibility.js'
+import { openRequestEvent, isParticipant } from '../services/request-visibility.js'
 import { notifyNewRequest, notifyRequestAccepted } from '../services/notifications.js'
 import { isEnabled } from '../features.js'
 import * as pointsRepo from '../repositories/points.js'
@@ -40,10 +41,11 @@ requestRouter.post('/', async (req, res) => {
       destinationLng: destinationLng ? parseFloat(destinationLng) : null,
     })
 
-    // Broadcast to other clients via Socket.io
+    // Broadcast to other clients via Socket.io. Id only: every logged-in
+    // socket is in this room, and the full row holds the exact destination.
     const io = req.app.get('io')
     if (io) {
-      io.to('requests:open').emit('request:new', { request })
+      io.to('requests:open').emit('request:new', openRequestEvent(request))
     }
 
     // Push-notify eligible responders (fire-and-forget)
@@ -113,12 +115,16 @@ requestRouter.get('/:id/messages', async (req, res) => {
 })
 
 /**
- * GET /api/requests/:id — Request detail
+ * GET /api/requests/:id — Request detail (participants only).
+ * Non-participants get 404, not 403, so ids cannot be probed. Everyone else
+ * sees open requests through GET /open (rounded pickup, no destination).
  */
 requestRouter.get('/:id', async (req, res) => {
   try {
     const request = await reqRepo.findById(req.params.id)
-    if (!request) return res.status(404).json({ error: 'Request not found' })
+    if (!request || !isParticipant(request, req.user.userId)) {
+      return res.status(404).json({ error: 'Request not found' })
+    }
     res.json({ request })
   } catch (err) {
     log.error(err, { event: 'request_detail_failed', requestId: req.params.id })

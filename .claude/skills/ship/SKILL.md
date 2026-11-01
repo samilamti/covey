@@ -13,8 +13,8 @@ Run the steps in order. Do not skip a gate.
 ## Gate A — full test suites (must be 100% green)
 
 ```bash
-cd backend  && npm test    # node:test (107)
-cd frontend && npm test    # vitest (191)
+cd backend  && npm test    # node:test (179 with DATABASE_URL; DB tests skip without it)
+cd frontend && npm test    # vitest (197)
 ```
 
 If anything fails, STOP. Fix it or tell Sami what's red — do not commit a failing tree.

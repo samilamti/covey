@@ -11,6 +11,7 @@ import * as reqRepo from './repositories/requests.js'
 import * as msgRepo from './repositories/messages.js'
 import { processLocationUpdate } from './services/geolocation.js'
 import { checkEligibility } from './services/eligibility.js'
+import { openRequestEvent } from './services/request-visibility.js'
 import { notifyNewRequest, notifyRequestAccepted } from './services/notifications.js'
 import { isEnabled } from './features.js'
 import * as pointsRepo from './repositories/points.js'
@@ -74,7 +75,9 @@ export function registerSocketHandlers(io) {
           destinationLng: destLng ? parseFloat(destLng) : null,
         })
 
-        io.to('requests:open').emit('request:new', { request })
+        // Id only: every logged-in socket is in this room, whatever circle the
+        // requester chose, and the full row holds the exact destination.
+        io.to('requests:open').emit('request:new', openRequestEvent(request))
 
         // Push-notify eligible responders (fire-and-forget)
         notifyNewRequest(request).catch(() => {})

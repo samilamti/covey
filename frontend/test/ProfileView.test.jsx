@@ -34,6 +34,7 @@ vi.mock('../src/services/profile', () => ({
 }))
 
 const { ProfileView } = await import('../src/components/ProfileView')
+const { profileService } = await import('../src/services/profile')
 
 describe('ProfileView', () => {
   let consoleErrorSpy
@@ -55,9 +56,23 @@ describe('ProfileView', () => {
     expect(getByText('profile.title')).toBeTruthy()
   })
 
-  it('renders verified badge', () => {
-    const { getByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
-    expect(getByText('profile.verified')).toBeTruthy()
+  it('renders the verified badge when the backend reports a BankID-verified user', async () => {
+    profileService.get.mockResolvedValueOnce({ user: { safetyScore: 3, isGuardian: false, verified: true } })
+    const { findByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    expect(await findByText('profile.verified')).toBeTruthy()
+  })
+
+  it('hides the verified badge for a stub login (verified false)', async () => {
+    profileService.get.mockResolvedValueOnce({ user: { safetyScore: 3, isGuardian: false, verified: false } })
+    const { queryByText, findByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    // Wait for the profile to load (safety score renders), then assert no badge
+    await findByText('profile.safetyScore')
+    expect(queryByText('profile.verified')).toBeNull()
+  })
+
+  it('hides the verified badge before the profile has loaded', () => {
+    const { queryByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    expect(queryByText('profile.verified')).toBeNull()
   })
 
   it('renders display name input with user name', () => {

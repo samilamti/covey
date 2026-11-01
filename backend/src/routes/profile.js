@@ -12,6 +12,7 @@ import * as userRepo from '../repositories/users.js'
 import * as ratingRepo from '../repositories/ratings.js'
 import * as pointsRepo from '../repositories/points.js'
 import { isEnabled } from '../features.js'
+import { displayedVerified } from '../services/verification.js'
 import { log } from '../logger.js'
 
 export const profileRouter = Router()
@@ -40,7 +41,7 @@ profileRouter.get('/', async (req, res) => {
         displayName: user.display_name,
         givenName: user.given_name,
         surname: user.surname,
-        verified: user.verified,
+        verified: displayedVerified(user, isEnabled('BANKID_AUTH')),
         preferredLang: user.preferred_lang,
         createdAt: user.created_at,
         safetyScore,
@@ -77,7 +78,7 @@ profileRouter.put('/', async (req, res) => {
         displayName: user.display_name,
         givenName: user.given_name,
         surname: user.surname,
-        verified: user.verified,
+        verified: displayedVerified(user, isEnabled('BANKID_AUTH')),
         preferredLang: user.preferred_lang,
       },
     })
@@ -123,7 +124,7 @@ profileRouter.get('/:userId', async (req, res) => {
       user: {
         id: user.id,
         displayName: user.display_name,
-        verified: user.verified,
+        verified: displayedVerified(user, isEnabled('BANKID_AUTH')),
         safetyScore,
         isGuardian: safetyScore >= 5,
         badges: visibleBadges,

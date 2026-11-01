@@ -68,10 +68,13 @@ export function ProfileView({ user, onLogout }) {
 
       {/* Identity & standing */}
       <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 space-y-3">
-        <div class="flex items-center gap-2 text-green-600">
-          <ShieldCheck size={20} />
-          <span class="text-sm font-medium">{t('profile.verified')}</span>
-        </div>
+        {/* Only a real BankID login is verified; the backend reports false for stub logins */}
+        {profile?.verified === true && (
+          <div class="flex items-center gap-2 text-green-600">
+            <ShieldCheck size={20} />
+            <span class="text-sm font-medium">{t('profile.verified')}</span>
+          </div>
+        )}
 
         {profile && (
           <>
