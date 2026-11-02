@@ -10,7 +10,7 @@ see `../../ops/tech/bankid-connection-options.md` in the private ops repo).
 
 - `initAuth({ endUserIp })` → `POST /auth` → `{ orderRef, autoStartToken, qrStartToken, qrStartSecret }`
 - `collect(orderRef)` → `POST /collect` → `{ status, hintCode?, user? }`; on `complete`,
-  builds the user from `completionData` (personal number → SHA-256 hash, never stored raw)
+  builds the user from `completionData` (personal number → keyed HMAC via `auth/nin-hash.js`, never stored raw)
 - `cancel(orderRef)` → `POST /cancel`
 - `qr(orderRef)` → the current animated-QR payload (`bankid.<token>.<sec>.<hmac>`)
 

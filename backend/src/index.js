@@ -8,6 +8,7 @@ import { registerSocketHandlers } from './handlers.js'
 import { startExpirationWorker } from './workers/expiration.js'
 import { startGdprCleanupWorker } from './workers/gdpr-cleanup.js'
 import { migrate } from './migrate.js'
+import { assertNinHashKey } from './auth/nin-hash.js'
 import * as reqRepo from './repositories/requests.js'
 import { log } from './logger.js'
 import { httpLogger, errorLogger } from './middleware/logging.js'
@@ -21,6 +22,10 @@ import { getBuildInfo } from './build-info.js'
 // after a deploy; cheaper and less racy than hitting an endpoint right after
 // `docker compose up`. Emitted before any work so it anchors the stream.
 log.info('backend_build', getBuildInfo())
+
+// --- Refuse to run production without the personnummer HMAC key ---
+// Without it every login would store a reversible SHA-256 (auth/nin-hash.js).
+assertNinHashKey()
 
 // --- Run migrations before anything else ---
 // Guarantees all tables exist before the server accepts traffic or workers query the DB.

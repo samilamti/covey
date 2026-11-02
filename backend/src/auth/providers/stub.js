@@ -15,6 +15,7 @@
  */
 
 import crypto from 'node:crypto'
+import { hashNin } from '../nin-hash.js'
 
 /** In-memory order store. Orders are cleaned up on terminal states. */
 const orders = new Map()
@@ -75,11 +76,8 @@ export function collect(orderRef) {
   // Complete — generate user data
   orders.delete(orderRef)
 
-  // Hash the NIN for database lookup (SHA-256)
-  const ninHash = crypto
-    .createHash('sha256')
-    .update(pn)
-    .digest('hex')
+  // Pseudonymise the NIN for database lookup (keyed HMAC, see auth/nin-hash.js)
+  const ninHash = hashNin(pn)
 
   // Generate stub names from the NIN
   const givenName = 'Test'

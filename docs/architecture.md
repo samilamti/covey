@@ -157,7 +157,7 @@ Location data is ephemeral — a database trigger purges `location_updates` when
 All tables are created in a single initial migration (`001_initial`):
 
 - `migrations` — tracks executed migrations
-- `users` — BankID-verified users (NIN stored as SHA-256 hash only)
+- `users` — BankID-verified users (NIN stored only as a keyed HMAC-SHA256, see `docs/auth.md`)
 - `assistance_requests` — the core feature (walk, escort, check_in)
 - `location_updates` — ephemeral location data during active sessions
 - `push_subscriptions` — Web Push API subscriptions

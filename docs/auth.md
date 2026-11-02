@@ -142,12 +142,12 @@ const socket = io({ auth: { token: localStorage.getItem('token') }, autoConnect:
 
 ## Users Table
 
-The NIN (Swedish personnummer) is **never stored raw** in the database. Only the SHA-256 hash is kept for lookups:
+The NIN (Swedish personnummer) is **never stored raw** in the database. Only a keyed HMAC-SHA256 is kept for lookups (`backend/src/auth/nin-hash.js`, secret `NIN_HASH_KEY`). A plain SHA-256, used until 2026-11-02, is reversible by enumerating the ~10^8 plausible personnummer; the HMAC is not without the key. Production refuses to boot without `NIN_HASH_KEY` (at least 32 characters). Accounts written with the old hash are re-keyed at their next login (`rekeyLegacyNinHash`), so nobody loses their account. **Losing the key means no returning user matches their account again**, so it is backed up outside the server. The JWT `sub` claim carries the same HMAC.
 
 ```sql
 CREATE TABLE users (
   id                   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  nin_hash             TEXT UNIQUE NOT NULL,  -- SHA-256
+  nin_hash             TEXT UNIQUE NOT NULL,  -- HMAC-SHA256(NIN_HASH_KEY, personnummer)
   display_name         TEXT NOT NULL DEFAULT '',
   given_name           TEXT NOT NULL DEFAULT '',
   surname              TEXT NOT NULL DEFAULT '',

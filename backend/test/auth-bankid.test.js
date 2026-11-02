@@ -51,7 +51,7 @@ describe('BankID provider — generateQrData (animated QR)', () => {
 })
 
 describe('BankID provider — buildUserFromCompletion', () => {
-  it('maps personalNumber → nin + SHA-256 ninHash, and names', () => {
+  it('maps personalNumber → nin + keyed HMAC ninHash, and names', () => {
     const completionData = {
       user: {
         personalNumber: '199008189999',
@@ -60,16 +60,26 @@ describe('BankID provider — buildUserFromCompletion', () => {
         surname: 'Andersson',
       },
     }
-    const user = buildUserFromCompletion(completionData)
+    const key = 'k'.repeat(64)
+    const original = process.env.NIN_HASH_KEY
+    process.env.NIN_HASH_KEY = key
+    let user
+    try {
+      user = buildUserFromCompletion(completionData)
+    } finally {
+      if (original === undefined) delete process.env.NIN_HASH_KEY
+      else process.env.NIN_HASH_KEY = original
+    }
     assert.equal(user.nin, '199008189999')
     assert.equal(user.givenName, 'Anna')
     assert.equal(user.surname, 'Andersson')
     assert.equal(user.name, 'Anna Andersson')
     assert.equal(
       user.ninHash,
-      crypto.createHash('sha256').update('199008189999').digest('hex')
+      crypto.createHmac('sha256', key).update('199008189999').digest('hex')
     )
-    // The raw NIN is hashed, never the plaintext as the stored identifier.
+    // Not the unkeyed SHA-256 (enumerable), and never the plaintext.
+    assert.notEqual(user.ninHash, crypto.createHash('sha256').update('199008189999').digest('hex'))
     assert.notEqual(user.ninHash, user.nin)
   })
 

@@ -26,7 +26,7 @@ The non-code half of Covey lives in a separate **private** repo at `../ops` (`~/
 - **Backend**: Node 22 + Express 5 + Socket.io v4 + PostgreSQL 16 + jose (JWT) + web-push
 - **Infrastructure**: Docker Compose (5 services) + Traefik v3.6 + nginx (frontend + docs serving)
 - **Docs site**: Eleventy 3.0 static site + nginx 1.27, routed at `docs.${DOMAIN}`
-- **Testing**: node:test (backend, 179 tests with a database; DB tests skip silently without `DATABASE_URL`), vitest + @testing-library/preact (frontend, 197 tests)
+- **Testing**: node:test (backend, 204 tests with a database; DB tests skip silently without `DATABASE_URL`), vitest + @testing-library/preact (frontend, 197 tests)
 
 ## Key constraints
 
@@ -43,7 +43,7 @@ The non-code half of Covey lives in a separate **private** repo at `../ops` (`~/
 All tests must pass before committing. Run the full test suite (not just related tests) after any backend or shared logic change.
 
 ```bash
-cd backend && npm test        # node:test (179 tests with DATABASE_URL set)
+cd backend && npm test        # node:test (204 tests with DATABASE_URL set)
 cd frontend && npm test       # vitest (197 tests)
 ```
 
@@ -166,8 +166,8 @@ There is no people directory and no user search — only open requests are lista
 
 ## GDPR considerations
 
-- NIN stored as SHA-256 hash only (raw never persisted)
-- Location data is ephemeral (DB trigger purges on session end)
+- NIN stored only as a keyed HMAC-SHA256 (`auth/nin-hash.js`, secret `NIN_HASH_KEY`; raw never persisted). Production refuses to boot without the key; login re-keys accounts written with the old unkeyed SHA-256. **Back the key up**: losing it means no returning user matches their account. Local stacks opt out with `ALLOW_UNKEYED_NIN_HASH=true` (docker-compose.local.yml only)
+- Location data and session messages are ephemeral (DB triggers `trg_cleanup_locations` and `trg_cleanup_messages` purge them on session end)
 - Soft delete with 30-day cooling period, then hard delete (daily worker)
 - Data export endpoint: `GET /api/gdpr/export`
 - Account deletion: `POST /api/gdpr/delete`
@@ -184,7 +184,7 @@ docker compose up db -d       # Database only
 docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml up --build -d
 
 # Tests (or use /test skill)
-cd backend && npm test        # node:test (179 tests with DATABASE_URL set)
+cd backend && npm test        # node:test (204 tests with DATABASE_URL set)
 cd frontend && npm test       # vitest (197 tests)
 
 # Build
@@ -305,8 +305,9 @@ MSYS_NO_PATHCONV=1 docker exec tillsammans-db-1 bash -c 'psql -U $POSTGRES_USER 
 - Real web-push provider implemented; VAPID keys wired through `docker-compose.yml` + `frontend/Dockerfile` build arg (generate keys with `npx web-push generate-vapid-keys`)
 - `request:new` broadcasts carry ONLY `{ requestId }` (`services/request-visibility.js`): every logged-in socket is in `requests:open` whatever circle the requester chose, and the full row holds the exact destination. Clients reload `/open`, which applies eligibility + rounding. `GET /api/requests/:id` answers only the requester and helper (404 otherwise). Both guarded by source assertions in `test/request-visibility.test.js` (fixed 2026-11-02; until then the full row went to everyone). Push notifications are eligibility-filtered in SQL (`findEligibleForRequest()`).
 - `users.verified` is true only for a login through the real BankID provider, and the API reports it only while `FEATURE_BANKID_AUTH` is on (`services/verification.js`); the profile shows the "BankID-verifierad" badge only then. Stub logins are never verified (fixed 2026-11-02).
-- `nin_hash` is plain unsalted SHA-256, reversible by brute force over the personnummer space (more so with `birth_year` + `sex` stored beside it). Move to a keyed HMAC with a server-side secret; existing rows need a migration plan.
-- Session messages and terminal requests are only deleted by the startup cleanup (`deleteTerminal()` at boot), so they survive until the next restart.
+- `nin_hash` was plain unsalted SHA-256 until 2026-11-02; it is now a keyed HMAC and each account is re-keyed at its next login (`rekeyLegacyNinHash`). Accounts that never log in again keep the old hash until the GDPR or terminal cleanups remove them.
+- Session messages are deleted when a session ends (migration 011). Terminal request rows themselves (with coordinates) still live until the startup cleanup (`deleteTerminal()` at boot).
+- Backend test files run serially (`--test-concurrency=1`): DB test files each call `migrate()`, and parallel runs raced on one database (hung on PGlite, would collide on recording a migration in CI).
 - Stub safety score overrides are in-memory only — lost on container restart (re-populated on next login)
 - Traefik v3.6 required for Docker Engine 29+ compatibility (v3.2 hardcodes Docker API v1.24, Engine 29 requires v1.44+). Production uses HTTP-01 ACME challenge (more reliable than TLS-ALPN-01)
 - The community feature was removed from the codebase; remaining docs describing it have been cleaned up (see `docs/decisions.md`). Terminology shift still pending in places: "verified guardian" → "qualified companion"

@@ -32,6 +32,7 @@ import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { hashNin } from '../nin-hash.js'
 
 const MODULE_DIR = path.dirname(fileURLToPath(import.meta.url))
 // backend/src/auth/providers → backend/certs
@@ -157,8 +158,8 @@ export function generateQrData(qrStartToken, qrStartSecret, elapsedSeconds) {
 
 /**
  * Build the router's expected user object from BankID completionData.
- * The verified personal number is hashed (SHA-256) — the raw NIN is never
- * persisted, matching the GDPR model used everywhere else.
+ * The verified personal number is pseudonymised with a keyed HMAC
+ * (auth/nin-hash.js) — the raw NIN is never persisted.
  * @param {object} completionData
  * @returns {{ nin: string, ninHash: string, givenName: string, surname: string, name: string }}
  */
@@ -170,7 +171,7 @@ export function buildUserFromCompletion(completionData) {
   const name = u.name || `${givenName} ${surname}`.trim()
   return {
     nin,
-    ninHash: crypto.createHash('sha256').update(String(nin)).digest('hex'),
+    ninHash: hashNin(nin),
     givenName,
     surname,
     name,

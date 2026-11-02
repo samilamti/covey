@@ -223,3 +223,9 @@ social network — the exact thing Covey defines itself against. Removing it mad
 simpler and the privacy story stronger: there is no persistent group membership to leak, no
 member list to expose, and no moderation surface to police. Documentation that still described
 communities (including the community threat model in `architecture.md`) was removed with it.
+
+## GDPR: NIN stored as a keyed HMAC (supersedes "NIN stored as SHA-256 hash only")
+
+**Decision** (2026-11-02): `users.nin_hash` holds HMAC-SHA256 of the personnummer under a server secret, `NIN_HASH_KEY`, instead of a plain SHA-256. Production refuses to boot without the key. Accounts written with the old hash are re-keyed at their next login.
+
+**Rationale**: A plain SHA-256 of a personnummer is not pseudonymisation in practice. There are only about 10^8 plausible numbers, fewer once `birth_year` and `sex` are stored in the same row, so a leaked table can be reversed in seconds. A keyed HMAC cannot be enumerated without the key, which lives outside the database (and outside its backups). The cost is a new single point of failure: losing the key means no returning user matches their account, so the key is backed up separately. Found by the Vinnova red team review R2.

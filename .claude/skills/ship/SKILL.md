@@ -13,7 +13,7 @@ Run the steps in order. Do not skip a gate.
 ## Gate A — full test suites (must be 100% green)
 
 ```bash
-cd backend  && npm test    # node:test (179 with DATABASE_URL; DB tests skip without it)
+cd backend  && npm test    # node:test (204 with DATABASE_URL; DB tests skip without it)
 cd frontend && npm test    # vitest (197)
 ```
 

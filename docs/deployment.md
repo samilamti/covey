@@ -146,6 +146,12 @@ echo "POSTGRES_PASSWORD: $PGPASS"
 JWTSECRET=$(openssl rand -base64 64 | tr -d '=/+' | head -c 80)
 echo "JWT_SECRET: $JWTSECRET"
 
+# Personnummer HMAC key (the backend refuses to boot without it).
+# Generate ONCE and back it up off the server: losing it means no returning
+# user matches their account again. Never rotate it casually.
+NINKEY=$(openssl rand -hex 32)
+echo "NIN_HASH_KEY: $NINKEY"
+
 # VAPID keys
 cd ~/apps/tillsammans/backend
 npm ci --omit=dev
@@ -162,6 +168,8 @@ cp .env.example .env.prod
 # Edit .env.prod and fill in:
 # - POSTGRES_PASSWORD (generated above)
 # - JWT_SECRET (generated above)
+# - NIN_HASH_KEY (generated above; also store it in the macOS Keychain,
+#   service "covey-nin-hash-key", account "covey")
 # - VAPID_PUBLIC_KEY (generated above)
 # - VAPID_PRIVATE_KEY (generated above)
 nano .env.prod

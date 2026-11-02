@@ -25,6 +25,7 @@ import * as userRepo from '../repositories/users.js'
 import { setScoreOverride } from '../repositories/ratings.js'
 import { parseBirthYear, parseSex } from './nin.js'
 import { verifiedForLogin } from '../services/verification.js'
+import { legacyHashNin } from './nin-hash.js'
 import { devLoginPage } from './bankid-dev-page.js'
 import { log } from '../logger.js'
 
@@ -124,6 +125,14 @@ authRouter.post('/collect', apiRateLimit, async (req, res) => {
       // Extract demographics from NIN before it's discarded
       const birthYear = parseBirthYear(result.user.nin)
       const sex = parseSex(result.user.nin)
+
+      // Move a pre-HMAC account onto the keyed hash first, so the upsert below
+      // finds it instead of creating a second account for the same person.
+      const rekeyed = await userRepo.rekeyLegacyNinHash({
+        legacyHash: legacyHashNin(result.user.nin),
+        ninHash: result.user.ninHash,
+      })
+      if (rekeyed) log.info('nin_hash_rekeyed')
 
       // Upsert user into database — get real UUID
       const dbUser = await userRepo.upsertFromAuth({

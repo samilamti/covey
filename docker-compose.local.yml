@@ -18,6 +18,9 @@ services:
     environment:
       CORS_ORIGIN: https://localhost
       STUB_SAFETY_SCORES: ${STUB_SAFETY_SCORES:-}
+      # Local stacks may run without NIN_HASH_KEY (unkeyed SHA-256 hashes).
+      # Never set this in production.
+      ALLOW_UNKEYED_NIN_HASH: "true"
     labels:
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls=true"

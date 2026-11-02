@@ -41,6 +41,27 @@ export async function findById(id) {
 }
 
 /**
+ * Re-key a row written before NIN_HASH_KEY existed: replace its unkeyed
+ * SHA-256 nin_hash with the keyed HMAC, so a returning user keeps their
+ * account (ratings, display name) instead of getting a new one. Runs at login,
+ * the only moment the raw personnummer is available to compute both values.
+ * A no-op when the hashes are equal (no key configured), when no legacy row
+ * exists, or when a row with the new hash already exists.
+ * @param {{ legacyHash: string, ninHash: string }} hashes
+ * @returns {Promise<boolean>} true if a row was re-keyed
+ */
+export async function rekeyLegacyNinHash({ legacyHash, ninHash }) {
+  if (!legacyHash || !ninHash || legacyHash === ninHash) return false
+  const { rowCount } = await db.query(
+    `UPDATE users SET nin_hash = $2, updated_at = NOW()
+     WHERE nin_hash = $1
+       AND NOT EXISTS (SELECT 1 FROM users WHERE nin_hash = $2)`,
+    [legacyHash, ninHash]
+  )
+  return rowCount > 0
+}
+
+/**
  * Upsert a user from auth data. Creates on first login, updates last_login_at on subsequent logins.
  * `verified` reflects THIS login: true only when the real BankID provider
  * completed it (see services/verification.js), so a stub login clears it.

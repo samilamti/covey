@@ -26,6 +26,10 @@ services:
       PORT: 3000
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       JWT_SECRET: ${JWT_SECRET}
+      # Keyed HMAC for personnummer (auth/nin-hash.js). Required in production:
+      # the backend refuses to boot without it. Back it up: losing it means no
+      # returning user matches their account again.
+      NIN_HASH_KEY: ${NIN_HASH_KEY:-}
       CORS_ORIGIN: https://${DOMAIN}
       AUTH_PROVIDER: ${AUTH_PROVIDER}
       FEATURE_BANKID_AUTH: ${FEATURE_BANKID_AUTH:-false}

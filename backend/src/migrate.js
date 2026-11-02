@@ -318,6 +318,37 @@ const migrations = [
       END $$;
     `,
   },
+  {
+    name: '011_messages_end_with_session',
+    sql: `
+      -- Session messages exist to coordinate one walk and end with it, like
+      -- location_updates (trg_cleanup_locations in 001). Until now they were
+      -- only removed when deleteTerminal() ran at the next server start, so
+      -- both participants could still read them after the session ended.
+      CREATE OR REPLACE FUNCTION cleanup_session_messages()
+      RETURNS TRIGGER AS $$
+      BEGIN
+        IF NEW.status IN ('completed', 'safety_confirmed', 'cancelled', 'expired') AND
+           OLD.status NOT IN ('completed', 'safety_confirmed', 'cancelled', 'expired') THEN
+          DELETE FROM session_messages WHERE request_id = NEW.id;
+        END IF;
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
+
+      DROP TRIGGER IF EXISTS trg_cleanup_messages ON assistance_requests;
+      CREATE TRIGGER trg_cleanup_messages
+        AFTER UPDATE OF status ON assistance_requests
+        FOR EACH ROW EXECUTE FUNCTION cleanup_session_messages();
+
+      -- Sessions that ended before this trigger existed. Idempotent: on the
+      -- boot-time re-run there is nothing left to delete.
+      DELETE FROM session_messages sm
+        USING assistance_requests ar
+       WHERE sm.request_id = ar.id
+         AND ar.status IN ('completed', 'safety_confirmed', 'cancelled', 'expired');
+    `,
+  },
 ]
 
 /**
