@@ -8,6 +8,7 @@ import { haversineKm } from '../utils/geo'
 import { LocationBanner } from './LocationBanner'
 import { useGeolocation } from '../hooks/useGeolocation'
 import { profileService } from '../services/profile'
+import { SafetyActions } from './SafetyActions'
 
 const PROXIMITY_THRESHOLD_KM = 0.2 // 200 meters
 
@@ -38,6 +39,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
 
   const isRequester = request.requester_id === currentUserId
   const isHelper = request.helper_id === currentUserId
+  const otherUserId = isRequester ? request.helper_id : request.requester_id
 
   // Self-heal: if entered with 'accepted' status, auto-start to transition to 'active'
   useEffect(() => {
@@ -498,6 +500,18 @@ export function ActiveSession({ request, currentUserId, onClose }) {
                 <Send size={16} />
               </button>
             </div>
+          </div>
+        )}
+
+        {/* Report and block — also after the session has ended */}
+        {otherUserId && (
+          <div class="mb-3">
+            <SafetyActions
+              userId={otherUserId}
+              name={otherName}
+              requestId={request.id}
+              onBlocked={() => setStatus('cancelled')}
+            />
           </div>
         )}
 

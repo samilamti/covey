@@ -204,5 +204,31 @@
       "points_500": "500 pistettä"
     },
     "locked": "Lukittu"
+  },
+  "safety": {
+    "report": "Ilmoita",
+    "block": "Estä",
+    "unblock": "Poista esto",
+    "blocked": "Estetty",
+    "someone": "Toinen henkilö",
+    "reportTitle": "Ilmoita käyttäjästä {{name}}",
+    "reportIntro": "Mitä tapahtui? Luemme jokaisen ilmoituksen. Jos olet vaarassa, soita 112.",
+    "reasons": {
+      "harassment": "Häirintä tai uhkailu",
+      "inappropriate": "Asiattomat viestit",
+      "unsafe": "Sai minut tuntemaan oloni turvattomaksi",
+      "spam": "Roskaposti tai huijaus",
+      "other": "Muu syy"
+    },
+    "details": "Kerro lisää (valinnainen)",
+    "alsoBlock": "Estä myös tämä henkilö",
+    "send": "Lähetä ilmoitus",
+    "cancel": "Peruuta",
+    "reportSent": "Kiitos. Ilmoitus on lähetetty Coveylle.",
+    "blockConfirm": "Estetäänkö {{name}}? Teitä ei enää koskaan yhdistetä, ja käynnissä oleva istunto päättyy.",
+    "blockDone": "{{name}} on estetty.",
+    "partnersTitle": "Henkilöt, jotka olet tavannut",
+    "partnersDesc": "Ilmoita tai estä joku, jonka kanssa sinulla on ollut istunto.",
+    "partnersEmpty": "Ei vielä istuntoja."
   }
 }

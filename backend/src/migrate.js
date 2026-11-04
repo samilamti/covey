@@ -349,6 +349,86 @@ const migrations = [
          AND ar.status IN ('completed', 'safety_confirmed', 'cancelled', 'expired');
     `,
   },
+  {
+    name: '012_blocks_reports',
+    sql: `
+      -- Block and report (Play user-generated-content policy). New tables only,
+      -- so IF NOT EXISTS is safe on populated databases.
+
+      -- A block is one-directional in storage but enforced both ways: neither
+      -- person is matched with, notified about or able to message the other.
+      CREATE TABLE IF NOT EXISTS user_blocks (
+        blocker_id  UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        blocked_id  UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (blocker_id, blocked_id),
+        CHECK (blocker_id <> blocked_id)
+      );
+      CREATE INDEX IF NOT EXISTS idx_blocks_blocked ON user_blocks(blocked_id);
+
+      -- Reports outlive the session and both accounts (SET NULL), so support
+      -- can still act on them. messages is a snapshot of the session chat at
+      -- the time of the report: the chat itself is deleted when the session ends.
+      CREATE TABLE IF NOT EXISTS user_reports (
+        id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        reporter_id  UUID REFERENCES users(id) ON DELETE SET NULL,
+        reported_id  UUID REFERENCES users(id) ON DELETE SET NULL,
+        request_id   UUID REFERENCES assistance_requests(id) ON DELETE SET NULL,
+        reason       TEXT NOT NULL CHECK (reason IN (
+                       'harassment', 'inappropriate', 'unsafe', 'spam', 'other'
+                     )),
+        details      TEXT NOT NULL DEFAULT '',
+        messages     JSONB NOT NULL DEFAULT '[]'::jsonb,
+        status       TEXT NOT NULL DEFAULT 'open'
+                       CHECK (status IN ('open', 'reviewed', 'actioned', 'dismissed')),
+        created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        reviewed_at  TIMESTAMPTZ
+      );
+      CREATE INDEX IF NOT EXISTS idx_reports_status ON user_reports(status, created_at DESC);
+
+      -- Who you have been in a session with. Request rows are deleted at boot
+      -- once terminal (deleteTerminal), so this is what keeps report and block
+      -- reachable after a session ends. Filled when a helper is assigned.
+      CREATE TABLE IF NOT EXISTS session_partners (
+        user_id     UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        partner_id  UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        request_id  UUID REFERENCES assistance_requests(id) ON DELETE SET NULL,
+        met_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (user_id, partner_id)
+      );
+
+      CREATE OR REPLACE FUNCTION record_session_partners()
+      RETURNS TRIGGER AS $$
+      BEGIN
+        IF NEW.helper_id IS NOT NULL AND NEW.requester_id IS NOT NULL
+           AND (OLD.helper_id IS NULL OR OLD.helper_id <> NEW.helper_id) THEN
+          INSERT INTO session_partners (user_id, partner_id, request_id)
+          VALUES (NEW.requester_id, NEW.helper_id, NEW.id),
+                 (NEW.helper_id, NEW.requester_id, NEW.id)
+          ON CONFLICT (user_id, partner_id)
+          DO UPDATE SET request_id = EXCLUDED.request_id, met_at = NOW();
+        END IF;
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
+
+      DROP TRIGGER IF EXISTS trg_session_partners ON assistance_requests;
+      CREATE TRIGGER trg_session_partners
+        AFTER UPDATE OF helper_id ON assistance_requests
+        FOR EACH ROW EXECUTE FUNCTION record_session_partners();
+
+      -- Sessions that started before this trigger existed. Idempotent.
+      INSERT INTO session_partners (user_id, partner_id, request_id, met_at)
+      SELECT requester_id, helper_id, id, COALESCE(accepted_at, created_at)
+        FROM assistance_requests
+       WHERE requester_id IS NOT NULL AND helper_id IS NOT NULL
+      UNION ALL
+      SELECT helper_id, requester_id, id, COALESCE(accepted_at, created_at)
+        FROM assistance_requests
+       WHERE requester_id IS NOT NULL AND helper_id IS NOT NULL
+      ON CONFLICT (user_id, partner_id) DO NOTHING;
+    `,
+  },
 ]
 
 /**

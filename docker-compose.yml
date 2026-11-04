@@ -44,6 +44,11 @@ services:
       # Firebase service-account JSON on a single line. Empty by default so
       # backend tests + local stacks don't require a Firebase project.
       FIREBASE_SERVICE_ACCOUNT: ${FIREBASE_SERVICE_ACCOUNT:-}
+      # Moderation: admin UUIDs for /api/admin/reports, optional report email
+      ADMIN_USER_IDS: ${ADMIN_USER_IDS:-}
+      POSTMARK_SERVER_TOKEN: ${POSTMARK_SERVER_TOKEN:-}
+      REPORT_EMAIL_TO: ${REPORT_EMAIL_TO:-support@covey.se}
+      REPORT_EMAIL_FROM: ${REPORT_EMAIL_FROM:-support@covey.se}
     # Deliberately NO healthcheck here. Traefik's Docker provider drops any
     # container whose health is "starting" or "unhealthy" from routing, and
     # this backend's router shares the Host with the frontend's catch-all, so

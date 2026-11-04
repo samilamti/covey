@@ -204,5 +204,31 @@
       "points_500": "500 punktów"
     },
     "locked": "Zablokowane"
+  },
+  "safety": {
+    "report": "Zgłoś",
+    "block": "Zablokuj",
+    "unblock": "Odblokuj",
+    "blocked": "Zablokowano",
+    "someone": "Druga osoba",
+    "reportTitle": "Zgłoś {{name}}",
+    "reportIntro": "Co się stało? Czytamy każde zgłoszenie. Jeśli jesteś w niebezpieczeństwie, zadzwoń pod 112.",
+    "reasons": {
+      "harassment": "Nękanie lub groźby",
+      "inappropriate": "Niestosowne wiadomości",
+      "unsafe": "Poczułam/em się zagrożona/y",
+      "spam": "Spam lub oszustwo",
+      "other": "Coś innego"
+    },
+    "details": "Napisz więcej (opcjonalnie)",
+    "alsoBlock": "Zablokuj też tę osobę",
+    "send": "Wyślij zgłoszenie",
+    "cancel": "Anuluj",
+    "reportSent": "Dziękujemy. Zgłoszenie zostało wysłane do Covey.",
+    "blockConfirm": "Zablokować {{name}}? Nigdy więcej nie zostaniecie połączeni, a trwająca sesja się zakończy.",
+    "blockDone": "{{name}} jest zablokowany/a.",
+    "partnersTitle": "Osoby, które spotkałeś/aś",
+    "partnersDesc": "Zgłoś lub zablokuj osobę, z którą miałeś/aś sesję.",
+    "partnersEmpty": "Brak sesji."
   }
 }

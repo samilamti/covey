@@ -7,6 +7,7 @@
 
 import { db } from '../pool.js'
 import { log } from '../logger.js'
+import { pruneOldPartners } from '../repositories/safety.js'
 
 const INTERVAL_MS = 24 * 60 * 60 * 1000 // 24 hours
 
@@ -15,6 +16,9 @@ const INTERVAL_MS = 24 * 60 * 60 * 1000 // 24 hours
  */
 async function cleanup() {
   try {
+    // Past session partners are kept only as long as report/block needs them
+    await pruneOldPartners()
+
     // Find users to purge
     const { rows: users } = await db.query(`
       SELECT id FROM users

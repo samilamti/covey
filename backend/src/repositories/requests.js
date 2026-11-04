@@ -3,6 +3,7 @@
  */
 
 import { db } from '../pool.js'
+import { blockedBetweenSql } from './safety.js'
 
 /**
  * Create a new assistance request.
@@ -62,6 +63,7 @@ export async function findOpenFreestanding({ userId, sex, birthYear, safetyScore
     JOIN users u ON u.id = ar.requester_id
     WHERE ar.status = 'open'
       AND ar.requester_id != $1
+      AND NOT ${blockedBetweenSql('ar.requester_id', '$1::uuid')}
       AND (
         ar.eligibility_tier = 'any_member'
         OR (ar.eligibility_tier = 'verified_guardians' AND (
@@ -88,6 +90,7 @@ export async function accept(requestId, helperId) {
     UPDATE assistance_requests
     SET status = 'accepted', helper_id = $2, accepted_at = NOW(), updated_at = NOW()
     WHERE id = $1 AND status = 'open'
+      AND NOT ${blockedBetweenSql('requester_id', '$2::uuid')}
     RETURNING *
   `, [requestId, helperId])
   return rows[0] || null
@@ -201,6 +204,22 @@ export async function cancel(requestId) {
     RETURNING *
   `, [requestId])
   return rows[0] || null
+}
+
+/**
+ * Cancel every running session between two users (used when one blocks the
+ * other). Returns the cancelled rows.
+ */
+export async function cancelSessionsBetween(userA, userB) {
+  const { rows } = await db.query(`
+    UPDATE assistance_requests
+    SET status = 'cancelled', cancelled_at = NOW(), updated_at = NOW()
+    WHERE status IN ('accepted', 'active', 'done_pending')
+      AND ((requester_id = $1 AND helper_id = $2)
+        OR (requester_id = $2 AND helper_id = $1))
+    RETURNING id, requester_id, helper_id
+  `, [userA, userB])
+  return rows
 }
 
 /**

@@ -3,6 +3,7 @@
  */
 
 import { db } from '../pool.js'
+import { blockedBetweenSql } from './safety.js'
 
 /**
  * Save or update a push subscription for a user.
@@ -72,6 +73,7 @@ export async function findEligibleForRequest({ requesterId, eligibilityTier }) {
     JOIN users u ON u.id = ps.user_id AND u.deleted_at IS NULL
     CROSS JOIN (SELECT birth_year, sex FROM users WHERE id = $1) AS req
     WHERE ps.user_id != $1
+      AND NOT ${blockedBetweenSql(`ps.user_id`, '$1')}
       AND (
         $2 = 'any_member'
         OR ($2 = 'verified_guardians' AND (

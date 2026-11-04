@@ -10,6 +10,7 @@ import * as userRepo from '../repositories/users.js'
 import * as msgRepo from '../repositories/messages.js'
 import * as pointsRepo from '../repositories/points.js'
 import * as nativePushRepo from '../repositories/native-push.js'
+import * as safetyRepo from '../repositories/safety.js'
 import { isEnabled } from '../features.js'
 import { db } from '../pool.js'
 import { log } from '../logger.js'
@@ -29,7 +30,7 @@ gdprRouter.get('/export', async (req, res) => {
     }
 
     // Gather all user data
-    const [requests, subscriptions, nativeTokens, ratingsGiven, ratingsReceived, sessionMessages, pointsData] = await Promise.all([
+    const [requests, subscriptions, nativeTokens, ratingsGiven, ratingsReceived, sessionMessages, pointsData, blocks, reportsFiled] = await Promise.all([
       db.query(`
         SELECT id, type, message, status, created_at, completed_at, done_initiated_at
         FROM assistance_requests
@@ -54,6 +55,8 @@ gdprRouter.get('/export', async (req, res) => {
       `, [req.user.userId]),
       msgRepo.findByUser(req.user.userId),
       isEnabled('POINTS_SYSTEM') ? pointsRepo.getExportData(req.user.userId) : { points: [], badges: [] },
+      safetyRepo.listBlocked(req.user.userId),
+      safetyRepo.findReportsByReporter(req.user.userId),
     ])
 
     res.json({
@@ -81,6 +84,8 @@ gdprRouter.get('/export', async (req, res) => {
       ratingsReceived: ratingsReceived.rows,
       sessionMessages,
       pointsAndBadges: pointsData,
+      blockedUsers: blocks.map((b) => ({ userId: b.user_id, createdAt: b.created_at })),
+      reportsFiled,
     })
   } catch (err) {
     log.error(err, { event: 'gdpr_export_failed', user: req.user.userId })

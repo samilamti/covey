@@ -19,6 +19,16 @@ vi.mock('lucide-preact', () => ({
   Clock: (props) => h('span', props, 'Clock'),
   MessageCircle: (props) => h('span', props, 'MessageCircle'),
   Send: (props) => h('span', props, 'Send'),
+  Flag: (props) => h('span', props, 'Flag'),
+  Ban: (props) => h('span', props, 'Ban'),
+}))
+
+vi.mock('../src/services/safety', () => ({
+  safetyService: {
+    block: vi.fn().mockResolvedValue({ blocked: true, endedSessions: 1 }),
+    unblock: vi.fn().mockResolvedValue({ blocked: false }),
+    report: vi.fn().mockResolvedValue({ report: { id: 'rep1' }, blocked: false }),
+  },
 }))
 
 // Track socket emissions
@@ -86,6 +96,7 @@ vi.mock('../src/hooks/useGeolocation', () => ({
 
 const { ActiveSession } = await import('../src/components/ActiveSession')
 const { socket } = await import('../src/socket')
+const { safetyService } = await import('../src/services/safety')
 
 const makeRequest = (overrides = {}) => ({
   id: 'r1',
@@ -387,5 +398,46 @@ describe('ActiveSession', () => {
 
     const offCalls = socket.off.mock.calls.map(([event]) => event)
     expect(offCalls).toContain('connect')
+  })
+
+  /* ── Report and block ── */
+
+  it('offers report and block against the other party during the session', () => {
+    const { getByText } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    expect(getByText('safety.report')).toBeTruthy()
+    expect(getByText('safety.block')).toBeTruthy()
+  })
+
+  it('keeps report and block after the session has ended', () => {
+    const { getByText } = render(
+      <ActiveSession request={makeRequest({ status: 'completed' })} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    expect(getByText('safety.report')).toBeTruthy()
+    expect(getByText('safety.block')).toBeTruthy()
+  })
+
+  it('blocks the helper (not the user) and shows the session as ended', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    const { getByText } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    fireEvent.click(getByText('safety.block'))
+    await waitFor(() => expect(safetyService.block).toHaveBeenCalledWith('user-b'))
+    await waitFor(() => expect(getByText('requests.close')).toBeTruthy())
+    window.confirm.mockRestore()
+  })
+
+  it('reports the requester with the session id when the helper reports', async () => {
+    const { getByText, getByLabelText } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-b" onClose={vi.fn()} />
+    )
+    fireEvent.click(getByText('safety.report'))
+    fireEvent.click(getByLabelText('safety.reasons.unsafe'))
+    fireEvent.click(getByText('safety.send'))
+    await waitFor(() => expect(safetyService.report).toHaveBeenCalledWith(
+      expect.objectContaining({ userId: 'user-a', reason: 'unsafe', requestId: 'r1', block: false })
+    ))
   })
 })

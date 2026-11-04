@@ -138,6 +138,7 @@ Open requests are protected against adversarial targeting:
 | Identify real names | Display names are user-chosen pseudonyms. The BankID name is stored separately and never auto-populated. |
 | Cross-reference users | The profile endpoint returns display name + verified badge only to non-self viewers. |
 | Accept requests to approach targets | Audit trail links BankID-verified identities. Mutual completion plus a safety check-in after the session. |
+| Harassment by a session partner | Report and block, from the live session and from Profile → "People you have met" (90 days, `session_partners`, kept past the request row). A block is enforced both ways in SQL: open listing, accept, web + native push targeting and the chat insert; it also cancels any running session between the two. A report stores the reason, optional text and a snapshot of the session chat (`user_reports`), logs `user_report_filed`, optionally emails support, and is reviewed at `GET /api/admin/reports` (`ADMIN_USER_IDS`). Only people you have shared a session with can be reported or blocked, so ids cannot be probed. |
 | Retain movement history | `location_updates` is purged by a database trigger when a request reaches a terminal state — deletion is a schema property, not a cron job. |
 
 ## Assistance Request Lifecycle
@@ -184,3 +185,5 @@ All secrets live in the root `.env` file (never committed). Docker Compose inter
 | `VAPID_PRIVATE_KEY` | backend | Web Push VAPID private key |
 | `VAPID_CONTACT` | backend | VAPID contact email (default: `mailto:sentinel@covey.se`) |
 | `FIREBASE_SERVICE_ACCOUNT` | backend | Firebase service account JSON for native push (FCM) |
+| `ADMIN_USER_IDS` | backend | Comma-separated user UUIDs who may read the report queue (`/api/admin/reports`) |
+| `POSTMARK_SERVER_TOKEN` | backend | Optional: email each new user report to `REPORT_EMAIL_TO` (default support@covey.se) from `REPORT_EMAIL_FROM` |

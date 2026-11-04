@@ -204,5 +204,31 @@
       "points_500": "500 čuoggá"
     },
     "locked": "Giddejuvvon"
+  },
+  "safety": {
+    "report": "Dieđit",
+    "block": "Blokere",
+    "unblock": "Sihko blokkema",
+    "blocked": "Blokerejuvvon",
+    "someone": "Nubbi olmmoš",
+    "reportTitle": "Dieđit {{name}}",
+    "reportIntro": "Mii dáhpáhuvai? Mii lohkat juohke dieđáhusa. Jos leat vára vuolde, riŋge 112.",
+    "reasons": {
+      "harassment": "Givssideapmi dahje áitagat",
+      "inappropriate": "Heivvoheamit dieđáhusat",
+      "unsafe": "Dagahii ahte in dovdan oadjebasvuođa",
+      "spam": "Spam dahje beahttás",
+      "other": "Eará"
+    },
+    "details": "Muital eanet (eaktodáhtolaš)",
+    "alsoBlock": "Blokere maiddái dán olbmo",
+    "send": "Sádde dieđáhusa",
+    "cancel": "Gaskkalduhte",
+    "reportSent": "Giitu. Dieđáhus lea sáddejuvvon Coveyii.",
+    "blockConfirm": "Blokeret {{name}}? Dii ehpet goassege šat ovttastuvvo, ja jođus leahkki čoahkkin loahpahuvvo.",
+    "blockDone": "{{name}} lea blokerejuvvon.",
+    "partnersTitle": "Olbmot geaid leat deaividan",
+    "partnersDesc": "Dieđit dahje blokere muhtuma geainna leat leamaš čoahkkimis.",
+    "partnersEmpty": "Ii vel leat čoahkkimat."
   }
 }

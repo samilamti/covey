@@ -384,6 +384,8 @@ export function registerSocketHandlers(io) {
           content: trimmed,
           isQuick: !!isQuick,
         })
+        // Null when the session ended or a block landed since the check above
+        if (!message) return
 
         const payload = {
           requestId,

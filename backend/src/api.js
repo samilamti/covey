@@ -8,6 +8,8 @@ import { notificationRouter } from './routes/notifications.js'
 import { gdprRouter } from './routes/gdpr.js'
 import { ratingRouter } from './routes/ratings.js'
 import { pointsRouter } from './routes/points.js'
+import { safetyRouter } from './routes/safety.js'
+import { adminRouter } from './routes/admin.js'
 import { apiRateLimit } from './middleware/rateLimit.js'
 
 export const apiRouter = Router()
@@ -40,6 +42,12 @@ apiRouter.use('/ratings', ratingRouter)
 
 // --- Points routes ---
 apiRouter.use('/points', pointsRouter)
+
+// --- Block and report ---
+apiRouter.use('/safety', safetyRouter)
+
+// --- Admin (moderation queue, ADMIN_USER_IDS only) ---
+apiRouter.use('/admin', adminRouter)
 
 // --- GDPR routes ---
 apiRouter.use('/gdpr', gdprRouter)

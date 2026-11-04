@@ -204,5 +204,31 @@
       "points_500": "500 stig"
     },
     "locked": "Læst"
+  },
+  "safety": {
+    "report": "Tilkynna",
+    "block": "Loka á",
+    "unblock": "Aflétta lokun",
+    "blocked": "Lokað á",
+    "someone": "Hinn aðilinn",
+    "reportTitle": "Tilkynna {{name}}",
+    "reportIntro": "Hvað gerðist? Við lesum allar tilkynningar. Ef þú ert í hættu, hringdu í 112.",
+    "reasons": {
+      "harassment": "Áreitni eða hótanir",
+      "inappropriate": "Óviðeigandi skilaboð",
+      "unsafe": "Lét mér líða óörugga(n)",
+      "spam": "Ruslpóstur eða svik",
+      "other": "Annað"
+    },
+    "details": "Segðu okkur meira (valfrjálst)",
+    "alsoBlock": "Loka líka á þennan aðila",
+    "send": "Senda tilkynningu",
+    "cancel": "Hætta við",
+    "reportSent": "Takk. Tilkynningin hefur verið send til Covey.",
+    "blockConfirm": "Loka á {{name}}? Þið verðið aldrei pöruð saman aftur og yfirstandandi lotu lýkur.",
+    "blockDone": "Lokað hefur verið á {{name}}.",
+    "partnersTitle": "Fólk sem þú hefur hitt",
+    "partnersDesc": "Tilkynntu eða lokaðu á einhvern sem þú hefur verið í lotu með.",
+    "partnersEmpty": "Engar lotur enn."
   }
 }

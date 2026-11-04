@@ -204,5 +204,31 @@
       "points_500": "500 stig"
     },
     "locked": "Læst"
+  },
+  "safety": {
+    "report": "Melda",
+    "block": "Blokera",
+    "unblock": "Tak blokering burtur",
+    "blocked": "Blokeraður",
+    "someone": "Hin persónurin",
+    "reportTitle": "Melda {{name}}",
+    "reportIntro": "Hvat hendi? Vit lesa hvørja melding. Ert tú í vanda, ring 112.",
+    "reasons": {
+      "harassment": "Ágang ella hóttanir",
+      "inappropriate": "Óhóskandi boð",
+      "unsafe": "Fekk meg at kenna meg ótryggan",
+      "spam": "Spam ella svik",
+      "other": "Annað"
+    },
+    "details": "Sig okkum meira (valfrítt)",
+    "alsoBlock": "Blokera eisini hesa persónin",
+    "send": "Send melding",
+    "cancel": "Angra",
+    "reportSent": "Takk. Meldingin er send til Covey.",
+    "blockConfirm": "Blokera {{name}}? Tit verða ongantíð pøraði saman aftur, og ein verandi seta endar.",
+    "blockDone": "{{name}} er blokeraður.",
+    "partnersTitle": "Fólk tú hevur hitt",
+    "partnersDesc": "Melda ella blokera onkran, tú hevur havt eina setu við.",
+    "partnersEmpty": "Ongar setur enn."
   }
 }

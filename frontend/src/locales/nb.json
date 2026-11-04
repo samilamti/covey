@@ -204,5 +204,31 @@
       "points_500": "500 poeng"
     },
     "locked": "Låst"
+  },
+  "safety": {
+    "report": "Rapporter",
+    "block": "Blokker",
+    "unblock": "Opphev blokkering",
+    "blocked": "Blokkert",
+    "someone": "Den andre personen",
+    "reportTitle": "Rapporter {{name}}",
+    "reportIntro": "Hva skjedde? Vi leser hver rapport. Er du i fare, ring 112.",
+    "reasons": {
+      "harassment": "Trakassering eller trusler",
+      "inappropriate": "Upassende meldinger",
+      "unsafe": "Fikk meg til å føle meg utrygg",
+      "spam": "Spam eller svindel",
+      "other": "Noe annet"
+    },
+    "details": "Fortell mer (valgfritt)",
+    "alsoBlock": "Blokker også denne personen",
+    "send": "Send rapport",
+    "cancel": "Avbryt",
+    "reportSent": "Takk. Rapporten er sendt til Covey.",
+    "blockConfirm": "Blokkere {{name}}? Dere blir aldri koblet igjen, og en pågående økt avsluttes.",
+    "blockDone": "{{name}} er blokkert.",
+    "partnersTitle": "Personer du har møtt",
+    "partnersDesc": "Rapporter eller blokker noen du har hatt en økt med.",
+    "partnersEmpty": "Ingen økter ennå."
   }
 }

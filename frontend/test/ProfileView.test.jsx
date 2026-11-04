@@ -25,6 +25,11 @@ vi.mock('../src/components/LanguageSelector', () => ({
   LanguageSelector: () => h('div', null, 'LanguageSelector'),
 }))
 
+// Report/block list has its own tests (SafetyActions.test.jsx)
+vi.mock('../src/components/SafetyPartners', () => ({
+  SafetyPartners: () => h('div', null, 'SafetyPartners'),
+}))
+
 vi.mock('../src/services/profile', () => ({
   profileService: {
     get: vi.fn().mockResolvedValue({ user: { safetyScore: 3, isGuardian: false } }),

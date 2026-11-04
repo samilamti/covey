@@ -26,7 +26,7 @@ The non-code half of Covey lives in a separate **private** repo at `../ops` (`~/
 - **Backend**: Node 22 + Express 5 + Socket.io v4 + PostgreSQL 16 + jose (JWT) + web-push
 - **Infrastructure**: Docker Compose (5 services) + Traefik v3.6 + nginx (frontend + docs serving)
 - **Docs site**: Eleventy 3.0 static site + nginx 1.27, routed at `docs.${DOMAIN}`
-- **Testing**: node:test (backend, 204 tests with a database; DB tests skip silently without `DATABASE_URL`), vitest + @testing-library/preact (frontend, 197 tests)
+- **Testing**: node:test (backend, 221 tests with a database; DB tests skip silently without `DATABASE_URL`), vitest + @testing-library/preact (frontend, 209 tests)
 
 ## Key constraints
 
@@ -43,8 +43,8 @@ The non-code half of Covey lives in a separate **private** repo at `../ops` (`~/
 All tests must pass before committing. Run the full test suite (not just related tests) after any backend or shared logic change.
 
 ```bash
-cd backend && npm test        # node:test (204 tests with DATABASE_URL set)
-cd frontend && npm test       # vitest (197 tests)
+cd backend && npm test        # node:test (221 tests with DATABASE_URL set)
+cd frontend && npm test       # vitest (209 tests)
 ```
 
 ### Common pitfalls
@@ -142,6 +142,7 @@ Scaffolding skills encode project conventions (route ordering, 4-file feature fl
 - **Open requests**: All assistance requests are freestanding — there is no group-scoping layer. They broadcast to the `requests:open` room which all authenticated users auto-join.
 - **Eligibility tiers**: Three levels control who can accept requests — `same_demographics` (same sex, birth year ±5), `verified_guardians` (demographics OR safety score ≥ 5), `any_member` (no filtering). Default is `same_demographics`. Pre-filtering in SQL prevents users from seeing requests they can't accept. Accept-time guard provides defense-in-depth.
 - **Stub safety scores**: `STUB_SAFETY_SCORES` env var (`nin:score,nin:score`) sets in-memory overrides applied at stub login. Stored in `Map<userId, score>` in `ratings.js`, checked before DB query. Enables testing `verified_guardians` tier without real rating history.
+- **Block and report**: `routes/safety.js` + `repositories/safety.js` (migration `012_blocks_reports`). Report (reason + optional text, chat snapshot) and block are reachable in `ActiveSession` (also after it ends) and in Profile via `SafetyPartners` (90-day `session_partners`, filled by a trigger when a helper is assigned, so it survives `deleteTerminal()`). Only past session partners can be reported/blocked. A block is enforced both ways through `blockedBetweenSql()` in `findOpenFreestanding`, `accept`, both `findEligibleForRequest`s and the guarded `msgRepo.create` insert (returns null when the session ended or a block landed), and cancels any running session between the pair (`request:cancelled` to both). Reports log `user_report_filed`, optionally email via Postmark, and are reviewed at `GET/PATCH /api/admin/reports` (`ADMIN_USER_IDS`). Required by Google Play's UGC policy.
 - **Session messaging**: In-session chat between requester and helper via Socket.io. Messages persisted to `session_messages` table. Rate limited (2s per user per request). Six pre-filled quick messages provided. Included in GDPR export.
 - **Geolocation**: Centralized `useGeolocation` hook in `frontend/src/hooks/useGeolocation.js` — replaces all inline `navigator.geolocation` calls. Returns `{ position, error, loading, retry, supported }`. Error codes mapped: 1→`denied`, 2→`unavailable`, 3→`timeout`. `LocationBanner` component shows user-facing feedback with retry button. Used by `RequestList` (info severity), `CreateRequest` (info), and `ActiveSession` (warning — safety-critical). Never call `navigator.geolocation` directly from components. Includes `visibilitychange` listener — automatically re-acquires position when the page regains focus (one-shot mode re-calls `getCurrentPosition`, watch mode restarts `watchPosition`).
 - **Mutual done flow**: Either party can initiate "done" (`active` → `done_pending`). The other party accepts (`→ completed`) or rejects (`→ active`). Simultaneous done clicks auto-complete. Tracked via `done_initiated_by`/`done_initiated_at` columns. Routes: `/:id/done`, `/:id/done/accept`, `/:id/done/reject`. Socket events: `request:done-initiated`, `request:done-rejected`. Location relay + messaging remain active during `done_pending`. `ActiveSession` re-fetches request state on socket reconnect and `visibilitychange` to catch missed events. `MainLayout` keeps persistent listeners for `request:done-initiated` and `request:accepted` — auto-navigates to Requests tab and bumps a `refreshKey` that forces `RequestList` re-mount.
@@ -184,8 +185,8 @@ docker compose up db -d       # Database only
 docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml up --build -d
 
 # Tests (or use /test skill)
-cd backend && npm test        # node:test (204 tests with DATABASE_URL set)
-cd frontend && npm test       # vitest (197 tests)
+cd backend && npm test        # node:test (221 tests with DATABASE_URL set)
+cd frontend && npm test       # vitest (209 tests)
 
 # Build
 cd frontend && npm run build  # Vite production build

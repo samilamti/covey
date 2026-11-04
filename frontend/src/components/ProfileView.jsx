@@ -4,6 +4,7 @@ import { ShieldCheck, Shield, Download, Trash2, Save, Award, LogOut } from 'luci
 import { profileService } from '../services/profile'
 import { gdprService } from '../services/gdpr'
 import { LanguageSelector } from './LanguageSelector'
+import { SafetyPartners } from './SafetyPartners'
 
 export function ProfileView({ user, onLogout }) {
   const { t } = useTranslation()
@@ -144,6 +145,9 @@ export function ProfileView({ user, onLogout }) {
         <label class="block text-sm font-medium text-gray-700 mb-2">{t('profile.language')}</label>
         <LanguageSelector />
       </div>
+
+      {/* Report and block people from past sessions */}
+      <SafetyPartners />
 
       {/* Account actions */}
       <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 space-y-3">

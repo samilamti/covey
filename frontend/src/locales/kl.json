@@ -204,5 +204,31 @@
       "points_500": "500 pointit"
     },
     "locked": "Matusaavoq"
+  },
+  "safety": {
+    "report": "Nalunaaruteqarit",
+    "block": "Blokeriguk",
+    "unblock": "Blokerinera peeruk",
+    "blocked": "Blokerineqarpoq",
+    "someone": "Inuk alla",
+    "reportTitle": "{{name}} pillugu nalunaaruteqarit",
+    "reportIntro": "Sunaana pisoq? Nalunaarutit tamaasa atuartarpavut. Navianartumiikkuit 112 sianerfigiuk.",
+    "reasons": {
+      "harassment": "Pinngitsaaliineq imaluunniit siorasaarineq",
+      "inappropriate": "Allakkat naleqquttuunngitsut",
+      "unsafe": "Isumannaatsuunngitsutut misigitippaanga",
+      "spam": "Spam imaluunniit peqqusersorneq",
+      "other": "Allat"
+    },
+    "details": "Annertunerusumik oqaluttuarit (piumasariaqanngilaq)",
+    "alsoBlock": "Inuk una aamma blokeriguk",
+    "send": "Nalunaarut nassiuguk",
+    "cancel": "Taamaatiguk",
+    "reportSent": "Qujanaq. Nalunaarut Coveymut nassiunneqarpoq.",
+    "blockConfirm": "{{name}} blokerissaviuk? Atassuteqqikkumaanngilasi, ingerlanneqartorlu naammassineqassaaq.",
+    "blockDone": "{{name}} blokerineqarpoq.",
+    "partnersTitle": "Inuit naapitsimasatit",
+    "partnersDesc": "Inuk ilinnut ingerlanneqartumi peqataasimasoq nalunaarutigiuk imaluunniit blokeriguk.",
+    "partnersEmpty": "Suli ingerlanneqarsimanngilaq."
   }
 }

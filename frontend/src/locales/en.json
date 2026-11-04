@@ -204,5 +204,31 @@
       "points_500": "500 points"
     },
     "locked": "Locked"
+  },
+  "safety": {
+    "report": "Report",
+    "block": "Block",
+    "unblock": "Unblock",
+    "blocked": "Blocked",
+    "someone": "The other person",
+    "reportTitle": "Report {{name}}",
+    "reportIntro": "What happened? We read every report. If you are in danger, call 112.",
+    "reasons": {
+      "harassment": "Harassment or threats",
+      "inappropriate": "Inappropriate messages",
+      "unsafe": "Made me feel unsafe",
+      "spam": "Spam or scam",
+      "other": "Something else"
+    },
+    "details": "Tell us more (optional)",
+    "alsoBlock": "Also block this person",
+    "send": "Send report",
+    "cancel": "Cancel",
+    "reportSent": "Thank you. Your report has been sent to Covey.",
+    "blockConfirm": "Block {{name}}? You will never be matched again, and any ongoing session ends.",
+    "blockDone": "{{name}} is blocked.",
+    "partnersTitle": "People you have met",
+    "partnersDesc": "Report or block someone you have had a session with.",
+    "partnersEmpty": "No sessions yet."
   }
 }

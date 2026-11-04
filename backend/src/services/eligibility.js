@@ -10,6 +10,7 @@
 
 import * as userRepo from '../repositories/users.js'
 import * as ratingRepo from '../repositories/ratings.js'
+import * as safetyRepo from '../repositories/safety.js'
 import { matchesDemographics, GUARDIAN_SCORE_THRESHOLD } from './demographics.js'
 
 // Re-export for consumers that imported from here
@@ -22,6 +23,9 @@ export { matchesDemographics }
  * @returns {Promise<boolean>}
  */
 export async function checkEligibility(request, helperId) {
+  // A block in either direction rules the pair out at every tier
+  if (await safetyRepo.isBlockedEitherWay(request.requester_id, helperId)) return false
+
   if (request.eligibility_tier === 'any_member') return true
 
   const [requester, helper] = await Promise.all([

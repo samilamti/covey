@@ -204,5 +204,31 @@
       "points_500": "500 poäng"
     },
     "locked": "Låst"
+  },
+  "safety": {
+    "report": "Rapportera",
+    "block": "Blockera",
+    "unblock": "Avblockera",
+    "blocked": "Blockerad",
+    "someone": "Den andra personen",
+    "reportTitle": "Rapportera {{name}}",
+    "reportIntro": "Vad hände? Vi läser varje rapport. Är du i fara, ring 112.",
+    "reasons": {
+      "harassment": "Trakasserier eller hot",
+      "inappropriate": "Olämpliga meddelanden",
+      "unsafe": "Fick mig att känna mig otrygg",
+      "spam": "Spam eller bedrägeri",
+      "other": "Annat"
+    },
+    "details": "Berätta mer (valfritt)",
+    "alsoBlock": "Blockera också den här personen",
+    "send": "Skicka rapport",
+    "cancel": "Avbryt",
+    "reportSent": "Tack. Rapporten har skickats till Covey.",
+    "blockConfirm": "Blockera {{name}}? Ni matchas aldrig mer, och en pågående session avslutas.",
+    "blockDone": "{{name}} är blockerad.",
+    "partnersTitle": "Personer du har träffat",
+    "partnersDesc": "Rapportera eller blockera någon du har haft en session med.",
+    "partnersEmpty": "Inga sessioner än."
   }
 }

@@ -204,5 +204,31 @@
       "points_500": "500 point"
     },
     "locked": "Låst"
+  },
+  "safety": {
+    "report": "Anmeld",
+    "block": "Bloker",
+    "unblock": "Fjern blokering",
+    "blocked": "Blokeret",
+    "someone": "Den anden person",
+    "reportTitle": "Anmeld {{name}}",
+    "reportIntro": "Hvad skete der? Vi læser hver anmeldelse. Er du i fare, så ring 112.",
+    "reasons": {
+      "harassment": "Chikane eller trusler",
+      "inappropriate": "Upassende beskeder",
+      "unsafe": "Fik mig til at føle mig utryg",
+      "spam": "Spam eller svindel",
+      "other": "Andet"
+    },
+    "details": "Fortæl mere (valgfrit)",
+    "alsoBlock": "Bloker også denne person",
+    "send": "Send anmeldelse",
+    "cancel": "Annuller",
+    "reportSent": "Tak. Anmeldelsen er sendt til Covey.",
+    "blockConfirm": "Bloker {{name}}? I bliver aldrig matchet igen, og en igangværende session afsluttes.",
+    "blockDone": "{{name}} er blokeret.",
+    "partnersTitle": "Personer du har mødt",
+    "partnersDesc": "Anmeld eller bloker nogen, du har haft en session med.",
+    "partnersEmpty": "Ingen sessioner endnu."
   }
 }

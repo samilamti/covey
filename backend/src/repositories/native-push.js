@@ -6,6 +6,7 @@
  */
 
 import { db } from '../pool.js'
+import { blockedBetweenSql } from './safety.js'
 
 /**
  * Save or update a native push token for a user.
@@ -59,6 +60,7 @@ export async function findEligibleForRequest({ requesterId, eligibilityTier }) {
     JOIN users u ON u.id = npt.user_id AND u.deleted_at IS NULL
     CROSS JOIN (SELECT birth_year, sex FROM users WHERE id = $1) AS req
     WHERE npt.user_id != $1
+      AND NOT ${blockedBetweenSql(`npt.user_id`, '$1')}
       AND (
         $2 = 'any_member'
         OR ($2 = 'verified_guardians' AND (

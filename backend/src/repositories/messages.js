@@ -3,17 +3,27 @@
  */
 
 import { db } from '../pool.js'
+import { blockedBetweenSql } from './safety.js'
 
 /**
  * Create a new session message.
+ *
+ * The insert itself checks that the session is still running and that
+ * neither party has blocked the other, so a message racing a block or the
+ * end of the session is dropped (returns null) instead of outliving it.
  */
 export async function create({ requestId, senderId, content, isQuick = false }) {
   const { rows } = await db.query(`
     INSERT INTO session_messages (request_id, sender_id, content, is_quick)
-    VALUES ($1, $2, $3, $4)
+    SELECT ar.id, $2, $3, $4
+    FROM assistance_requests ar
+    WHERE ar.id = $1
+      AND ar.status IN ('accepted', 'active', 'done_pending')
+      AND $2 IN (ar.requester_id, ar.helper_id)
+      AND NOT ${blockedBetweenSql('ar.requester_id', 'ar.helper_id')}
     RETURNING *
   `, [requestId, senderId, content, isQuick])
-  return rows[0]
+  return rows[0] || null
 }
 
 /**
