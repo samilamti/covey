@@ -65,7 +65,12 @@ export function InstallPrompt() {
           </button>
         )}
       </div>
-      <button onClick={handleDismiss} class="text-indigo-400 hover:text-indigo-600">
+      <button
+        type="button"
+        onClick={handleDismiss}
+        aria-label={t('requests.close')}
+        class="text-indigo-400 hover:text-indigo-600"
+      >
         <X size={16} />
       </button>
     </div>

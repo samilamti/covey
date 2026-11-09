@@ -144,4 +144,16 @@ describe('InstallPrompt', () => {
 
     expect(container.innerHTML).toBe('')
   })
+
+  it('exposes an accessible name for the icon-only dismiss button', () => {
+    // The dismiss control is an X glyph with no visible text, so a screen
+    // reader has nothing to say for it without an aria-label. Use the shared
+    // requests.close translation key so it is localized in all 12 languages.
+    Object.defineProperty(navigator, 'userAgent', {
+      value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1',
+      configurable: true,
+    })
+    const { getByLabelText } = render(<InstallPrompt />)
+    expect(getByLabelText('requests.close')).toBeTruthy()
+  })
 })

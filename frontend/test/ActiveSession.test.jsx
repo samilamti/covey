@@ -265,6 +265,16 @@ describe('ActiveSession', () => {
     expect(getByText('requests.close')).toBeTruthy()
   })
 
+  it('exposes an accessible name for the header close button', () => {
+    // The header X button has no visible text — screen readers need the
+    // aria-label to announce it. requests.close is translated in all 12
+    // locales so this works for every language.
+    const { getByLabelText } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    expect(getByLabelText('requests.close')).toBeTruthy()
+  })
+
   /* ── Done flow ── */
 
   it('shows done-waiting message when current user initiated done', () => {

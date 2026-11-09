@@ -387,7 +387,12 @@ export function ActiveSession({ request, currentUserId, onClose }) {
             {isRequester ? t('requests.youRequested') : t('requests.youAreHelper')}
           </p>
         </div>
-        <button onClick={onClose} class="p-1">
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={t('requests.close')}
+          class="p-1"
+        >
           <X size={20} />
         </button>
       </div>
