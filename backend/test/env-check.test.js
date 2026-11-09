@@ -54,22 +54,100 @@ describe('assertProductionEnv', () => {
       env: { NODE_ENV: 'production', JWT_SECRET: 'genuinely-random-secret' },
     })
     // Letting the caller log what was checked makes the startup line
-    // observable without hard-coding the list in two places.
-    assert.deepEqual(checked, ['JWT_SECRET'])
+    // observable without hard-coding the list in two places. AUTH_PROVIDER
+    // is a consistency check — unset (so not 'bankid') is a legitimate
+    // production shape and counts as "passed", matching today's prod box
+    // which still runs AUTH_PROVIDER=stub until the Idura RP agreement
+    // lands.
+    assert.deepEqual(checked, ['JWT_SECRET', 'AUTH_PROVIDER'])
+  })
+
+  it('throws when AUTH_PROVIDER=bankid but FEATURE_BANKID_AUTH is off in production', () => {
+    // The silent-footgun case this check exists for: auth/router.js emits ONE
+    // warn line and falls back to the stub provider, which accepts any
+    // personnummer — every production login would be anonymous, with nothing
+    // visible to a user clicking through. Fail the boot instead.
+    assert.throws(
+      () =>
+        assertProductionEnv({
+          env: {
+            NODE_ENV: 'production',
+            JWT_SECRET: 'genuinely-random-secret',
+            AUTH_PROVIDER: 'bankid',
+            // FEATURE_BANKID_AUTH deliberately absent — identical to 'false'
+            // under features.js's DEFAULTS table.
+          },
+        }),
+      (err) => {
+        assert.match(err.message, /AUTH_PROVIDER/)
+        assert.match(err.message, /FEATURE_BANKID_AUTH=true/)
+        // Name the fallback behaviour so a reader of the error does not
+        // have to open auth/router.js to understand what "unsafe" means
+        // here.
+        assert.match(err.message, /stub provider/)
+        return true
+      },
+    )
+  })
+
+  it('throws when AUTH_PROVIDER=bankid and FEATURE_BANKID_AUTH is literally "false"', () => {
+    // Explicitly setting the flag to the string "false" is the same shape as
+    // leaving it unset — features.js reads env vars as strings and only
+    // "true" turns the flag on. The check must treat both the same.
+    assert.throws(
+      () =>
+        assertProductionEnv({
+          env: {
+            NODE_ENV: 'production',
+            JWT_SECRET: 'genuinely-random-secret',
+            AUTH_PROVIDER: 'bankid',
+            FEATURE_BANKID_AUTH: 'false',
+          },
+        }),
+      /AUTH_PROVIDER/,
+    )
+  })
+
+  it('accepts AUTH_PROVIDER=bankid when FEATURE_BANKID_AUTH=true', () => {
+    // The intended production shape once the Idura RP agreement is live.
+    const checked = assertProductionEnv({
+      env: {
+        NODE_ENV: 'production',
+        JWT_SECRET: 'genuinely-random-secret',
+        AUTH_PROVIDER: 'bankid',
+        FEATURE_BANKID_AUTH: 'true',
+      },
+    })
+    assert.deepEqual(checked, ['JWT_SECRET', 'AUTH_PROVIDER'])
+  })
+
+  it('does not require FEATURE_BANKID_AUTH when AUTH_PROVIDER is anything other than bankid', () => {
+    // Today's prod box runs AUTH_PROVIDER=stub with FEATURE_BANKID_AUTH off;
+    // that combination is the current shipping shape and must not throw.
+    const checked = assertProductionEnv({
+      env: {
+        NODE_ENV: 'production',
+        JWT_SECRET: 'genuinely-random-secret',
+        AUTH_PROVIDER: 'stub',
+      },
+    })
+    assert.deepEqual(checked, ['JWT_SECRET', 'AUTH_PROVIDER'])
   })
 
   it('collects every failing var into one Error', () => {
-    // Today there is one required var in production; this test documents the
-    // intent so a future addition cannot silently fall back to one-at-a-time
-    // reporting. A production boot with multiple broken secrets should
-    // surface all of them in one restart cycle.
+    // A production boot with multiple broken configs should surface all of
+    // them in one restart cycle, not force the operator to restart to find
+    // the next failure.
     try {
-      assertProductionEnv({ env: { NODE_ENV: 'production' } })
+      assertProductionEnv({
+        env: { NODE_ENV: 'production', AUTH_PROVIDER: 'bankid' },
+      })
       assert.fail('expected the check to throw')
     } catch (err) {
       // The message is bulleted so humans can scan it in `docker compose logs`.
       assert.match(err.message, /Refusing to start/)
       assert.match(err.message, /- JWT_SECRET/)
+      assert.match(err.message, /- AUTH_PROVIDER/)
     }
   })
 })

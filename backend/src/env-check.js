@@ -26,15 +26,31 @@
 // the two in sync if the fallback is ever renamed.
 export const JWT_SECRET_DEV_FALLBACK = 'dev-secret-do-not-use-in-prod'
 
+// Each check receives the whole env object so it can look at a single secret
+// (JWT_SECRET) or a combination (AUTH_PROVIDER + FEATURE_BANKID_AUTH). `name`
+// is what the passed-checks log line and the error message quote.
 const REQUIRED_IN_PROD = [
   {
     name: 'JWT_SECRET',
     // Reject unset, empty, and the dev fallback literal.
-    isUnsafe: (v) => !v || v === JWT_SECRET_DEV_FALLBACK,
-    reason: (v) =>
-      !v
+    isUnsafe: (env) => !env.JWT_SECRET || env.JWT_SECRET === JWT_SECRET_DEV_FALLBACK,
+    reason: (env) =>
+      !env.JWT_SECRET
         ? 'JWT_SECRET is unset — tokens would be signed with the well-known dev fallback'
         : 'JWT_SECRET still equals the dev fallback literal — anyone reading the source can forge a session',
+  },
+  {
+    // Guards a separate silent footgun: auth/router.js selects the real
+    // BankID provider only when AUTH_PROVIDER=bankid AND FEATURE_BANKID_AUTH
+    // is on; with the flag off it emits ONE warn line and quietly falls back
+    // to the stub provider, which accepts any personnummer. In production
+    // that means every login is anonymous, with nothing visible to a user.
+    // Fail the boot instead, so the misconfig lands at deploy time.
+    name: 'AUTH_PROVIDER',
+    isUnsafe: (env) =>
+      env.AUTH_PROVIDER === 'bankid' && env.FEATURE_BANKID_AUTH !== 'true',
+    reason: () =>
+      'AUTH_PROVIDER=bankid requires FEATURE_BANKID_AUTH=true — otherwise login silently falls back to the stub provider, which accepts any personnummer',
   },
 ]
 
@@ -53,9 +69,8 @@ export function assertProductionEnv({ env = process.env } = {}) {
   const failures = []
   const passed = []
   for (const check of REQUIRED_IN_PROD) {
-    const value = env[check.name]
-    if (check.isUnsafe(value)) {
-      failures.push(`${check.name}: ${check.reason(value)}`)
+    if (check.isUnsafe(env)) {
+      failures.push(`${check.name}: ${check.reason(env)}`)
     } else {
       passed.push(check.name)
     }
