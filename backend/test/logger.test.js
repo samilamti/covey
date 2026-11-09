@@ -148,3 +148,78 @@ describe('logger (request context + json mode)', () => {
     assert.equal(parsed.foo, 1)
   })
 })
+
+/**
+ * Guards the "every log line carries an `event:` tag" convention end to end.
+ *
+ * A grep over `src/` is the only way to prove this at build time: a single
+ * drifted call site leaves one group empty in a log aggregator without any
+ * test going red, which is exactly how five calls had slipped by the time
+ * this test was added (admin_report_status, user_blocked, user_report_filed,
+ * report_email_failed, nin_hash_rekeyed). The regression this catches is
+ * silent and operational, not functional.
+ *
+ * `sockMeta(event)` (socket handlers) wraps the tag internally, so a call
+ * that passes it is considered compliant.
+ */
+import { readdirSync, readFileSync, statSync } from 'node:fs'
+import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+describe('wiring (source assertions): every log.* call carries event:', () => {
+  const srcDir = fileURLToPath(new URL('../src', import.meta.url))
+
+  function walk(dir, files = []) {
+    for (const name of readdirSync(dir)) {
+      const full = join(dir, name)
+      const stats = statSync(full)
+      if (stats.isDirectory()) walk(full, files)
+      else if (full.endsWith('.js')) files.push(full)
+    }
+    return files
+  }
+
+  // Extract every top-level log.info/warn/error(…) call with balanced parens.
+  function findLogCalls(src) {
+    const calls = []
+    const re = /log\.(info|warn|error)\s*\(/g
+    let m
+    while ((m = re.exec(src)) !== null) {
+      const start = m.index
+      let depth = 1
+      let i = start + m[0].length
+      while (i < src.length && depth > 0) {
+        const c = src[i]
+        if (c === '(') depth += 1
+        else if (c === ')') depth -= 1
+        i += 1
+      }
+      calls.push({
+        text: src.slice(start, i),
+        line: src.slice(0, start).split('\n').length,
+      })
+    }
+    return calls
+  }
+
+  it('all log.info/warn/error calls in src/ carry an event: key (or wrap sockMeta)', () => {
+    const files = walk(srcDir).filter((f) => !f.endsWith('logger.js'))
+    const missing = []
+    for (const file of files) {
+      const src = readFileSync(file, 'utf8')
+      for (const { text, line } of findLogCalls(src)) {
+        // Match `event:`, shorthand `event,`, and the terminal `event)` form.
+        const hasEvent = /\bevent\s*[,:)]/.test(text)
+        const viaHelper = /sockMeta\(/.test(text)
+        if (!hasEvent && !viaHelper) {
+          missing.push(`${file}:${line} — ${text.split('\n')[0]}`)
+        }
+      }
+    }
+    assert.equal(
+      missing.length,
+      0,
+      `log calls without an event: tag:\n${missing.join('\n')}`,
+    )
+  })
+})

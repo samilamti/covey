@@ -134,7 +134,7 @@ authRouter.post('/collect', apiRateLimit, async (req, res) => {
         legacyHash: legacyHashNin(result.user.nin),
         ninHash: result.user.ninHash,
       })
-      if (rekeyed) log.info('nin_hash_rekeyed')
+      if (rekeyed) log.info('nin_hash_rekeyed', { event: 'nin_hash_rekeyed' })
 
       // Upsert user into database — get real UUID
       const dbUser = await userRepo.upsertFromAuth({

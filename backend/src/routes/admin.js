@@ -51,7 +51,7 @@ adminRouter.patch('/reports/:id', async (req, res) => {
   try {
     const report = await safetyRepo.setReportStatus(req.params.id, status)
     if (!report) return res.status(404).json({ error: 'Report not found' })
-    log.info('admin_report_status', { report: report.id, status, admin: req.user.userId })
+    log.info('admin_report_status', { event: 'admin_report_status', report: report.id, status, admin: req.user.userId })
     res.json({ report })
   } catch (err) {
     log.error(err, { event: 'admin_set_report_failed' })

@@ -82,7 +82,7 @@ safetyRouter.post('/blocks', async (req, res) => {
   try {
     if (!(await requirePartner(req, res, userId))) return
     const endedSessions = await blockPartner(req.app.get('io'), req.user.userId, userId)
-    log.info('user_blocked', { user: req.user.userId, endedSessions })
+    log.info('user_blocked', { event: 'user_blocked', user: req.user.userId, endedSessions })
     res.status(201).json({ blocked: true, endedSessions })
   } catch (err) {
     log.error(err, { event: 'block_failed', user: req.user.userId })

@@ -16,6 +16,7 @@ const POSTMARK_URL = 'https://api.postmarkapp.com/email'
 
 export async function notifyReportFiled(report, { fetchImpl = globalThis.fetch } = {}) {
   log.warn('user_report_filed', {
+    event: 'user_report_filed',
     report: report.id,
     reason: report.reason,
     reported: report.reported_id,
@@ -49,7 +50,7 @@ export async function notifyReportFiled(report, { fetchImpl = globalThis.fetch }
     }),
   })
   if (!res.ok) {
-    log.error('report_email_failed', { report: report.id, status: res.status })
+    log.error('report_email_failed', { event: 'report_email_failed', report: report.id, status: res.status })
     return false
   }
   return true
