@@ -42,13 +42,13 @@ frontend/
 │   ├── main.jsx            # Preact render entry + service worker registration
 │   ├── App.jsx             # Root component: auth state, router, socket
 │   ├── socket.js           # Singleton Socket.io client (auth token, autoConnect:false)
-│   ├── i18n.js             # i18next config (11 languages, sv fallback, RTL)
+│   ├── i18n.js             # i18next config (12 languages, sv fallback, RTL)
 │   ├── index.css           # Tailwind directives + mobile compatibility resets
 │   ├── context/
 │   │   └── FeatureFlagContext.jsx  # Feature flag Preact context + useFeatureFlag()
 │   ├── components/
 │   │   ├── LandingPage.jsx         # BankID login flow
-│   │   ├── LanguageSelector.jsx    # 11-language dropdown with flags
+│   │   ├── LanguageSelector.jsx    # 12-language dropdown with flags
 │   │   ├── SamiFlag.jsx            # Custom Sami flag SVG component
 │   │   ├── MainLayout.jsx          # Authenticated app shell
 │   │   ├── BottomNav.jsx           # Mobile tab navigation

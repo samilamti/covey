@@ -100,7 +100,7 @@ Server-side groupings for targeted event broadcasting:
 In-session chat between requester and helper. Messages are persisted to the `session_messages` table. Only available in `accepted` or `active` sessions. Rate limited (1 message per 2 seconds per user per request). Includes 6 pre-filled **quick messages** for common situations.
 
 ### Quick messages
-Pre-defined message templates that users can send with one tap during an active session. Examples: "I'm on my way", "I'm slightly delayed, but still on my way", "I can see you". Stored with `is_quick = true` in the database. Localised in all 11 languages.
+Pre-defined message templates that users can send with one tap during an active session. Examples: "I'm on my way", "I'm slightly delayed, but still on my way", "I can see you". Stored with `is_quick = true` in the database. Localised in all 12 languages.
 
 ---
 
@@ -155,10 +155,10 @@ Open request listings round `pickup_lat`/`pickup_lng` to 3 decimal places (~111 
 ## Localisation
 
 ### Canonical language
-Swedish (`sv`) is the source language. All 11 locale files derive from `sv.json`. The i18n fallback language is Swedish, not English.
+Swedish (`sv`) is the source language. All 12 locale files derive from `sv.json`. The i18n fallback language is Swedish, not English.
 
 ### Locale key parity
-A test ensures all 11 locale files contain exactly the same keys as `sv.json`. Adding a new i18n key requires updating all 11 files.
+A test ensures all 12 locale files contain exactly the same keys as `sv.json`. Adding a new i18n key requires updating all 12 files.
 
 ### Supported languages
-sv (Swedish), nb (Norwegian Bokmal), da (Danish), fi (Finnish), ar (Arabic), is (Icelandic), pl (Polish), fo (Faroese), kl (Greenlandic), se (Northern Sami), en (English).
+sv (Swedish), nb (Norwegian Bokmål), da (Danish), fi (Finnish), ar (Arabic), is (Icelandic), pl (Polish), fo (Faroese), kl (Greenlandic/Kalaallisut), se (Northern Sami), uk (Ukrainian), en (English).
