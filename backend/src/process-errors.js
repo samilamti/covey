@@ -44,7 +44,7 @@ export function attachProcessErrorHandlers({ log, shutdown, proc = process } = {
       event: 'uncaught_exception',
       origin: origin || null,
     })
-    shutdown('uncaught_exception')
+    shutdown('uncaught_exception', 1)
   }
 
   function onUnhandled(reason, promise) {
@@ -60,7 +60,7 @@ export function attachProcessErrorHandlers({ log, shutdown, proc = process } = {
       // tell "this stack is synthetic" from the shape.
       reason_type: reason instanceof Error ? 'error' : typeof reason,
     })
-    shutdown('unhandled_rejection')
+    shutdown('unhandled_rejection', 1)
     // Silence the "promise" lint warning without consuming it — the handle
     // isn't useful once we've logged the reason.
     void promise

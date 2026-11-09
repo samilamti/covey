@@ -146,7 +146,7 @@ httpServer.listen(PORT, () => {
 // Docker sends SIGTERM when a container stops; without a handler, in-flight
 // requests are dropped and the browser sees a 502 across a deploy. SIGINT is
 // the local Ctrl-C case. See src/shutdown.js for the sequence.
-const shutdown = createShutdown({ httpServer, io, log })
+const shutdown = createShutdown({ io, log })
 process.on('SIGTERM', () => shutdown('SIGTERM'))
 process.on('SIGINT', () => shutdown('SIGINT'))
 

@@ -24,7 +24,7 @@ function makeLog() {
 
 function makeShutdown() {
   const calls = []
-  return { calls, fn: (reason) => calls.push(reason) }
+  return { calls, fn: (reason, code) => calls.push([reason, code]) }
 }
 
 describe('attachProcessErrorHandlers', () => {
@@ -48,7 +48,7 @@ describe('attachProcessErrorHandlers', () => {
     // Stack must survive the log so an operator can read it without reproducing.
     assert.ok(line.meta.stack.includes('boom'))
     assert.equal(line.meta.origin, 'uncaughtException')
-    assert.deepEqual(shutdown.calls, ['uncaught_exception'])
+    assert.deepEqual(shutdown.calls, [['uncaught_exception', 1]])
   })
 
   it('normalises a non-Error uncaughtException into a loggable Error', () => {
@@ -58,7 +58,7 @@ describe('attachProcessErrorHandlers', () => {
     assert.equal(line.msg, 'string thrown')
     // Shutdown still fires — the process state is suspect regardless of what
     // was thrown.
-    assert.deepEqual(shutdown.calls, ['uncaught_exception'])
+    assert.deepEqual(shutdown.calls, [['uncaught_exception', 1]])
   })
 
   it('logs an unhandledRejection carrying an Error with its stack', () => {
@@ -70,7 +70,7 @@ describe('attachProcessErrorHandlers', () => {
     assert.equal(line.msg, 'bad promise')
     assert.equal(line.meta.reason_type, 'error')
     assert.ok(line.meta.stack.includes('bad promise'))
-    assert.deepEqual(shutdown.calls, ['unhandled_rejection'])
+    assert.deepEqual(shutdown.calls, [['unhandled_rejection', 1]])
   })
 
   it('tags a non-Error rejection reason with reason_type for debuggability', () => {
@@ -81,7 +81,7 @@ describe('attachProcessErrorHandlers', () => {
     // someone rejects with a plain object: the stack points at process-errors.js
     // and would otherwise mislead whoever is debugging.
     assert.equal(line.meta.reason_type, 'object')
-    assert.deepEqual(shutdown.calls, ['unhandled_rejection'])
+    assert.deepEqual(shutdown.calls, [['unhandled_rejection', 1]])
   })
 
   it('does not swallow the handlers of other listeners', () => {
