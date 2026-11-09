@@ -63,6 +63,30 @@ describe('LanguageSelector', () => {
     expect(svgs.length).toBe(1)
   })
 
+  it('closes the dropdown on Escape', async () => {
+    // A keyboard user with the dropdown open should be able to dismiss it
+    // without tabbing through all 12 options or hunting for empty space to
+    // click — WCAG 2.1.1 Keyboard.
+    const { getByRole, queryAllByRole } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+    expect(queryAllByRole('menuitem')).toHaveLength(12)
+
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(queryAllByRole('menuitem')).toHaveLength(0)
+    // The toggle button goes back to aria-expanded=false, and the dropdown
+    // can be re-opened.
+    const toggle = getByRole('button', { expanded: false })
+    expect(toggle).toBeDefined()
+  })
+
+  it('ignores Escape when the dropdown is already closed', () => {
+    // Guard against swallowing Esc for anything else on the page while the
+    // selector is idle.
+    const { queryAllByRole } = render(<LanguageSelector />)
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(queryAllByRole('menuitem')).toHaveLength(0)
+  })
+
   it('marks every native language label with its own lang attribute', async () => {
     // WCAG 3.1.2 — without lang="ar", a screen reader pronounces "العربية"
     // with the current UI language's voice, which produces garbage.

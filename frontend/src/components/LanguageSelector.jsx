@@ -48,6 +48,21 @@ export function LanguageSelector() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [isOpen])
 
+  // Escape closes the dropdown — WCAG 2.1.1 Keyboard. Without this a keyboard
+  // user has to Tab through all 12 languages or click outside to dismiss the
+  // open menu.
+  useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation()
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [isOpen])
+
   const currentLang = languages.find((l) => l.code === i18n.language)
 
   return (
