@@ -325,6 +325,25 @@ describe('ActiveSession', () => {
     expect(getByText('messages.title')).toBeTruthy()
   })
 
+  it('gives the chat input and send button accessible names', async () => {
+    // The chat input relied on `placeholder` as its label, which assistive
+    // tech does not treat as an accessible name — a placeholder disappears
+    // when the user types, so the input would announce as "edit text, blank"
+    // mid-message. The icon-only send button had no name at all.
+    // jsdom has no scrollIntoView; opening the message panel runs an effect
+    // that would call it, so stub it before firing the toggle.
+    Element.prototype.scrollIntoView = vi.fn()
+    const { getByText, getByLabelText } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    // Toggle the message panel open.
+    fireEvent.click(getByText('messages.title'))
+    const input = getByLabelText('messages.placeholder')
+    expect(input.tagName).toBe('INPUT')
+    const sendBtn = getByLabelText('messages.send')
+    expect(sendBtn.tagName).toBe('BUTTON')
+  })
+
   it('does not show message toggle for terminal states', () => {
     const { queryByText } = render(
       <ActiveSession request={makeRequest({ status: 'completed' })} currentUserId="user-a" onClose={vi.fn()} />

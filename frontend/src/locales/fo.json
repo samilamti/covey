@@ -121,6 +121,7 @@
   "messages": {
     "title": "Boð",
     "placeholder": "Skriv eitt boð…",
+    "send": "Send boð",
     "quick": {
       "onMyWay": "Eg eri á veg!",
       "almostThere": "Næstan frammi!",

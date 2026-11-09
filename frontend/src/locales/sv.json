@@ -121,6 +121,7 @@
   "messages": {
     "title": "Meddelanden",
     "placeholder": "Skriv ett meddelande…",
+    "send": "Skicka meddelande",
     "quick": {
       "onMyWay": "Jag är på väg!",
       "almostThere": "Nästan framme!",

@@ -121,6 +121,7 @@
   "messages": {
     "title": "Wiadomości",
     "placeholder": "Napisz wiadomość…",
+    "send": "Wyślij wiadomość",
     "quick": {
       "onMyWay": "Jestem w drodze!",
       "almostThere": "Prawie na miejscu!",

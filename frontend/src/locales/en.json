@@ -121,6 +121,7 @@
   "messages": {
     "title": "Messages",
     "placeholder": "Write a message…",
+    "send": "Send message",
     "quick": {
       "onMyWay": "I'm on my way!",
       "almostThere": "Almost there!",

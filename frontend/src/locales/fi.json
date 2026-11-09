@@ -121,6 +121,7 @@
   "messages": {
     "title": "Viestit",
     "placeholder": "Kirjoita viesti…",
+    "send": "Lähetä viesti",
     "quick": {
       "onMyWay": "Olen matkalla!",
       "almostThere": "Melkein perillä!",

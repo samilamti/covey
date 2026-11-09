@@ -121,6 +121,7 @@
   "messages": {
     "title": "الرسائل",
     "placeholder": "اكتب رسالة…",
+    "send": "إرسال رسالة",
     "quick": {
       "onMyWay": "أنا في الطريق!",
       "almostThere": "على وشك الوصول!",

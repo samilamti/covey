@@ -121,6 +121,7 @@
   "messages": {
     "title": "Skilaboð",
     "placeholder": "Skrifaðu skilaboð…",
+    "send": "Senda skilaboð",
     "quick": {
       "onMyWay": "Ég er á leiðinni!",
       "almostThere": "Næstum kominn!",

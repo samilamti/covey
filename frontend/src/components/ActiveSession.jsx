@@ -488,21 +488,28 @@ export function ActiveSession({ request, currentUserId, onClose }) {
 
             {/* Text input */}
             <div class="px-3 py-2 border-t border-gray-200 flex gap-2 flex-shrink-0">
+              {/* aria-label mirrors the placeholder — a placeholder is not an
+                  accessible name (it disappears when the user types, and some
+                  screen readers skip it entirely), so without this the chat
+                  input announces as "edit text, blank". */}
               <input
                 type="text"
                 value={messageText}
                 onInput={(e) => setMessageText(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') sendMessage(messageText) }}
                 placeholder={t('messages.placeholder')}
+                aria-label={t('messages.placeholder')}
                 maxLength={200}
                 class="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm"
               />
+              {/* Icon-only send button needs a name — WCAG 4.1.2. */}
               <button
                 onClick={() => sendMessage(messageText)}
                 disabled={!messageText.trim()}
+                aria-label={t('messages.send')}
                 class="bg-indigo-600 text-white rounded-lg px-3 py-2 disabled:opacity-50"
               >
-                <Send size={16} />
+                <Send size={16} aria-hidden="true" />
               </button>
             </div>
           </div>
