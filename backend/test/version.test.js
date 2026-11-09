@@ -12,15 +12,17 @@ describe('versionHandler', () => {
     else process.env.GIT_SHA = originalSha
   })
 
-  it('returns the build info shape with version, commit, node, uptime_s', () => {
+  it('returns the build info shape with version, commit, uptime_s', () => {
     const req = mockReq({ method: 'GET', path: '/api/version' })
     const res = mockRes()
     versionHandler()(req, res)
     assert.equal(res.statusCode, 200)
     assert.ok(res.body, 'response body present')
     assert.match(res.body.version, /^\d+\.\d+\.\d+/)
-    assert.match(res.body.node, /^v\d+\.\d+\.\d+/)
     assert.equal(res.body.commit, null)
+    // The exact Node version stays in the startup log only: on a public
+    // endpoint it tells a scanner which Node CVEs to try.
+    assert.equal('node' in res.body, false)
     // uptime_s is a whole non-negative integer when read from the real process.
     assert.equal(typeof res.body.uptime_s, 'number')
     assert.ok(Number.isInteger(res.body.uptime_s))
