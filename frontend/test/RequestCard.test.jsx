@@ -50,6 +50,29 @@ describe('RequestCard', () => {
     consoleErrorSpy.mockRestore()
   })
 
+  it('hides the type emoji from assistive tech', () => {
+    // The emoji is decorative — the localized type label right beside it is
+    // the real name. Without aria-hidden a screen reader announces the
+    // Unicode name and the label, which is both redundant and confusing
+    // in non-English locales whose voice is tuned to another language.
+    const { container } = render(
+      <RequestCard request={makeRequest({ type: 'walk' })} currentUserId="user-b" />
+    )
+    const emoji = container.querySelector('span[aria-hidden="true"]')
+    expect(emoji, 'expected a decorative span').toBeTruthy()
+    expect(emoji.textContent).toBe('🚶')
+  })
+
+  it('hides the fallback question-mark emoji from assistive tech', () => {
+    // An unknown type must not announce "red question mark" through the
+    // screen reader — the status label still conveys state.
+    const { container } = render(
+      <RequestCard request={makeRequest({ type: 'unknown' })} currentUserId="user-b" />
+    )
+    const emoji = container.querySelector('span[aria-hidden="true"]')
+    expect(emoji?.textContent).toBe('❓')
+  })
+
   it('renders walk request type', () => {
     const { getByText } = render(
       <RequestCard request={makeRequest()} currentUserId="user-b" />
