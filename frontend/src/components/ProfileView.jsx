@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useEffect, useId, useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { ShieldCheck, Shield, Download, Trash2, Save, Award, LogOut } from 'lucide-preact'
 import { profileService } from '../services/profile'
@@ -12,6 +12,9 @@ export function ProfileView({ user, onLogout }) {
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState(null)
   const [profile, setProfile] = useState(null)
+  // The display-name label sits next to the input, not around it, so without
+  // an explicit htmlFor/id pair assistive tech reads the input as unnamed.
+  const displayNameId = useId()
 
   useEffect(() => {
     profileService.get()
@@ -107,11 +110,12 @@ export function ProfileView({ user, onLogout }) {
 
       {/* Display name */}
       <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
-        <label class="block text-sm font-medium text-gray-700 mb-1">
+        <label for={displayNameId} class="block text-sm font-medium text-gray-700 mb-1">
           {t('profile.displayName')}
         </label>
         <div class="flex gap-2">
           <input
+            id={displayNameId}
             type="text"
             value={displayName}
             onInput={(e) => setDisplayName(e.target.value)}
@@ -127,8 +131,13 @@ export function ProfileView({ user, onLogout }) {
             {t('profile.save')}
           </button>
         </div>
+        {/* Role split matches the LocationBanner precedent: a failed save is
+            interruptive (user just tried to act), success is a confirmation
+            that shouldn't talk over anything. */}
         {message && (
           <div
+            role={message.type === 'success' ? 'status' : 'alert'}
+            aria-live={message.type === 'success' ? 'polite' : 'assertive'}
             class={`mt-3 p-3 rounded-lg text-sm ${
               message.type === 'success'
                 ? 'bg-green-50 text-green-700'

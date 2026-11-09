@@ -87,6 +87,16 @@ describe('ProfileView', () => {
     expect(input.value).toBe('TestUser')
   })
 
+  it('ties the display name label to the input', () => {
+    // A <label> sitting next to an <input> only provides an accessible name
+    // when `for=id` links them together. Without this, screen readers
+    // announce an unnamed edit field on the profile screen.
+    const { getByLabelText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    const input = getByLabelText('profile.displayName')
+    expect(input.tagName).toBe('INPUT')
+    expect(input.value).toBe('TestUser')
+  })
+
   it('renders GDPR export button', () => {
     const { getByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
     expect(getByText('profile.gdprExport')).toBeTruthy()
