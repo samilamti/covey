@@ -1,4 +1,4 @@
-import { useId, useState } from 'preact/hooks'
+import { useEffect, useId, useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Flag, Ban } from 'lucide-preact'
 import { safetyService } from '../services/safety'
@@ -61,6 +61,22 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
       setBusy(false)
     }
   }
+
+  // Escape closes the report dialog — WCAG 2.1.1 Keyboard + the ARIA dialog
+  // pattern. Without this, a keyboard-only user has to Tab to Cancel to dismiss
+  // the modal, while every sighted user expects Esc to work. Only active while
+  // the dialog is open so we don't swallow Esc for anything else.
+  useEffect(() => {
+    if (!showReport) return
+    const onKey = (e) => {
+      if (e.key === 'Escape' && !busy) {
+        e.stopPropagation()
+        setShowReport(false)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [showReport, busy])
 
   const handleReport = async () => {
     if (!reason) return

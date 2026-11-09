@@ -130,6 +130,36 @@ describe('SafetyActions', () => {
     expect(fieldset?.getAttribute('aria-labelledby')).toBe(introId)
   })
 
+  it('closes the report dialog on Escape', () => {
+    // A modal dialog with role="dialog" + aria-modal="true" must be dismissable
+    // from the keyboard (WCAG 2.1.1 + the ARIA dialog pattern). Without this
+    // escape hatch, a keyboard-only user has to Tab to Cancel to leave.
+    const { getByText, queryByRole } = render(<SafetyActions userId="u2" />)
+    fireEvent.click(getByText('safety.report'))
+    expect(queryByRole('dialog')).toBeTruthy()
+
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(queryByRole('dialog')).toBeNull()
+  })
+
+  it('only listens for Escape while the report dialog is open', () => {
+    // The handler must be scoped to the open dialog, or Escape would be
+    // swallowed for anything else on the page — the SafetyActions sitting
+    // on a profile row would eat Esc meant for an open outer dialog.
+    const { getByText, queryByRole } = render(<SafetyActions userId="u2" />)
+    // No dialog open yet — Escape should be a no-op.
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(queryByRole('dialog')).toBeNull()
+
+    fireEvent.click(getByText('safety.report'))
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(queryByRole('dialog')).toBeNull()
+
+    // Re-opening still works after a dismissal.
+    fireEvent.click(getByText('safety.report'))
+    expect(queryByRole('dialog')).toBeTruthy()
+  })
+
   it('gives each mounted SafetyActions its own dialog ids', () => {
     // Two instances can be on screen at once (live session + partner list);
     // hardcoded ids would duplicate and break the label associations.
