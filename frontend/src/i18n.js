@@ -67,10 +67,36 @@ i18n
     },
   })
 
-// Handle RTL for Arabic and set document lang attribute
+/**
+ * Languages whose base tag writes right-to-left. A Set so new RTL scripts
+ * (Hebrew, Farsi, Urdu, …) can be added without touching the handler. We
+ * match on the BASE subtag (lowercase, pre-hyphen) so any region variant
+ * — `ar`, `ar-SA`, `AR-eg` — resolves the same way; before this normalisation
+ * a stored `ar-SA` quietly rendered LTR.
+ */
+const RTL_LANGUAGES = new Set(['ar'])
+
+/**
+ * Compute the `lang` and `dir` attributes the document should carry for a
+ * given i18next language code. Exported for unit tests.
+ */
+export function resolveDocumentLanguage(lng) {
+  const code = typeof lng === 'string' ? lng : ''
+  const base = code.toLowerCase().split('-')[0]
+  return {
+    lang: code,
+    dir: RTL_LANGUAGES.has(base) ? 'rtl' : 'ltr',
+  }
+}
+
+// Mirror the active language onto the document so assistive tech and the
+// CSS cascade (direction-dependent spacing, logical properties) follow along.
 i18n.on('languageChanged', (lng) => {
-  document.documentElement.lang = lng
-  document.dir = lng === 'ar' ? 'rtl' : 'ltr'
+  const { lang, dir } = resolveDocumentLanguage(lng)
+  if (typeof document !== 'undefined') {
+    document.documentElement.lang = lang
+    document.dir = dir
+  }
 })
 
 export default i18n

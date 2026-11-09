@@ -132,3 +132,60 @@ describe('i18n configuration', () => {
     }
   })
 })
+
+describe('resolveDocumentLanguage()', () => {
+  it('marks Arabic as RTL', async () => {
+    const { resolveDocumentLanguage } = await import('../src/i18n.js')
+    expect(resolveDocumentLanguage('ar')).toEqual({ lang: 'ar', dir: 'rtl' })
+  })
+
+  it('marks every Arabic region subtag as RTL', async () => {
+    const { resolveDocumentLanguage } = await import('../src/i18n.js')
+    // The old handler compared `lng === 'ar'` and silently rendered
+    // ar-SA / ar-EG / AR-eg as LTR — this is the regression test for it.
+    for (const tag of ['ar-SA', 'ar-EG', 'AR-eg', 'ar-Latn-XA']) {
+      expect(resolveDocumentLanguage(tag).dir).toBe('rtl')
+    }
+  })
+
+  it('leaves non-RTL locales as LTR', async () => {
+    const { resolveDocumentLanguage } = await import('../src/i18n.js')
+    for (const tag of ['sv', 'en', 'en-US', 'fi', 'kl', 'se', 'uk']) {
+      expect(resolveDocumentLanguage(tag).dir).toBe('ltr')
+    }
+  })
+
+  it('preserves the full language tag on `lang`', async () => {
+    // Full BCP 47 tags on the document carry locale precision for assistive
+    // tech; we deliberately pass them through rather than truncate to base.
+    const { resolveDocumentLanguage } = await import('../src/i18n.js')
+    expect(resolveDocumentLanguage('en-US').lang).toBe('en-US')
+    expect(resolveDocumentLanguage('ar-SA').lang).toBe('ar-SA')
+  })
+
+  it('falls back to LTR and an empty lang for a non-string input', async () => {
+    const { resolveDocumentLanguage } = await import('../src/i18n.js')
+    expect(resolveDocumentLanguage(undefined)).toEqual({ lang: '', dir: 'ltr' })
+    expect(resolveDocumentLanguage(null)).toEqual({ lang: '', dir: 'ltr' })
+  })
+})
+
+describe('languageChanged → document attributes', () => {
+  it('syncs document.documentElement.lang and document.dir when the language changes', async () => {
+    const i18n = (await import('../src/i18n.js')).default
+    await i18n.changeLanguage('ar')
+    expect(document.documentElement.lang).toBe('ar')
+    expect(document.dir).toBe('rtl')
+    await i18n.changeLanguage('sv')
+    expect(document.documentElement.lang).toBe('sv')
+    expect(document.dir).toBe('ltr')
+  })
+
+  it('switches an Arabic region subtag into RTL too', async () => {
+    const i18n = (await import('../src/i18n.js')).default
+    await i18n.changeLanguage('ar-SA')
+    expect(document.dir).toBe('rtl')
+    // Reset so later tests in the same jsdom window start from a neutral state.
+    await i18n.changeLanguage('sv')
+  })
+})
