@@ -166,7 +166,10 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
   return (
     <div>
       {error && (
-        <div class="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
+        <div
+          role="alert"
+          class="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm"
+        >
           {error}
         </div>
       )}

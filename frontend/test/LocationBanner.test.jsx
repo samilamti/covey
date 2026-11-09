@@ -69,4 +69,18 @@ describe('LocationBanner', () => {
     const { queryByText } = render(<LocationBanner error="denied" />)
     expect(queryByText('location.retry')).toBeNull()
   })
+
+  it('announces safety-critical ("warning") banners with role="alert"', () => {
+    // `warning` is only used in ActiveSession, where losing location is a
+    // safety concern. Screen readers must interrupt to say so.
+    const { container } = render(<LocationBanner error="denied" severity="warning" />)
+    expect(container.firstChild.getAttribute('role')).toBe('alert')
+  })
+
+  it('uses role="status" for the informational variant', () => {
+    // Pre-session the user may not yet have granted location, so polite
+    // announcement is right — no interruption.
+    const { container } = render(<LocationBanner error="denied" />)
+    expect(container.firstChild.getAttribute('role')).toBe('status')
+  })
 })

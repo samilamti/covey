@@ -28,8 +28,17 @@ export function LocationBanner({ error, onRetry, severity = 'info' }) {
     ? 'text-red-700 hover:bg-red-100'
     : 'text-blue-700 hover:bg-blue-100'
 
+  // `role="alert"` for the safety-critical warning (requester can't share
+  // their live location to a helper) gets screen-reader-announced immediately;
+  // `role="status"` is the polite variant for the informational case so a
+  // pre-session "we can't centre the map on you" banner doesn't interrupt.
+  const role = severity === 'warning' ? 'alert' : 'status'
+
   return (
-    <div class={`flex items-center gap-2 rounded-lg border p-3 mb-3 text-sm ${colors}`}>
+    <div
+      role={role}
+      class={`flex items-center gap-2 rounded-lg border p-3 mb-3 text-sm ${colors}`}
+    >
       <MapPin size={16} class="flex-shrink-0" />
       <span class="flex-1">{message}</span>
       {onRetry && (
