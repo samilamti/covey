@@ -48,8 +48,10 @@ describe('BankIDLogin (Secure Start)', () => {
     fireEvent.click(getByText('landing.loginButton'))
 
     await waitFor(() => {
-      // client-side QR image
-      const img = container.querySelector('img[alt="BankID QR"]')
+      // client-side QR image — alt is empty so a screen reader doesn't read
+      // the untranslated "BankID QR" on every tick; the scan paragraph
+      // immediately below it carries the meaning in the user's language.
+      const img = container.querySelector('img[alt=""]')
       expect(img).toBeTruthy()
       expect(img.getAttribute('src').startsWith('data:image/gif')).toBe(true)
       // scan instruction
@@ -74,6 +76,24 @@ describe('BankIDLogin (Secure Start)', () => {
     fireEvent.click(getByText('landing.loginButton'))
 
     await waitFor(() => expect(onLogin).toHaveBeenCalledWith(user, 'jwt-token'))
+  })
+
+  it('announces the pending BankID instruction as a live region', async () => {
+    // The hint text flips from "Open BankID app" to "Enter your security
+    // code" the moment the user actually opens BankID. Without a live
+    // region a screen reader never speaks that transition, so an assistive
+    // user has no idea the device is now waiting on them.
+    authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
+    authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
+
+    const { container, getByText } = render(<BankIDLogin onLogin={vi.fn()} pollMs={30} qrMs={30} />)
+    fireEvent.click(getByText('landing.loginButton'))
+
+    await waitFor(() => {
+      const live = container.querySelector('[role="status"][aria-live="polite"]')
+      expect(live, 'expected the pending instruction to live inside a polite status region').toBeTruthy()
+      expect(live.textContent).toContain('landing.bankidPending')
+    })
   })
 
   it('shows a cancel message when the order fails with userCancel', async () => {

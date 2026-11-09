@@ -125,10 +125,14 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
   if (status === 'pending') {
     return (
       <div class="flex flex-col items-center">
+        {/* The paragraph below names the QR in the user's language, and a
+            screen-reader user cannot point a camera at it anyway — the
+            autostart link below is the inclusive path. Empty alt marks it
+            decorative so the content isn't duplicated on each tick. */}
         {qrDataUrl ? (
           <img
             src={qrDataUrl}
-            alt="BankID QR"
+            alt=""
             width="200"
             height="200"
             class="rounded-lg border border-gray-200 mb-3"
@@ -151,8 +155,16 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
           </a>
         )}
 
-        <div class="text-blue-700 text-sm flex items-center gap-2 mb-3">
-          <Loader2 size={16} class="animate-spin" />
+        {/* The pending text flips from "Open BankID app" to "Enter your
+            security code" when the user actually opens BankID — assistive
+            tech needs to hear that transition. Polite so it doesn't
+            interrupt whatever the user was reading on the page. */}
+        <div
+          role="status"
+          aria-live="polite"
+          class="text-blue-700 text-sm flex items-center gap-2 mb-3"
+        >
+          <Loader2 size={16} class="animate-spin" aria-hidden="true" />
           {pendingText}
         </div>
 
