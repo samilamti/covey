@@ -27,6 +27,8 @@ The active provider is determined by two settings:
 
 This dual-gate design means you can set `AUTH_PROVIDER=bankid` in your env but still safely test against the stub by keeping the feature flag off.
 
+Production is the exception: with `NODE_ENV=production`, `AUTH_PROVIDER=bankid` and the flag off refuses to boot (`backend/src/env-check.js`), because a silent fallback to the stub would let any typed personnummer sign in. A production that is meant to run the stub sets `AUTH_PROVIDER=stub`, as covey.se does until real BankID is live.
+
 ## Provider Interface
 
 Both providers implement:
