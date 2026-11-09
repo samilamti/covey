@@ -99,6 +99,56 @@ describe('SafetyActions', () => {
     await waitFor(() => expect(getByText('safety.block')).toBeTruthy())
     expect(safetyService.unblock).toHaveBeenCalledWith('u2')
   })
+
+  it('labels the report dialog and its radio group for screen readers', () => {
+    // A dialog with role="dialog" + aria-modal="true" needs an accessible
+    // name, or screen readers announce it as an unnamed dialog on open.
+    // Similarly, the fieldset of reasons needs a group label so the radios
+    // are announced with context ("Reason: harassment, 1 of 5") rather than
+    // in isolation.
+    const { getByText, getByRole } = render(<SafetyActions userId="u2" name="Kim" />)
+    fireEvent.click(getByText('safety.report'))
+
+    const dialog = getByRole('dialog')
+    const titleId = dialog.getAttribute('aria-labelledby')
+    const introId = dialog.getAttribute('aria-describedby')
+    expect(titleId).toBeTruthy()
+    expect(introId).toBeTruthy()
+    expect(titleId).not.toBe(introId)
+
+    // The referenced elements must exist and carry the expected content.
+    // getElementById handles ids containing characters CSS selectors treat
+    // specially (useId returns ids like ":r0:"), which querySelector would
+    // need escaped.
+    const titleEl = document.getElementById(titleId)
+    const introEl = document.getElementById(introId)
+    expect(titleEl?.textContent).toBe('safety.reportTitle')
+    expect(introEl?.textContent).toBe('safety.reportIntro')
+
+    // The fieldset points at the intro paragraph, which names the question.
+    const fieldset = dialog.querySelector('fieldset')
+    expect(fieldset?.getAttribute('aria-labelledby')).toBe(introId)
+  })
+
+  it('gives each mounted SafetyActions its own dialog ids', () => {
+    // Two instances can be on screen at once (live session + partner list);
+    // hardcoded ids would duplicate and break the label associations.
+    const { getAllByText, getAllByRole } = render(
+      <div>
+        <SafetyActions userId="u2" name="Kim" />
+        <SafetyActions userId="u3" name="Sam" />
+      </div>
+    )
+    const reportButtons = getAllByText('safety.report')
+    fireEvent.click(reportButtons[0])
+    fireEvent.click(reportButtons[1])
+
+    const dialogs = getAllByRole('dialog')
+    expect(dialogs).toHaveLength(2)
+    expect(dialogs[0].getAttribute('aria-labelledby')).not.toBe(
+      dialogs[1].getAttribute('aria-labelledby')
+    )
+  })
 })
 
 describe('SafetyPartners', () => {

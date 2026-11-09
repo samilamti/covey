@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useId, useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Flag, Ban } from 'lucide-preact'
 import { safetyService } from '../services/safety'
@@ -21,6 +21,11 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
   const [alsoBlock, setAlsoBlock] = useState(false)
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState(null)
+  // Stable, per-instance ids for aria-labelledby/aria-describedby. Two
+  // SafetyActions can be on screen at once (session view + profile list), so
+  // a hardcoded id would duplicate and break screen-reader name resolution.
+  const titleId = useId()
+  const introId = useId()
 
   const who = name || t('safety.someone')
 
@@ -122,12 +127,21 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
       )}
 
       {showReport && (
-        <div class="fixed inset-0 bg-black/40 z-[1200] flex items-end sm:items-center justify-center" role="dialog" aria-modal="true">
+        <div
+          class="fixed inset-0 bg-black/40 z-[1200] flex items-end sm:items-center justify-center"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          aria-describedby={introId}
+        >
           <div class="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-4 space-y-3 safe-area-bottom max-h-[90vh] overflow-y-auto">
-            <h3 class="font-semibold text-lg">{t('safety.reportTitle', { name: who })}</h3>
-            <p class="text-sm text-gray-600">{t('safety.reportIntro')}</p>
+            <h3 id={titleId} class="font-semibold text-lg">{t('safety.reportTitle', { name: who })}</h3>
+            <p id={introId} class="text-sm text-gray-600">{t('safety.reportIntro')}</p>
 
-            <fieldset class="space-y-2">
+            {/* aria-labelledby on the fieldset gives the radio group a name
+                so a screen reader announces "What happened? radio button 1
+                of 5 …" rather than an unlabelled group. */}
+            <fieldset class="space-y-2" aria-labelledby={introId}>
               {REPORT_REASONS.map((r) => (
                 <label key={r} class="flex items-center gap-2 text-sm">
                   <input
