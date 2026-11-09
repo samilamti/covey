@@ -12,7 +12,8 @@
     "learnMore": "اقرأ المزيد عن Covey",
     "partnersLink": "شركاء الأمان",
     "bankidScan": "امسح رمز QR باستخدام تطبيق BankID",
-    "bankidOpenHere": "افتح BankID على هذا الجهاز"
+    "bankidOpenHere": "افتح BankID على هذا الجهاز",
+    "ninLabel": "رقم الهوية"
   },
   "language": {
     "select": "اختر اللغة",

@@ -50,9 +50,12 @@ describe('LandingPage', () => {
     expect(getByText('landing.title')).toBeTruthy()
   })
 
-  it('renders the NIN input field', () => {
+  it('renders the NIN input field with a translated aria-label', () => {
+    // aria-label was previously hardcoded in Swedish — screen readers for
+    // non-Swedish users had no idea what the input was for. It now goes
+    // through t('landing.ninLabel'), which is keyed in all 12 locales.
     const { container } = render(<LandingPage onLogin={vi.fn()} />)
-    const input = container.querySelector('input[aria-label="Personnummer"]')
+    const input = container.querySelector('input[aria-label="landing.ninLabel"]')
     expect(input).toBeTruthy()
   })
 

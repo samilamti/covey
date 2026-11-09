@@ -12,7 +12,8 @@
     "learnMore": "Läs mer om Covey",
     "partnersLink": "Trygghetspartners",
     "bankidScan": "Skanna QR-koden med BankID-appen",
-    "bankidOpenHere": "Öppna BankID på den här enheten"
+    "bankidOpenHere": "Öppna BankID på den här enheten",
+    "ninLabel": "Personnummer"
   },
   "language": {
     "select": "Välj språk",

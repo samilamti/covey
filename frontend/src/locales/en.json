@@ -12,7 +12,8 @@
     "learnMore": "Learn more about Covey",
     "partnersLink": "Safety partners",
     "bankidScan": "Scan the QR code with the BankID app",
-    "bankidOpenHere": "Open BankID on this device"
+    "bankidOpenHere": "Open BankID on this device",
+    "ninLabel": "Personal identity number"
   },
   "language": {
     "select": "Select language",

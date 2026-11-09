@@ -12,7 +12,8 @@
     "learnMore": "Lestu meira um Covey",
     "partnersLink": "Öryggisaðilar",
     "bankidScan": "Skannaðu QR-kóðann með BankID-appinu",
-    "bankidOpenHere": "Opna BankID á þessu tæki"
+    "bankidOpenHere": "Opna BankID á þessu tæki",
+    "ninLabel": "Kennitala"
   },
   "language": {
     "select": "Veldu tungumál",

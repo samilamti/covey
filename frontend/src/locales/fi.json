@@ -12,7 +12,8 @@
     "learnMore": "Lue lisää Coveysta",
     "partnersLink": "Turvallisuuskumppanit",
     "bankidScan": "Skannaa QR-koodi BankID-sovelluksella",
-    "bankidOpenHere": "Avaa BankID tällä laitteella"
+    "bankidOpenHere": "Avaa BankID tällä laitteella",
+    "ninLabel": "Henkilötunnus"
   },
   "language": {
     "select": "Valitse kieli",

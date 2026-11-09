@@ -218,7 +218,7 @@ export function LandingPage({ onLogin }) {
                 onBlur={() => setInputFocused(false)}
                 placeholder="ÅÅÅÅMMDDXXXX"
                 class={`w-full mb-4 px-4 py-3 border rounded-lg text-center text-lg tracking-widest focus:outline-none transition-shadow duration-300 ${inputFocused ? 'border-amber-400 ring-4 ring-amber-300' : 'border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'}`}
-                aria-label="Personnummer"
+                aria-label={t('landing.ninLabel')}
               />
 
               <button
