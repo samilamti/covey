@@ -82,7 +82,13 @@ export function LanguageSelector() {
                   <span class="mr-3 inline-flex items-center" style={{ minWidth: '1.5rem' }}>
                     <FlagComponent size={20} />
                   </span>
-                  {lng.label}
+                  {/* Each label is written in its own language, so mark it as
+                      such — WCAG 3.1.2 Language of Parts. A screen reader
+                      otherwise reads "العربية" and "Українська" with the
+                      current UI language's phonetics. All our codes (sv, nb,
+                      da, fi, ar, is, pl, fo, kl, se, uk, en) are valid BCP 47
+                      primary language subtags. */}
+                  <span lang={lng.code}>{lng.label}</span>
                 </button>
               )
             })}

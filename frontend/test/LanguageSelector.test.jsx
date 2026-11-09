@@ -62,4 +62,32 @@ describe('LanguageSelector', () => {
     const svgs = container.querySelectorAll('svg[aria-label="Sami flag"]')
     expect(svgs.length).toBe(1)
   })
+
+  it('marks every native language label with its own lang attribute', async () => {
+    // WCAG 3.1.2 — without lang="ar", a screen reader pronounces "العربية"
+    // with the current UI language's voice, which produces garbage.
+    const { getByRole, container } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+
+    const expected = [
+      ['sv', 'Svenska'],
+      ['nb', 'Norsk'],
+      ['da', 'Dansk'],
+      ['fi', 'Suomi'],
+      ['ar', 'العربية'],
+      ['is', 'Íslenska'],
+      ['pl', 'Polski'],
+      ['fo', 'Føroyskt'],
+      ['kl', 'Kalaallisut'],
+      ['se', 'Davvisámegiella'],
+      ['uk', 'Українська'],
+      ['en', 'English'],
+    ]
+
+    for (const [code, label] of expected) {
+      const span = container.querySelector(`span[lang="${code}"]`)
+      expect(span, `expected a span with lang="${code}"`).toBeTruthy()
+      expect(span.textContent).toBe(label)
+    }
+  })
 })
