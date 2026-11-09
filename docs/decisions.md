@@ -80,6 +80,8 @@ This document records key decisions made during the project's development, with 
 
 **Rationale**: These languages represent the major immigrant and minority language groups in Sweden, plus the Nordic neighbors. Colloquial tone makes the safety platform feel approachable and human, not bureaucratic. The priority order reflects the user base demographics.
 
+**Update**: Ukrainian (`uk`) was later added for Sweden's large post-2022 Ukrainian population, bringing the total to 12. The priority order for new additions follows user-base demographics on the same principle.
+
 ## Custom Sami flag SVG
 
 **Decision**: Render the Northern Sami (Davvisamegiella) flag as a custom inline SVG component instead of using a Unicode emoji.
