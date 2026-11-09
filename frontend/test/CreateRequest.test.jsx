@@ -97,6 +97,34 @@ describe('CreateRequest', () => {
     expect(getByText('requests.tiers.anyMember')).toBeTruthy()
   })
 
+  it('wires the message textarea to its own label', () => {
+    // A <label> sitting next to a <textarea> is only an accessible name
+    // when `for=id` ties them together — a sibling label is ignored. Without
+    // this, screen readers announce an unnamed textarea, so the user has
+    // no idea what to type.
+    const { getByLabelText } = render(<CreateRequest />)
+    // The matched node is the textarea, not the label — if the association
+    // is missing the query throws and the test fails.
+    const textarea = getByLabelText(/requests\.message/)
+    expect(textarea.tagName).toBe('TEXTAREA')
+  })
+
+  it('gives each CreateRequest its own message id', () => {
+    // Two instances must not share an id — the first label would then name
+    // the second textarea and vice versa.
+    const { container } = render(
+      <div>
+        <CreateRequest />
+        <CreateRequest />
+      </div>
+    )
+    const textareas = container.querySelectorAll('textarea')
+    expect(textareas).toHaveLength(2)
+    expect(textareas[0].id).toBeTruthy()
+    expect(textareas[1].id).toBeTruthy()
+    expect(textareas[0].id).not.toBe(textareas[1].id)
+  })
+
   it('submitting calls requestService.create', async () => {
     const onCreated = vi.fn()
     const { getByText } = render(<CreateRequest onCreated={onCreated} />)

@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useId, useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Send, MapPin } from 'lucide-preact'
 import { requestService } from '../services/requests'
@@ -24,6 +24,11 @@ export function CreateRequest({ onCreated }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const { position, error: geoError, loading: geoLoading, retry: retryGeo } = useGeolocation()
+  // Stable per-instance id — the label sits next to the textarea, not around
+  // it, so without an explicit htmlFor/id pair a screen reader reads the
+  // textarea as unnamed. useId is safe with two CreateRequest instances on
+  // screen; a hardcoded id would duplicate.
+  const messageId = useId()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -106,10 +111,11 @@ export function CreateRequest({ onCreated }) {
 
         {/* Message */}
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
+          <label for={messageId} class="block text-sm font-medium text-gray-700 mb-1">
             {t('requests.message')} <span class="text-gray-400 font-normal">({t('requests.optional')})</span>
           </label>
           <textarea
+            id={messageId}
             value={message}
             onInput={(e) => setMessage(e.target.value)}
             placeholder={t('requests.messagePlaceholder')}
