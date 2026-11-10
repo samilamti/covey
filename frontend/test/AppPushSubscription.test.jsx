@@ -5,8 +5,14 @@ import { h } from 'preact'
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key) => key,
-    i18n: { language: 'sv', changeLanguage: vi.fn() },
+    i18n: { language: 'sv', changeLanguage: vi.fn(), on: vi.fn(), off: vi.fn() },
   }),
+}))
+
+// App keeps preferred_lang in step after sign-in (test/AppLanguageSync.test.jsx);
+// stub it here so these tests make no network call.
+vi.mock('../src/services/profile', () => ({
+  profileService: { update: vi.fn().mockResolvedValue({}) },
 }))
 
 vi.mock('../src/components/LandingPage', () => ({

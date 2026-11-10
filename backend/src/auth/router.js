@@ -167,6 +167,10 @@ authRouter.post('/collect', apiRateLimit, async (req, res) => {
             name: result.user.name,
             givenName: result.user.givenName,
             surname: result.user.surname,
+            // The language push notifications are sent in. The app compares it
+            // with the language on screen and saves the screen's one if they
+            // differ (frontend/src/language-sync.js).
+            preferredLang: dbUser.preferred_lang,
           },
           token,
         },
@@ -250,6 +254,7 @@ authRouter.post('/verify', authRateLimit, async (req, res) => {
         userId: payload.userId,
         name: payload.name,
         provider: payload.provider,
+        preferredLang: dbUser.preferred_lang,
       },
     })
   } catch {

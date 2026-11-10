@@ -8,6 +8,8 @@ import { socket } from './socket'
 import { authService } from './services/auth'
 import { subscribeToPush } from './services/notifications'
 import { registerNativePush } from './services/push'
+import { profileService } from './services/profile'
+import { createLanguageSync } from './language-sync'
 
 function trySubscribePush() {
   if (Capacitor.isNativePlatform()) {
@@ -57,7 +59,7 @@ function restoreDemoTheme() {
 }
 
 function AppContent() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [connected, setConnected] = useState(false)
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -95,6 +97,21 @@ function AppContent() {
       socket.off('disconnect')
     }
   }, [])
+
+  // Push notifications are written in the account's preferred_lang, so keep it
+  // in step with the language on screen for as long as someone is signed in:
+  // once at sign-in or session restore, then on every switch in the picker.
+  useEffect(() => {
+    if (!user) return
+    const sync = createLanguageSync({
+      stored: user.preferredLang,
+      save: (preferredLang) => profileService.update({ preferredLang }),
+    })
+    sync(i18n.language)
+    const onLanguageChanged = (lng) => { sync(lng) }
+    i18n.on('languageChanged', onLanguageChanged)
+    return () => i18n.off('languageChanged', onLanguageChanged)
+  }, [user])
 
   const handleLogin = (userData, token) => {
     localStorage.setItem('token', token)
