@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@capacitor/android": "^7.0.0",
-    "@capacitor/assets": "^3.0.5",
+    "@capacitor/assets": "^4.0.0",
     "@capacitor/cli": "^7.0.0",
     "@capacitor/ios": "^7.0.0",
     "@preact/preset-vite": "^2.9.0",
@@ -45,6 +45,10 @@
     "tailwindcss": "^3.4.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "vitest": "^3.1.1"
+    "vitest": "^5.1.0"
+  },
+  "//overrides": "@grpc/grpc-js: firebase's @firebase/firestore pins ~1.9.0 (vulnerable below 1.13.6) and no firestore release fixes it. Covey never imports firestore (only firebase/messaging, through @capacitor-firebase/messaging), so grpc-js never loads; this keeps npm audit meaningful. Drop it once firestore depends on a patched grpc-js.",
+  "overrides": {
+    "@grpc/grpc-js": "^1.14.7"
   }
 }
