@@ -13,7 +13,8 @@
     "partnersLink": "Safety partners",
     "bankidScan": "Scan the QR code with the BankID app",
     "bankidOpenHere": "Open BankID on this device",
-    "ninLabel": "Personal identity number"
+    "ninLabel": "Personal identity number",
+    "bankidQrLoading": "Loading BankID QR code"
   },
   "language": {
     "select": "Select language",

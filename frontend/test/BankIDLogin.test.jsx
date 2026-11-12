@@ -96,6 +96,31 @@ describe('BankIDLogin (Secure Start)', () => {
     })
   })
 
+  it('names the QR placeholder while BankID has not returned the first frame', async () => {
+    // Before the first qr() call resolves, the UI shows a plain spinner in a
+    // box. Without an accessible name a screen reader user on the login
+    // screen hears nothing and cannot tell the device is waiting. The box
+    // is marked role="status" with a translated aria-label so a polite
+    // live region speaks a real sentence.
+    authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
+    authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
+    // Hold the qr promise open so the placeholder stays on screen through
+    // the assertion.
+    let resolveQr
+    authService.qr.mockReturnValue(new Promise((resolve) => { resolveQr = resolve }))
+
+    const { container, getByText } = render(<BankIDLogin onLogin={vi.fn()} pollMs={30} qrMs={30} />)
+    fireEvent.click(getByText('landing.loginButton'))
+
+    await waitFor(() => {
+      const placeholder = container.querySelector('div[role="status"][aria-label="landing.bankidQrLoading"]')
+      expect(placeholder, 'expected a named status region around the QR spinner').toBeTruthy()
+    })
+    // Clean up — let the deferred qr settle before the component unmounts
+    // so the test doesn't trail an unhandled promise.
+    resolveQr({ qr: 'bankid.67df3917.0.abc123' })
+  })
+
   it('shows a cancel message when the order fails with userCancel', async () => {
     authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
     authService.collect.mockResolvedValue({ status: 'failed', hintCode: 'userCancel' })

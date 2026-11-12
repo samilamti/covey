@@ -13,7 +13,8 @@
     "partnersLink": "Trygdarpartnarar",
     "bankidScan": "Skanna QR-kotuna við BankID-appini",
     "bankidOpenHere": "Lat upp BankID á hesi eindini",
-    "ninLabel": "Persónnummar"
+    "ninLabel": "Persónnummar",
+    "bankidQrLoading": "Heldur BankID QR-kodu"
   },
   "language": {
     "select": "Vel mál",

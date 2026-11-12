@@ -13,7 +13,8 @@
     "partnersLink": "Turvallisuuskumppanit",
     "bankidScan": "Skannaa QR-koodi BankID-sovelluksella",
     "bankidOpenHere": "Avaa BankID tällä laitteella",
-    "ninLabel": "Henkilötunnus"
+    "ninLabel": "Henkilötunnus",
+    "bankidQrLoading": "Ladataan BankID-QR-koodia"
   },
   "language": {
     "select": "Valitse kieli",

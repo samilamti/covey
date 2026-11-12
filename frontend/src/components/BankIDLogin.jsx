@@ -138,8 +138,17 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
             class="rounded-lg border border-gray-200 mb-3"
           />
         ) : (
-          <div class="w-[200px] h-[200px] rounded-lg border border-gray-200 mb-3 flex items-center justify-center">
-            <Loader2 size={28} class="animate-spin text-gray-300" />
+          // The spinner that stands in for the QR before the first frame
+          // arrives had no name at all, so a keyboard/screen-reader user
+          // on the login screen was stuck guessing whether BankID was
+          // working. Name the placeholder as a loading status so a
+          // polite live region announces it.
+          <div
+            role="status"
+            aria-label={t('landing.bankidQrLoading')}
+            class="w-[200px] h-[200px] rounded-lg border border-gray-200 mb-3 flex items-center justify-center"
+          >
+            <Loader2 size={28} class="animate-spin text-gray-300" aria-hidden="true" />
           </div>
         )}
 

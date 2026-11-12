@@ -13,7 +13,8 @@
     "partnersLink": "Öryggisaðilar",
     "bankidScan": "Skannaðu QR-kóðann með BankID-appinu",
     "bankidOpenHere": "Opna BankID á þessu tæki",
-    "ninLabel": "Kennitala"
+    "ninLabel": "Kennitala",
+    "bankidQrLoading": "Hleð BankID QR-kóða"
   },
   "language": {
     "select": "Veldu tungumál",

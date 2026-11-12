@@ -13,7 +13,8 @@
     "partnersLink": "Peqatigiit",
     "bankidScan": "QR-koodi BankID-appimik skannaruk",
     "bankidOpenHere": "BankID mobilimi una ammaruk",
-    "ninLabel": "Personnummer"
+    "ninLabel": "Personnummer",
+    "bankidQrLoading": "BankID-ip QR-koodia aqqutigalugu"
   },
   "language": {
     "select": "Oqaatsit toqqaruk",

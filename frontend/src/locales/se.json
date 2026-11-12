@@ -13,7 +13,8 @@
     "partnersLink": "Guoimmit",
     "bankidScan": "Skánne QR-koda BankID-appain",
     "bankidOpenHere": "Raba BankID dán neavttas",
-    "ninLabel": "Personnummer"
+    "ninLabel": "Personnummer",
+    "bankidQrLoading": "Viežžá BankID QR-koda"
   },
   "language": {
     "select": "Vállje giela",

@@ -13,7 +13,8 @@
     "partnersLink": "Партнери безпеки",
     "bankidScan": "Відскануйте QR-код у застосунку BankID",
     "bankidOpenHere": "Відкрити BankID на цьому пристрої",
-    "ninLabel": "Персональний номер"
+    "ninLabel": "Персональний номер",
+    "bankidQrLoading": "Завантаження QR-коду BankID"
   },
   "language": {
     "select": "Оберіть мову",

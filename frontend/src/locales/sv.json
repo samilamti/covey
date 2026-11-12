@@ -13,7 +13,8 @@
     "partnersLink": "Trygghetspartners",
     "bankidScan": "Skanna QR-koden med BankID-appen",
     "bankidOpenHere": "Öppna BankID på den här enheten",
-    "ninLabel": "Personnummer"
+    "ninLabel": "Personnummer",
+    "bankidQrLoading": "Laddar BankID-QR-kod"
   },
   "language": {
     "select": "Välj språk",

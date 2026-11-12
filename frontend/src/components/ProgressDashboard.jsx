@@ -47,9 +47,18 @@ export function ProgressDashboard() {
   }
 
   if (loading) {
+    // Without role="status" + an accessible name, a screen reader user
+    // tabbing onto this tab hears nothing and cannot tell whether the
+    // page is working, broken, or empty. aria-live="polite" so the
+    // text fires once the spinner renders without interrupting.
     return (
-      <div class="flex justify-center py-12">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600" />
+      <div
+        class="flex justify-center py-12"
+        role="status"
+        aria-live="polite"
+        aria-label={t('app.loading')}
+      >
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600" aria-hidden="true" />
       </div>
     )
   }

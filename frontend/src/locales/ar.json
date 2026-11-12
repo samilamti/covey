@@ -13,7 +13,8 @@
     "partnersLink": "شركاء الأمان",
     "bankidScan": "امسح رمز QR باستخدام تطبيق BankID",
     "bankidOpenHere": "افتح BankID على هذا الجهاز",
-    "ninLabel": "رقم الهوية"
+    "ninLabel": "رقم الهوية",
+    "bankidQrLoading": "جارٍ تحميل رمز QR الخاص بـ BankID"
   },
   "language": {
     "select": "اختر اللغة",
