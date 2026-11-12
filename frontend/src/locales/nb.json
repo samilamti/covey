@@ -34,7 +34,8 @@
     "home": "Hjem",
     "requests": "Forespørsler",
     "profile": "Profil",
-    "progress": "Fremgang"
+    "progress": "Fremgang",
+    "primary": "Hovednavigasjon"
   },
   "app": {
     "loading": "Laster…",
@@ -131,7 +132,8 @@
       "stayThere": "Bli der du er",
       "whereAreYou": "Hvor er du?",
       "thanks": "Tusen takk!"
-    }
+    },
+    "unread": "{{count}} uleste meldinger"
   },
   "profile": {
     "title": "Min profil",

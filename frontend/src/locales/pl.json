@@ -34,7 +34,8 @@
     "home": "Start",
     "requests": "Prośby",
     "profile": "Profil",
-    "progress": "Postępy"
+    "progress": "Postępy",
+    "primary": "Nawigacja główna"
   },
   "app": {
     "loading": "Ładowanie…",
@@ -131,7 +132,8 @@
       "stayThere": "Zostań tam, gdzie jesteś",
       "whereAreYou": "Gdzie jesteś?",
       "thanks": "Dziękuję bardzo!"
-    }
+    },
+    "unread": "{{count}} nieprzeczytanych wiadomości"
   },
   "profile": {
     "title": "Mój profil",

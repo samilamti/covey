@@ -34,7 +34,8 @@
     "home": "Hem",
     "requests": "Förfrågningar",
     "profile": "Profil",
-    "progress": "Framsteg"
+    "progress": "Framsteg",
+    "primary": "Huvudnavigering"
   },
   "app": {
     "loading": "Laddar…",
@@ -131,7 +132,8 @@
       "stayThere": "Stanna där du är",
       "whereAreYou": "Var är du?",
       "thanks": "Tack så mycket!"
-    }
+    },
+    "unread": "{{count}} olästa meddelanden"
   },
   "profile": {
     "title": "Min profil",

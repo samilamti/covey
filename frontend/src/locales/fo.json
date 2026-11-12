@@ -34,7 +34,8 @@
     "home": "Heim",
     "requests": "Umbøðir",
     "profile": "Vangamynd",
-    "progress": "Framgongd"
+    "progress": "Framgongd",
+    "primary": "Høvuðsnavigatión"
   },
   "app": {
     "loading": "Lesur inn…",
@@ -131,7 +132,8 @@
       "stayThere": "Verð har tú ert",
       "whereAreYou": "Hvar ert tú?",
       "thanks": "Túsund takk!"
-    }
+    },
+    "unread": "{{count}} ólisin boð"
   },
   "profile": {
     "title": "Mítt vangamynd",

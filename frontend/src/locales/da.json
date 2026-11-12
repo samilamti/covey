@@ -34,7 +34,8 @@
     "home": "Hjem",
     "requests": "Anmodninger",
     "profile": "Profil",
-    "progress": "Fremskridt"
+    "progress": "Fremskridt",
+    "primary": "Hovednavigation"
   },
   "app": {
     "loading": "Indlæser…",
@@ -131,7 +132,8 @@
       "stayThere": "Bliv hvor du er",
       "whereAreYou": "Hvor er du?",
       "thanks": "Tusind tak!"
-    }
+    },
+    "unread": "{{count}} ulæste beskeder"
   },
   "profile": {
     "title": "Min profil",

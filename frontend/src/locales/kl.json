@@ -34,7 +34,8 @@
     "home": "Saqqaa",
     "requests": "Qinnuteqaatit",
     "profile": "Uanga pillut",
-    "progress": "Ingerlatsivik"
+    "progress": "Ingerlatsivik",
+    "primary": "Pingaarnersumik ingerlasiorneq"
   },
   "app": {
     "loading": "Ikkuarpoq…",
@@ -131,7 +132,8 @@
       "stayThere": "Sumiinnerpit inissiani",
       "whereAreYou": "Sumiippit?",
       "thanks": "Qujanaq!"
-    }
+    },
+    "unread": "{{count}} atuangasaanngitsut"
   },
   "profile": {
     "title": "Uanga pillut",

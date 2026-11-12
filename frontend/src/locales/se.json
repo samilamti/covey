@@ -34,7 +34,8 @@
     "home": "Ruoktu",
     "requests": "Bivddut",
     "profile": "Profila",
-    "progress": "Ovdáneapmi"
+    "progress": "Ovdáneapmi",
+    "primary": "Váldonavigašuvdna"
   },
   "app": {
     "loading": "Viežžamin…",
@@ -131,7 +132,8 @@
       "stayThere": "Báze doppe gos leat",
       "whereAreYou": "Gos leat?",
       "thanks": "Giitu!"
-    }
+    },
+    "unread": "{{count}} lohkakeahtes diedut"
   },
   "profile": {
     "title": "Mu profila",

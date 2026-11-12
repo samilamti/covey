@@ -34,7 +34,8 @@
     "home": "Koti",
     "requests": "Pyynnöt",
     "profile": "Profiili",
-    "progress": "Edistyminen"
+    "progress": "Edistyminen",
+    "primary": "Päänavigointi"
   },
   "app": {
     "loading": "Ladataan…",
@@ -131,7 +132,8 @@
       "stayThere": "Pysy paikallasi",
       "whereAreYou": "Missä olet?",
       "thanks": "Kiitos paljon!"
-    }
+    },
+    "unread": "{{count}} lukematonta viestiä"
   },
   "profile": {
     "title": "Profiilini",

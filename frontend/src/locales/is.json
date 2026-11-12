@@ -34,7 +34,8 @@
     "home": "Heim",
     "requests": "Beiðnir",
     "profile": "Prófíll",
-    "progress": "Framfarir"
+    "progress": "Framfarir",
+    "primary": "Aðalvalmynd"
   },
   "app": {
     "loading": "Hleður…",
@@ -131,7 +132,8 @@
       "stayThere": "Vertu þar sem þú ert",
       "whereAreYou": "Hvar ertu?",
       "thanks": "Takk fyrir!"
-    }
+    },
+    "unread": "{{count}} ólesin skilaboð"
   },
   "profile": {
     "title": "Prófíllinn minn",
