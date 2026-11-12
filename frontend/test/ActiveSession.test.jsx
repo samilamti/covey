@@ -300,6 +300,41 @@ describe('ActiveSession', () => {
     expect(getByText('requests.doneReject')).toBeTruthy()
   })
 
+  it('announces the other party\'s done proposal as a polite status', () => {
+    // The whole done-pending prompt appears from a socket event, so for
+    // a screen reader user on an active escort the state change would
+    // otherwise be silent. role="status" + aria-live="polite" so the
+    // proposal and its two buttons are announced on insertion.
+    const { getByText } = render(
+      <ActiveSession
+        request={makeRequest({ status: 'done_pending', done_initiated_by: 'user-b' })}
+        currentUserId="user-a"
+        onClose={vi.fn()}
+      />
+    )
+    const proposalText = getByText('requests.doneProposal')
+    const region = proposalText.closest('[role="status"]')
+    expect(region).not.toBeNull()
+    expect(region.getAttribute('aria-live')).toBe('polite')
+  })
+
+  it('announces session expiry as a polite status', () => {
+    // Expiry is server-driven; nothing tells a screen reader user that
+    // their session just timed out unless the appearing banner lives in
+    // a live region.
+    const { getByText } = render(
+      <ActiveSession
+        request={makeRequest({ status: 'expired' })}
+        currentUserId="user-a"
+        onClose={vi.fn()}
+      />
+    )
+    const expiredText = getByText('requests.expired')
+    const region = expiredText.closest('[role="status"]')
+    expect(region).not.toBeNull()
+    expect(region.getAttribute('aria-live')).toBe('polite')
+  })
+
   /* ── Socket listener registration ── */
 
   it('registers socket listeners for location updates on mount', () => {

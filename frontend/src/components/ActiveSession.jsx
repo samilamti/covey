@@ -570,7 +570,15 @@ export function ActiveSession({ request, currentUserId, onClose }) {
           )}
 
           {status === 'done_pending' && doneInitiatedBy && doneInitiatedBy !== currentUserId && (
-            <div class="space-y-2">
+            // The other party tapped "done" — a state change driven by a
+            // socket event, not by anything this user did. A sighted user
+            // sees the whole block replace the "done" button; a screen
+            // reader user would never be told unless they tab-explore, and
+            // in an active escort session they are walking, not tabbing.
+            // role="status" + aria-live="polite" so the prompt + the two
+            // choices are announced on insertion without interrupting.
+            // Mirrors the PostCreateMap confirmation pattern. WCAG 4.1.3.
+            <div class="space-y-2" role="status" aria-live="polite">
               <p class="text-sm text-gray-700 font-medium text-center">{t('requests.doneProposal')}</p>
               <div class="flex gap-2">
                 <button
@@ -591,7 +599,17 @@ export function ActiveSession({ request, currentUserId, onClose }) {
           )}
 
           {status === 'expired' && (
-            <div class="bg-gray-100 border border-gray-300 rounded-lg p-3 text-center">
+            // Expiry is server-driven: the request simply times out. For a
+            // sighted user the grey band says so; for a screen reader user
+            // nothing announces the transition, so they keep believing the
+            // session is live. role="status" announces the one line on
+            // insertion. Polite — expiry is a change of state, not a
+            // safety alarm.
+            <div
+              role="status"
+              aria-live="polite"
+              class="bg-gray-100 border border-gray-300 rounded-lg p-3 text-center"
+            >
               <p class="text-sm text-gray-600 font-medium">{t('requests.expired')}</p>
             </div>
           )}
