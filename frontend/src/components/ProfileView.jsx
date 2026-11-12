@@ -32,7 +32,12 @@ export function ProfileView({ user, onLogout }) {
     setMessage(null)
     try {
       await profileService.update({ displayName })
-      setMessage({ type: 'success', text: '✓' })
+      // The original success text was a bare "✓" glyph — visible to sighted
+      // users and silent for assistive tech, which reads it as a decorative
+      // check mark (or nothing at all, depending on the voice). A translated
+      // word is announced properly through the surrounding role="status"
+      // live region.
+      setMessage({ type: 'success', text: t('profile.saved') })
     } catch {
       setMessage({ type: 'error', text: t('app.error') })
     } finally {

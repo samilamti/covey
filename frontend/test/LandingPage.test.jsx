@@ -73,4 +73,24 @@ describe('LandingPage', () => {
     const { getByTestId } = render(<LandingPage onLogin={vi.fn()} />)
     expect(getByTestId('lang-selector')).toBeTruthy()
   })
+
+  it('wraps the stub BankID pending indicator in a polite live region', async () => {
+    // The pending text flips from "Open BankID" to "Enter your security
+    // code" as BankID moves through its hints, and a screen reader
+    // otherwise never hears the transition. Mirror BankIDLogin's
+    // production path: role="status" + aria-live="polite" so the text
+    // is announced without interrupting whatever the user is reading.
+    const { fireEvent, waitFor } = await import('@testing-library/preact')
+    const { authService } = await import('../src/services/auth')
+    // Hold the collect in "pending" so the branch under test stays on
+    // screen long enough to assert.
+    authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
+    const { getByText, findByRole } = render(<LandingPage onLogin={vi.fn()} />)
+    await fireEvent.click(getByText('landing.loginButton'))
+    const status = await findByRole('status')
+    await waitFor(() => {
+      expect(status.getAttribute('aria-live')).toBe('polite')
+      expect(status.textContent).toContain('landing.bankidPending')
+    })
+  })
 })

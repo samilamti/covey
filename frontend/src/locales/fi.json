@@ -148,7 +148,8 @@
     "gdprExportDesc": "Hae kaikki sinusta tallennetut tiedot (GDPR).",
     "anonymous": "Nimetön",
     "safetyScore": "Turvallisuuspisteet",
-    "guardian": "Pätevä seuralainen"
+    "guardian": "Pätevä seuralainen",
+    "saved": "Tallennettu"
   },
   "ratings": {
     "prompt": "Miltä tuntui? Kerro kokemuksestasi.",

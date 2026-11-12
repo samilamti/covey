@@ -200,8 +200,17 @@ export function LandingPage({ onLogin }) {
           )}
 
           {status === 'pending' ? (
-            <div class="bg-blue-50 text-blue-800 p-4 rounded-lg flex flex-col items-center animate-pulse">
-              <Loader2 size={32} class="animate-spin mb-2" />
+            // Mirror the production BankIDLogin's pending announcement: the
+            // text flips between "open BankID" and "enter your code" as the
+            // hint code moves, and a screen reader would otherwise never be
+            // told. role="status" + aria-live="polite" so the transition is
+            // spoken without interrupting the user. Loader is decorative.
+            <div
+              role="status"
+              aria-live="polite"
+              class="bg-blue-50 text-blue-800 p-4 rounded-lg flex flex-col items-center animate-pulse"
+            >
+              <Loader2 size={32} class="animate-spin mb-2" aria-hidden="true" />
               <p class="font-medium">{pendingText}</p>
             </div>
           ) : (

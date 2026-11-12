@@ -148,7 +148,8 @@
     "gdprExportDesc": "Fáðu öll gögn sem við höfum um þig (GDPR).",
     "anonymous": "Nafnlaus",
     "safetyScore": "Öryggisstig",
-    "guardian": "Hæfur fylgdarmaður"
+    "guardian": "Hæfur fylgdarmaður",
+    "saved": "Vistað"
   },
   "ratings": {
     "prompt": "Hvernig leist þér? Segðu okkur frá upplifun þinni.",

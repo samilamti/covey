@@ -148,7 +148,8 @@
     "gdprExportDesc": "Heinta øll dáta, vit hava um teg (GDPR).",
     "anonymous": "Ónnevndur",
     "safetyScore": "Tryggisstigutal",
-    "guardian": "Hóskaður fylgissveinur"
+    "guardian": "Hóskaður fylgissveinur",
+    "saved": "Goymt"
   },
   "ratings": {
     "prompt": "Hvussu kendi tað? Fortel okkum um tína roynlu.",

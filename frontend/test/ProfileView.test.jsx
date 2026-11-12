@@ -111,4 +111,15 @@ describe('ProfileView', () => {
     const { getByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
     expect(getByText('app.logout')).toBeTruthy()
   })
+
+  it('announces a translated save confirmation (not a bare ✓)', async () => {
+    // Earlier the success text was a bare "✓" glyph, which is silent to
+    // assistive tech — the user got no acknowledgement that their edit
+    // landed. After this, the surrounding role="status" live region
+    // announces a real translated word that each voice reads correctly.
+    const { fireEvent } = await import('@testing-library/preact')
+    const { getByText, findByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    await fireEvent.click(getByText('profile.save'))
+    expect(await findByText('profile.saved')).toBeTruthy()
+  })
 })

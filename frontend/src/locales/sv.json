@@ -148,7 +148,8 @@
     "gdprExportDesc": "Hämta all data vi har om dig (GDPR).",
     "anonymous": "Anonym",
     "safetyScore": "Trygghetspoäng",
-    "guardian": "Kvalificerad ledsagare"
+    "guardian": "Kvalificerad ledsagare",
+    "saved": "Sparat"
   },
   "ratings": {
     "prompt": "Hur kändes det? Berätta om din upplevelse.",

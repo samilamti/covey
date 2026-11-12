@@ -148,7 +148,8 @@
     "gdprExportDesc": "Get all data we have about you (GDPR).",
     "anonymous": "Anonymous",
     "safetyScore": "Safety score",
-    "guardian": "Qualified companion"
+    "guardian": "Qualified companion",
+    "saved": "Saved"
   },
   "ratings": {
     "prompt": "How did it feel? Tell us about your experience.",

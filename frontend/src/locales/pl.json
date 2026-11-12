@@ -148,7 +148,8 @@
     "gdprExportDesc": "Pobierz wszystkie dane, które o Tobie mamy (GDPR).",
     "anonymous": "Anonim",
     "safetyScore": "Punkty bezpieczeństwa",
-    "guardian": "Wykwalifikowany towarzysz"
+    "guardian": "Wykwalifikowany towarzysz",
+    "saved": "Zapisano"
   },
   "ratings": {
     "prompt": "Jak się czułeś? Opowiedz o swoim doświadczeniu.",

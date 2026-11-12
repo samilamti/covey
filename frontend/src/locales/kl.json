@@ -148,7 +148,8 @@
     "gdprExportDesc": "Illit pillutit dáta tamaat piguk (GDPR).",
     "anonymous": "Ateqanngitsoq",
     "safetyScore": "Naapertuutissaq",
-    "guardian": "Naleqquttoq ilagisaq"
+    "guardian": "Naleqquttoq ilagisaq",
+    "saved": "Toqqorneqarpoq"
   },
   "ratings": {
     "prompt": "Qanoq imiippit? Pilersaarusiorfiguk.",
