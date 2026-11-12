@@ -383,6 +383,28 @@ describe('ActiveSession', () => {
     expect(getByText('messages.title')).toBeTruthy()
   })
 
+  it('exposes the message toggle as a disclosure with aria-expanded and aria-controls', async () => {
+    // The message toggle opens and closes the chat panel; a screen
+    // reader needs aria-expanded to know the state and aria-controls to
+    // point at the panel the button toggles. Without them the button
+    // announces as a generic push with no hint that it reveals content.
+    Element.prototype.scrollIntoView = vi.fn()
+    const { getByText } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    const toggle = getByText('messages.title').closest('button')
+    expect(toggle).toBeTruthy()
+    // Closed by default.
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
+    const panelId = toggle.getAttribute('aria-controls')
+    expect(panelId).toBeTruthy()
+    // Opening it flips the state and reveals a panel with the referenced id.
+    await fireEvent.click(toggle)
+    expect(toggle.getAttribute('aria-expanded')).toBe('true')
+    const panel = document.getElementById(panelId)
+    expect(panel).not.toBeNull()
+  })
+
   it('announces new messages as a polite live region', async () => {
     // A blind user can see "Messages 3" but has no reason to re-read a
     // number that never speaks for itself, so an incoming reply used to

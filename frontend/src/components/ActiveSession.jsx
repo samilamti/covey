@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'preact/hooks'
+import { useState, useEffect, useId, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { CheckCircle, X, Clock, MessageCircle, Send } from 'lucide-preact'
 import 'leaflet/dist/leaflet.css'
@@ -36,6 +36,10 @@ export function ActiveSession({ request, currentUserId, onClose }) {
   const messagesEndRef = useRef(null)
   const [myName, setMyName] = useState(null)
   const [otherName, setOtherName] = useState(null)
+  // Stable id per instance so the message toggle can point at the panel
+  // it controls (ARIA Disclosure pattern). useId is safe if two
+  // ActiveSessions ever coexist; a hardcoded id would duplicate.
+  const messagesPanelId = useId()
 
   const isRequester = request.requester_id === currentUserId
   const isHelper = request.helper_id === currentUserId
@@ -452,10 +456,16 @@ export function ActiveSession({ request, currentUserId, onClose }) {
           </div>
         )}
 
-        {/* Message toggle */}
+        {/* Message toggle — the ARIA Disclosure pattern: aria-expanded
+            tells a screen reader whether the chat panel is open, and
+            aria-controls points at the panel the button toggles. Without
+            these the button announces as a generic push, giving no clue
+            that it reveals additional content or what that content is. */}
         {!isTerminal && (
           <button
             onClick={() => { setShowMessages(!showMessages); if (!showMessages) setUnreadCount(0) }}
+            aria-expanded={showMessages}
+            aria-controls={messagesPanelId}
             class="flex items-center gap-2 text-sm text-indigo-600 mb-3"
           >
             <MessageCircle size={16} aria-hidden="true" />
@@ -476,7 +486,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
 
         {/* Message panel */}
         {showMessages && !isTerminal && (
-          <div class="bg-gray-50 rounded-lg border border-gray-200 mb-3 flex flex-col" style="max-height:16rem">
+          <div id={messagesPanelId} class="bg-gray-50 rounded-lg border border-gray-200 mb-3 flex flex-col" style="max-height:16rem">
             {/* Message list. role="log" + aria-live="polite" announce each new
                 message the moment it arrives, without stealing focus. Without
                 this, an incoming message is only reflected in a number that a
