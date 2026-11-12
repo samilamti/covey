@@ -200,4 +200,37 @@ describe('SafetyPartners', () => {
     const { findByText } = render(<SafetyPartners />)
     expect(await findByText('safety.partnersEmpty')).toBeTruthy()
   })
+
+  it('exposes the partners as a named list with one item per person', async () => {
+    // A pile of <div>s is invisible to assistive tech as a collection — the
+    // screen reader cannot announce "3 items" and the user cannot jump
+    // between entries with the list shortcut. WCAG 1.3.1.
+    safetyService.getPartners.mockResolvedValueOnce({ partners: [
+      { user_id: 'u2', display_name: 'Kim', request_id: null, met_at: '2026-11-01T20:00:00Z', blocked: false },
+      { user_id: 'u3', display_name: 'Pat', request_id: null, met_at: '2026-10-30T20:00:00Z', blocked: true },
+    ] })
+    const { findByRole, getAllByRole } = render(<SafetyPartners />)
+    const list = await findByRole('list')
+    // Visible section heading must be the list's accessible name, so the
+    // list announces as "Safety partners, list" rather than unnamed.
+    const labelId = list.getAttribute('aria-labelledby')
+    expect(labelId).toBeTruthy()
+    const heading = list.ownerDocument.getElementById(labelId)
+    expect(heading).toBeTruthy()
+    expect(heading.textContent).toContain('safety.partnersTitle')
+    // One listitem per person, each containing the person's name.
+    const items = getAllByRole('listitem')
+    expect(items).toHaveLength(2)
+    expect(items[0].textContent).toContain('Kim')
+    expect(items[1].textContent).toContain('Pat')
+  })
+
+  it('does not render an empty list when there are no partners', async () => {
+    // An empty <ul> is announced as "list, 0 items" by some screen readers,
+    // which is noise next to the dedicated empty-state message. Collapse
+    // the shell entirely on the no-partners branch.
+    const { findByText, queryByRole } = render(<SafetyPartners />)
+    await findByText('safety.partnersEmpty')
+    expect(queryByRole('list')).toBeNull()
+  })
 })
