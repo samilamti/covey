@@ -130,6 +130,7 @@ export function ProgressDashboard() {
                     onClick={() => handleToggleVisibility(badge.key, badge.visible)}
                     class="mt-1 p-1 rounded hover:bg-amber-100"
                     title={badge.visible ? t('progress.hideFromProfile') : t('progress.showOnProfile')}
+                    aria-label={badge.visible ? t('progress.hideFromProfile') : t('progress.showOnProfile')}
                   >
                     {badge.visible ? (
                       <Eye size={12} class="text-amber-600" />

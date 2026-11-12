@@ -122,4 +122,15 @@ describe('ProgressDashboard', () => {
     const spinner = container.querySelector('.animate-spin')
     expect(spinner).toBeTruthy()
   })
+
+  it('names the icon-only badge visibility toggle', async () => {
+    // The button holds only an Eye/EyeOff icon, so its name has to come from
+    // an attribute. It says what a tap does, which is why it must not also
+    // carry aria-pressed: "Show on profile, pressed" would read as a
+    // contradiction.
+    const { getByLabelText } = render(<ProgressDashboard />)
+    const toggle = await waitFor(() => getByLabelText('progress.showOnProfile'))
+    expect(toggle.tagName).toBe('BUTTON')
+    expect(toggle.hasAttribute('aria-pressed')).toBe(false)
+  })
 })

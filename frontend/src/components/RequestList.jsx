@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
-import { HelpCircle, Plus, List } from 'lucide-preact'
+import { Plus, List } from 'lucide-preact'
 import { requestService } from '../services/requests'
 import { ratingService } from '../services/ratings'
 import { RequestCard } from './RequestCard'

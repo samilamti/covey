@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
-import { CheckCircle, Phone, MapPin, X, Clock, MessageCircle, Send } from 'lucide-preact'
+import { CheckCircle, X, Clock, MessageCircle, Send } from 'lucide-preact'
 import 'leaflet/dist/leaflet.css'
 import { socket } from '../socket'
 import { requestService } from '../services/requests'
