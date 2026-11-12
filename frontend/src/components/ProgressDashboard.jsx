@@ -133,6 +133,17 @@ export function ProgressDashboard() {
                   }`}
                 >
                   {t(`progress.badge.${badge.key}`)}
+                  {/* The locked vs. earned distinction is carried by colour,
+                      the amber badge icon, and a decorative padlock — none
+                      of which reach a screen reader (lucide hides the icons,
+                      colour is not a signal). Without this sr-only tag every
+                      badge announces identically, so a blind user cannot
+                      tell which goals they have met. The locale string
+                      already existed (`progress.locked`) and is now wired
+                      up in all 12 languages at once. */}
+                  {!badge.earned && (
+                    <span class="sr-only"> {t('progress.locked')}</span>
+                  )}
                 </span>
                 {badge.earned && (
                   <button

@@ -135,6 +135,28 @@ describe('ProgressDashboard', () => {
     expect(spinner).toBeTruthy()
   })
 
+  it('marks locked badges with a visually hidden "locked" label', async () => {
+    // Earned and locked badges are distinguished by colour and a padlock
+    // icon, neither of which reaches a screen reader (colour is not a
+    // signal; lucide hides the icon). Without this a blind user hears
+    // every badge name identically and cannot tell which goals they have
+    // met. sr-only text next to each locked badge name fixes it in all
+    // 12 languages at once via the existing locale key.
+    const { container } = render(<ProgressDashboard />)
+    await waitFor(() => {
+      expect(container.textContent).toContain('progress.badge.first_session')
+    })
+    const srOnlyLocked = Array.from(container.querySelectorAll('span.sr-only'))
+      .filter((n) => n.textContent.includes('progress.locked'))
+    // The fixture has 6 locked badges and 1 earned, so we expect 6 tags.
+    expect(srOnlyLocked.length).toBe(6)
+    // The earned badge (first_session) must NOT carry the locked label.
+    const earnedSpan = Array.from(container.querySelectorAll('span'))
+      .find((n) => n.textContent.includes('progress.badge.first_session'))
+    expect(earnedSpan).toBeTruthy()
+    expect(earnedSpan.textContent).not.toContain('progress.locked')
+  })
+
   it('names the icon-only badge visibility toggle', async () => {
     // The button holds only an Eye/EyeOff icon, so its name has to come from
     // an attribute. It says what a tap does, which is why it must not also
