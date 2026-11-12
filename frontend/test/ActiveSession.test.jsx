@@ -143,6 +143,17 @@ describe('ActiveSession', () => {
     expect(getByText('requests.types.walk')).toBeTruthy()
   })
 
+  it('names the header as an h2 so heading navigation lands on this view', () => {
+    // ActiveSession takes over the whole screen and replaces the
+    // RequestList h2. Shipping the header as h3 would leave a screen
+    // reader jumping headings with nothing at this level to land on.
+    const { getByRole } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    const heading = getByRole('heading', { level: 2, name: 'requests.types.walk' })
+    expect(heading).toBeTruthy()
+  })
+
   it('shows "you requested" label for requester', () => {
     const { getByText } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />

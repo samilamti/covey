@@ -382,7 +382,14 @@ export function ActiveSession({ request, currentUserId, onClose }) {
           isn't occluded by the app chrome. */}
       <div class="bg-indigo-600 text-white px-4 py-3 flex items-center justify-between safe-area-top">
         <div>
-          <h3 class="font-semibold">{t(`requests.types.${request.type}`)}</h3>
+          {/* ActiveSession is a full-screen takeover that replaces the
+              RequestList h2 and the app chrome, so starting at h3 would
+              leave a screen reader navigating by heading with no landing
+              point on this view (jumping from nothing to h3). Matches
+              the h2 that every sibling top-level view already uses
+              (RequestList, ProfileView, ProgressDashboard). WCAG 1.3.1
+              Info and Relationships / 2.4.6 Headings and Labels. */}
+          <h2 class="font-semibold">{t(`requests.types.${request.type}`)}</h2>
           <p class="text-xs text-indigo-200">
             {isRequester ? t('requests.youRequested') : t('requests.youAreHelper')}
           </p>
