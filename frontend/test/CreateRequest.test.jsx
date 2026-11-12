@@ -97,6 +97,46 @@ describe('CreateRequest', () => {
     expect(getByText('requests.tiers.anyMember')).toBeTruthy()
   })
 
+  it('exposes the type choice as a named radiogroup with the current pick', async () => {
+    // The visual cue for the selected card is Tailwind's indigo background,
+    // which assistive tech cannot see. Marking each card role="radio"
+    // + aria-checked turns the group into something a screen reader can
+    // announce as "Type of help, radio group, Walk, selected" and keeps
+    // the semantics honest when the user swaps selection.
+    const { getByRole, getAllByRole } = render(<CreateRequest />)
+    const group = getByRole('radiogroup', { name: 'requests.type' })
+    expect(group).toBeDefined()
+    const radios = getAllByRole('radio').filter((el) => group.contains(el))
+    expect(radios).toHaveLength(2)
+    // Default is walk — exactly one radio checked.
+    const checked = radios.filter((r) => r.getAttribute('aria-checked') === 'true')
+    expect(checked).toHaveLength(1)
+    // Switching selection updates aria-checked on both.
+    await fireEvent.click(radios.find((r) => r.textContent.includes('requests.types.wait')))
+    const checkedAfter = radios.filter((r) => r.getAttribute('aria-checked') === 'true')
+    expect(checkedAfter).toHaveLength(1)
+    expect(checkedAfter[0].textContent).toContain('requests.types.wait')
+  })
+
+  it('exposes the eligibility tier as a labelled radiogroup', async () => {
+    // The group has a visible section label — tie it to the group via
+    // aria-labelledby so a screen reader announces the group with its
+    // real name ("Who can help you?") instead of an unnamed group.
+    const { getByRole, getAllByRole } = render(<CreateRequest />)
+    const group = getByRole('radiogroup', { name: 'requests.eligibility' })
+    expect(group).toBeDefined()
+    const radios = getAllByRole('radio').filter((el) => group.contains(el))
+    expect(radios).toHaveLength(3)
+    const checked = radios.filter((r) => r.getAttribute('aria-checked') === 'true')
+    expect(checked).toHaveLength(1)
+    expect(checked[0].textContent).toContain('requests.tiers.sameDemographics')
+    // Picking another tier moves aria-checked.
+    await fireEvent.click(radios.find((r) => r.textContent.includes('requests.tiers.anyMember')))
+    const checkedAfter = radios.filter((r) => r.getAttribute('aria-checked') === 'true')
+    expect(checkedAfter).toHaveLength(1)
+    expect(checkedAfter[0].textContent).toContain('requests.tiers.anyMember')
+  })
+
   it('wires the message textarea to its own label', () => {
     // A <label> sitting next to a <textarea> is only an accessible name
     // when `for=id` ties them together — a sibling label is ignored. Without

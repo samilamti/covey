@@ -29,6 +29,10 @@ export function CreateRequest({ onCreated }) {
   // textarea as unnamed. useId is safe with two CreateRequest instances on
   // screen; a hardcoded id would duplicate.
   const messageId = useId()
+  // The eligibility group has a visible section label; tie it to the
+  // radiogroup via aria-labelledby so the group announces as "Who can
+  // help you? radiogroup" instead of an unnamed group.
+  const eligibilityLabelId = useId()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -55,8 +59,14 @@ export function CreateRequest({ onCreated }) {
 
   return (
     <form onSubmit={handleSubmit} class="space-y-4">
-        {/* Request type */}
-        <div class="flex gap-3">
+        {/* Request type — a two-option choice with no visible header. The
+            buttons styled as cards communicate "pick one" visually; mark
+            them as a radiogroup with aria-checked so a screen reader
+            announces the current selection too (WCAG 4.1.2 Name, Role,
+            Value). The group gets an aria-label from the already-translated
+            section name rather than an invisible <h3>, which avoids adding
+            a heading the visual design deliberately omits. */}
+        <div class="flex gap-3" role="radiogroup" aria-label={t('requests.type')}>
           {[
             { key: 'walk', Icon: WalkIcon },
             { key: 'wait', Icon: WaitIcon },
@@ -64,6 +74,8 @@ export function CreateRequest({ onCreated }) {
             <button
               key={key}
               type="button"
+              role="radio"
+              aria-checked={type === key}
               onClick={() => setType(key)}
               class={`flex-1 flex flex-col items-center text-center px-4 py-5 rounded-xl border-2 transition-colors ${
                 type === key
@@ -71,19 +83,24 @@ export function CreateRequest({ onCreated }) {
                   : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
               }`}
             >
-              <Icon size={44} />
+              <Icon size={44} aria-hidden="true" />
               <span class="text-lg font-bold mt-2">{t(`requests.types.${key}`)}</span>
               <span class="text-xs opacity-60 mt-1 leading-snug">{t(`requests.types.${key}Examples`)}</span>
             </button>
           ))}
         </div>
 
-        {/* Eligibility tier */}
+        {/* Eligibility tier — same shape as the type group above: cards
+            that read visually as "pick one". The visible section label is
+            an id-pointed <div> instead of a bare <label> (a <label> is
+            only semantically valid with an associated form control, and
+            the group is three buttons, not an input), and it is tied to
+            the radiogroup via aria-labelledby. */}
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
+          <div id={eligibilityLabelId} class="block text-sm font-medium text-gray-700 mb-1">
             {t('requests.eligibility')}
-          </label>
-          <div class="space-y-2">
+          </div>
+          <div class="space-y-2" role="radiogroup" aria-labelledby={eligibilityLabelId}>
             {[
               { value: 'same_demographics', label: t('requests.tiers.sameDemographics'), desc: t('requests.tiers.sameDemographicsDesc'), Icon: FewPeopleIcon },
               { value: 'verified_guardians', label: t('requests.tiers.verifiedGuardians'), desc: t('requests.tiers.verifiedGuardiansDesc'), Icon: MorePeopleIcon },
@@ -92,6 +109,8 @@ export function CreateRequest({ onCreated }) {
               <button
                 key={tier.value}
                 type="button"
+                role="radio"
+                aria-checked={eligibilityTier === tier.value}
                 onClick={() => setEligibilityTier(tier.value)}
                 class={`w-full flex items-center gap-3 text-left px-3 py-2 rounded-lg text-sm border transition-colors ${
                   eligibilityTier === tier.value
@@ -99,7 +118,7 @@ export function CreateRequest({ onCreated }) {
                     : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
                 }`}
               >
-                <tier.Icon size={28} />
+                <tier.Icon size={28} aria-hidden="true" />
                 <div>
                   <div class="font-medium">{tier.label}</div>
                   <div class="text-xs opacity-70">{tier.desc}</div>
