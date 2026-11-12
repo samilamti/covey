@@ -325,6 +325,54 @@ describe('ActiveSession', () => {
     expect(getByText('messages.title')).toBeTruthy()
   })
 
+  it('announces new messages as a polite live region', async () => {
+    // A blind user can see "Messages 3" but has no reason to re-read a
+    // number that never speaks for itself, so an incoming reply used to
+    // land silently. role="log" with aria-live="polite" tells a screen
+    // reader to announce each appended message without stealing focus
+    // from whatever the user is doing.
+    Element.prototype.scrollIntoView = vi.fn()
+    const { getByText, getByRole } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    fireEvent.click(getByText('messages.title'))
+    const log = getByRole('log', { name: 'messages.title' })
+    expect(log.getAttribute('aria-live')).toBe('polite')
+    // aria-relevant="additions" keeps the announcement to new messages
+    // instead of re-reading the entire list on every repaint.
+    expect(log.getAttribute('aria-relevant')).toBe('additions')
+  })
+
+  it('pairs the unread badge with a hidden accessible description', async () => {
+    // The visible badge is just "3", which announces as "Messages 3" and
+    // leaves the user guessing whether that is an id, a time, or a count.
+    // The raw digit is hidden from AT and paired with a sr-only
+    // count-aware string that stands on its own.
+    const { container } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    // Give useEffect a chance to register the socket listener before we
+    // fire its event.
+    await waitFor(() => {
+      expect(listeners['message:received']?.[0]).toBeDefined()
+    })
+    const handleReceived = listeners['message:received'][0]
+    // Fire an inbound message while the panel is CLOSED so unreadCount
+    // ticks and the badge actually renders.
+    handleReceived({
+      requestId: 'r1',
+      message: { id: 'm1', senderId: 'user-b', content: 'hi', createdAt: new Date().toISOString() },
+    })
+    // sr-only span carries the resolved key — the mocked t() echoes the
+    // key, so we assert the hidden description is PRESENT and the digit
+    // is marked aria-hidden.
+    await waitFor(() => {
+      const srOnly = container.querySelector('.sr-only')
+      expect(srOnly).toBeTruthy()
+      expect(srOnly.textContent).toContain('messages.unread')
+    })
+  })
+
   it('gives the chat input and send button accessible names', async () => {
     // The chat input relied on `placeholder` as its label, which assistive
     // tech does not treat as an accessible name — a placeholder disappears

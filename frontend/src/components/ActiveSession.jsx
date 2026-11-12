@@ -441,11 +441,17 @@ export function ActiveSession({ request, currentUserId, onClose }) {
             onClick={() => { setShowMessages(!showMessages); if (!showMessages) setUnreadCount(0) }}
             class="flex items-center gap-2 text-sm text-indigo-600 mb-3"
           >
-            <MessageCircle size={16} />
+            <MessageCircle size={16} aria-hidden="true" />
             {t('messages.title')}
             {unreadCount > 0 && (
+              // The visible badge is just a number; a screen reader user
+              // hearing "Messages 3" cannot tell whether that is an ID, a
+              // count, or clutter. Hide the raw digit from AT and pair it
+              // with a visually hidden count-aware string that stands on
+              // its own.
               <span class="bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {unreadCount}
+                <span aria-hidden="true">{unreadCount}</span>
+                <span class="sr-only">{t('messages.unread', { count: unreadCount })}</span>
               </span>
             )}
           </button>
@@ -454,8 +460,20 @@ export function ActiveSession({ request, currentUserId, onClose }) {
         {/* Message panel */}
         {showMessages && !isTerminal && (
           <div class="bg-gray-50 rounded-lg border border-gray-200 mb-3 flex flex-col" style="max-height:16rem">
-            {/* Message list */}
-            <div class="flex-1 overflow-y-auto p-3 space-y-2">
+            {/* Message list. role="log" + aria-live="polite" announce each new
+                message the moment it arrives, without stealing focus. Without
+                this, an incoming message is only reflected in a number that a
+                screen reader has no reason to re-read, so a blind user never
+                learns the other person has replied. aria-relevant="additions"
+                keeps the announcement to newly appended messages — not the
+                whole list each time. */}
+            <div
+              class="flex-1 overflow-y-auto p-3 space-y-2"
+              role="log"
+              aria-live="polite"
+              aria-relevant="additions"
+              aria-label={t('messages.title')}
+            >
               {messages.length === 0 && (
                 <p class="text-xs text-gray-400 text-center py-2">{t('messages.placeholder')}</p>
               )}
