@@ -130,6 +130,50 @@ describe('SafetyActions', () => {
     expect(fieldset?.getAttribute('aria-labelledby')).toBe(introId)
   })
 
+  it('moves focus into the dialog on open and returns it to the trigger on close', async () => {
+    // ARIA APG Dialog pattern + WCAG 2.4.3 Focus Order. Without moving
+    // focus into the dialog, the caret stays on the Report button that
+    // is now behind an inert scrim — Tab then walks the page under the
+    // modal instead of the modal's controls. Returning focus on close
+    // keeps keyboard navigation coherent so the user picks up where they
+    // left off rather than losing their place.
+    const { getByText, getByRole } = render(<SafetyActions userId="u2" name="Kim" />)
+    const trigger = getByText('safety.report').closest('button')
+    // Browser gives initial focus to document.body; clicking opens the
+    // modal, at which point the heading should become the active element.
+    fireEvent.click(trigger)
+    const dialog = getByRole('dialog')
+    const heading = document.getElementById(dialog.getAttribute('aria-labelledby'))
+    expect(heading).toBeTruthy()
+    // The heading needs tabIndex="-1" to be a valid focus target — a bare
+    // <h3> is otherwise unfocusable and .focus() is a no-op.
+    expect(heading.getAttribute('tabindex')).toBe('-1')
+    await waitFor(() => expect(document.activeElement).toBe(heading))
+
+    // Dismiss with Escape; focus must land back on the Report trigger.
+    fireEvent.keyDown(document, { key: 'Escape' })
+    await waitFor(() => expect(document.activeElement).toBe(trigger))
+  })
+
+  it('does not steal focus to the Report trigger on initial mount', () => {
+    // A naive useEffect that focuses the trigger whenever the dialog is
+    // closed would also fire on first render (showReport starts false),
+    // yanking focus the moment the component appears and stomping on
+    // whatever the user was tabbing through on the surrounding screen.
+    // The initial-mount guard makes this branch inert until the dialog
+    // has been opened at least once.
+    const outsideButton = document.createElement('button')
+    outsideButton.textContent = 'outside'
+    document.body.appendChild(outsideButton)
+    outsideButton.focus()
+    try {
+      render(<SafetyActions userId="u2" />)
+      expect(document.activeElement).toBe(outsideButton)
+    } finally {
+      outsideButton.remove()
+    }
+  })
+
   it('closes the report dialog on Escape', () => {
     // A modal dialog with role="dialog" + aria-modal="true" must be dismissable
     // from the keyboard (WCAG 2.1.1 + the ARIA dialog pattern). Without this

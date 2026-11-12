@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'preact/hooks'
+import { useEffect, useId, useRef, useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Flag, Ban } from 'lucide-preact'
 import { safetyService } from '../services/safety'
@@ -26,6 +26,18 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
   // a hardcoded id would duplicate and break screen-reader name resolution.
   const titleId = useId()
   const introId = useId()
+  // Focus targets for the report dialog — see the dialog focus-flow effect
+  // below. reportTriggerRef marks the button that opened the modal so we
+  // can return focus to it on close (ARIA APG Dialog pattern); dialogHeadingRef
+  // is where focus lands when the modal opens so a screen reader announces
+  // the dialog's title rather than keeping the caret on the invisible
+  // trigger behind the scrim.
+  const reportTriggerRef = useRef(null)
+  const dialogHeadingRef = useRef(null)
+  // Guard for return-focus: without this, the "modal closed → focus the
+  // trigger" branch fires on initial mount and steals focus the moment the
+  // component renders.
+  const dialogWasOpenRef = useRef(false)
 
   const who = name || t('safety.someone')
 
@@ -78,6 +90,28 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
     return () => document.removeEventListener('keydown', onKey)
   }, [showReport, busy])
 
+  // Dialog focus flow (ARIA APG Dialog pattern + WCAG 2.4.3 Focus Order):
+  //   • On open, move focus INTO the dialog so a keyboard/screen-reader
+  //     user can navigate it. Without this, the caret stays on the trigger
+  //     button that is now behind an inert scrim — pressing Tab walks the
+  //     page below the modal instead of the modal's own controls.
+  //   • On close, return focus to the trigger so the user picks up where
+  //     they were. A dialogWasOpenRef guard prevents this branch from
+  //     firing on initial mount (where showReport starts false and the
+  //     trigger is already the natural focus target the browser gave).
+  useEffect(() => {
+    if (showReport) {
+      // The heading needs tabIndex="-1" to be focusable programmatically
+      // without entering the tab sequence; without it, .focus() is a no-op
+      // on an <h3> in every browser.
+      dialogHeadingRef.current?.focus()
+      dialogWasOpenRef.current = true
+    } else if (dialogWasOpenRef.current) {
+      reportTriggerRef.current?.focus()
+      dialogWasOpenRef.current = false
+    }
+  }, [showReport])
+
   const handleReport = async () => {
     if (!reason) return
     setBusy(true)
@@ -106,6 +140,7 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
     <div>
       <div class="flex gap-2">
         <button
+          ref={reportTriggerRef}
           onClick={() => { setShowReport(true); setNotice(null) }}
           class="flex-1 flex items-center justify-center gap-1 text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700"
         >
@@ -151,7 +186,14 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
           aria-describedby={introId}
         >
           <div class="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-4 space-y-3 safe-area-bottom max-h-[90vh] overflow-y-auto">
-            <h3 id={titleId} class="font-semibold text-lg">{t('safety.reportTitle', { name: who })}</h3>
+            <h3
+              id={titleId}
+              ref={dialogHeadingRef}
+              tabIndex={-1}
+              class="font-semibold text-lg focus:outline-none"
+            >
+              {t('safety.reportTitle', { name: who })}
+            </h3>
             <p id={introId} class="text-sm text-gray-600">{t('safety.reportIntro')}</p>
 
             {/* aria-labelledby on the fieldset gives the radio group a name
