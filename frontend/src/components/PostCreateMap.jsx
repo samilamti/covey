@@ -51,8 +51,18 @@ export function PostCreateMap({ position, onBack }) {
 
   return (
     <div>
-      {/* Success banner */}
-      <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4 text-center">
+      {/* Success banner — PostCreateMap mounts the moment a request has
+          been accepted by the backend, so for a screen reader user the
+          "your request is on its way" confirmation IS the submission
+          feedback. role="status" + aria-live="polite" turns the green
+          strip into a spoken acknowledgement without stealing focus,
+          matching how LandingPage/CreateRequest announce failures.
+          WCAG 4.1.3 Status Messages. */}
+      <div
+        role="status"
+        aria-live="polite"
+        class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4 text-center"
+      >
         <p class="font-semibold text-green-800">{t('requests.waitingForHelp')}</p>
       </div>
 

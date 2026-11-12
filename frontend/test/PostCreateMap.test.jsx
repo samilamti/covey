@@ -46,6 +46,22 @@ describe('PostCreateMap', () => {
     expect(getByText('requests.waitingForHelp')).toBeTruthy()
   })
 
+  it('announces the success banner in a polite live region', () => {
+    // PostCreateMap mounts only after a successful request submission, so
+    // for a screen reader user this banner IS the submission feedback.
+    // Without role="status" the user finishes creating a request and hears
+    // nothing: focus moves to a view with no landmark, no heading, and a
+    // decorative map. Polite so the acknowledgement doesn't talk over
+    // anything the user may still be reading on the previous view.
+    const { getByRole } = render(
+      <PostCreateMap position={{ lat: 59.33, lng: 18.07 }} onBack={() => {}} />
+    )
+    const status = getByRole('status')
+    expect(status).toBeTruthy()
+    expect(status.getAttribute('aria-live')).toBe('polite')
+    expect(status.textContent).toContain('requests.waitingForHelp')
+  })
+
   it('renders back button', () => {
     const { getByText } = render(
       <PostCreateMap position={{ lat: 59.33, lng: 18.07 }} onBack={() => {}} />
