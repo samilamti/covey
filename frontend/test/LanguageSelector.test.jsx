@@ -87,6 +87,29 @@ describe('LanguageSelector', () => {
     expect(queryAllByRole('menuitem')).toHaveLength(0)
   })
 
+  it('marks the current language with aria-current and no other', async () => {
+    // Visually the active item gets bg-gray-100 and the others don't — nothing
+    // in the DOM tells a screen reader which one is already chosen, so a user
+    // tabbing through the menu has to guess from the voice's handling of the
+    // highlighted row. aria-current="true" is the WCAG-approved marker for
+    // "this is the current value in a group of choices".
+    const { getByRole, getAllByRole } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+
+    const items = getAllByRole('menuitem')
+    const current = items.filter((el) => el.getAttribute('aria-current') === 'true')
+    expect(current).toHaveLength(1)
+    // The mocked i18n.language is 'sv'; the current row carries its label.
+    expect(current[0].textContent).toContain('Svenska')
+    // Every other row must leave aria-current unset — a stale 'false' would
+    // still be announced by some screen readers.
+    for (const el of items) {
+      if (el !== current[0]) {
+        expect(el.getAttribute('aria-current')).toBeNull()
+      }
+    }
+  })
+
   it('marks every native language label with its own lang attribute', async () => {
     // WCAG 3.1.2 — without lang="ar", a screen reader pronounces "العربية"
     // with the current UI language's voice, which produces garbage.

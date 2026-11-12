@@ -83,16 +83,18 @@ export function LanguageSelector() {
           <div class="py-1" role="menu" aria-orientation="vertical">
             {languages.map((lng) => {
               const FlagComponent = lng.flag
+              const isCurrent = i18n.language === lng.code
               return (
                 <button
                   key={lng.code}
                   onClick={() => changeLanguage(lng.code)}
                   class={`${
-                    i18n.language === lng.code
+                    isCurrent
                       ? 'bg-gray-100 text-gray-900'
                       : 'text-gray-700'
                   } w-full text-left px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 flex items-center`}
                   role="menuitem"
+                  aria-current={isCurrent ? 'true' : undefined}
                 >
                   <span class="mr-3 inline-flex items-center" style={{ minWidth: '1.5rem' }}>
                     <FlagComponent size={20} />
