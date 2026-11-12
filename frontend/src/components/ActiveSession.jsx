@@ -404,8 +404,18 @@ export function ActiveSession({ request, currentUserId, onClose }) {
         </button>
       </div>
 
-      {/* Map */}
-      <div ref={mapRef} class="flex-1 min-h-0" />
+      {/* Map. Leaflet makes the container focusable the moment it
+          initialises, so without role="region" + an accessible name a
+          keyboard user lands on a nameless widget and a screen-reader
+          user has nothing to find or skip by landmark. The legend and
+          ETA below carry the information the map shows visually; the
+          label here just names the pane. */}
+      <div
+        ref={mapRef}
+        role="region"
+        aria-label={t('map.title')}
+        class="flex-1 min-h-0"
+      />
 
       {/* Status bar + actions */}
       <div class="bg-white border-t border-gray-200 p-4 safe-area-bottom overflow-y-auto" style="max-height:60vh">

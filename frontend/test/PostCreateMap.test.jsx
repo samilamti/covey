@@ -62,6 +62,17 @@ describe('PostCreateMap', () => {
     expect(status.textContent).toContain('requests.waitingForHelp')
   })
 
+  it('names the map container as a region so screen readers can find or skip it', () => {
+    // Leaflet makes the container focusable the moment it initialises;
+    // without a name the user tabs onto a nameless widget and landmark
+    // navigation has nothing to list.
+    const { getByRole } = render(
+      <PostCreateMap position={{ lat: 59.33, lng: 18.07 }} onBack={() => {}} />
+    )
+    const map = getByRole('region', { name: 'map.title' })
+    expect(map).toBeTruthy()
+  })
+
   it('renders back button', () => {
     const { getByText } = render(
       <PostCreateMap position={{ lat: 59.33, lng: 18.07 }} onBack={() => {}} />

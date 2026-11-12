@@ -143,6 +143,18 @@ describe('ActiveSession', () => {
     expect(getByText('requests.types.walk')).toBeTruthy()
   })
 
+  it('names the map container as a region so screen readers can find or skip it', () => {
+    // Leaflet makes the map div focusable once it initialises, so a
+    // keyboard user tabs onto an unnamed widget and a screen-reader
+    // user has nothing to find or skip by landmark. The legend and ETA
+    // carry what the map shows visually; the label just names the pane.
+    const { getByRole } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    const map = getByRole('region', { name: 'map.title' })
+    expect(map).toBeTruthy()
+  })
+
   it('names the header as an h2 so heading navigation lands on this view', () => {
     // ActiveSession takes over the whole screen and replaces the
     // RequestList h2. Shipping the header as h3 would leave a screen

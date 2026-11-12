@@ -66,9 +66,17 @@ export function PostCreateMap({ position, onBack }) {
         <p class="font-semibold text-green-800">{t('requests.waitingForHelp')}</p>
       </div>
 
-      {/* Map */}
+      {/* Map. Leaflet puts the container into the tab order (tabindex=0)
+          once it initialises, so without role="region" + an accessible
+          name a keyboard or screen-reader user tabs onto a nameless
+          widget. Labelling it as a region also gives landmark navigation
+          a way to find or skip it. The green confirmation above speaks
+          for itself, so the map is a supplement rather than the only
+          source of truth. */}
       <div
         ref={mapRef}
+        role="region"
+        aria-label={t('map.title')}
         class="w-full rounded-lg overflow-hidden bg-gray-200"
         style={{ height: '300px' }}
       />
