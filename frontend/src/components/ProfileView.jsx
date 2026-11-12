@@ -154,9 +154,14 @@ export function ProfileView({ user, onLogout }) {
         )}
       </div>
 
-      {/* Language */}
+      {/* Language — the visible section heading was a bare <label> without
+          a `for` attribute, i.e. a dangling label that no screen reader
+          attaches to the LanguageSelector button. Render it as a <div>
+          with the same visual class: the picker component now carries its
+          own accessible name ("Choose language …"), so we keep the visible
+          heading as a styling element rather than a broken form semantic. */}
       <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
-        <label class="block text-sm font-medium text-gray-700 mb-2">{t('profile.language')}</label>
+        <div class="block text-sm font-medium text-gray-700 mb-2">{t('profile.language')}</div>
         <LanguageSelector />
       </div>
 

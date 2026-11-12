@@ -27,7 +27,7 @@ const languages = [
 ]
 
 export function LanguageSelector() {
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef(null)
 
@@ -74,8 +74,24 @@ export function LanguageSelector() {
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <Globe size={16} />
-        {currentLang?.label || 'Språk'}
+        <Globe size={16} aria-hidden="true" />
+        {/* Without this hidden prefix the trigger reads as just "Svenska"
+            (or "English", …), so a screen reader user has no idea they've
+            landed on a language picker vs. a disclosure named after that
+            word. A visually-hidden span pulls the picker's purpose into
+            the accessible name, and the visible label stays unchanged.
+            Preferable to an aria-label override because that would strip
+            the native language of the visible label — losing the SR's
+            ability to pronounce it (e.g. a Swedish voice saying "English"
+            vs. "English" wrapped in lang="en"). */}
+        <span class="sr-only">{t('language.select')} </span>
+        {/* Wrap the current language's label in its own lang attribute for
+            the same reason as the menu items below (WCAG 3.1.2 Language of
+            Parts): "English" inside a Swedish UI should read with English
+            phonetics, and "العربية" should not be voiced as Latin. */}
+        {currentLang
+          ? <span lang={currentLang.code}>{currentLang.label}</span>
+          : 'Språk'}
       </button>
 
       {isOpen && (

@@ -26,6 +26,31 @@ describe('LanguageSelector', () => {
     expect(button.textContent).toContain('Svenska')
   })
 
+  it('names the trigger with the picker purpose, not only the current value', () => {
+    // Without a leading hidden label the trigger reads as just "Svenska"
+    // (or "English", …), i.e. the current *value* with no mention that the
+    // control picks a language. A screen reader user cannot tell it apart
+    // from an unrelated disclosure named after that word. A visually-hidden
+    // span carrying language.select pulls the picker's purpose into the
+    // accessible name; the visible label and its lang attribute stay intact
+    // so a Swedish voice still pronounces "Svenska" the Swedish way.
+    const { getByRole, container } = render(<LanguageSelector />)
+    const button = getByRole('button', { expanded: false })
+    expect(button.textContent).toContain('language.select')
+    expect(button.textContent).toContain('Svenska')
+    // The purpose text must stay visually hidden — a visible duplicate
+    // would clutter the control. .sr-only is the project's shared class.
+    const hidden = button.querySelector('span.sr-only')
+    expect(hidden).toBeTruthy()
+    expect(hidden.textContent.trim()).toBe('language.select')
+    // The native-language label below must keep its lang="sv" wrapper so
+    // the voice doesn't fall back to the UI language's phonetics for it.
+    const nativeLabel = button.querySelector('span[lang="sv"]')
+    expect(nativeLabel, 'expected the current language label to carry lang="sv"').toBeTruthy()
+    expect(nativeLabel.textContent).toBe('Svenska')
+    expect(container).toBeTruthy()
+  })
+
   it('shows dropdown with all 12 languages on click', async () => {
     const { getByRole, getAllByRole } = render(<LanguageSelector />)
     const toggle = getByRole('button', { expanded: false })

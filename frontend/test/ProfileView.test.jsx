@@ -112,6 +112,26 @@ describe('ProfileView', () => {
     expect(getByText('app.logout')).toBeTruthy()
   })
 
+  it('does not render the language section header as a dangling <label>', () => {
+    // A <label> with no `for` attribute is a malformed accessible-name
+    // relationship: a screen reader does not attach it to the picker that
+    // follows, so the visible "Language" heading claims to name a control
+    // it never reaches. Keep it as a <div> and let the LanguageSelector
+    // carry its own accessible name.
+    const { container } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    const labels = container.querySelectorAll('label')
+    for (const el of labels) {
+      // Every surviving <label> must point at a real input/select/textarea
+      // (the display-name input in this view). A <label> without `for` is
+      // the bug we are guarding against.
+      const forAttr = el.getAttribute('for')
+      expect(forAttr, `expected every <label> to have a for="" target, offender: ${el.outerHTML}`).toBeTruthy()
+      // Use getElementById rather than CSS.escape — jsdom's global CSS is
+      // undefined, and the real DOM uses getElementById under the hood too.
+      expect(container.ownerDocument.getElementById(forAttr)).toBeTruthy()
+    }
+  })
+
   it('announces a translated save confirmation (not a bare ✓)', async () => {
     // Earlier the success text was a bare "✓" glyph, which is silent to
     // assistive tech — the user got no acknowledgement that their edit
