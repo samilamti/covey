@@ -201,7 +201,20 @@ export function RequestList({ currentUserId }) {
   }
 
   if (loading) {
-    return <div class="text-center py-8 text-gray-400">{t('app.loading')}</div>
+    // Without role="status" + an accessible name, a screen reader user
+    // landing on the Requests tab (the app's default view on sign-in)
+    // hears nothing between the auth redirect and the first list paint.
+    // aria-live="polite" so the text is announced without interrupting.
+    // Mirrors the ProgressDashboard loading pattern.
+    return (
+      <div
+        role="status"
+        aria-live="polite"
+        class="text-center py-8 text-gray-400"
+      >
+        {t('app.loading')}
+      </div>
+    )
   }
 
   return (

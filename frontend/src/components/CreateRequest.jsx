@@ -161,9 +161,13 @@ export function CreateRequest({ onCreated }) {
           <LocationBanner error={geoError} onRetry={retryGeo} />
         )}
 
-        {/* Error message */}
+        {/* Error message — role="alert" + assertive so a failed submit
+            interrupts to tell the user, since the only other sign is a
+            small red line at the bottom of a scrolled form. The LandingPage
+            BankID error block uses the same pattern. WCAG 4.1.3 Status
+            Messages. */}
         {error && (
-          <p class="text-sm text-red-600">{error}</p>
+          <p role="alert" aria-live="assertive" class="text-sm text-red-600">{error}</p>
         )}
 
         {/* Submit */}

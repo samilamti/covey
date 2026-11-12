@@ -96,6 +96,28 @@ describe('RequestList', () => {
 
   /* ── Basic rendering ── */
 
+  it('announces the initial loading state in a polite live region', async () => {
+    // RequestList is the app's default view on sign-in, so between the auth
+    // redirect and the first list paint there is a bare "loading…" line.
+    // Without role="status" + aria-live a screen reader user has no idea
+    // whether the page is working, empty, or broken — WCAG 4.1.3 Status
+    // Messages. Hold list() unresolved so the loading branch stays mounted
+    // long enough to inspect.
+    let resolveList
+    requestService.list.mockImplementationOnce(
+      () => new Promise((resolve) => { resolveList = resolve })
+    )
+    const { getByRole } = render(<RequestList currentUserId="user-a" />)
+    const status = getByRole('status')
+    expect(status).toBeTruthy()
+    expect(status.getAttribute('aria-live')).toBe('polite')
+    expect(status.textContent).toContain('app.loading')
+    // Let the suspended list resolve so React can tear down the loading
+    // branch cleanly and we don't leak a pending promise into the next test.
+    resolveList({ requests: [] })
+    await waitFor(() => {})
+  })
+
   it('renders the requests title after loading', async () => {
     const { getByText } = render(<RequestList currentUserId="user-a" />)
     await waitFor(() => {
