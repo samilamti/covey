@@ -134,7 +134,7 @@
       "whereAreYou": "Gos leat?",
       "thanks": "Giitu!"
     },
-    "unread": "{{count}} lohkakeahtes diedut"
+    "unread": "Lohkakeahtes diedut: {{count}}"
   },
   "profile": {
     "title": "Mu profila",

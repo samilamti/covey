@@ -113,8 +113,11 @@ describe('BankIDLogin (Secure Start)', () => {
     fireEvent.click(getByText('landing.loginButton'))
 
     await waitFor(() => {
-      const placeholder = container.querySelector('div[role="status"][aria-label="landing.bankidQrLoading"]')
-      expect(placeholder, 'expected a named status region around the QR spinner').toBeTruthy()
+      const placeholder = container.querySelector('div[role="status"]')
+      expect(placeholder, 'expected a status region around the QR spinner').toBeTruthy()
+      // A live region speaks its text content; an aria-label is never announced.
+      expect(placeholder.textContent).toContain('landing.bankidQrLoading')
+      expect(placeholder.hasAttribute('aria-label')).toBe(false)
     })
     // Clean up — let the deferred qr settle before the component unmounts
     // so the test doesn't trail an unhandled promise.

@@ -74,7 +74,7 @@ export function LanguageSelector() {
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <Globe size={16} aria-hidden="true" />
+        <Globe size={16} />
         {/* Without this hidden prefix the trigger reads as just "Svenska"
             (or "English", …), so a screen reader user has no idea they've
             landed on a language picker vs. a disclosure named after that

@@ -139,16 +139,16 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
           />
         ) : (
           // The spinner that stands in for the QR before the first frame
-          // arrives had no name at all, so a keyboard/screen-reader user
-          // on the login screen was stuck guessing whether BankID was
-          // working. Name the placeholder as a loading status so a
-          // polite live region announces it.
+          // arrives had nothing to say, so a screen-reader user on the login
+          // screen was left guessing whether BankID was working. A status
+          // region reads out its text, not an aria-label, so the words go in
+          // as visually hidden content.
           <div
             role="status"
-            aria-label={t('landing.bankidQrLoading')}
             class="w-[200px] h-[200px] rounded-lg border border-gray-200 mb-3 flex items-center justify-center"
           >
-            <Loader2 size={28} class="animate-spin text-gray-300" aria-hidden="true" />
+            <Loader2 size={28} class="animate-spin text-gray-300" />
+            <span class="sr-only">{t('landing.bankidQrLoading')}</span>
           </div>
         )}
 

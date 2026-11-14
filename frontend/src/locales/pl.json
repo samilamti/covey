@@ -134,7 +134,7 @@
       "whereAreYou": "Gdzie jesteś?",
       "thanks": "Dziękuję bardzo!"
     },
-    "unread": "{{count}} nieprzeczytanych wiadomości"
+    "unread": "Nieprzeczytane wiadomości: {{count}}"
   },
   "profile": {
     "title": "Mój profil",

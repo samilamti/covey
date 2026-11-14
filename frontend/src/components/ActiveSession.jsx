@@ -468,7 +468,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
             aria-controls={messagesPanelId}
             class="flex items-center gap-2 text-sm text-indigo-600 mb-3"
           >
-            <MessageCircle size={16} aria-hidden="true" />
+            <MessageCircle size={16} />
             {t('messages.title')}
             {unreadCount > 0 && (
               // The visible badge is just a number; a screen reader user

@@ -11,6 +11,36 @@ import { MorePeopleIcon } from './icons/MorePeopleIcon'
 import { EveryoneIcon } from './icons/EveryoneIcon'
 
 /**
+ * Arrow keys move the choice within a radiogroup. role="radio" tells a
+ * screen reader the arrows work (ARIA radio group pattern), so they have
+ * to. Left and right swap in a right-to-left layout, where the next card
+ * sits to the left. Only the checked radio is in the tab order, so Tab
+ * leaves the group in one step.
+ */
+function onRadioKeyDown(e, values, current, select) {
+  const rtl = document.dir === 'rtl'
+  const step = {
+    ArrowDown: 1,
+    ArrowUp: -1,
+    ArrowRight: rtl ? -1 : 1,
+    ArrowLeft: rtl ? 1 : -1,
+  }[e.key]
+  if (!step) return
+  e.preventDefault()
+  const next = values[(values.indexOf(current) + step + values.length) % values.length]
+  select(next)
+  const radios = e.currentTarget.closest('[role="radiogroup"]').querySelectorAll('[role="radio"]')
+  radios[values.indexOf(next)]?.focus()
+}
+
+const TYPE_OPTIONS = [
+  { key: 'walk', Icon: WalkIcon },
+  { key: 'wait', Icon: WaitIcon },
+]
+const TYPE_VALUES = TYPE_OPTIONS.map((o) => o.key)
+const TIER_VALUES = ['same_demographics', 'verified_guardians', 'any_member']
+
+/**
  * CreateRequest — form to create a new assistance request.
  *
  * User selects a type (walk/wait), writes an optional message,
@@ -67,23 +97,22 @@ export function CreateRequest({ onCreated }) {
             section name rather than an invisible <h3>, which avoids adding
             a heading the visual design deliberately omits. */}
         <div class="flex gap-3" role="radiogroup" aria-label={t('requests.type')}>
-          {[
-            { key: 'walk', Icon: WalkIcon },
-            { key: 'wait', Icon: WaitIcon },
-          ].map(({ key, Icon }) => (
+          {TYPE_OPTIONS.map(({ key, Icon }) => (
             <button
               key={key}
               type="button"
               role="radio"
               aria-checked={type === key}
+              tabIndex={type === key ? 0 : -1}
               onClick={() => setType(key)}
+              onKeyDown={(e) => onRadioKeyDown(e, TYPE_VALUES, type, setType)}
               class={`flex-1 flex flex-col items-center text-center px-4 py-5 rounded-xl border-2 transition-colors ${
                 type === key
                   ? 'bg-indigo-50 border-indigo-400 text-indigo-700'
                   : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
               }`}
             >
-              <Icon size={44} aria-hidden="true" />
+              <Icon size={44} />
               <span class="text-lg font-bold mt-2">{t(`requests.types.${key}`)}</span>
               <span class="text-xs opacity-60 mt-1 leading-snug">{t(`requests.types.${key}Examples`)}</span>
             </button>
@@ -111,14 +140,16 @@ export function CreateRequest({ onCreated }) {
                 type="button"
                 role="radio"
                 aria-checked={eligibilityTier === tier.value}
+                tabIndex={eligibilityTier === tier.value ? 0 : -1}
                 onClick={() => setEligibilityTier(tier.value)}
+                onKeyDown={(e) => onRadioKeyDown(e, TIER_VALUES, eligibilityTier, setEligibilityTier)}
                 class={`w-full flex items-center gap-3 text-left px-3 py-2 rounded-lg text-sm border transition-colors ${
                   eligibilityTier === tier.value
                     ? 'bg-indigo-50 border-indigo-300 text-indigo-700'
                     : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
                 }`}
               >
-                <tier.Icon size={28} aria-hidden="true" />
+                <tier.Icon size={28} />
                 <div>
                   <div class="font-medium">{tier.label}</div>
                   <div class="text-xs opacity-70">{tier.desc}</div>

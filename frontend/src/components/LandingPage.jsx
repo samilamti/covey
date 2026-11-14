@@ -210,7 +210,7 @@ export function LandingPage({ onLogin }) {
               aria-live="polite"
               class="bg-blue-50 text-blue-800 p-4 rounded-lg flex flex-col items-center animate-pulse"
             >
-              <Loader2 size={32} class="animate-spin mb-2" aria-hidden="true" />
+              <Loader2 size={32} class="animate-spin mb-2" />
               <p class="font-medium">{pendingText}</p>
             </div>
           ) : (

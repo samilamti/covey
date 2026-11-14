@@ -134,7 +134,7 @@
       "whereAreYou": "Sumiippit?",
       "thanks": "Qujanaq!"
     },
-    "unread": "{{count}} atuangasaanngitsut"
+    "unread": "Atuangasaanngitsut: {{count}}"
   },
   "profile": {
     "title": "Uanga pillut",

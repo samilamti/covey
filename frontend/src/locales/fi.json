@@ -134,7 +134,7 @@
       "whereAreYou": "Missä olet?",
       "thanks": "Kiitos paljon!"
     },
-    "unread": "{{count}} lukematonta viestiä"
+    "unread": "Lukemattomat viestit: {{count}}"
   },
   "profile": {
     "title": "Profiilini",

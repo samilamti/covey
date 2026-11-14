@@ -82,13 +82,14 @@ describe('ProgressDashboard', () => {
   it('names the loading state so a screen reader knows the tab is working', () => {
     // Before this, the loading branch rendered only a spinning div with no
     // text or accessible name — a blind user hitting the Progress tab
-    // heard nothing between navigation and the first content paint. Mark
-    // the container role="status" with an aria-label so a polite live
-    // region announces "loading" without duplicating a spinner icon.
+    // heard nothing between navigation and the first content paint. A
+    // status region speaks its text content, never an aria-label, so the
+    // word has to be in the region as (visually hidden) text.
     const { container } = render(<ProgressDashboard />)
     const status = container.querySelector('div[role="status"][aria-live="polite"]')
-    expect(status, 'expected a named status region around the progress spinner').toBeTruthy()
-    expect(status.getAttribute('aria-label')).toBe('app.loading')
+    expect(status, 'expected a status region around the progress spinner').toBeTruthy()
+    expect(status.textContent).toContain('app.loading')
+    expect(status.hasAttribute('aria-label')).toBe(false)
   })
 
   it('renders total points after loading', async () => {

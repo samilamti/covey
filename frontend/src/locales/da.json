@@ -134,7 +134,7 @@
       "whereAreYou": "Hvor er du?",
       "thanks": "Tusind tak!"
     },
-    "unread": "{{count}} ulæste beskeder"
+    "unread": "Ulæste beskeder: {{count}}"
   },
   "profile": {
     "title": "Min profil",

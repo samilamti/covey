@@ -134,7 +134,7 @@
       "whereAreYou": "Hvar ert tú?",
       "thanks": "Túsund takk!"
     },
-    "unread": "{{count}} ólisin boð"
+    "unread": "Ólisin boð: {{count}}"
   },
   "profile": {
     "title": "Mítt vangamynd",

@@ -137,6 +137,57 @@ describe('CreateRequest', () => {
     expect(checkedAfter[0].textContent).toContain('requests.tiers.anyMember')
   })
 
+  it('moves the type choice with arrow keys and keeps one tab stop', async () => {
+    // role="radio" tells a screen reader that arrow keys change the choice,
+    // so they must; and only the checked radio may sit in the tab order.
+    const { getByRole, getAllByRole } = render(<CreateRequest />)
+    const group = getByRole('radiogroup', { name: 'requests.type' })
+    const [walk, wait] = getAllByRole('radio').filter((el) => group.contains(el))
+    expect([walk.tabIndex, wait.tabIndex]).toEqual([0, -1])
+
+    walk.focus()
+    await fireEvent.keyDown(walk, { key: 'ArrowRight' })
+    expect(wait.getAttribute('aria-checked')).toBe('true')
+    expect(document.activeElement).toBe(wait)
+    expect([walk.tabIndex, wait.tabIndex]).toEqual([-1, 0])
+
+    // Wraps around at the end of the group.
+    await fireEvent.keyDown(wait, { key: 'ArrowDown' })
+    expect(walk.getAttribute('aria-checked')).toBe('true')
+    expect(document.activeElement).toBe(walk)
+  })
+
+  it('moves the tier choice with arrow keys in both directions', async () => {
+    const { getByRole, getAllByRole } = render(<CreateRequest />)
+    const group = getByRole('radiogroup', { name: 'requests.eligibility' })
+    const radios = getAllByRole('radio').filter((el) => group.contains(el))
+    radios[0].focus()
+    await fireEvent.keyDown(radios[0], { key: 'ArrowUp' })
+    expect(radios[2].getAttribute('aria-checked')).toBe('true')
+    expect(document.activeElement).toBe(radios[2])
+    await fireEvent.keyDown(radios[2], { key: 'ArrowDown' })
+    expect(radios[0].getAttribute('aria-checked')).toBe('true')
+    // Any other key leaves the choice alone.
+    await fireEvent.keyDown(radios[0], { key: 'a' })
+    expect(radios[0].getAttribute('aria-checked')).toBe('true')
+  })
+
+  it('swaps left and right in a right-to-left layout', async () => {
+    document.dir = 'rtl'
+    try {
+      // Three options, so going the wrong way lands somewhere else.
+      const { getByRole, getAllByRole } = render(<CreateRequest />)
+      const group = getByRole('radiogroup', { name: 'requests.eligibility' })
+      const radios = getAllByRole('radio').filter((el) => group.contains(el))
+      await fireEvent.keyDown(radios[0], { key: 'ArrowLeft' })
+      expect(radios[1].getAttribute('aria-checked')).toBe('true')
+      await fireEvent.keyDown(radios[1], { key: 'ArrowRight' })
+      expect(radios[0].getAttribute('aria-checked')).toBe('true')
+    } finally {
+      document.dir = ''
+    }
+  })
+
   it('wires the message textarea to its own label', () => {
     // A <label> sitting next to a <textarea> is only an accessible name
     // when `for=id` ties them together — a sibling label is ignored. Without

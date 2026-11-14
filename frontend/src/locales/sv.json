@@ -134,7 +134,7 @@
       "whereAreYou": "Var är du?",
       "thanks": "Tack så mycket!"
     },
-    "unread": "{{count}} olästa meddelanden"
+    "unread": "Olästa meddelanden: {{count}}"
   },
   "profile": {
     "title": "Min profil",

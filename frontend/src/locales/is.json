@@ -134,7 +134,7 @@
       "whereAreYou": "Hvar ertu?",
       "thanks": "Takk fyrir!"
     },
-    "unread": "{{count}} ólesin skilaboð"
+    "unread": "Ólesin skilaboð: {{count}}"
   },
   "profile": {
     "title": "Prófíllinn minn",
