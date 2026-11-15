@@ -14,6 +14,17 @@ vi.mock('lucide-preact', () => ({
   Ban: () => h('span', null, 'Ban'),
 }))
 
+// Spy on the global announcer — the inline role="status|alert" notice still
+// exists, but Sami's a11y notes point out that an inline region mounted
+// TOGETHER with its text is often skipped (VoiceOver especially). The
+// reliable channel is the always-mounted announcer, so we verify
+// SafetyActions routes its success and failure messages through it.
+const announceSpy = vi.fn()
+vi.mock('../src/context/AnnouncerContext', () => ({
+  useAnnouncer: () => ({ announce: announceSpy }),
+  AnnouncerProvider: ({ children }) => children,
+}))
+
 vi.mock('../src/services/safety', () => ({
   safetyService: {
     getPartners: vi.fn().mockResolvedValue({ partners: [] }),
@@ -33,6 +44,7 @@ describe('SafetyActions', () => {
   beforeEach(() => {
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     vi.clearAllMocks()
+    announceSpy.mockClear()
   })
 
   afterEach(() => {
@@ -91,6 +103,36 @@ describe('SafetyActions', () => {
     fireEvent.click(getByText('safety.send'))
     await waitFor(() => expect(getByText('app.error')).toBeTruthy())
     expect(getByRole('dialog')).toBeTruthy()
+  })
+
+  it('routes block success through the global announcer so VoiceOver speaks it', async () => {
+    // The inline role="status" notice is mounted together with its text,
+    // which VoiceOver tends to skip. The global announcer is the reliable
+    // channel. Polite because success is a confirmation, not an alarm.
+    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    const { getByText } = render(<SafetyActions userId="u2" name="Kim" />)
+    fireEvent.click(getByText('safety.block'))
+    await waitFor(() => expect(getByText('safety.unblock')).toBeTruthy())
+    expect(announceSpy).toHaveBeenCalledWith('safety.blockDone', { assertive: false })
+  })
+
+  it('routes block failure through the global announcer as assertive', async () => {
+    // The user just tried to act and the action failed. Assertive — a quiet
+    // polite announcement would be talked over by anything else happening
+    // on the page and the user would not realise their block did not land.
+    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    safetyService.block.mockRejectedValueOnce(new Error('nope'))
+    const { getByText } = render(<SafetyActions userId="u2" name="Kim" />)
+    fireEvent.click(getByText('safety.block'))
+    await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('app.error', { assertive: true }))
+  })
+
+  it('routes report success through the global announcer', async () => {
+    const { getByText, getByLabelText } = render(<SafetyActions userId="u2" />)
+    fireEvent.click(getByText('safety.report'))
+    fireEvent.click(getByLabelText('safety.reasons.harassment'))
+    fireEvent.click(getByText('safety.send'))
+    await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('safety.reportSent', { assertive: false }))
   })
 
   it('unblocks a blocked user', async () => {

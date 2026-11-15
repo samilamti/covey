@@ -30,6 +30,22 @@ vi.mock('../src/components/SafetyPartners', () => ({
   SafetyPartners: () => h('div', null, 'SafetyPartners'),
 }))
 
+// Spy on the global announcer — the inline role="status|alert" message block
+// stays, but Sami's a11y notes point out that an inline region mounted
+// TOGETHER with its text is often skipped (VoiceOver especially). The
+// reliable channel is the always-mounted announcer.
+const announceSpy = vi.fn()
+vi.mock('../src/context/AnnouncerContext', () => ({
+  useAnnouncer: () => ({ announce: announceSpy }),
+  AnnouncerProvider: ({ children }) => children,
+}))
+
+vi.mock('../src/services/gdpr', () => ({
+  gdprService: {
+    exportData: vi.fn().mockResolvedValue({ user: {}, requests: [] }),
+  },
+}))
+
 vi.mock('../src/services/profile', () => ({
   profileService: {
     get: vi.fn().mockResolvedValue({ user: { safetyScore: 3, isGuardian: false } }),
@@ -47,6 +63,7 @@ describe('ProfileView', () => {
   beforeEach(() => {
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     vi.clearAllMocks()
+    announceSpy.mockClear()
   })
 
   afterEach(() => {
@@ -141,5 +158,25 @@ describe('ProfileView', () => {
     const { getByText, findByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
     await fireEvent.click(getByText('profile.save'))
     expect(await findByText('profile.saved')).toBeTruthy()
+  })
+
+  it('routes save success through the global announcer as polite', async () => {
+    // The inline role="status" message block is mounted together with its
+    // text, which VoiceOver often skips. The global announcer is always in
+    // the a11y tree so its update fires reliably.
+    const { fireEvent } = await import('@testing-library/preact')
+    const { getByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    await fireEvent.click(getByText('profile.save'))
+    await new Promise((r) => setTimeout(r, 0))
+    expect(announceSpy).toHaveBeenCalledWith('profile.saved', { assertive: false })
+  })
+
+  it('routes save failure through the global announcer as assertive', async () => {
+    const { fireEvent } = await import('@testing-library/preact')
+    profileService.update.mockRejectedValueOnce(new Error('nope'))
+    const { getByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    await fireEvent.click(getByText('profile.save'))
+    await new Promise((r) => setTimeout(r, 0))
+    expect(announceSpy).toHaveBeenCalledWith('app.error', { assertive: true })
   })
 })

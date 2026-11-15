@@ -5,13 +5,24 @@ import { profileService } from '../services/profile'
 import { gdprService } from '../services/gdpr'
 import { LanguageSelector } from './LanguageSelector'
 import { SafetyPartners } from './SafetyPartners'
+import { useAnnouncer } from '../context/AnnouncerContext'
 
 export function ProfileView({ user, onLogout }) {
   const { t } = useTranslation()
+  const { announce } = useAnnouncer()
   const [displayName, setDisplayName] = useState(user?.displayName || user?.name || '')
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState(null)
   const [profile, setProfile] = useState(null)
+
+  // Route message changes through both the inline role="status|alert" block
+  // (the visible receipt) and the global announcer. The inline region is
+  // mounted together with its text, which VoiceOver often skips; the global
+  // announcer is always in the a11y tree so its content update fires reliably.
+  const showMessage = (type, text) => {
+    setMessage({ type, text })
+    announce(text, { assertive: type === 'error' })
+  }
   // The display-name label sits next to the input, not around it, so without
   // an explicit htmlFor/id pair assistive tech reads the input as unnamed.
   const displayNameId = useId()
@@ -37,9 +48,9 @@ export function ProfileView({ user, onLogout }) {
       // check mark (or nothing at all, depending on the voice). A translated
       // word is announced properly through the surrounding role="status"
       // live region.
-      setMessage({ type: 'success', text: t('profile.saved') })
+      showMessage('success', t('profile.saved'))
     } catch {
-      setMessage({ type: 'error', text: t('app.error') })
+      showMessage('error', t('app.error'))
     } finally {
       setSaving(false)
     }
@@ -57,7 +68,7 @@ export function ProfileView({ user, onLogout }) {
       a.click()
       URL.revokeObjectURL(url)
     } catch {
-      setMessage({ type: 'error', text: t('app.error') })
+      showMessage('error', t('app.error'))
     }
   }
 
@@ -67,7 +78,7 @@ export function ProfileView({ user, onLogout }) {
       await profileService.deleteAccount()
       onLogout()
     } catch {
-      setMessage({ type: 'error', text: t('app.error') })
+      showMessage('error', t('app.error'))
     }
   }
 

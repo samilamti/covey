@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Flag, Ban } from 'lucide-preact'
 import { safetyService } from '../services/safety'
+import { useAnnouncer } from '../context/AnnouncerContext'
 
 export const REPORT_REASONS = ['harassment', 'inappropriate', 'unsafe', 'spam', 'other']
 
@@ -14,6 +15,7 @@ export const REPORT_REASONS = ['harassment', 'inappropriate', 'unsafe', 'spam', 
  */
 export function SafetyActions({ userId, name, requestId, blocked = false, onBlocked, onUnblocked }) {
   const { t } = useTranslation()
+  const { announce } = useAnnouncer()
   const [isBlocked, setIsBlocked] = useState(blocked)
   const [showReport, setShowReport] = useState(false)
   const [reason, setReason] = useState(null)
@@ -46,15 +48,25 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
     onBlocked?.()
   }
 
+  // Route a status change through the inline notice element AND the global
+  // announcer. The inline role="status" renders together with its text, which
+  // VoiceOver often skips; the global announcer already exists in the a11y
+  // tree so its content update fires reliably. Keep the inline block as the
+  // visible receipt plus a belt-and-braces channel.
+  const showNotice = (type, text) => {
+    setNotice({ type, text })
+    announce(text, { assertive: type === 'error' })
+  }
+
   const handleBlock = async () => {
     if (!confirm(t('safety.blockConfirm', { name: who }))) return
     setBusy(true)
     try {
       await safetyService.block(userId)
       markBlocked()
-      setNotice({ type: 'success', text: t('safety.blockDone', { name: who }) })
+      showNotice('success', t('safety.blockDone', { name: who }))
     } catch {
-      setNotice({ type: 'error', text: t('app.error') })
+      showNotice('error', t('app.error'))
     } finally {
       setBusy(false)
     }
@@ -68,7 +80,7 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
       setNotice(null)
       onUnblocked?.()
     } catch {
-      setNotice({ type: 'error', text: t('app.error') })
+      showNotice('error', t('app.error'))
     } finally {
       setBusy(false)
     }
@@ -128,9 +140,9 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
       setReason(null)
       setDetails('')
       setAlsoBlock(false)
-      setNotice({ type: 'success', text: t('safety.reportSent') })
+      showNotice('success', t('safety.reportSent'))
     } catch {
-      setNotice({ type: 'error', text: t('app.error') })
+      showNotice('error', t('app.error'))
     } finally {
       setBusy(false)
     }
