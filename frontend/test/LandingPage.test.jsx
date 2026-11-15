@@ -119,4 +119,27 @@ describe('LandingPage', () => {
       expect(status.textContent).toContain('landing.bankidPending')
     })
   })
+
+  it('routes the initial pending instruction through the global announcer (polite)', async () => {
+    // The inline role="status" region above is mounted together with its
+    // first instruction text, which VoiceOver often skips. The announcer
+    // seeds the first paint; aria-live takes over for subsequent hint-code
+    // transitions so VoiceOver doesn't read the same line twice. Mirrors
+    // the BankIDLogin fix for the real flow — this test covers the stub
+    // path that ships in local dev (FEATURE_BANKID_AUTH off). Polite — the
+    // user initiated the sign-in, whatever they were reading shouldn't be
+    // interrupted.
+    const { fireEvent, waitFor } = await import('@testing-library/preact')
+    const { authService } = await import('../src/services/auth')
+    authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
+    const { getByText } = render(<LandingPage onLogin={vi.fn()} />)
+    await fireEvent.click(getByText('landing.loginButton'))
+    // The announcer is invoked without an opts arg (default polite); we
+    // explicitly assert that so an accidental assertive slip is caught.
+    await waitFor(() => {
+      const call = announceSpy.mock.calls.find((c) => c[0] === 'landing.bankidPending')
+      expect(call).toBeTruthy()
+      expect(call[1]).toBeUndefined()
+    })
+  })
 })

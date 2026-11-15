@@ -36,6 +36,20 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
     if (error) announce(error, { assertive: true })
   }, [error])
 
+  // Speak the pending instruction when the BankID flow first appears. The
+  // inline aria-live region below picks up subsequent hint-code transitions
+  // ("open BankID" → "enter your code") natively — aria-live is reliable
+  // for CHANGES once the region is in the a11y tree. The mounted-with-text
+  // case is the first paint of the pending screen, where region and text
+  // enter the tree on the same tick; VoiceOver typically skips that one.
+  // Polite — the user initiated this transition themselves, and whatever
+  // they were reading before shouldn't be interrupted.
+  useEffect(() => {
+    if (status !== 'pending') return
+    announce(pendingText)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status])
+
   const orderRef = useRef(null)
   const collectTimer = useRef(null)
   const qrTimer = useRef(null)

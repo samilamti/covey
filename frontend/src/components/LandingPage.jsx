@@ -140,6 +140,21 @@ export function LandingPage({ onLogin }) {
     ? t('landing.bankidUserSign')
     : t('landing.bankidPending')
 
+  // Speak the pending instruction when the BankID stub flow first enters its
+  // pending state. The inline aria-live region below picks up subsequent
+  // hint-code transitions ("open BankID" → "enter your code") natively —
+  // aria-live is reliable for CHANGES once the region is in the a11y tree.
+  // The mounted-with-text case is the first paint of the pending screen,
+  // where region and text enter the tree on the same tick and VoiceOver
+  // typically skips it. Mirrors the BankIDLogin fix for the real flow;
+  // this branch covers local dev/stub (FEATURE_BANKID_AUTH off). Polite —
+  // the user initiated the transition themselves.
+  useEffect(() => {
+    if (status !== 'pending') return
+    announce(pendingText)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status])
+
   return (
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col safe-area-top safe-area-bottom safe-area-x relative">
       <header class="p-4 flex justify-end">
