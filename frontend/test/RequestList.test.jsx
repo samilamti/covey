@@ -134,6 +134,24 @@ describe('RequestList', () => {
     })
   })
 
+  it('hides the decorative breadcrumb arrow from assistive tech', async () => {
+    // The visual "→" between the two breadcrumb crumbs is a separator, not
+    // a word; without aria-hidden a screen reader reads it as "rightwards
+    // arrow" every time it visits the heading. The final crumb carries
+    // aria-current="page" so it announces as the current page rather than
+    // as a second identical-sounding span. Guards the ARIA Breadcrumb
+    // pattern on RequestList's create-mode header.
+    const { container, getByText } = render(<RequestList currentUserId="user-a" />)
+    await waitFor(() => expect(getByText('requests.createShort')).toBeTruthy())
+
+    const arrow = container.querySelector('h2 span[aria-hidden="true"]')
+    expect(arrow).toBeTruthy()
+    expect(arrow.textContent).toBe('→')
+
+    const current = getByText('requests.createShort')
+    expect(current.getAttribute('aria-current')).toBe('page')
+  })
+
   it('defaults to list view when open requests exist', async () => {
     requestService.listOpen.mockResolvedValue({ requests: [{
       id: 'r-open-1', type: 'walk', status: 'open', message: 'Need help',

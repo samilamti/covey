@@ -228,6 +228,15 @@ export function RequestList({ currentUserId }) {
       {/* Header — breadcrumb + toggle */}
       <div class="flex justify-between items-center mb-4">
         {showCreate ? (
+          // Breadcrumb heading. The "→" is a VISUAL separator — a screen
+          // reader otherwise reads it as "rightwards arrow" between the two
+          // crumbs, which is noise that competes with the actual labels
+          // (WCAG 1.3.1 Info and Relationships + 2.4.6 Headings and Labels).
+          // aria-hidden hides it from assistive tech while keeping it in
+          // the layout for sighted users. aria-current="page" on the final
+          // crumb matches the ARIA Breadcrumb pattern, so the heading
+          // announces as "Requests, Create, current page" rather than two
+          // identical-sounding spans.
           <h2 class="text-xl font-bold flex items-center gap-1.5">
             <button
               onClick={() => setShowCreate(false)}
@@ -235,8 +244,8 @@ export function RequestList({ currentUserId }) {
             >
               {t('requests.title')}
             </button>
-            <span class="text-gray-300 font-normal">→</span>
-            <span>{t('requests.createShort')}</span>
+            <span class="text-gray-300 font-normal" aria-hidden="true">→</span>
+            <span aria-current="page">{t('requests.createShort')}</span>
           </h2>
         ) : (
           <h2 class="text-xl font-bold">{t('requests.title')}</h2>
