@@ -1,5 +1,7 @@
+import { useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { MapPin } from 'lucide-preact'
+import { useAnnouncer } from '../context/AnnouncerContext'
 
 /**
  * LocationBanner — inline notification shown when geolocation fails.
@@ -11,12 +13,32 @@ import { MapPin } from 'lucide-preact'
  */
 export function LocationBanner({ error, onRetry, severity = 'info' }) {
   const { t } = useTranslation()
-
-  if (!error) return null
+  const { announce } = useAnnouncer()
 
   const message = error === 'denied'
     ? t('location.denied')
     : t('location.unavailable')
+
+  // Route the banner through the global announcer whenever `error` changes
+  // to a non-null value. The inline role="status"/"alert" block below stays
+  // as a belt-and-braces channel, but as Sami's notes record, a region
+  // mounted TOGETHER with its text is often skipped by VoiceOver — the
+  // region and the text land in the a11y tree at the same tick, so there's
+  // no CHANGE event for the live-region observer to fire on. The global
+  // announcer already sits in the tree, so a text change fires reliably.
+  // Warning severity is safety-critical (ActiveSession loses location
+  // relay) → assertive; the pre-session informational use (CreateRequest,
+  // RequestList) stays polite so it doesn't interrupt. The effect depends
+  // on `error` and `severity`, so re-announces on a denied→unavailable
+  // transition; `message` and `announce` round out the deps to satisfy the
+  // exhaustive-deps lint without changing behaviour (message is derived
+  // from error, announce is stable from useCallback).
+  useEffect(() => {
+    if (!error) return
+    announce(message, { assertive: severity === 'warning' })
+  }, [error, severity, message, announce])
+
+  if (!error) return null
 
   // 'warning' (safety-critical) stays red; informational uses a calm blue so it
   // doesn't compete with the amber rating prompt (amber is reserved for that).

@@ -13,6 +13,17 @@ vi.mock('lucide-preact', () => ({
   MapPin: (props) => h('span', { 'data-testid': 'map-pin', ...props }),
 }))
 
+// Spy on the global announcer. Sami's a11y note: an inline role="status" or
+// role="alert" region rendered together with its text is often skipped by
+// VoiceOver, so the component must also route the message through the
+// always-mounted announcer. The inline banner stays as a belt-and-braces
+// channel, but the announcer is where the reliable spoken update lives.
+const announceSpy = vi.fn()
+vi.mock('../src/context/AnnouncerContext', () => ({
+  useAnnouncer: () => ({ announce: announceSpy }),
+  AnnouncerProvider: ({ children }) => children,
+}))
+
 const { LocationBanner } = await import('../src/components/LocationBanner')
 
 describe('LocationBanner', () => {
@@ -20,6 +31,7 @@ describe('LocationBanner', () => {
 
   beforeEach(() => {
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    announceSpy.mockClear()
   })
 
   afterEach(() => {
@@ -82,5 +94,34 @@ describe('LocationBanner', () => {
     // announcement is right — no interruption.
     const { container } = render(<LocationBanner error="denied" />)
     expect(container.firstChild.getAttribute('role')).toBe('status')
+  })
+
+  it('announces the informational variant through the polite channel', () => {
+    // Inline role="status" blocks mounted TOGETHER with their text are often
+    // skipped by VoiceOver (region + text land in the a11y tree at the same
+    // tick, so there is no CHANGE event). The global announcer already exists
+    // in the tree, so this is where the reliable spoken update lives.
+    render(<LocationBanner error="denied" />)
+    expect(announceSpy).toHaveBeenCalledWith('location.denied', { assertive: false })
+  })
+
+  it('announces the safety-critical ("warning") variant through the assertive channel', () => {
+    // ActiveSession passes severity="warning" because losing location relay
+    // during an escort is a safety concern — a screen-reader user must be
+    // interrupted to hear it, not told politely between other announcements.
+    render(<LocationBanner error="denied" severity="warning" />)
+    expect(announceSpy).toHaveBeenCalledWith('location.denied', { assertive: true })
+  })
+
+  it('does not announce when error is null (banner is hidden)', () => {
+    render(<LocationBanner error={null} />)
+    expect(announceSpy).not.toHaveBeenCalled()
+  })
+
+  it('announces the unavailable message for the "timeout" error code', () => {
+    // 'timeout' shares the "unavailable" message because to the user the
+    // distinction doesn't matter — the device simply couldn't answer.
+    render(<LocationBanner error="timeout" />)
+    expect(announceSpy).toHaveBeenCalledWith('location.unavailable', { assertive: false })
   })
 })
