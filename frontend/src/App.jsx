@@ -133,8 +133,21 @@ function AppContent() {
   }
 
   if (loading) {
+    // This is the very first paint on a signed-in reload — the session
+    // restore sits between the token read and the first MainLayout render.
+    // Without a status role a screen reader lands on bare text with no
+    // reason to announce it as an app state, so the user hears nothing
+    // between the authed reload and the eventual list paint and cannot
+    // tell whether the app is working or broken. role="status" +
+    // aria-live="polite" turns the one line into an announced state
+    // without stealing focus. Mirrors the RequestList and ProgressDashboard
+    // loading pattern.
     return (
-      <div class="min-h-screen flex items-center justify-center">
+      <div
+        role="status"
+        aria-live="polite"
+        class="min-h-screen flex items-center justify-center"
+      >
         {t('app.loading')}
       </div>
     )
