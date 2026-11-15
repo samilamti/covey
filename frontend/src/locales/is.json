@@ -36,7 +36,8 @@
     "requests": "Beiðnir",
     "profile": "Prófíll",
     "progress": "Framfarir",
-    "primary": "Aðalvalmynd"
+    "primary": "Aðalvalmynd",
+    "skipToContent": "Hoppa í efnið"
   },
   "app": {
     "loading": "Hleður…",

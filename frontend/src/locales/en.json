@@ -36,7 +36,8 @@
     "requests": "Requests",
     "profile": "Profile",
     "progress": "Progress",
-    "primary": "Main navigation"
+    "primary": "Main navigation",
+    "skipToContent": "Skip to content"
   },
   "app": {
     "loading": "Loading…",

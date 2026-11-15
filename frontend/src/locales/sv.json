@@ -36,7 +36,8 @@
     "requests": "Förfrågningar",
     "profile": "Profil",
     "progress": "Framsteg",
-    "primary": "Huvudnavigering"
+    "primary": "Huvudnavigering",
+    "skipToContent": "Hoppa till innehållet"
   },
   "app": {
     "loading": "Laddar…",

@@ -36,7 +36,8 @@
     "requests": "Forespørsler",
     "profile": "Profil",
     "progress": "Fremgang",
-    "primary": "Hovednavigasjon"
+    "primary": "Hovednavigasjon",
+    "skipToContent": "Hopp til innholdet"
   },
   "app": {
     "loading": "Laster…",

@@ -36,7 +36,8 @@
     "requests": "Qinnuteqaatit",
     "profile": "Uanga pillut",
     "progress": "Ingerlatsivik",
-    "primary": "Pingaarnersumik ingerlasiorneq"
+    "primary": "Pingaarnersumik ingerlasiorneq",
+    "skipToContent": "Imarisaanut pisigit"
   },
   "app": {
     "loading": "Ikkuarpoq…",

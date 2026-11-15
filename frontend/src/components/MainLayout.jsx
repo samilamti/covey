@@ -66,14 +66,51 @@ export function MainLayout({ user, onLogout }) {
     }
   }
 
+  // Skip link — WCAG 2.4.1 Bypass Blocks. Every keyboard-only user currently
+  // has to tab past the InstallPrompt banner (and any transient dismiss / Install
+  // buttons it mounts) before reaching the main content; a screen-reader user
+  // navigating by landmark can skip ahead, but a sighted keyboard user who does
+  // not know that shortcut cannot. The link stays visually hidden until it takes
+  // focus, which is the moment it matters: a Tab from the top of the page.
+  //
+  // The onClick handler is belt-and-braces: anchor jumps DO move focus in
+  // modern browsers once the target has tabindex=-1, but older Android
+  // builds still vary, and a focus() call costs nothing. z-[1300] keeps it
+  // above the safety report modal (z-1200), the ActiveSession takeover
+  // (z-1100) and the app header (z-1001) so a "where am I?" refocus during
+  // a dialog still shows.
+  const skipToMain = (e) => {
+    e.preventDefault()
+    const main = document.getElementById('main-content')
+    if (main) {
+      main.focus()
+      main.scrollIntoView({ block: 'start' })
+    }
+  }
+
   return (
     <div class="min-h-screen bg-gray-50 pb-20 safe-area-x safe-area-top">
+      <a
+        href="#main-content"
+        onClick={skipToMain}
+        class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[1300] focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
+      >
+        {t('nav.skipToContent')}
+      </a>
+
       <InstallPrompt />
 
       {/* Main content area — capped + centred so cards don't stretch on tablets/large screens.
           The chrome header (name + language) was removed to reclaim space; language now
-          lives in the profile/settings tab. */}
-      <main class="p-4 max-w-md mx-auto w-full">
+          lives in the profile/settings tab.
+          tabIndex={-1} makes the <main> programmatically focusable so the skip
+          link can land on it; the focus ring is suppressed because the landing
+          is driven by a skip link, not by a Tab onto an interactive control. */}
+      <main
+        id="main-content"
+        tabIndex={-1}
+        class="p-4 max-w-md mx-auto w-full focus:outline-none"
+      >
         {renderContent()}
       </main>
 

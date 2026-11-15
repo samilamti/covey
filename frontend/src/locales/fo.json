@@ -36,7 +36,8 @@
     "requests": "Umbøðir",
     "profile": "Vangamynd",
     "progress": "Framgongd",
-    "primary": "Høvuðsnavigatión"
+    "primary": "Høvuðsnavigatión",
+    "skipToContent": "Stökk til innihaldið"
   },
   "app": {
     "loading": "Lesur inn…",

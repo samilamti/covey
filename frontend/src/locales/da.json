@@ -36,7 +36,8 @@
     "requests": "Anmodninger",
     "profile": "Profil",
     "progress": "Fremskridt",
-    "primary": "Hovednavigation"
+    "primary": "Hovednavigation",
+    "skipToContent": "Spring til indholdet"
   },
   "app": {
     "loading": "Indlæser…",

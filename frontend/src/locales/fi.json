@@ -36,7 +36,8 @@
     "requests": "Pyynnöt",
     "profile": "Profiili",
     "progress": "Edistyminen",
-    "primary": "Päänavigointi"
+    "primary": "Päänavigointi",
+    "skipToContent": "Siirry sisältöön"
   },
   "app": {
     "loading": "Ladataan…",
