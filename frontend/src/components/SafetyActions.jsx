@@ -33,9 +33,11 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
   // can return focus to it on close (ARIA APG Dialog pattern); dialogHeadingRef
   // is where focus lands when the modal opens so a screen reader announces
   // the dialog's title rather than keeping the caret on the invisible
-  // trigger behind the scrim.
+  // trigger behind the scrim. dialogContainerRef bounds the Tab/Shift+Tab
+  // focus trap below.
   const reportTriggerRef = useRef(null)
   const dialogHeadingRef = useRef(null)
+  const dialogContainerRef = useRef(null)
   // Guard for return-focus: without this, the "modal closed → focus the
   // trigger" branch fires on initial mount and steals focus the moment the
   // component renders.
@@ -86,16 +88,51 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
     }
   }
 
-  // Escape closes the report dialog — WCAG 2.1.1 Keyboard + the ARIA dialog
-  // pattern. Without this, a keyboard-only user has to Tab to Cancel to dismiss
-  // the modal, while every sighted user expects Esc to work. Only active while
-  // the dialog is open so we don't swallow Esc for anything else.
+  // Escape closes the report dialog AND Tab/Shift+Tab is trapped inside it —
+  // WCAG 2.1.1 Keyboard + 2.4.3 Focus Order + the ARIA APG Dialog pattern.
+  // Without the trap, aria-modal is a label-only signal: the browser still
+  // lets Tab walk from the Send button to the trigger behind the scrim and
+  // from there into the page under the modal, so a keyboard-only user loses
+  // their place while the modal "looks" open. Shift+Tab from the heading
+  // cycles to the last control; Tab from the last control cycles back to
+  // the first. The listener is scoped to the open dialog so no other view
+  // swallows Esc/Tab.
   useEffect(() => {
     if (!showReport) return
     const onKey = (e) => {
       if (e.key === 'Escape' && !busy) {
         e.stopPropagation()
         setShowReport(false)
+        return
+      }
+      if (e.key !== 'Tab') return
+      const container = dialogContainerRef.current
+      if (!container) return
+      // Scope the walk to visible, focusable controls only. The heading is
+      // tabIndex=-1 so .focus() works but it is deliberately not in the tab
+      // sequence — leave it out of the loop. A hidden input (type="hidden")
+      // is already filtered out because :not([disabled]) does not include
+      // it; a `disabled` button is skipped so the Send button being disabled
+      // (no reason picked yet) doesn't park the caret on a dead target.
+      const focusables = Array.from(
+        container.querySelectorAll(
+          'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute('data-focus-trap-exclude'))
+      if (focusables.length === 0) return
+      const first = focusables[0]
+      const last = focusables[focusables.length - 1]
+      const active = document.activeElement
+      if (e.shiftKey) {
+        if (active === first || !container.contains(active)) {
+          e.preventDefault()
+          last.focus()
+        }
+      } else {
+        if (active === last) {
+          e.preventDefault()
+          first.focus()
+        }
       }
     }
     document.addEventListener('keydown', onKey)
@@ -191,6 +228,7 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
 
       {showReport && (
         <div
+          ref={dialogContainerRef}
           class="fixed inset-0 bg-black/40 z-[1200] flex items-end sm:items-center justify-center"
           role="dialog"
           aria-modal="true"

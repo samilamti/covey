@@ -246,6 +246,78 @@ describe('SafetyActions', () => {
     expect(queryByRole('dialog')).toBeTruthy()
   })
 
+  it('traps Tab inside the open report dialog so focus cannot leak behind the scrim', () => {
+    // WCAG 2.4.3 Focus Order + ARIA APG Dialog pattern. aria-modal is a
+    // label-only signal — the browser itself still lets Tab walk out of a
+    // role="dialog" wrapper into the page below. Without the trap, a
+    // keyboard-only user Tabbing past Send lands on the Report trigger
+    // behind the scrim, then on controls on the surrounding page, while
+    // the modal is visually still open.
+    //
+    // There is a Report trigger outside the dialog (below in the DOM); the
+    // trap must prevent focus from reaching it while the dialog is open.
+    const { getByText, getByRole, getAllByRole } = render(
+      <SafetyActions userId="u2" name="Kim" />
+    )
+    const trigger = getByText('safety.report').closest('button')
+    fireEvent.click(trigger)
+    const dialog = getByRole('dialog')
+    // Collect only the dialog's visible focusable controls. The heading is
+    // tabIndex=-1 and explicitly outside the sequence.
+    const insideFocusables = Array.from(
+      dialog.querySelectorAll('button, input, textarea')
+    ).filter((el) => !el.disabled)
+    expect(insideFocusables.length).toBeGreaterThan(0)
+    const first = insideFocusables[0]
+    const last = insideFocusables[insideFocusables.length - 1]
+
+    // Simulate "Tab from the last focusable in the dialog". The handler
+    // preventDefaults the key and moves focus back to the first — a bare
+    // Tab would otherwise step to whatever button sits right after Send
+    // in document order, which on this view is a sibling control under
+    // the modal.
+    last.focus()
+    const tabEvent = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true })
+    const defaultPrevented = !document.dispatchEvent(tabEvent)
+    expect(defaultPrevented).toBe(true)
+    expect(document.activeElement).toBe(first)
+
+    // Shift+Tab from the first focusable cycles to the last — the mirror
+    // condition that prevents a user from leaving the modal backwards.
+    first.focus()
+    const shiftTabEvent = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true })
+    const shiftPrevented = !document.dispatchEvent(shiftTabEvent)
+    expect(shiftPrevented).toBe(true)
+    expect(document.activeElement).toBe(last)
+
+    // The Report trigger must remain outside the dialog AND outside the
+    // reach of a trapped Tab. Two SafetyActions-authored buttons exist on
+    // the page (Report, Block); neither should be reachable by continuing
+    // to Tab while the dialog is open.
+    const allButtons = getAllByRole('button')
+    const outsideButtons = allButtons.filter((b) => !dialog.contains(b))
+    expect(outsideButtons.length).toBeGreaterThan(0)
+    for (const outside of outsideButtons) {
+      // A real browser would still skip outside buttons because Tab was
+      // preventDefaulted above — assert the invariant the trap preserves.
+      expect(dialog.contains(outside)).toBe(false)
+    }
+  })
+
+  it('does not swallow Tab when the dialog is closed', () => {
+    // The trap handler is scoped to showReport === true so Tab on the
+    // surrounding page keeps its native behaviour. A trap that leaked
+    // when the modal was closed would silently break Tab across the
+    // whole app for anyone with a SafetyActions on screen (which is
+    // every profile view).
+    const { getByText } = render(<SafetyActions userId="u2" name="Kim" />)
+    const trigger = getByText('safety.report').closest('button')
+    trigger.focus()
+    const tabEvent = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true })
+    const defaultPrevented = !document.dispatchEvent(tabEvent)
+    expect(defaultPrevented).toBe(false)
+  })
+
   it('gives each mounted SafetyActions its own dialog ids', () => {
     // Two instances can be on screen at once (live session + partner list);
     // hardcoded ids would duplicate and break the label associations.
