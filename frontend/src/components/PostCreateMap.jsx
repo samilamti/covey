@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft } from 'lucide-preact'
 import 'leaflet/dist/leaflet.css'
+import { useAnnouncer } from '../context/AnnouncerContext'
 
 /**
  * PostCreateMap — shows a Leaflet map centered on the requester's
@@ -9,8 +10,18 @@ import 'leaflet/dist/leaflet.css'
  */
 export function PostCreateMap({ position, onBack }) {
   const { t } = useTranslation()
+  const { announce } = useAnnouncer()
   const mapRef = useRef(null)
   const mapInstance = useRef(null)
+
+  // Speak the success banner through the always-mounted global announcer, in
+  // addition to the inline role="status" below. The inline region is often
+  // skipped by VoiceOver because it is mounted TOGETHER with its text; the
+  // global announcer already exists in the a11y tree when its content
+  // changes, so the "polite" update actually fires.
+  useEffect(() => {
+    announce(t('requests.waitingForHelp'))
+  }, [])
 
   useEffect(() => {
     const initMap = async () => {

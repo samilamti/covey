@@ -4,6 +4,7 @@ import { Capacitor } from '@capacitor/core'
 import { LandingPage } from './components/LandingPage'
 import { MainLayout } from './components/MainLayout'
 import { FeatureFlagProvider } from './context/FeatureFlagContext'
+import { AnnouncerProvider } from './context/AnnouncerContext'
 import { socket } from './socket'
 import { authService } from './services/auth'
 import { subscribeToPush } from './services/notifications'
@@ -149,7 +150,9 @@ function AppContent() {
 export function App() {
   return (
     <FeatureFlagProvider>
-      <AppContent />
+      <AnnouncerProvider>
+        <AppContent />
+      </AnnouncerProvider>
     </FeatureFlagProvider>
   )
 }

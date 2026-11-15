@@ -23,6 +23,17 @@ vi.mock('lucide-preact', () => ({
   Ban: (props) => h('span', props, 'Ban'),
 }))
 
+// Spy on the global announcer — the inline role="status" blocks still exist,
+// but Sami's a11y notes point out that an inline region mounted TOGETHER with
+// its text is often skipped (VoiceOver especially). The reliable channel is
+// the always-mounted announcer, so we verify ActiveSession routes its
+// user-driven and server-driven state transitions through it.
+const announceSpy = vi.fn()
+vi.mock('../src/context/AnnouncerContext', () => ({
+  useAnnouncer: () => ({ announce: announceSpy }),
+  AnnouncerProvider: ({ children }) => children,
+}))
+
 vi.mock('../src/services/safety', () => ({
   safetyService: {
     block: vi.fn().mockResolvedValue({ blocked: true, endedSessions: 1 }),
@@ -118,6 +129,7 @@ describe('ActiveSession', () => {
   beforeEach(() => {
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     vi.clearAllMocks()
+    announceSpy.mockClear()
     emitted.length = 0
     Object.keys(listeners).forEach((k) => delete listeners[k])
     // Default: geolocation working
@@ -339,6 +351,48 @@ describe('ActiveSession', () => {
     const region = proposalText.closest('[role="status"]')
     expect(region).not.toBeNull()
     expect(region.getAttribute('aria-live')).toBe('polite')
+  })
+
+  it('routes the other party\'s done proposal through the global announcer', () => {
+    // A done proposal appears from a socket event while the user is walking
+    // and almost certainly not looking at the screen. The inline role="status"
+    // below gets mounted together with its text and is often skipped by
+    // VoiceOver; the always-mounted announcer is the reliable channel.
+    render(
+      <ActiveSession
+        request={makeRequest({ status: 'done_pending', done_initiated_by: 'user-b' })}
+        currentUserId="user-a"
+        onClose={vi.fn()}
+      />
+    )
+    expect(announceSpy).toHaveBeenCalledWith('requests.doneProposal')
+  })
+
+  it('does not announce the user\'s own done tap as a proposal', () => {
+    // When the current user initiates done, they know — they just tapped the
+    // button — so re-announcing it would be noise. Only the OTHER party's
+    // proposal goes to the announcer.
+    render(
+      <ActiveSession
+        request={makeRequest({ status: 'done_pending', done_initiated_by: 'user-a' })}
+        currentUserId="user-a"
+        onClose={vi.fn()}
+      />
+    )
+    expect(announceSpy).not.toHaveBeenCalledWith('requests.doneProposal')
+  })
+
+  it('routes session expiry through the global announcer', () => {
+    // Expiry is server-driven — nothing the user did — so a VoiceOver user
+    // keeps believing the session is live unless the transition is spoken.
+    render(
+      <ActiveSession
+        request={makeRequest({ status: 'expired' })}
+        currentUserId="user-a"
+        onClose={vi.fn()}
+      />
+    )
+    expect(announceSpy).toHaveBeenCalledWith('requests.expired')
   })
 
   it('announces session expiry as a polite status', () => {

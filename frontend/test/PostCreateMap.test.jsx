@@ -13,6 +13,16 @@ vi.mock('lucide-preact', () => ({
   ArrowLeft: (props) => h('span', props, 'ArrowLeft'),
 }))
 
+// Spy on the global announcer. The inline role="status" banner still exists,
+// but Sami's a11y notes point out that an inline region mounted TOGETHER with
+// its text is often skipped by VoiceOver — the reliable channel is the
+// always-mounted announcer, so we assert the component wires through it.
+const announceSpy = vi.fn()
+vi.mock('../src/context/AnnouncerContext', () => ({
+  useAnnouncer: () => ({ announce: announceSpy }),
+  AnnouncerProvider: ({ children }) => children,
+}))
+
 // Mock Leaflet dynamic import
 vi.mock('leaflet', () => ({
   default: {
@@ -33,6 +43,7 @@ describe('PostCreateMap', () => {
 
   beforeEach(() => {
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    announceSpy.mockClear()
   })
 
   afterEach(() => {
@@ -60,6 +71,16 @@ describe('PostCreateMap', () => {
     expect(status).toBeTruthy()
     expect(status.getAttribute('aria-live')).toBe('polite')
     expect(status.textContent).toContain('requests.waitingForHelp')
+  })
+
+  it('routes the success banner through the global announcer on mount', () => {
+    // PostCreateMap mounts only after a successful request submission, so a
+    // VoiceOver user who can't rely on the inline region getting read needs
+    // the words spoken through the always-mounted announcer.
+    render(
+      <PostCreateMap position={{ lat: 59.33, lng: 18.07 }} onBack={() => {}} />
+    )
+    expect(announceSpy).toHaveBeenCalledWith('requests.waitingForHelp')
   })
 
   it('names the map container as a region so screen readers can find or skip it', () => {

@@ -9,6 +9,7 @@ import { LocationBanner } from './LocationBanner'
 import { useGeolocation } from '../hooks/useGeolocation'
 import { profileService } from '../services/profile'
 import { SafetyActions } from './SafetyActions'
+import { useAnnouncer } from '../context/AnnouncerContext'
 
 const PROXIMITY_THRESHOLD_KM = 0.2 // 200 meters
 
@@ -20,6 +21,7 @@ const PROXIMITY_THRESHOLD_KM = 0.2 // 200 meters
  */
 export function ActiveSession({ request, currentUserId, onClose }) {
   const { t } = useTranslation()
+  const { announce } = useAnnouncer()
   const mapRef = useRef(null)
   const mapInstance = useRef(null)
   const markersRef = useRef({})
@@ -44,6 +46,25 @@ export function ActiveSession({ request, currentUserId, onClose }) {
   const isRequester = request.requester_id === currentUserId
   const isHelper = request.helper_id === currentUserId
   const otherUserId = isRequester ? request.helper_id : request.requester_id
+
+  // Speak session state changes through the always-mounted global announcer,
+  // on top of the inline role="status" blocks below. Those inline regions
+  // are often skipped by VoiceOver because they mount TOGETHER with their
+  // text; the global announcer is always in the a11y tree so its content
+  // change is heard. Fires when the OTHER party proposes done (not the user's
+  // own tap, which is a self-initiated action they already know about) and
+  // on server-driven expiry.
+  useEffect(() => {
+    if (status === 'done_pending' && doneInitiatedBy && doneInitiatedBy !== currentUserId) {
+      announce(t('requests.doneProposal'))
+    }
+  }, [status, doneInitiatedBy, currentUserId])
+
+  useEffect(() => {
+    if (status === 'expired') {
+      announce(t('requests.expired'))
+    }
+  }, [status])
 
   // Self-heal: if entered with 'accepted' status, auto-start to transition to 'active'
   useEffect(() => {
