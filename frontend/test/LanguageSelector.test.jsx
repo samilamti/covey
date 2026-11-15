@@ -135,6 +135,142 @@ describe('LanguageSelector', () => {
     }
   })
 
+  it('uses roving tabindex — only the current language is in the tab sequence', async () => {
+    // ARIA APG Menu pattern: a role="menu" with twelve items that are all
+    // tabIndex=0 forces a keyboard user to walk every one of them before
+    // leaving the menu, which defeats the point of a menu. Roving tabindex
+    // keeps exactly one item (the current language) in the tab sequence and
+    // puts the others on tabIndex=-1 so arrow keys drive navigation within.
+    const { getByRole, getAllByRole } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+    const items = getAllByRole('menuitem')
+    const tabbable = items.filter((el) => el.tabIndex === 0)
+    expect(tabbable).toHaveLength(1)
+    expect(tabbable[0].textContent).toContain('Svenska')
+    for (const el of items) {
+      if (el !== tabbable[0]) expect(el.tabIndex).toBe(-1)
+    }
+  })
+
+  it('focuses the current menuitem when the menu opens', async () => {
+    // Without this a keyboard user tabbing onto the trigger and pressing
+    // Enter lands the caret on … nothing inside the menu, and the next
+    // Tab leaves the menu entirely. The APG menu pattern moves focus into
+    // the menu on open so arrow keys start from the user's actual position
+    // (the currently-selected language), not from an arbitrary first item
+    // or the dangling trigger.
+    const { getByRole, getAllByRole } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+    const items = getAllByRole('menuitem')
+    const current = items.find((el) => el.getAttribute('aria-current') === 'true')
+    expect(document.activeElement).toBe(current)
+  })
+
+  it('moves focus with ArrowDown and wraps past the last item', async () => {
+    // The APG menu pattern makes arrow-key navigation mandatory — a
+    // role="menu" that only responds to Tab reads as a menu to assistive
+    // tech but behaves like a normal list, which is worse than no role at
+    // all. Wrap behaviour matches CreateRequest's radio navigation so the
+    // two patterns stay consistent.
+    const { getByRole, getAllByRole } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+    const items = getAllByRole('menuitem')
+    const current = items.find((el) => el.getAttribute('aria-current') === 'true')
+    const currentIdx = items.indexOf(current)
+    // ArrowDown from the current item lands on the next.
+    fireEvent.keyDown(current, { key: 'ArrowDown' })
+    expect(document.activeElement).toBe(items[(currentIdx + 1) % items.length])
+    // ArrowUp from the (new) focused item moves back to the previous one.
+    fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' })
+    expect(document.activeElement).toBe(items[currentIdx])
+    // Wrap: ArrowUp from the first item lands on the last.
+    items[0].focus()
+    fireEvent.keyDown(items[0], { key: 'ArrowUp' })
+    expect(document.activeElement).toBe(items[items.length - 1])
+    // Wrap the other way: ArrowDown from the last item lands on the first.
+    items[items.length - 1].focus()
+    fireEvent.keyDown(items[items.length - 1], { key: 'ArrowDown' })
+    expect(document.activeElement).toBe(items[0])
+  })
+
+  it('jumps to first and last with Home and End', async () => {
+    const { getByRole, getAllByRole } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+    const items = getAllByRole('menuitem')
+    // Start from the middle; Home jumps to the first item.
+    items[5].focus()
+    fireEvent.keyDown(items[5], { key: 'Home' })
+    expect(document.activeElement).toBe(items[0])
+    // End jumps to the last item regardless of starting point.
+    fireEvent.keyDown(items[0], { key: 'End' })
+    expect(document.activeElement).toBe(items[items.length - 1])
+  })
+
+  it('returns focus to the trigger when the menu closes on Escape', async () => {
+    // WCAG 2.4.3 Focus Order + ARIA APG Menu Button pattern — a dangling
+    // focus on the dismissed menu would strand a keyboard user on a hidden
+    // control, so the trigger has to catch the caret.
+    const { getByRole } = render(<LanguageSelector />)
+    const trigger = getByRole('button', { expanded: false })
+    await fireEvent.click(trigger)
+    // Focus is somewhere inside the menu at this point.
+    expect(document.activeElement).not.toBe(trigger)
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(document.activeElement).toBe(trigger)
+  })
+
+  it('returns focus to the trigger after selecting a language', async () => {
+    // Same reason as the Escape path — a click on a menuitem dismisses the
+    // menu, so without return-focus a sighted keyboard user who used the
+    // arrow keys to land on English and pressed Enter would then have no
+    // visible focus ring anywhere on the page.
+    const { getByRole, getAllByRole } = render(<LanguageSelector />)
+    const trigger = getByRole('button', { expanded: false })
+    await fireEvent.click(trigger)
+    const items = getAllByRole('menuitem')
+    const english = items.find((el) => /English/.test(el.textContent))
+    await fireEvent.click(english)
+    expect(document.activeElement).toBe(trigger)
+  })
+
+  it('does not steal focus on initial mount', async () => {
+    // The wasOpenRef guard: without it the "closed → focus the trigger"
+    // branch of the focus-flow effect fires on first render and yanks focus
+    // away from whatever element the browser picked (the auth form's first
+    // input, say). The menu is closed on mount, so no focus change should
+    // happen. We seed activeElement on a sentinel button to verify.
+    const sentinel = document.createElement('button')
+    sentinel.textContent = 'sentinel'
+    document.body.appendChild(sentinel)
+    sentinel.focus()
+    expect(document.activeElement).toBe(sentinel)
+    render(<LanguageSelector />)
+    expect(document.activeElement).toBe(sentinel)
+    document.body.removeChild(sentinel)
+  })
+
+  it('declares the menu purpose with aria-haspopup="menu", not the shorthand', async () => {
+    // aria-haspopup="true" is spec-equivalent to "menu", but screen readers
+    // vary on how they announce the shorthand. "menu" is explicit and
+    // matches the role of the popup that actually opens — one round-trip
+    // for any later maintainer who reads it.
+    const { getByRole } = render(<LanguageSelector />)
+    const trigger = getByRole('button', { expanded: false })
+    expect(trigger.getAttribute('aria-haspopup')).toBe('menu')
+  })
+
+  it('names the menu landmark with aria-label so assistive tech can skip to it', async () => {
+    // A bare role="menu" announces as "menu" with no idea of what it holds —
+    // a quick-navigation user has no reason to jump to it over the three
+    // other menus in the app (quick messages, tier picker, type picker).
+    // The visually-hidden label on the trigger says "choose language" and
+    // the menu itself carries the same name.
+    const { getByRole } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+    const menu = getByRole('menu')
+    expect(menu.getAttribute('aria-label')).toBe('language.select')
+  })
+
   it('marks every native language label with its own lang attribute', async () => {
     // WCAG 3.1.2 — without lang="ar", a screen reader pronounces "العربية"
     // with the current UI language's voice, which produces garbage.
