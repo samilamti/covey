@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { ShieldCheck, Loader2, Smartphone } from 'lucide-preact'
 import qrcode from 'qrcode-generator'
 import { authService } from '../services/auth'
+import { useAnnouncer } from '../context/AnnouncerContext'
 
 /**
  * BankIDLogin — the real BankID v6 "Secure Start" login flow.
@@ -19,11 +20,21 @@ import { authService } from '../services/auth'
  */
 export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
   const { t } = useTranslation()
+  const { announce } = useAnnouncer()
   const [status, setStatus] = useState('idle') // idle | starting | pending | error
   const [hintCode, setHintCode] = useState(null)
   const [qrDataUrl, setQrDataUrl] = useState(null)
   const [autoStartToken, setAutoStartToken] = useState(null)
   const [error, setError] = useState(null)
+
+  // Route a failed BankID flow through the global announcer as well as the
+  // inline role="alert" below. The inline region is mounted together with
+  // its text, which VoiceOver often skips. Assertive — the user just tried
+  // to sign in and their flow failed (cancelled, expired, or errored); a
+  // polite update would be talked over.
+  useEffect(() => {
+    if (error) announce(error, { assertive: true })
+  }, [error])
 
   const orderRef = useRef(null)
   const collectTimer = useRef(null)

@@ -20,6 +20,15 @@ const authService = {
 }
 vi.mock('../src/services/auth', () => ({ authService }))
 
+// Spy on the global announcer — the inline role="alert" error block stays,
+// but Sami's a11y notes point out that an inline region mounted TOGETHER
+// with its text is often skipped (VoiceOver especially).
+const announceSpy = vi.fn()
+vi.mock('../src/context/AnnouncerContext', () => ({
+  useAnnouncer: () => ({ announce: announceSpy }),
+  AnnouncerProvider: ({ children }) => children,
+}))
+
 const { BankIDLogin } = await import('../src/components/BankIDLogin')
 
 describe('BankIDLogin (Secure Start)', () => {
@@ -27,6 +36,7 @@ describe('BankIDLogin (Secure Start)', () => {
   beforeEach(() => {
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     vi.clearAllMocks()
+    announceSpy.mockClear()
     authService.qr.mockResolvedValue({ qr: 'bankid.67df3917.0.abc123' })
     authService.cancel.mockResolvedValue({ ok: true })
   })
@@ -132,5 +142,29 @@ describe('BankIDLogin (Secure Start)', () => {
     fireEvent.click(getByText('landing.loginButton'))
 
     await waitFor(() => expect(getByText('landing.bankidCancel')).toBeTruthy())
+  })
+
+  it('routes a failed BankID flow through the global announcer as assertive', async () => {
+    // The inline role="alert" error block is mounted together with its text,
+    // which VoiceOver often skips. The announcer is the reliable channel.
+    // Assertive — the user just tried to sign in and their BankID cancelled
+    // or errored; a polite update would be talked over.
+    authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
+    authService.collect.mockResolvedValue({ status: 'failed', hintCode: 'expiredTransaction' })
+
+    const { getByText } = render(<BankIDLogin onLogin={vi.fn()} pollMs={30} qrMs={30} />)
+    fireEvent.click(getByText('landing.loginButton'))
+
+    await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('landing.bankidExpired', { assertive: true }))
+  })
+
+  it('routes a failed login call through the global announcer as assertive', async () => {
+    // A thrown error from authService.login (not a BankID hint code) hits
+    // the catch branch that sets a generic error message — same announcer
+    // channel.
+    authService.login.mockRejectedValueOnce(new Error('network'))
+    const { getByText } = render(<BankIDLogin onLogin={vi.fn()} pollMs={30} qrMs={30} />)
+    fireEvent.click(getByText('landing.loginButton'))
+    await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('landing.bankidError', { assertive: true }))
   })
 })
