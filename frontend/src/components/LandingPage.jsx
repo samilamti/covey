@@ -6,6 +6,7 @@ import { CoveyMark } from './CoveyMark'
 import { authService } from '../services/auth'
 import { useFeatureFlag } from '../context/FeatureFlagContext'
 import { BankIDLogin } from './BankIDLogin'
+import { useAnnouncer } from '../context/AnnouncerContext'
 
 /** Generate a random valid 12-digit NIN for unique test users. */
 function generateTestNin() {
@@ -28,6 +29,7 @@ const DEMO_NIN = '199001011234'
 
 export function LandingPage({ onLogin }) {
   const { t } = useTranslation()
+  const { announce } = useAnnouncer()
   // Real BankID v6 (Secure Start, QR + autostart) when the flag is on;
   // the personnummer/stub flow below stays for local dev (flag off).
   const bankidEnabled = useFeatureFlag('BANKID_AUTH')
@@ -37,6 +39,14 @@ export function LandingPage({ onLogin }) {
   const [error, setError] = useState(null)
   const pollRef = useRef(null)
   const [inputFocused, setInputFocused] = useState(false)
+
+  // Route a failed login through the global announcer as well as the inline
+  // role="alert" below. The inline region is mounted together with its text,
+  // which VoiceOver often skips. Assertive — the user just tried to sign in
+  // and nothing happened; a polite update would be talked over.
+  useEffect(() => {
+    if (error) announce(error, { assertive: true })
+  }, [error])
 
   // --- Demo easter egg ---
   // Sequence to activate: tap logo, tap logo, tap Login.

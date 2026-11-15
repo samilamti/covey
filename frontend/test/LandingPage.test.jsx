@@ -16,6 +16,16 @@ vi.mock('lucide-preact', () => ({
   ExternalLink: () => h('span', null, 'ExternalLink'),
 }))
 
+// Spy on the global announcer — the inline role="alert" error box stays,
+// but Sami's a11y notes point out that an inline region mounted TOGETHER
+// with its text is often skipped (VoiceOver especially). The reliable
+// channel is the always-mounted announcer.
+const announceSpy = vi.fn()
+vi.mock('../src/context/AnnouncerContext', () => ({
+  useAnnouncer: () => ({ announce: announceSpy }),
+  AnnouncerProvider: ({ children }) => children,
+}))
+
 vi.mock('../src/services/auth', () => ({
   authService: {
     login: vi.fn().mockResolvedValue({ orderRef: 'order-123' }),
@@ -38,6 +48,7 @@ describe('LandingPage', () => {
   beforeEach(() => {
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     vi.clearAllMocks()
+    announceSpy.mockClear()
   })
 
   afterEach(() => {
@@ -72,6 +83,21 @@ describe('LandingPage', () => {
   it('renders LanguageSelector', () => {
     const { getByTestId } = render(<LandingPage onLogin={vi.fn()} />)
     expect(getByTestId('lang-selector')).toBeTruthy()
+  })
+
+  it('routes a failed login through the global announcer as assertive', async () => {
+    // The inline role="alert" error block is mounted together with its text,
+    // which VoiceOver often skips. The announcer is the reliable channel.
+    // Assertive — the user just tried to sign in and nothing happened; a
+    // quiet update would leave them with no feedback.
+    const { fireEvent, waitFor } = await import('@testing-library/preact')
+    const { authService } = await import('../src/services/auth')
+    authService.login.mockRejectedValueOnce(new Error('BankID unavailable'))
+    const { getByText } = render(<LandingPage onLogin={vi.fn()} />)
+    await fireEvent.click(getByText('landing.loginButton'))
+    // The catch sets error to the translated landing.bankidError key, not
+    // the raw Error message — the component owns its own user-facing copy.
+    await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('landing.bankidError', { assertive: true }))
   })
 
   it('wraps the stub BankID pending indicator in a polite live region', async () => {

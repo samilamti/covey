@@ -1,9 +1,10 @@
-import { useId, useState } from 'preact/hooks'
+import { useEffect, useId, useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Send, MapPin } from 'lucide-preact'
 import { requestService } from '../services/requests'
 import { LocationBanner } from './LocationBanner'
 import { useGeolocation } from '../hooks/useGeolocation'
+import { useAnnouncer } from '../context/AnnouncerContext'
 import { WalkIcon } from './icons/WalkIcon'
 import { WaitIcon } from './icons/WaitIcon'
 import { FewPeopleIcon } from './icons/FewPeopleIcon'
@@ -48,12 +49,22 @@ const TIER_VALUES = ['same_demographics', 'verified_guardians', 'any_member']
  */
 export function CreateRequest({ onCreated }) {
   const { t } = useTranslation()
+  const { announce } = useAnnouncer()
   const [type, setType] = useState('walk')
   const [eligibilityTier, setEligibilityTier] = useState('same_demographics')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const { position, error: geoError, loading: geoLoading, retry: retryGeo } = useGeolocation()
+
+  // Route a failed submit through the global announcer as well as the
+  // inline role="alert" below. The inline region is mounted together with
+  // its text, which VoiceOver often skips. Assertive — the user just tried
+  // to act and the action failed; a polite update would be talked over by
+  // whatever else is happening on the page.
+  useEffect(() => {
+    if (error) announce(error, { assertive: true })
+  }, [error])
   // Stable per-instance id — the label sits next to the textarea, not around
   // it, so without an explicit htmlFor/id pair a screen reader reads the
   // textarea as unnamed. useId is safe with two CreateRequest instances on

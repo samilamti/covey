@@ -35,6 +35,16 @@ vi.mock('../src/components/icons/EveryoneIcon', () => ({
   EveryoneIcon: () => h('span', null, 'EveryoneIcon'),
 }))
 
+// Spy on the global announcer — the inline role="alert" error paragraph
+// stays, but Sami's a11y notes point out that an inline region mounted
+// TOGETHER with its text is often skipped (VoiceOver especially). The
+// reliable channel is the always-mounted announcer.
+const announceSpy = vi.fn()
+vi.mock('../src/context/AnnouncerContext', () => ({
+  useAnnouncer: () => ({ announce: announceSpy }),
+  AnnouncerProvider: ({ children }) => children,
+}))
+
 vi.mock('../src/services/requests', () => ({
   requestService: {
     create: vi.fn().mockResolvedValue({ request: { id: 'new-1', type: 'walk', status: 'open' } }),
@@ -50,6 +60,7 @@ describe('CreateRequest', () => {
   beforeEach(() => {
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     vi.clearAllMocks()
+    announceSpy.mockClear()
     // Mock geolocation
     Object.defineProperty(navigator, 'geolocation', {
       value: {
@@ -317,6 +328,26 @@ describe('CreateRequest', () => {
     await waitFor(() => {
       expect(getByText('location.retry')).toBeTruthy()
     })
+  })
+
+  it('routes a failed submit through the global announcer as assertive', async () => {
+    // The inline role="alert" paragraph is mounted together with its text,
+    // which VoiceOver often skips. The announcer is the reliable channel.
+    // Assertive — the user just tried to send; a quiet polite update would
+    // leave them staring at a form that didn't submit with no idea why.
+    requestService.create.mockRejectedValueOnce(new Error('no network'))
+    const { getByText } = render(<CreateRequest />)
+    await fireEvent.click(getByText('requests.send'))
+    await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('no network', { assertive: true }))
+  })
+
+  it('does not announce anything on a successful submit', async () => {
+    // Success hands off to PostCreateMap, which announces its own banner.
+    // Double-announcing here would re-read nothing useful.
+    const { getByText } = render(<CreateRequest onCreated={vi.fn()} />)
+    await fireEvent.click(getByText('requests.send'))
+    await waitFor(() => expect(requestService.create).toHaveBeenCalled())
+    expect(announceSpy).not.toHaveBeenCalled()
   })
 
   it('submits null coords when geolocation fails', async () => {
