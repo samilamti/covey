@@ -8,8 +8,7 @@ export function IcelandFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 250 180"
-      role="img"
-      aria-label="Icelandic flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect width="250" height="180" fill="#003897" />

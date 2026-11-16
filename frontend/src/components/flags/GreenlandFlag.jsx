@@ -8,8 +8,7 @@ export function GreenlandFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 180 120"
-      role="img"
-      aria-label="Greenlandic flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect x="0" y="0" width="180" height="60" fill="#FFF" />

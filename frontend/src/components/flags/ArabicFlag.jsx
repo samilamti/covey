@@ -9,8 +9,7 @@ export function ArabicFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 300 200"
-      role="img"
-      aria-label="Saudi Arabian flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect width="300" height="200" fill="#006C35" />

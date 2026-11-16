@@ -8,8 +8,7 @@ export function SwedenFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 160 100"
-      role="img"
-      aria-label="Swedish flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect width="160" height="100" fill="#006AA7" />

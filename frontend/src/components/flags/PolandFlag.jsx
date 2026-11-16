@@ -8,8 +8,7 @@ export function PolandFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 320 200"
-      role="img"
-      aria-label="Polish flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect x="0" y="0" width="320" height="100" fill="#FFF" />

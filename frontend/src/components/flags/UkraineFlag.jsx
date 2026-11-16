@@ -8,6 +8,7 @@ export function UkraineFlag({ size = 20 }) {
       height={size * 0.667}
       viewBox="0 0 30 20"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       style={{ borderRadius: '2px', display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect width="30" height="10" fill="#005BBB" />

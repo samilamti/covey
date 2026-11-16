@@ -8,8 +8,7 @@ export function DenmarkFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 370 280"
-      role="img"
-      aria-label="Danish flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect width="370" height="280" fill="#C8102E" />

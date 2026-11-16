@@ -8,8 +8,7 @@ export function NorwayFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 220 160"
-      role="img"
-      aria-label="Norwegian flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect width="220" height="160" fill="#BA0C2F" />

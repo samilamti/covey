@@ -8,8 +8,7 @@ export function FinlandFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 360 220"
-      role="img"
-      aria-label="Finnish flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect width="360" height="220" fill="#FFF" />

@@ -83,9 +83,36 @@ describe('LanguageSelector', () => {
     const { getByRole, container } = render(<LanguageSelector />)
     await fireEvent.click(getByRole('button', { expanded: false }))
 
-    // The Sami flag should be an SVG element
-    const svgs = container.querySelectorAll('svg[aria-label="Sami flag"]')
-    expect(svgs.length).toBe(1)
+    // The Sami flag has no Unicode emoji equivalent — it must render as an
+    // inline SVG inside the Sami menu item. Match by viewBox because the
+    // SVG is now aria-hidden="true" (flags are decorative next to their
+    // language label); viewBox="0 0 240 160" is the SamiFlag component's
+    // signature (`src/components/flags/SamiFlag.jsx`).
+    const samiItem = Array.from(
+      container.querySelectorAll('[role="menuitem"]')
+    ).find((el) => el.textContent.includes('Davvisámegiella'))
+    expect(samiItem, 'Sami menu item should exist').toBeTruthy()
+    const svg = samiItem.querySelector('svg[viewBox="0 0 240 160"]')
+    expect(svg, 'Sami menu item should contain the SamiFlag SVG').toBeTruthy()
+  })
+
+  it('hides every flag SVG from assistive tech', async () => {
+    // Regression target: eleven flags used to carry
+    // `role="img" aria-label="Xish flag"` hardcoded in English, so a Swedish
+    // or Polish voice would announce "Swedish flag, Svenska" / "Polish flag,
+    // Polski" as a broken bilingual label. The flag has no information the
+    // visible language name doesn't already carry, so it should be silent.
+    const { getByRole, container } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+    const items = container.querySelectorAll('[role="menuitem"]')
+    expect(items).toHaveLength(12)
+    for (const item of items) {
+      const svg = item.querySelector('svg')
+      expect(svg, `menu item "${item.textContent}" should have a flag SVG`).toBeTruthy()
+      expect(svg.getAttribute('aria-hidden')).toBe('true')
+      expect(svg.getAttribute('aria-label')).toBeNull()
+      expect(svg.getAttribute('role')).toBeNull()
+    }
   })
 
   it('closes the dropdown on Escape', async () => {

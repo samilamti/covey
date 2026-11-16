@@ -8,8 +8,7 @@ export function FaroeFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 220 160"
-      role="img"
-      aria-label="Faroese flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       <rect width="220" height="160" fill="#FFF" />

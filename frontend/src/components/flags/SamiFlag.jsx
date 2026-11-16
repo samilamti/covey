@@ -18,8 +18,7 @@ export function SamiFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 240 160"
-      role="img"
-      aria-label="Sami flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       {/* Background stripes */}

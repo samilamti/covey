@@ -8,8 +8,7 @@ export function UKFlag({ size = 20 }) {
       width={size}
       height={size}
       viewBox="0 0 600 400"
-      role="img"
-      aria-label="United Kingdom flag"
+      aria-hidden="true"
       style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
       {/* Blue field */}
