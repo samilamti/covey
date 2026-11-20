@@ -16,11 +16,16 @@ vi.mock('lucide-preact', () => ({
   ExternalLink: () => h('span', null, 'ExternalLink'),
 }))
 
-// Spy on the global announcer — the inline role="alert" error box stays,
-// but Sami's a11y notes point out that an inline region mounted TOGETHER
-// with its text is often skipped (VoiceOver especially). The reliable
-// channel is the always-mounted announcer.
+// Spy on the global announcer. It is the only channel that speaks a routed
+// message: an inline live region mounted together with its text is often
+// skipped by VoiceOver, and keeping both would read the message twice.
 const announceSpy = vi.fn()
+
+// True when `text` sits inside any live region in `container`. Routed
+// messages must not: the announcer (mocked here) is their only channel.
+const LIVE = '[role="status"],[role="alert"],[role="log"],[aria-live]'
+const inLiveRegion = (container, text) =>
+  Array.from(container.querySelectorAll(LIVE)).some((el) => el.textContent.includes(text))
 vi.mock('../src/context/AnnouncerContext', () => ({
   useAnnouncer: () => ({ announce: announceSpy }),
   AnnouncerProvider: ({ children }) => children,
@@ -100,24 +105,17 @@ describe('LandingPage', () => {
     await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('landing.bankidError', { assertive: true }))
   })
 
-  it('wraps the stub BankID pending indicator in a polite live region', async () => {
-    // The pending text flips from "Open BankID" to "Enter your security
-    // code" as BankID moves through its hints, and a screen reader
-    // otherwise never hears the transition. Mirror BankIDLogin's
-    // production path: role="status" + aria-live="polite" so the text
-    // is announced without interrupting whatever the user is reading.
+
+  it('shows the stub BankID pending text outside any inline live region', async () => {
+    // The announcer speaks the pending text (and each change to it); the
+    // visible block is not a live region, so nothing is read twice.
     const { fireEvent, waitFor } = await import('@testing-library/preact')
     const { authService } = await import('../src/services/auth')
-    // Hold the collect in "pending" so the branch under test stays on
-    // screen long enough to assert.
     authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
-    const { getByText, findByRole } = render(<LandingPage onLogin={vi.fn()} />)
+    const { container, getByText } = render(<LandingPage onLogin={vi.fn()} />)
     await fireEvent.click(getByText('landing.loginButton'))
-    const status = await findByRole('status')
-    await waitFor(() => {
-      expect(status.getAttribute('aria-live')).toBe('polite')
-      expect(status.textContent).toContain('landing.bankidPending')
-    })
+    await waitFor(() => expect(container.textContent).toContain('landing.bankidPending'))
+    expect(inLiveRegion(container, 'landing.bankidPending')).toBe(false)
   })
 
   it('routes the initial pending instruction through the global announcer (polite)', async () => {
@@ -141,5 +139,19 @@ describe('LandingPage', () => {
       expect(call).toBeTruthy()
       expect(call[1]).toBeUndefined()
     })
+  })
+  it('announces the change to "enter your security code" in the stub flow', async () => {
+    // With no inline live region the announcer carries the hint change too.
+    // The stub flow polls once a second.
+    const { fireEvent, waitFor } = await import('@testing-library/preact')
+    const { authService } = await import('../src/services/auth')
+    authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'userSign' })
+    const { getByText } = render(<LandingPage onLogin={vi.fn()} />)
+    await fireEvent.click(getByText('landing.loginButton'))
+    await waitFor(() => {
+      const said = announceSpy.mock.calls.map((c) => c[0])
+      expect(said).toContain('landing.bankidPending')
+      expect(said).toContain('landing.bankidUserSign')
+    }, { timeout: 3000 })
   })
 })

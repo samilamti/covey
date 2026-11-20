@@ -27,28 +27,28 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
   const [autoStartToken, setAutoStartToken] = useState(null)
   const [error, setError] = useState(null)
 
-  // Route a failed BankID flow through the global announcer as well as the
-  // inline role="alert" below. The inline region is mounted together with
-  // its text, which VoiceOver often skips. Assertive — the user just tried
-  // to sign in and their flow failed (cancelled, expired, or errored); a
-  // polite update would be talked over.
+  const pendingText = hintCode === 'userSign'
+    ? t('landing.bankidUserSign')
+    : t('landing.bankidPending')
+
+  // Speak a failed BankID flow through the global announcer. An inline role="alert"
+  // mounted together with its text is often skipped by VoiceOver, so the
+  // visible error has no live role of its own. Assertive: the user just
+  // tried to sign in and the flow failed (cancelled, expired or errored).
   useEffect(() => {
     if (error) announce(error, { assertive: true })
   }, [error])
 
-  // Speak the pending instruction when the BankID flow first appears. The
-  // inline aria-live region below picks up subsequent hint-code transitions
-  // ("open BankID" → "enter your code") natively — aria-live is reliable
-  // for CHANGES once the region is in the a11y tree. The mounted-with-text
-  // case is the first paint of the pending screen, where region and text
-  // enter the tree on the same tick; VoiceOver typically skips that one.
-  // Polite — the user initiated this transition themselves, and whatever
-  // they were reading before shouldn't be interrupted.
+  // Speak the pending instruction when the flow starts and again whenever it
+  // changes ("open BankID" → "enter your code"). The announcer is the only
+  // channel; the visible text below has no live role, so a screen reader that
+  // would also pick up an inline region does not read it twice. Polite — the
+  // user started this themselves.
   useEffect(() => {
     if (status !== 'pending') return
     announce(pendingText)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status])
+  }, [status, pendingText])
 
   const orderRef = useRef(null)
   const collectTimer = useRef(null)
@@ -143,9 +143,6 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
     setHintCode(null)
   }
 
-  const pendingText = hintCode === 'userSign'
-    ? t('landing.bankidUserSign')
-    : t('landing.bankidPending')
 
   if (status === 'pending') {
     return (
@@ -190,14 +187,9 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
         )}
 
         {/* The pending text flips from "Open BankID app" to "Enter your
-            security code" when the user actually opens BankID — assistive
-            tech needs to hear that transition. Polite so it doesn't
-            interrupt whatever the user was reading on the page. */}
-        <div
-          role="status"
-          aria-live="polite"
-          class="text-blue-700 text-sm flex items-center gap-2 mb-3"
-        >
+            security code" when the user opens BankID. The effect at the top
+            speaks each version through the announcer. */}
+        <div class="text-blue-700 text-sm flex items-center gap-2 mb-3">
           <Loader2 size={16} class="animate-spin" aria-hidden="true" />
           {pendingText}
         </div>
@@ -212,10 +204,7 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
   return (
     <div>
       {error && (
-        <div
-          role="alert"
-          class="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm"
-        >
+        <div class="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
           {error}
         </div>
       )}

@@ -15,10 +15,10 @@ export function ProfileView({ user, onLogout }) {
   const [message, setMessage] = useState(null)
   const [profile, setProfile] = useState(null)
 
-  // Route message changes through both the inline role="status|alert" block
-  // (the visible receipt) and the global announcer. The inline region is
-  // mounted together with its text, which VoiceOver often skips; the global
-  // announcer is always in the a11y tree so its content update fires reliably.
+  // Show the message inline (the visible receipt) and speak it through the
+  // global announcer. An inline region mounted together with its text is
+  // often skipped by VoiceOver, so the block carries no live role: the
+  // announcer is the only channel, and nothing is read twice.
   const showMessage = (type, text) => {
     setMessage({ type, text })
     announce(text, { assertive: type === 'error' })
@@ -46,8 +46,7 @@ export function ProfileView({ user, onLogout }) {
       // The original success text was a bare "✓" glyph — visible to sighted
       // users and silent for assistive tech, which reads it as a decorative
       // check mark (or nothing at all, depending on the voice). A translated
-      // word is announced properly through the surrounding role="status"
-      // live region.
+      // word is spoken through the announcer.
       showMessage('success', t('profile.saved'))
     } catch {
       showMessage('error', t('app.error'))
@@ -147,13 +146,10 @@ export function ProfileView({ user, onLogout }) {
             {t('profile.save')}
           </button>
         </div>
-        {/* Role split matches the LocationBanner precedent: a failed save is
-            interruptive (user just tried to act), success is a confirmation
-            that shouldn't talk over anything. */}
+        {/* Visible receipt only. showMessage() speaks it: assertively for a
+            failed save (the user just tried to act), politely for success. */}
         {message && (
           <div
-            role={message.type === 'success' ? 'status' : 'alert'}
-            aria-live={message.type === 'success' ? 'polite' : 'assertive'}
             class={`mt-3 p-3 rounded-lg text-sm ${
               message.type === 'success'
                 ? 'bg-green-50 text-green-700'

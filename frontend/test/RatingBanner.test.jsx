@@ -22,12 +22,16 @@ vi.mock('../src/services/ratings', () => ({
   },
 }))
 
-// Spy on the global announcer. The inline role="status" on the prompt still
-// exists, but Sami's a11y notes point out that an inline region mounted
-// TOGETHER with its text is often skipped by VoiceOver — the reliable
-// channel is the always-mounted announcer, so we assert the component wires
-// through it.
+// Spy on the global announcer. It is the only channel that speaks a routed
+// message: an inline live region mounted together with its text is often
+// skipped by VoiceOver, and keeping both would read the message twice.
 const announceSpy = vi.fn()
+
+// True when `text` sits inside any live region in `container`. Routed
+// messages must not: the announcer (mocked here) is their only channel.
+const LIVE = '[role="status"],[role="alert"],[role="log"],[aria-live]'
+const inLiveRegion = (container, text) =>
+  Array.from(container.querySelectorAll(LIVE)).some((el) => el.textContent.includes(text))
 vi.mock('../src/context/AnnouncerContext', () => ({
   useAnnouncer: () => ({ announce: announceSpy }),
   AnnouncerProvider: ({ children }) => children,
@@ -143,21 +147,17 @@ describe('RatingBanner', () => {
     expect(announceSpy).toHaveBeenCalledWith('ratings.prompt')
   })
 
-  it('wraps the prompt text in a polite live region as a fallback channel', () => {
-    // Belt-and-braces alongside the announcer: an AT that does read a
-    // mounted-with-text region still catches the prompt. Scoped to the
-    // prompt paragraph, NOT the whole banner — wrapping the rating buttons
-    // and the request description in a live region would read the full
-    // layout on every mount and overwhelm a screen-reader user.
-    const { getByText } = render(
+
+  it('keeps the prompt and its buttons out of any live region', () => {
+    // The announcer speaks the prompt. A live region here would read it twice
+    // on screen readers that announce insertions, and wrapping the buttons
+    // would read the whole banner out on every mount.
+    const { container, getByText } = render(
       <RatingBanner pendingRating={pendingRating} onRated={() => {}} />
     )
-    const prompt = getByText('ratings.prompt')
-    expect(prompt.getAttribute('role')).toBe('status')
-    expect(prompt.getAttribute('aria-live')).toBe('polite')
-    // The buttons must remain OUTSIDE the live region, or every mount
-    // reads "How did it feel? Safe Neutral Uncomfortable" at once.
-    expect(prompt.querySelector('button')).toBeNull()
+    expect(getByText('ratings.prompt')).toBeTruthy()
+    expect(inLiveRegion(container, 'ratings.prompt')).toBe(false)
+    expect(container.querySelector(LIVE)).toBeNull()
   })
 
   it('re-announces when a new pending rating replaces the previous one', () => {

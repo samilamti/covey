@@ -13,11 +13,16 @@ vi.mock('lucide-preact', () => ({
   ArrowLeft: (props) => h('span', props, 'ArrowLeft'),
 }))
 
-// Spy on the global announcer. The inline role="status" banner still exists,
-// but Sami's a11y notes point out that an inline region mounted TOGETHER with
-// its text is often skipped by VoiceOver — the reliable channel is the
-// always-mounted announcer, so we assert the component wires through it.
+// Spy on the global announcer. It is the only channel that speaks a routed
+// message: an inline live region mounted together with its text is often
+// skipped by VoiceOver, and keeping both would read the message twice.
 const announceSpy = vi.fn()
+
+// True when `text` sits inside any live region in `container`. Routed
+// messages must not: the announcer (mocked here) is their only channel.
+const LIVE = '[role="status"],[role="alert"],[role="log"],[aria-live]'
+const inLiveRegion = (container, text) =>
+  Array.from(container.querySelectorAll(LIVE)).some((el) => el.textContent.includes(text))
 vi.mock('../src/context/AnnouncerContext', () => ({
   useAnnouncer: () => ({ announce: announceSpy }),
   AnnouncerProvider: ({ children }) => children,
@@ -57,20 +62,16 @@ describe('PostCreateMap', () => {
     expect(getByText('requests.waitingForHelp')).toBeTruthy()
   })
 
-  it('announces the success banner in a polite live region', () => {
-    // PostCreateMap mounts only after a successful request submission, so
-    // for a screen reader user this banner IS the submission feedback.
-    // Without role="status" the user finishes creating a request and hears
-    // nothing: focus moves to a view with no landmark, no heading, and a
-    // decorative map. Polite so the acknowledgement doesn't talk over
-    // anything the user may still be reading on the previous view.
-    const { getByRole } = render(
+
+  it('shows the success banner outside any inline live region', () => {
+    // For a screen reader user this banner IS the submission feedback. The
+    // announcer speaks it on mount (next test); the banner itself is not a
+    // live region, so it is not read twice.
+    const { container, getByText } = render(
       <PostCreateMap position={{ lat: 59.33, lng: 18.07 }} onBack={() => {}} />
     )
-    const status = getByRole('status')
-    expect(status).toBeTruthy()
-    expect(status.getAttribute('aria-live')).toBe('polite')
-    expect(status.textContent).toContain('requests.waitingForHelp')
+    expect(getByText('requests.waitingForHelp')).toBeTruthy()
+    expect(inLiveRegion(container, 'requests.waitingForHelp')).toBe(false)
   })
 
   it('routes the success banner through the global announcer on mount', () => {

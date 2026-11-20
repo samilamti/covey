@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, fireEvent } from '@testing-library/preact'
+import { render, fireEvent, waitFor } from '@testing-library/preact'
 import { h } from 'preact'
 import { LanguageSelector } from '../src/components/LanguageSelector'
 
@@ -258,6 +258,44 @@ describe('LanguageSelector', () => {
     const english = items.find((el) => /English/.test(el.textContent))
     await fireEvent.click(english)
     expect(document.activeElement).toBe(trigger)
+  })
+
+  it('leaves focus where the user clicked when that click closes the menu', async () => {
+    // Clicking another field while the menu is open closes it. Pulling focus
+    // back to the language button would undo the click: the user would start
+    // typing their display name into nothing.
+    const { getByRole, getByLabelText } = render(
+      <div>
+        <LanguageSelector />
+        <label>
+          name
+          <input />
+        </label>
+      </div>
+    )
+    const trigger = getByRole('button', { expanded: false })
+    await fireEvent.click(trigger)
+    const field = getByLabelText('name')
+    // In a browser the click focuses the field before the menu's close
+    // effect runs, so focus it first and then deliver the mousedown.
+    field.focus()
+    await fireEvent.mouseDown(field)
+    await new Promise((r) => setTimeout(r, 50))
+    expect(getByRole('button', { expanded: false })).toBe(trigger)
+    expect(document.activeElement).toBe(field)
+  })
+
+  it('closes the menu when Tab leaves it', async () => {
+    const { getByRole, queryByRole } = render(<LanguageSelector />)
+    await fireEvent.click(getByRole('button', { expanded: false }))
+    const menu = getByRole('menu')
+    const item = document.activeElement
+    await fireEvent.keyDown(item, { key: 'Tab' })
+    // Still open while the browser handles the Tab, so the focused item is
+    // not unmounted underneath it.
+    expect(item.isConnected).toBe(true)
+    await waitFor(() => expect(menu.isConnected).toBe(false))
+    expect(queryByRole('menu')).toBeNull()
   })
 
   it('does not steal focus on initial mount', async () => {

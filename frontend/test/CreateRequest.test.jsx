@@ -35,11 +35,16 @@ vi.mock('../src/components/icons/EveryoneIcon', () => ({
   EveryoneIcon: () => h('span', null, 'EveryoneIcon'),
 }))
 
-// Spy on the global announcer — the inline role="alert" error paragraph
-// stays, but Sami's a11y notes point out that an inline region mounted
-// TOGETHER with its text is often skipped (VoiceOver especially). The
-// reliable channel is the always-mounted announcer.
+// Spy on the global announcer. It is the only channel that speaks a routed
+// message: an inline live region mounted together with its text is often
+// skipped by VoiceOver, and keeping both would read the message twice.
 const announceSpy = vi.fn()
+
+// True when `text` sits inside any live region in `container`. Routed
+// messages must not: the announcer (mocked here) is their only channel.
+const LIVE = '[role="status"],[role="alert"],[role="log"],[aria-live]'
+const inLiveRegion = (container, text) =>
+  Array.from(container.querySelectorAll(LIVE)).some((el) => el.textContent.includes(text))
 vi.mock('../src/context/AnnouncerContext', () => ({
   useAnnouncer: () => ({ announce: announceSpy }),
   AnnouncerProvider: ({ children }) => children,
@@ -227,21 +232,20 @@ describe('CreateRequest', () => {
     expect(textareas[0].id).not.toBe(textareas[1].id)
   })
 
-  it('announces a failed submission as an assertive alert', async () => {
+
+  it('shows a failed submission and speaks it assertively, without an inline live region', async () => {
     // The only visual sign of a failed submission is a small red line at the
-    // bottom of the form; without role="alert" a screen reader user taps
-    // Send, nothing speaks, and they have no idea their request did not go
-    // through. assertive because the user just took an action and is waiting
-    // on its result — a polite announcement would stack behind other speech
-    // and could be missed entirely. WCAG 4.1.3 Status Messages.
+    // bottom of the form. The announcer speaks it assertively (the user just
+    // acted and is waiting on the result); the line itself is not a live
+    // region, so it is not read twice. WCAG 4.1.3 Status Messages.
     requestService.create.mockRejectedValueOnce(new Error('requests.errorFull'))
-    const { getByText, getByRole } = render(<CreateRequest />)
+    const { container, getByText } = render(<CreateRequest />)
 
     await fireEvent.click(getByText('requests.send'))
 
-    const alert = await waitFor(() => getByRole('alert'))
-    expect(alert.textContent).toContain('requests.errorFull')
-    expect(alert.getAttribute('aria-live')).toBe('assertive')
+    await waitFor(() => expect(container.textContent).toContain('requests.errorFull'))
+    expect(inLiveRegion(container, 'requests.errorFull')).toBe(false)
+    await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('requests.errorFull', { assertive: true }))
   })
 
   it('submitting calls requestService.create', async () => {

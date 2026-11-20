@@ -14,14 +14,11 @@ export function RatingBanner({ pendingRating, onRated, onDismiss }) {
   const [submitting, setSubmitting] = useState(false)
 
   // Speak the rating prompt through the always-mounted global announcer when
-  // the banner appears. The inline role="status" on the prompt text below is
-  // the belt-and-braces channel, but it mounts TOGETHER with its text, which
-  // VoiceOver often skips — the global announcer already exists in the a11y
-  // tree so its content change actually fires. Polite because this is an
-  // invitation to rate, not a safety alarm; it must not talk over whatever
-  // the user is still reading on the request list. Matches the PostCreateMap
-  // and LocationBanner patterns. Keyed on the request id so a second pending
-  // rating appearing after the first is still spoken.
+  // the banner appears. A region mounted TOGETHER with its text is often
+  // skipped by VoiceOver; the announcer already exists in the a11y tree, so
+  // its update is heard, and the prompt below has no live role. Polite: this
+  // is an invitation to rate, not a safety alarm. Keyed on the request id so
+  // a second pending rating appearing after the first is still spoken.
   useEffect(() => {
     announce(t('ratings.prompt'))
   }, [pendingRating.request_id])
@@ -41,13 +38,7 @@ export function RatingBanner({ pendingRating, onRated, onDismiss }) {
   return (
     <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-3">
       <div class="flex items-start justify-between gap-2 mb-2">
-        {/* The prompt gets role="status" + aria-live="polite" so an AT that
-            happens to pick up a mounted-with-text region (some NVDA+Firefox
-            setups, TalkBack) still reads it; the global announcer above is
-            the reliable channel. Only the prompt is wrapped — the three
-            rating buttons and the request description must not be in a live
-            region or every mount would read the whole banner's labels. */}
-        <p role="status" aria-live="polite" class="text-sm font-medium text-amber-800">
+        <p class="text-sm font-medium text-amber-800">
           {t('ratings.prompt')}
         </p>
         {onDismiss && (

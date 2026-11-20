@@ -40,10 +40,10 @@ export function LandingPage({ onLogin }) {
   const pollRef = useRef(null)
   const [inputFocused, setInputFocused] = useState(false)
 
-  // Route a failed login through the global announcer as well as the inline
-  // role="alert" below. The inline region is mounted together with its text,
-  // which VoiceOver often skips. Assertive — the user just tried to sign in
-  // and nothing happened; a polite update would be talked over.
+  // Speak a failed login through the global announcer. An inline role="alert"
+  // mounted together with its text is often skipped by VoiceOver, so the
+  // visible error has no live role of its own. Assertive: the user just
+  // tried to sign in and nothing happened.
   useEffect(() => {
     if (error) announce(error, { assertive: true })
   }, [error])
@@ -140,20 +140,16 @@ export function LandingPage({ onLogin }) {
     ? t('landing.bankidUserSign')
     : t('landing.bankidPending')
 
-  // Speak the pending instruction when the BankID stub flow first enters its
-  // pending state. The inline aria-live region below picks up subsequent
-  // hint-code transitions ("open BankID" → "enter your code") natively —
-  // aria-live is reliable for CHANGES once the region is in the a11y tree.
-  // The mounted-with-text case is the first paint of the pending screen,
-  // where region and text enter the tree on the same tick and VoiceOver
-  // typically skips it. Mirrors the BankIDLogin fix for the real flow;
-  // this branch covers local dev/stub (FEATURE_BANKID_AUTH off). Polite —
-  // the user initiated the transition themselves.
+  // Speak the pending instruction when the stub flow starts and whenever it
+  // changes ("open BankID" → "enter your code"), as BankIDLogin does for the
+  // real flow; this branch covers local dev/stub (FEATURE_BANKID_AUTH off).
+  // The announcer is the only channel, so the visible block below has no
+  // live role. Polite — the user started this themselves.
   useEffect(() => {
     if (status !== 'pending') return
     announce(pendingText)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status])
+  }, [status, pendingText])
 
   return (
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col safe-area-top safe-area-bottom safe-area-x relative">
@@ -216,25 +212,16 @@ export function LandingPage({ onLogin }) {
           ) : (
             <>
           {error && (
-            <div
-              role="alert"
-              class="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm"
-            >
+            <div class="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
               {error}
             </div>
           )}
 
           {status === 'pending' ? (
-            // Mirror the production BankIDLogin's pending announcement: the
-            // text flips between "open BankID" and "enter your code" as the
-            // hint code moves, and a screen reader would otherwise never be
-            // told. role="status" + aria-live="polite" so the transition is
-            // spoken without interrupting the user. Loader is decorative.
-            <div
-              role="status"
-              aria-live="polite"
-              class="bg-blue-50 text-blue-800 p-4 rounded-lg flex flex-col items-center animate-pulse"
-            >
+            // The text flips between "open BankID" and "enter your code" as
+            // the hint code moves; the effect above speaks each version
+            // through the announcer. Loader is decorative.
+            <div class="bg-blue-50 text-blue-800 p-4 rounded-lg flex flex-col items-center animate-pulse">
               <Loader2 size={32} class="animate-spin mb-2" />
               <p class="font-medium">{pendingText}</p>
             </div>

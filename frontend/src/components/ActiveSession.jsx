@@ -47,11 +47,11 @@ export function ActiveSession({ request, currentUserId, onClose }) {
   const isHelper = request.helper_id === currentUserId
   const otherUserId = isRequester ? request.helper_id : request.requester_id
 
-  // Speak session state changes through the always-mounted global announcer,
-  // on top of the inline role="status" blocks below. Those inline regions
-  // are often skipped by VoiceOver because they mount TOGETHER with their
-  // text; the global announcer is always in the a11y tree so its content
-  // change is heard. Fires when the OTHER party proposes done (not the user's
+  // Speak session state changes through the always-mounted global announcer.
+  // A role="status" block mounted TOGETHER with its text is often skipped by
+  // VoiceOver; the announcer is always in the a11y tree so its content change
+  // is heard. The visible blocks below carry no live role, so nothing is read
+  // twice. Fires when the OTHER party proposes done (not the user's
   // own tap, which is a self-initiated action they already know about) and
   // on server-driven expiry.
   useEffect(() => {
@@ -619,14 +619,11 @@ export function ActiveSession({ request, currentUserId, onClose }) {
 
           {status === 'done_pending' && doneInitiatedBy && doneInitiatedBy !== currentUserId && (
             // The other party tapped "done" — a state change driven by a
-            // socket event, not by anything this user did. A sighted user
-            // sees the whole block replace the "done" button; a screen
-            // reader user would never be told unless they tab-explore, and
-            // in an active escort session they are walking, not tabbing.
-            // role="status" + aria-live="polite" so the prompt + the two
-            // choices are announced on insertion without interrupting.
-            // Mirrors the PostCreateMap confirmation pattern. WCAG 4.1.3.
-            <div class="space-y-2" role="status" aria-live="polite">
+            // socket event, not by anything this user did. The announcer
+            // speaks the prompt (see the effect at the top); this block has
+            // no live role, so the prompt is not read twice and the two
+            // buttons are not read out as part of an announcement. WCAG 4.1.3.
+            <div class="space-y-2">
               <p class="text-sm text-gray-700 font-medium text-center">{t('requests.doneProposal')}</p>
               <div class="flex gap-2">
                 <button
@@ -647,17 +644,10 @@ export function ActiveSession({ request, currentUserId, onClose }) {
           )}
 
           {status === 'expired' && (
-            // Expiry is server-driven: the request simply times out. For a
-            // sighted user the grey band says so; for a screen reader user
-            // nothing announces the transition, so they keep believing the
-            // session is live. role="status" announces the one line on
-            // insertion. Polite — expiry is a change of state, not a
-            // safety alarm.
-            <div
-              role="status"
-              aria-live="polite"
-              class="bg-gray-100 border border-gray-300 rounded-lg p-3 text-center"
-            >
+            // Expiry is server-driven: the request simply times out. The
+            // announcer speaks it (see the effect at the top), so the grey
+            // band carries no live role of its own.
+            <div class="bg-gray-100 border border-gray-300 rounded-lg p-3 text-center">
               <p class="text-sm text-gray-600 font-medium">{t('requests.expired')}</p>
             </div>
           )}

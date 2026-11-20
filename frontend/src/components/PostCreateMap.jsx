@@ -14,11 +14,11 @@ export function PostCreateMap({ position, onBack }) {
   const mapRef = useRef(null)
   const mapInstance = useRef(null)
 
-  // Speak the success banner through the always-mounted global announcer, in
-  // addition to the inline role="status" below. The inline region is often
-  // skipped by VoiceOver because it is mounted TOGETHER with its text; the
-  // global announcer already exists in the a11y tree when its content
-  // changes, so the "polite" update actually fires.
+  // Speak the success banner through the always-mounted global announcer.
+  // A role="status" region mounted TOGETHER with its text is often skipped
+  // by VoiceOver; the announcer already exists in the a11y tree when its
+  // content changes, so the polite update is heard. The visible banner below
+  // has no live role of its own, so nothing reads it twice.
   useEffect(() => {
     announce(t('requests.waitingForHelp'))
   }, [])
@@ -62,18 +62,9 @@ export function PostCreateMap({ position, onBack }) {
 
   return (
     <div>
-      {/* Success banner — PostCreateMap mounts the moment a request has
-          been accepted by the backend, so for a screen reader user the
-          "your request is on its way" confirmation IS the submission
-          feedback. role="status" + aria-live="polite" turns the green
-          strip into a spoken acknowledgement without stealing focus,
-          matching how LandingPage/CreateRequest announce failures.
-          WCAG 4.1.3 Status Messages. */}
-      <div
-        role="status"
-        aria-live="polite"
-        class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4 text-center"
-      >
+      {/* Success banner. It is spoken through the announcer (see the
+          effect above), so it carries no live role here. WCAG 4.1.3. */}
+      <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4 text-center">
         <p class="font-semibold text-green-800">{t('requests.waitingForHelp')}</p>
       </div>
 

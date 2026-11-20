@@ -13,12 +13,16 @@ vi.mock('lucide-preact', () => ({
   MapPin: (props) => h('span', { 'data-testid': 'map-pin', ...props }),
 }))
 
-// Spy on the global announcer. Sami's a11y note: an inline role="status" or
-// role="alert" region rendered together with its text is often skipped by
-// VoiceOver, so the component must also route the message through the
-// always-mounted announcer. The inline banner stays as a belt-and-braces
-// channel, but the announcer is where the reliable spoken update lives.
+// Spy on the global announcer. It is the only channel that speaks a routed
+// message: an inline live region mounted together with its text is often
+// skipped by VoiceOver, and keeping both would read the message twice.
 const announceSpy = vi.fn()
+
+// True when `text` sits inside any live region in `container`. Routed
+// messages must not: the announcer (mocked here) is their only channel.
+const LIVE = '[role="status"],[role="alert"],[role="log"],[aria-live]'
+const inLiveRegion = (container, text) =>
+  Array.from(container.querySelectorAll(LIVE)).some((el) => el.textContent.includes(text))
 vi.mock('../src/context/AnnouncerContext', () => ({
   useAnnouncer: () => ({ announce: announceSpy }),
   AnnouncerProvider: ({ children }) => children,
@@ -82,18 +86,20 @@ describe('LocationBanner', () => {
     expect(queryByText('location.retry')).toBeNull()
   })
 
-  it('announces safety-critical ("warning") banners with role="alert"', () => {
-    // `warning` is only used in ActiveSession, where losing location is a
-    // safety concern. Screen readers must interrupt to say so.
+
+  it('gives the warning banner no live role of its own', () => {
+    // The announcer speaks it assertively (see below); an inline role="alert"
+    // as well would be read twice by screen readers that announce insertions.
     const { container } = render(<LocationBanner error="denied" severity="warning" />)
-    expect(container.firstChild.getAttribute('role')).toBe('alert')
+    expect(container.textContent).toContain('location.denied')
+    expect(inLiveRegion(container, 'location.denied')).toBe(false)
   })
 
-  it('uses role="status" for the informational variant', () => {
-    // Pre-session the user may not yet have granted location, so polite
-    // announcement is right — no interruption.
+
+  it('gives the informational banner no live role of its own', () => {
     const { container } = render(<LocationBanner error="denied" />)
-    expect(container.firstChild.getAttribute('role')).toBe('status')
+    expect(container.textContent).toContain('location.denied')
+    expect(inLiveRegion(container, 'location.denied')).toBe(false)
   })
 
   it('announces the informational variant through the polite channel', () => {

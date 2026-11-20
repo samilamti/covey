@@ -98,6 +98,18 @@ describe('App language sync', () => {
     })
   })
 
+  it('mounts the screen-reader announcer around the app', async () => {
+    // Components announce through it, and every component test mocks it, so
+    // this is the one place that proves the real app actually has it.
+    store.token = 'stored-tok'
+    i18nState.language = 'sv'
+    authService.verify.mockResolvedValue({ user: { userId: 'u1', name: 'Test', preferredLang: 'sv' } })
+    const { container, findByTestId } = render(<App />)
+    await findByTestId('main-layout')
+    expect(container.querySelector('.sr-only [role="status"][aria-live="polite"]')).not.toBeNull()
+    expect(container.querySelector('.sr-only [role="alert"][aria-live="assertive"]')).not.toBeNull()
+  })
+
   it('makes no request on restore when the two already agree', async () => {
     store.token = 'stored-tok'
     i18nState.language = 'fi'

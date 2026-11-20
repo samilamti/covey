@@ -6,6 +6,34 @@ import { useAnnouncer } from '../context/AnnouncerContext'
 
 export const REPORT_REASONS = ['harassment', 'inappropriate', 'unsafe', 'spam', 'other']
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
+/**
+ * The dialog's Tab stops, in order. A radio group is ONE stop, its checked
+ * radio (or the first when none is checked), as in the browser's own Tab
+ * order: with the reasons as five separate stops, Shift+Tab from the third
+ * reason would not count as leaving the start of the dialog. The heading is
+ * tabIndex=-1 (focusable for the open-focus, not a stop) and disabled
+ * controls are skipped, so a disabled Send never parks the caret.
+ */
+function tabStops(container) {
+  const all = Array.from(container.querySelectorAll(FOCUSABLE))
+  const groups = new Set()
+  const stops = []
+  for (const el of all) {
+    if (el.type !== 'radio' || !el.name) {
+      stops.push(el)
+      continue
+    }
+    if (groups.has(el.name)) continue
+    groups.add(el.name)
+    const group = all.filter((r) => r.type === 'radio' && r.name === el.name)
+    stops.push(group.find((r) => r.checked) || group[0])
+  }
+  return stops
+}
+
 /**
  * SafetyActions — report and block another person.
  *
@@ -50,11 +78,10 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
     onBlocked?.()
   }
 
-  // Route a status change through the inline notice element AND the global
-  // announcer. The inline role="status" renders together with its text, which
-  // VoiceOver often skips; the global announcer already exists in the a11y
-  // tree so its content update fires reliably. Keep the inline block as the
-  // visible receipt plus a belt-and-braces channel.
+  // Show a status change as the visible notice and speak it through the
+  // global announcer. An inline role="status" renders together with its text,
+  // which VoiceOver often skips, so the notice itself carries no live role:
+  // the announcer is the only channel, and nothing is read twice.
   const showNotice = (type, text) => {
     setNotice({ type, text })
     announce(text, { assertive: type === 'error' })
@@ -108,31 +135,22 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
       if (e.key !== 'Tab') return
       const container = dialogContainerRef.current
       if (!container) return
-      // Scope the walk to visible, focusable controls only. The heading is
-      // tabIndex=-1 so .focus() works but it is deliberately not in the tab
-      // sequence — leave it out of the loop. A hidden input (type="hidden")
-      // is already filtered out because :not([disabled]) does not include
-      // it; a `disabled` button is skipped so the Send button being disabled
-      // (no reason picked yet) doesn't park the caret on a dead target.
-      const focusables = Array.from(
-        container.querySelectorAll(
-          'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        )
-      ).filter((el) => !el.hasAttribute('data-focus-trap-exclude'))
-      if (focusables.length === 0) return
-      const first = focusables[0]
-      const last = focusables[focusables.length - 1]
+      const stops = tabStops(container)
+      if (stops.length === 0) return
+      const first = stops[0]
+      const last = stops[stops.length - 1]
       const active = document.activeElement
       if (e.shiftKey) {
-        if (active === first || !container.contains(active)) {
+        // Backwards out of the first stop, or from anything that is not a
+        // stop: the heading that takes focus on open sits before every
+        // control, so the browser's own Shift+Tab would leave the dialog.
+        if (active === first || !stops.includes(active)) {
           e.preventDefault()
           last.focus()
         }
-      } else {
-        if (active === last) {
-          e.preventDefault()
-          first.focus()
-        }
+      } else if (active === last || !container.contains(active)) {
+        e.preventDefault()
+        first.focus()
       }
     }
     document.addEventListener('keydown', onKey)
@@ -218,10 +236,7 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
       </div>
 
       {notice && (
-        <p
-          role="status"
-          class={`mt-2 text-sm ${notice.type === 'success' ? 'text-green-700' : 'text-red-600'}`}
-        >
+        <p class={`mt-2 text-sm ${notice.type === 'success' ? 'text-green-700' : 'text-red-600'}`}>
           {notice.text}
         </p>
       )}

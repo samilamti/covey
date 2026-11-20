@@ -14,12 +14,16 @@ vi.mock('lucide-preact', () => ({
   Ban: () => h('span', null, 'Ban'),
 }))
 
-// Spy on the global announcer — the inline role="status|alert" notice still
-// exists, but Sami's a11y notes point out that an inline region mounted
-// TOGETHER with its text is often skipped (VoiceOver especially). The
-// reliable channel is the always-mounted announcer, so we verify
-// SafetyActions routes its success and failure messages through it.
+// Spy on the global announcer. It is the only channel that speaks a routed
+// message: an inline live region mounted together with its text is often
+// skipped by VoiceOver, and keeping both would read the message twice.
 const announceSpy = vi.fn()
+
+// True when `text` sits inside any live region in `container`. Routed
+// messages must not: the announcer (mocked here) is their only channel.
+const LIVE = '[role="status"],[role="alert"],[role="log"],[aria-live]'
+const inLiveRegion = (container, text) =>
+  Array.from(container.querySelectorAll(LIVE)).some((el) => el.textContent.includes(text))
 vi.mock('../src/context/AnnouncerContext', () => ({
   useAnnouncer: () => ({ announce: announceSpy }),
   AnnouncerProvider: ({ children }) => children,
@@ -110,10 +114,12 @@ describe('SafetyActions', () => {
     // which VoiceOver tends to skip. The global announcer is the reliable
     // channel. Polite because success is a confirmation, not an alarm.
     vi.spyOn(window, 'confirm').mockReturnValue(true)
-    const { getByText } = render(<SafetyActions userId="u2" name="Kim" />)
+    const { container, getByText } = render(<SafetyActions userId="u2" name="Kim" />)
     fireEvent.click(getByText('safety.block'))
     await waitFor(() => expect(getByText('safety.unblock')).toBeTruthy())
     expect(announceSpy).toHaveBeenCalledWith('safety.blockDone', { assertive: false })
+    expect(container.textContent).toContain('safety.blockDone')
+    expect(inLiveRegion(container, 'safety.blockDone')).toBe(false)
   })
 
   it('routes block failure through the global announcer as assertive', async () => {
@@ -122,9 +128,11 @@ describe('SafetyActions', () => {
     // on the page and the user would not realise their block did not land.
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     safetyService.block.mockRejectedValueOnce(new Error('nope'))
-    const { getByText } = render(<SafetyActions userId="u2" name="Kim" />)
+    const { container, getByText } = render(<SafetyActions userId="u2" name="Kim" />)
     fireEvent.click(getByText('safety.block'))
     await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('app.error', { assertive: true }))
+    expect(container.textContent).toContain('app.error')
+    expect(inLiveRegion(container, 'app.error')).toBe(false)
   })
 
   it('routes report success through the global announcer', async () => {
@@ -302,6 +310,48 @@ describe('SafetyActions', () => {
       // preventDefaulted above — assert the invariant the trap preserves.
       expect(dialog.contains(outside)).toBe(false)
     }
+  })
+
+  it('keeps Shift+Tab inside the dialog from the heading that takes focus on open', () => {
+    // Opening the dialog focuses its heading (tabIndex=-1), which sits before
+    // every control. The browser's own Shift+Tab from there would step out to
+    // the Report trigger behind the scrim, so the trap must catch it.
+    const { getByText, getByRole } = render(<SafetyActions userId="u2" name="Kim" />)
+    fireEvent.click(getByText('safety.report').closest('button'))
+    const dialog = getByRole('dialog')
+    const heading = dialog.querySelector('h3')
+    heading.focus()
+    expect(document.activeElement).toBe(heading)
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true })
+    expect(document.dispatchEvent(ev)).toBe(false)
+    expect(dialog.contains(document.activeElement)).toBe(true)
+    expect(document.activeElement).not.toBe(heading)
+  })
+
+  it('treats the reason radios as one Tab stop, the checked one', () => {
+    // The five reasons are one radio group, so the browser gives them ONE Tab
+    // stop. Shift+Tab from the checked reason (not the first radio) is leaving
+    // the start of the dialog and must wrap to the end; Tab from the end must
+    // land back on the checked reason, not on the first radio.
+    const { getByText, getByRole } = render(<SafetyActions userId="u2" name="Kim" />)
+    fireEvent.click(getByText('safety.report').closest('button'))
+    const dialog = getByRole('dialog')
+    const radios = Array.from(dialog.querySelectorAll('input[type="radio"]'))
+    expect(radios.length).toBeGreaterThan(2)
+    const picked = radios[2]
+    fireEvent.click(picked)
+    expect(picked.checked).toBe(true)
+
+    picked.focus()
+    const back = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true })
+    expect(document.dispatchEvent(back)).toBe(false)
+    const last = document.activeElement
+    expect(dialog.contains(last)).toBe(true)
+    expect(last).not.toBe(picked)
+
+    const forward = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true })
+    expect(document.dispatchEvent(forward)).toBe(false)
+    expect(document.activeElement).toBe(picked)
   })
 
   it('does not swallow Tab when the dialog is closed', () => {

@@ -57,11 +57,10 @@ export function CreateRequest({ onCreated }) {
   const [error, setError] = useState(null)
   const { position, error: geoError, loading: geoLoading, retry: retryGeo } = useGeolocation()
 
-  // Route a failed submit through the global announcer as well as the
-  // inline role="alert" below. The inline region is mounted together with
-  // its text, which VoiceOver often skips. Assertive — the user just tried
-  // to act and the action failed; a polite update would be talked over by
-  // whatever else is happening on the page.
+  // Speak a failed submit through the global announcer. An inline role="alert"
+  // mounted together with its text is often skipped by VoiceOver, so the
+  // visible error has no live role of its own. Assertive: the user just
+  // tried to send a request and it failed.
   useEffect(() => {
     if (error) announce(error, { assertive: true })
   }, [error])
@@ -203,13 +202,10 @@ export function CreateRequest({ onCreated }) {
           <LocationBanner error={geoError} onRetry={retryGeo} />
         )}
 
-        {/* Error message — role="alert" + assertive so a failed submit
-            interrupts to tell the user, since the only other sign is a
-            small red line at the bottom of a scrolled form. The LandingPage
-            BankID error block uses the same pattern. WCAG 4.1.3 Status
-            Messages. */}
+        {/* Error message. The effect above speaks it assertively through
+            the announcer, so it carries no live role here. WCAG 4.1.3. */}
         {error && (
-          <p role="alert" aria-live="assertive" class="text-sm text-red-600">{error}</p>
+          <p class="text-sm text-red-600">{error}</p>
         )}
 
         {/* Submit */}

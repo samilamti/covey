@@ -81,10 +81,12 @@ export function LanguageSelector() {
   //     starting point, not from some arbitrary first item. Without this,
   //     the caret stays on the trigger and Tab walks past 12 items before
   //     leaving; the point of a menu is to collapse that choice.
-  //   • On close, return focus to the trigger so a keyboard user picks up
-  //     where they were. The wasOpenRef guard prevents this branch from
-  //     firing on initial mount, where isOpen starts false and the trigger
-  //     is already the natural focus target.
+  //   • On close via Escape or a selection, return focus to the trigger so a
+  //     keyboard user picks up where they were. Those closes leave focus in
+  //     the dropdown, or on <body> once the focused item unmounts. A close
+  //     caused by clicking or tabbing elsewhere has already put focus where
+  //     the user wanted it, so leave it there. The wasOpenRef guard keeps
+  //     this branch from firing on initial mount.
   useEffect(() => {
     if (isOpen) {
       const menu = menuRef.current
@@ -95,8 +97,11 @@ export function LanguageSelector() {
       target?.focus()
       wasOpenRef.current = true
     } else if (wasOpenRef.current) {
-      triggerRef.current?.focus()
       wasOpenRef.current = false
+      const active = document.activeElement
+      if (!active || active === document.body || dropdownRef.current?.contains(active)) {
+        triggerRef.current?.focus()
+      }
     }
   }, [isOpen])
 
@@ -108,6 +113,14 @@ export function LanguageSelector() {
   // behaviour matches CreateRequest's radio navigation (`onRadioKeyDown`)
   // so the two patterns stay consistent.
   const onMenuKeyDown = (e) => {
+    // Tab leaves the menu (ARIA APG Menu Button). Close it only after the
+    // browser has moved focus to the next control: closing at once unmounts
+    // the focused item before the Tab is handled, and focus could land back at
+    // the top of the page.
+    if (e.key === 'Tab') {
+      setTimeout(() => setIsOpen(false), 0)
+      return
+    }
     const menu = menuRef.current
     if (!menu) return
     const items = Array.from(menu.querySelectorAll('[role="menuitem"]'))

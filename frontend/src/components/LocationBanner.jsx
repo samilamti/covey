@@ -19,13 +19,12 @@ export function LocationBanner({ error, onRetry, severity = 'info' }) {
     ? t('location.denied')
     : t('location.unavailable')
 
-  // Route the banner through the global announcer whenever `error` changes
-  // to a non-null value. The inline role="status"/"alert" block below stays
-  // as a belt-and-braces channel, but as Sami's notes record, a region
-  // mounted TOGETHER with its text is often skipped by VoiceOver — the
-  // region and the text land in the a11y tree at the same tick, so there's
-  // no CHANGE event for the live-region observer to fire on. The global
-  // announcer already sits in the tree, so a text change fires reliably.
+  // Speak the banner through the global announcer whenever `error` changes
+  // to a non-null value. A region mounted TOGETHER with its text is often
+  // skipped by VoiceOver: the region and the text land in the a11y tree at
+  // the same tick, so there is no CHANGE for the live-region observer to fire
+  // on. The announcer already sits in the tree, so its update is heard, and
+  // it is the only channel: the visible banner has no live role.
   // Warning severity is safety-critical (ActiveSession loses location
   // relay) → assertive; the pre-session informational use (CreateRequest,
   // RequestList) stays polite so it doesn't interrupt. The effect depends
@@ -50,17 +49,8 @@ export function LocationBanner({ error, onRetry, severity = 'info' }) {
     ? 'text-red-700 hover:bg-red-100'
     : 'text-blue-700 hover:bg-blue-100'
 
-  // `role="alert"` for the safety-critical warning (requester can't share
-  // their live location to a helper) gets screen-reader-announced immediately;
-  // `role="status"` is the polite variant for the informational case so a
-  // pre-session "we can't centre the map on you" banner doesn't interrupt.
-  const role = severity === 'warning' ? 'alert' : 'status'
-
   return (
-    <div
-      role={role}
-      class={`flex items-center gap-2 rounded-lg border p-3 mb-3 text-sm ${colors}`}
-    >
+    <div class={`flex items-center gap-2 rounded-lg border p-3 mb-3 text-sm ${colors}`}>
       <MapPin size={16} class="flex-shrink-0" />
       <span class="flex-1">{message}</span>
       {onRetry && (

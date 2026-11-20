@@ -23,12 +23,16 @@ vi.mock('lucide-preact', () => ({
   Ban: (props) => h('span', props, 'Ban'),
 }))
 
-// Spy on the global announcer — the inline role="status" blocks still exist,
-// but Sami's a11y notes point out that an inline region mounted TOGETHER with
-// its text is often skipped (VoiceOver especially). The reliable channel is
-// the always-mounted announcer, so we verify ActiveSession routes its
-// user-driven and server-driven state transitions through it.
+// Spy on the global announcer. It is the only channel that speaks a routed
+// message: an inline live region mounted together with its text is often
+// skipped by VoiceOver, and keeping both would read the message twice.
 const announceSpy = vi.fn()
+
+// True when `text` sits inside any live region in `container`. Routed
+// messages must not: the announcer (mocked here) is their only channel.
+const LIVE = '[role="status"],[role="alert"],[role="log"],[aria-live]'
+const inLiveRegion = (container, text) =>
+  Array.from(container.querySelectorAll(LIVE)).some((el) => el.textContent.includes(text))
 vi.mock('../src/context/AnnouncerContext', () => ({
   useAnnouncer: () => ({ announce: announceSpy }),
   AnnouncerProvider: ({ children }) => children,
@@ -335,22 +339,20 @@ describe('ActiveSession', () => {
     expect(getByText('requests.doneReject')).toBeTruthy()
   })
 
-  it('announces the other party\'s done proposal as a polite status', () => {
-    // The whole done-pending prompt appears from a socket event, so for
-    // a screen reader user on an active escort the state change would
-    // otherwise be silent. role="status" + aria-live="polite" so the
-    // proposal and its two buttons are announced on insertion.
-    const { getByText } = render(
+
+  it('shows the other party\'s done proposal outside any inline live region', () => {
+    // The announcer speaks the proposal (next test). An inline live region
+    // around it would make a screen reader that does read inserted regions
+    // say it twice, and would read the two buttons out as part of it.
+    const { container, getByText } = render(
       <ActiveSession
         request={makeRequest({ status: 'done_pending', done_initiated_by: 'user-b' })}
         currentUserId="user-a"
         onClose={vi.fn()}
       />
     )
-    const proposalText = getByText('requests.doneProposal')
-    const region = proposalText.closest('[role="status"]')
-    expect(region).not.toBeNull()
-    expect(region.getAttribute('aria-live')).toBe('polite')
+    expect(getByText('requests.doneProposal')).toBeTruthy()
+    expect(inLiveRegion(container, 'requests.doneProposal')).toBe(false)
   })
 
   it('routes the other party\'s done proposal through the global announcer', () => {
@@ -395,21 +397,19 @@ describe('ActiveSession', () => {
     expect(announceSpy).toHaveBeenCalledWith('requests.expired')
   })
 
-  it('announces session expiry as a polite status', () => {
-    // Expiry is server-driven; nothing tells a screen reader user that
-    // their session just timed out unless the appearing banner lives in
-    // a live region.
-    const { getByText } = render(
+
+  it('shows session expiry outside any inline live region', () => {
+    // Expiry is server-driven; the announcer speaks it. The visible band
+    // must not be a live region too, or it is read twice.
+    const { container, getByText } = render(
       <ActiveSession
         request={makeRequest({ status: 'expired' })}
         currentUserId="user-a"
         onClose={vi.fn()}
       />
     )
-    const expiredText = getByText('requests.expired')
-    const region = expiredText.closest('[role="status"]')
-    expect(region).not.toBeNull()
-    expect(region.getAttribute('aria-live')).toBe('polite')
+    expect(getByText('requests.expired')).toBeTruthy()
+    expect(inLiveRegion(container, 'requests.expired')).toBe(false)
   })
 
   /* ── Socket listener registration ── */

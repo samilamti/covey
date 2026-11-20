@@ -20,10 +20,16 @@ const authService = {
 }
 vi.mock('../src/services/auth', () => ({ authService }))
 
-// Spy on the global announcer — the inline role="alert" error block stays,
-// but Sami's a11y notes point out that an inline region mounted TOGETHER
-// with its text is often skipped (VoiceOver especially).
+// Spy on the global announcer. It is the only channel that speaks a routed
+// message: an inline live region mounted together with its text is often
+// skipped by VoiceOver, and keeping both would read the message twice.
 const announceSpy = vi.fn()
+
+// True when `text` sits inside any live region in `container`. Routed
+// messages must not: the announcer (mocked here) is their only channel.
+const LIVE = '[role="status"],[role="alert"],[role="log"],[aria-live]'
+const inLiveRegion = (container, text) =>
+  Array.from(container.querySelectorAll(LIVE)).some((el) => el.textContent.includes(text))
 vi.mock('../src/context/AnnouncerContext', () => ({
   useAnnouncer: () => ({ announce: announceSpy }),
   AnnouncerProvider: ({ children }) => children,
@@ -88,22 +94,20 @@ describe('BankIDLogin (Secure Start)', () => {
     await waitFor(() => expect(onLogin).toHaveBeenCalledWith(user, 'jwt-token'))
   })
 
-  it('announces the pending BankID instruction as a live region', async () => {
+
+  it('speaks the pending BankID instruction through the announcer only', async () => {
     // The hint text flips from "Open BankID app" to "Enter your security
-    // code" the moment the user actually opens BankID. Without a live
-    // region a screen reader never speaks that transition, so an assistive
-    // user has no idea the device is now waiting on them.
+    // code" the moment the user opens BankID. The announcer speaks it; the
+    // visible line is not a live region, so nothing reads it twice.
     authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
     authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
 
     const { container, getByText } = render(<BankIDLogin onLogin={vi.fn()} pollMs={30} qrMs={30} />)
     fireEvent.click(getByText('landing.loginButton'))
 
-    await waitFor(() => {
-      const live = container.querySelector('[role="status"][aria-live="polite"]')
-      expect(live, 'expected the pending instruction to live inside a polite status region').toBeTruthy()
-      expect(live.textContent).toContain('landing.bankidPending')
-    })
+    await waitFor(() => expect(container.textContent).toContain('landing.bankidPending'))
+    expect(inLiveRegion(container, 'landing.bankidPending')).toBe(false)
+    expect(announceSpy).toHaveBeenCalledWith('landing.bankidPending')
   })
 
   it('names the QR placeholder while BankID has not returned the first frame', async () => {
@@ -190,11 +194,10 @@ describe('BankIDLogin (Secure Start)', () => {
     expect(call[1]).toBeUndefined()
   })
 
-  it('does not re-announce pending text through the announcer on every hint-code change', async () => {
-    // The announcer seeds the first paint; subsequent hint-code transitions
-    // are handled by the inline aria-live region below the QR. Announcing
-    // every change would make VoiceOver read the same line twice (once from
-    // the inline region, once from the announcer).
+
+  it('announces each pending instruction once, including the hint-code change', async () => {
+    // With no inline live region, the announcer has to carry the switch to
+    // "Enter your security code" as well, or that transition is silent.
     authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
     authService.collect
       .mockResolvedValueOnce({ status: 'pending', hintCode: 'outstandingTransaction' })
@@ -203,19 +206,12 @@ describe('BankIDLogin (Secure Start)', () => {
     const { getByText, container } = render(<BankIDLogin onLogin={vi.fn()} pollMs={30} qrMs={30} />)
     fireEvent.click(getByText('landing.loginButton'))
 
-    // Wait for the inline region to actually flip to the userSign text,
-    // proving the second poll has landed.
+    await waitFor(() => expect(container.textContent).toContain('landing.bankidUserSign'))
     await waitFor(() => {
-      const live = container.querySelector('[role="status"][aria-live="polite"]')
-      expect(live).toBeTruthy()
-      expect(live.textContent).toContain('landing.bankidUserSign')
+      const pendingCalls = announceSpy.mock.calls
+        .map((c) => c[0])
+        .filter((t) => t === 'landing.bankidPending' || t === 'landing.bankidUserSign')
+      expect(pendingCalls).toEqual(['landing.bankidPending', 'landing.bankidUserSign'])
     })
-    // The pending instruction should have fired through the announcer
-    // exactly once (the initial paint), not twice.
-    const pendingCalls = announceSpy.mock.calls.filter(
-      (c) => c[0] === 'landing.bankidPending' || c[0] === 'landing.bankidUserSign'
-    )
-    expect(pendingCalls).toHaveLength(1)
-    expect(pendingCalls[0][0]).toBe('landing.bankidPending')
   })
 })
