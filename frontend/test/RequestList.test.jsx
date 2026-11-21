@@ -316,6 +316,94 @@ describe('RequestList', () => {
     })
   })
 
+  /* ── Semantic list wrapping ── */
+
+  it('wraps the user\'s requests in a semantic list tied to its heading', async () => {
+    // Each RequestCard carries its own actions (Accept, Done, Cancel), so the
+    // collection is a true list — not a visual stack. Without role="list" +
+    // aria-labelledby a screen reader has no "N items" count on the Requests
+    // tab (the app's default view after sign-in) and no quick list-jump
+    // between entries. Same shape SafetyPartners already carries.
+    const myRequests = [
+      // Both 'open' so the auto-navigate-to-ActiveSession branch
+      // (active/accepted/done_pending) stays out of the way; the list
+      // semantics are what the test is here to verify.
+      {
+        id: 'r1', type: 'walk', status: 'open', message: '',
+        requester_id: 'user-a', helper_id: null,
+        pickup_lat: null, pickup_lng: null,
+        eligibility_tier: 'any_member', created_at: new Date().toISOString(),
+      },
+      {
+        id: 'r2', type: 'wait', status: 'open', message: '',
+        requester_id: 'user-a', helper_id: null,
+        pickup_lat: null, pickup_lng: null,
+        eligibility_tier: 'any_member', created_at: new Date().toISOString(),
+      },
+    ]
+    requestService.list.mockResolvedValue({ requests: myRequests })
+
+    const { getByText, getByRole, container } = render(<RequestList currentUserId="user-a" />)
+    // Flip to list view so the user's own list renders (create form is the
+    // default when there are no open requests).
+    await waitFor(() => expect(getByText('requests.all')).toBeTruthy())
+    fireEvent.click(getByText('requests.all'))
+
+    await waitFor(() => {
+      const heading = getByText('requests.title')
+      expect(heading.tagName).toBe('H2')
+      expect(heading.id).toBeTruthy()
+
+      const list = getByRole('list', { name: 'requests.title' })
+      expect(list.tagName).toBe('UL')
+      expect(list.getAttribute('aria-labelledby')).toBe(heading.id)
+
+      // Children are <li>, one per request.
+      const items = list.querySelectorAll(':scope > li')
+      expect(items.length).toBe(2)
+    })
+
+    // The default-item-marker rule (Tailwind strips list-style on <ul>
+    // explicitly; we belt-and-braces with list-none) keeps the visible
+    // layout identical, so no stray bullets appear.
+    const list = container.querySelector('ul[aria-labelledby]')
+    expect(list.className).toContain('list-none')
+  })
+
+  it('wraps open requests from others in a semantic list tied to its heading', async () => {
+    // Same reason as the user's own list above — a screen reader user
+    // listing open requests from others needs an item count and the list
+    // shortcut their reader provides.
+    requestService.listOpen.mockResolvedValue({ requests: [
+      {
+        id: 'r-open-1', type: 'walk', status: 'open', message: '',
+        requester_id: 'user-b', helper_id: null,
+        pickup_lat: null, pickup_lng: null,
+        eligibility_tier: 'any_member', created_at: new Date().toISOString(),
+      },
+      {
+        id: 'r-open-2', type: 'wait', status: 'open', message: '',
+        requester_id: 'user-c', helper_id: null,
+        pickup_lat: null, pickup_lng: null,
+        eligibility_tier: 'any_member', created_at: new Date().toISOString(),
+      },
+    ] })
+    const { getByText, getByRole } = render(<RequestList currentUserId="user-a" />)
+
+    await waitFor(() => {
+      const heading = getByText('requests.openRequests')
+      expect(heading.tagName).toBe('H3')
+      expect(heading.id).toBeTruthy()
+
+      const list = getByRole('list', { name: 'requests.openRequests' })
+      expect(list.tagName).toBe('UL')
+      expect(list.getAttribute('aria-labelledby')).toBe(heading.id)
+
+      const items = list.querySelectorAll(':scope > li')
+      expect(items.length).toBe(2)
+    })
+  })
+
   it('auto-navigates to ActiveSession when user has an active request', async () => {
     const myRequests = [{
       id: 'r1', type: 'walk', status: 'active', message: '',

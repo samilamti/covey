@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'preact/hooks'
+import { useState, useEffect, useId, useRef } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Plus, List } from 'lucide-preact'
 import { requestService } from '../services/requests'
@@ -27,6 +27,13 @@ export function RequestList({ currentUserId }) {
   const [createdPosition, setCreatedPosition] = useState(null)
   const [pendingRatings, setPendingRatings] = useState([])
   const initialViewDecided = useRef(false)
+  // Stable per-instance ids so each list can point at its own visible
+  // heading via aria-labelledby. Each ul below is a pile of discrete
+  // items with per-item actions (Accept, Done, Cancel), the same shape
+  // SafetyPartners already addresses — without list semantics a screen
+  // reader user hears no count and cannot jump between entries. WCAG 1.3.1.
+  const requestsHeadingId = useId()
+  const openRequestsHeadingId = useId()
 
   const loadRequests = async () => {
     try {
@@ -248,7 +255,7 @@ export function RequestList({ currentUserId }) {
             <span aria-current="page">{t('requests.createShort')}</span>
           </h2>
         ) : (
-          <h2 class="text-xl font-bold">{t('requests.title')}</h2>
+          <h2 id={requestsHeadingId} class="text-xl font-bold">{t('requests.title')}</h2>
         )}
         {showCreate ? (
           <button
@@ -294,37 +301,53 @@ export function RequestList({ currentUserId }) {
       {showCreate === false && (
         <>
           {requests.length > 0 && (
-            <div class="space-y-3">
+            // role="list" is explicit because Tailwind's reset strips the
+            // default list semantics in some browsers, and aria-labelledby
+            // ties the list to the visible h2 so it announces as
+            // "Requests, list, N items" instead of unnamed. Same shape
+            // SafetyPartners already carries. list-none + p-0 + m-0 keep
+            // the layout identical.
+            <ul
+              role="list"
+              aria-labelledby={requestsHeadingId}
+              class="list-none p-0 m-0 space-y-3"
+            >
               {requests.map((request) => (
-                <RequestCard
-                  key={request.id}
-                  request={request}
-                  currentUserId={currentUserId}
-                  viewerPosition={viewerPosition}
-                  onAccept={handleAccept}
-                  onCancel={handleCancel}
-                  onComplete={handleComplete}
-                  onConfirmSafety={handleConfirmSafety}
-                />
+                <li key={request.id}>
+                  <RequestCard
+                    request={request}
+                    currentUserId={currentUserId}
+                    viewerPosition={viewerPosition}
+                    onAccept={handleAccept}
+                    onCancel={handleCancel}
+                    onComplete={handleComplete}
+                    onConfirmSafety={handleConfirmSafety}
+                  />
+                </li>
               ))}
-            </div>
+            </ul>
           )}
 
           {/* Open freestanding requests from others */}
           {openRequests.length > 0 && (
             <div class="mt-6">
-              <h3 class="text-lg font-semibold text-gray-700 mb-3">{t('requests.openRequests')}</h3>
-              <div class="space-y-3">
+              <h3 id={openRequestsHeadingId} class="text-lg font-semibold text-gray-700 mb-3">{t('requests.openRequests')}</h3>
+              <ul
+                role="list"
+                aria-labelledby={openRequestsHeadingId}
+                class="list-none p-0 m-0 space-y-3"
+              >
                 {openRequests.map((request) => (
-                  <RequestCard
-                    key={request.id}
-                    request={request}
-                    currentUserId={currentUserId}
-                    viewerPosition={viewerPosition}
-                    onAccept={handleAccept}
-                  />
+                  <li key={request.id}>
+                    <RequestCard
+                      request={request}
+                      currentUserId={currentUserId}
+                      viewerPosition={viewerPosition}
+                      onAccept={handleAccept}
+                    />
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           )}
 
