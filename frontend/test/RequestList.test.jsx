@@ -144,6 +144,25 @@ describe('RequestList', () => {
     })
   })
 
+  it('reads the empty-state line at WCAG AA contrast', async () => {
+    // When the user has no requests and nothing is open, this empty
+    // line is the first thing they see on the Requests tab. It was
+    // drawn in `text-gray-400` (~2.6:1 on white), below WCAG 1.4.3's
+    // 4.5:1 AA bar for normal text — a low-vision user could see
+    // nothing where the empty state was supposed to explain the
+    // blank screen. `text-gray-500` clears ~4.9:1 on the same card.
+    const { getByText, container } = render(<RequestList currentUserId="user-a" />)
+    // The empty state only renders in list view (showCreate===false).
+    await waitFor(() => expect(getByText('requests.all')).toBeTruthy())
+    fireEvent.click(getByText('requests.all'))
+    await waitFor(() => {
+      const line = getByText('requests.empty')
+      const cls = line.getAttribute('class') || ''
+      expect(cls).toMatch(/\btext-gray-500\b/)
+      expect(container.innerHTML).not.toMatch(/\btext-gray-400\b/)
+    })
+  })
+
   it('reads the breadcrumb back-button at WCAG AA contrast', async () => {
     // The breadcrumb's "Requests" crumb is an interactive back-button
     // to the list view. It had been rendered in `text-gray-400`

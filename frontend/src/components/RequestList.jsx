@@ -360,8 +360,13 @@ export function RequestList({ currentUserId }) {
             </div>
           )}
 
+          {/* Empty state. This is the first thing a new user sees on
+              the Requests tab, so it has to be readable — it tells
+              them WHY there is nothing to interact with. `text-gray-400`
+              on a white background sat at ~2.6:1 and failed WCAG 1.4.3;
+              `text-gray-500` clears the 4.5:1 AA bar. */}
           {requests.length === 0 && openRequests.length === 0 && (
-            <div class="text-center py-8 text-gray-400">
+            <div class="text-center py-8 text-gray-500">
               {t('requests.empty')}
             </div>
           )}
