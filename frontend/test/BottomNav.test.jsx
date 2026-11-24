@@ -67,7 +67,21 @@ describe('BottomNav', () => {
     // Active/inactive colour lives on the icon-pill + label spans inside each tab.
     const buttons = getAllByRole('button')
     expect(buttons[0].innerHTML).toContain('text-indigo-600')
-    expect(buttons[1].innerHTML).toContain('text-gray-400')
+    expect(buttons[1].innerHTML).toContain('text-gray-500')
+  })
+
+  it('reads the inactive tab label at WCAG AA contrast on the white bar', () => {
+    // Inactive tabs were `text-gray-400` (#9ca3af) on a white background
+    // — about 2.6:1, which fails WCAG 1.4.3 Contrast (Minimum) for
+    // normal text at 12px. `text-gray-500` (#6b7280) measures ~4.9:1
+    // against the same background, clearing the 4.5:1 AA bar while
+    // staying visibly dimmer than the indigo of the active tab.
+    const { getAllByRole } = render(
+      <BottomNav currentPath="/requests" onNavigate={vi.fn()} />
+    )
+    const inactive = getAllByRole('button')[1]
+    expect(inactive.innerHTML).not.toContain('text-gray-400')
+    expect(inactive.innerHTML).toContain('text-gray-500')
   })
 
   it('calls onNavigate with /profile when profile tab clicked', async () => {

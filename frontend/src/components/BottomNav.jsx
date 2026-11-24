@@ -43,16 +43,23 @@ export function BottomNav({ currentPath, onNavigate }) {
               aria-current={isActive ? 'page' : undefined}
               class="group flex flex-col items-center justify-center flex-1 h-full gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-inset"
             >
+              {/* Inactive tab chrome was `text-gray-400` (#9ca3af) on a
+                  white bar, which is ~2.6:1 against the background and
+                  fails WCAG 1.4.3 Contrast (Minimum) at the 4.5:1 bar
+                  for normal text. `text-gray-500` (#6b7280) clears the
+                  threshold at ~4.9:1 while staying visibly dimmer than
+                  the active indigo — the "this is the other tab" signal
+                  the design relies on is still there, just readable. */}
               <span
                 class={`flex items-center justify-center rounded-full px-5 py-1.5 transition-colors ${
-                  isActive ? 'bg-indigo-50 text-indigo-600' : 'text-gray-400 group-hover:text-gray-600'
+                  isActive ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 group-hover:text-gray-700'
                 }`}
               >
                 <Icon size={26} />
               </span>
               <span
                 class={`text-xs font-medium transition-colors ${
-                  isActive ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-600'
+                  isActive ? 'text-indigo-600' : 'text-gray-500 group-hover:text-gray-700'
                 }`}
               >
                 {t(tab.labelKey)}
