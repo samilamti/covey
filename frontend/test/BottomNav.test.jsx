@@ -87,4 +87,23 @@ describe('BottomNav', () => {
     await fireEvent.click(getByText('nav.requests'))
     expect(onNavigate).toHaveBeenCalledWith('/requests')
   })
+
+  it('draws a visible keyboard focus ring on every tab button', () => {
+    // The browser default focus outline is often thin or suppressed on
+    // mobile Chromium, and the nav bar is the whole app's primary
+    // navigation — a keyboard user needs to see which tab is focused.
+    // focus-visible so the ring shows only on keyboard focus; ring-inset
+    // so it stays inside the fixed-height bar rather than bleeding into
+    // the content above. WCAG 2.4.7 Focus Visible.
+    const { getAllByRole } = render(
+      <BottomNav currentPath="/requests" onNavigate={vi.fn()} />
+    )
+    const buttons = getAllByRole('button')
+    for (const btn of buttons) {
+      const cls = btn.getAttribute('class') || ''
+      expect(cls).toMatch(/focus-visible:ring-2\b/)
+      expect(cls).toMatch(/focus-visible:ring-indigo-500\b/)
+      expect(cls).toMatch(/focus-visible:ring-inset\b/)
+    }
+  })
 })
