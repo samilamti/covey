@@ -227,4 +227,25 @@ describe('RequestCard', () => {
     expect(queryByText('500 m')).toBeNull()
     expect(queryByText('requests.locationAvailable')).toBeNull()
   })
+
+  it('reads the meta-info row at WCAG AA contrast on the white card', () => {
+    // Time since created, distance and the helper marker are genuine
+    // information. `text-gray-400` (#9ca3af) on white is ~2.6:1 and
+    // fails WCAG 1.4.3 Contrast (Minimum) for normal text at the 12px
+    // label size; `text-gray-500` (#6b7280) clears the 4.5:1 bar at
+    // ~4.9:1 while still reading as secondary against the body copy.
+    const { container } = render(
+      <RequestCard
+        request={makeRequest({ pickup_lat: '59.34', pickup_lng: '18.08' })}
+        currentUserId="user-b"
+        viewerPosition={{ lat: 59.33, lng: 18.07 }}
+      />
+    )
+    // The meta row is the only element containing the "500 m" distance.
+    const meta = container.querySelector('.text-gray-500')
+    expect(meta).toBeTruthy()
+    expect(meta.textContent).toContain('500 m')
+    // Guard against a sweep sliding back to the failing value.
+    expect(container.innerHTML).not.toMatch(/\btext-gray-400\b/)
+  })
 })
