@@ -270,7 +270,15 @@ export function LandingPage({ onLogin }) {
         </div>
       </main>
 
-      <footer class="p-4 text-center text-gray-400 text-sm">
+      {/* Footer sits on the page's blue-to-indigo gradient (not the
+          white card). `text-gray-400` came in at ~2.5:1 against
+          `bg-blue-50` and failed WCAG 1.4.3's 4.5:1 AA bar at 14 px
+          — on the unauthenticated landing page the copyright line
+          is the only cue a legal-minded visitor has about who runs
+          the service. `text-gray-500` only reaches ~4.4:1 on the
+          blue side and still fails; `text-gray-600` clears ~6.7:1
+          on the same gradient. */}
+      <footer class="p-4 text-center text-gray-600 text-sm">
         &copy; {new Date().getFullYear()} Covey
       </footer>
     </div>

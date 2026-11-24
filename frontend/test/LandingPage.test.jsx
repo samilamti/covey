@@ -90,6 +90,25 @@ describe('LandingPage', () => {
     expect(getByTestId('lang-selector')).toBeTruthy()
   })
 
+  it('reads the footer copyright line at WCAG AA contrast', () => {
+    // The footer sits on the page's blue-to-indigo gradient (not the
+    // white card), so its colour has to be reckoned against that
+    // tinted surface. `text-gray-400` dropped the copyright to
+    // ~2.5:1 on `bg-blue-50`, below WCAG 1.4.3's 4.5:1 AA bar at
+    // the 14 px label size — on the unauthenticated landing page
+    // this line is the only cue a legal-minded visitor has about
+    // who runs the service. `text-gray-500` only reaches ~4.4:1 on
+    // the blue side and still fails; `text-gray-600` clears ~6.7:1
+    // on the same gradient.
+    const { container } = render(<LandingPage onLogin={vi.fn()} />)
+    const footer = container.querySelector('footer')
+    expect(footer).toBeTruthy()
+    const cls = footer.getAttribute('class') || ''
+    expect(cls).toMatch(/\btext-gray-600\b/)
+    expect(cls).not.toMatch(/\btext-gray-400\b/)
+    expect(cls).not.toMatch(/\btext-gray-500\b/)
+  })
+
   it('draws a visible focus ring on the logo button when it is keyboard-focused', () => {
     // The logo is the first step of the demo easter egg, so it is a real
     // interactive control that a keyboard user lands on when tabbing into
