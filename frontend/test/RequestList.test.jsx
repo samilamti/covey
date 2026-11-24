@@ -144,6 +144,23 @@ describe('RequestList', () => {
     })
   })
 
+  it('reads the breadcrumb back-button at WCAG AA contrast', async () => {
+    // The breadcrumb's "Requests" crumb is an interactive back-button
+    // to the list view. It had been rendered in `text-gray-400`
+    // (#9ca3af) on a white card: ~2.6:1 against the background.
+    // Even as 20px bold text (which WCAG counts as large), that
+    // sits under the 3:1 large-text bar, so a low-vision user could
+    // not tell the crumb was the way back. `text-gray-500` (#6b7280)
+    // measures ~4.9:1 on the same surface and keeps it a crumb — the
+    // current-page span beside it still reads as the active crumb.
+    const { getByText } = render(<RequestList currentUserId="user-a" />)
+    await waitFor(() => expect(getByText('requests.createShort')).toBeTruthy())
+    const back = getByText('requests.title').closest('button')
+    const cls = back.getAttribute('class') || ''
+    expect(cls).toMatch(/\btext-gray-500\b/)
+    expect(cls).not.toMatch(/\btext-gray-400\b/)
+  })
+
   it('hides the decorative breadcrumb arrow from assistive tech', async () => {
     // The visual "→" between the two breadcrumb crumbs is a separator, not
     // a word; without aria-hidden a screen reader reads it as "rightwards

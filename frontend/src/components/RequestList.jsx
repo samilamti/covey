@@ -243,11 +243,14 @@ export function RequestList({ currentUserId }) {
           // the layout for sighted users. aria-current="page" on the final
           // crumb matches the ARIA Breadcrumb pattern, so the heading
           // announces as "Requests, Create, current page" rather than two
-          // identical-sounding spans.
+          // identical-sounding spans. The back-button carries text-gray-500
+          // so even a sighted low-vision user can read the way back (WCAG
+          // 1.4.3 — text-gray-400 came in at ~2.6:1 on this card, below
+          // the 3:1 large-text bar).
           <h2 class="text-xl font-bold flex items-center gap-1.5">
             <button
               onClick={() => setShowCreate(false)}
-              class="text-gray-400 hover:text-gray-600 font-bold"
+              class="text-gray-500 hover:text-gray-700 font-bold"
             >
               {t('requests.title')}
             </button>
