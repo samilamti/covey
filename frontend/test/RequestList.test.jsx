@@ -54,7 +54,17 @@ vi.mock('../src/socket', () => ({
 }))
 
 vi.mock('../src/components/ActiveSession', () => ({
-  ActiveSession: ({ request }) => h('div', { 'data-testid': 'active-session' }, `ActiveSession:${request.id}`),
+  // Expose an onClose hook so a test can simulate the user backing out
+  // of the full-screen session view, which is the only path that
+  // mounts the "resume active session" banner in RequestList.
+  ActiveSession: ({ request, onClose }) => h(
+    'div',
+    { 'data-testid': 'active-session' },
+    [
+      `ActiveSession:${request.id}`,
+      h('button', { 'data-testid': 'active-session-close', onClick: onClose }, 'close'),
+    ],
+  ),
 }))
 
 vi.mock('../src/utils/geo', () => ({
@@ -417,5 +427,38 @@ describe('RequestList', () => {
     await waitFor(() => {
       expect(getByTestId('active-session')).toBeTruthy()
     })
+  })
+
+  it('draws a visible keyboard focus ring on the resume-active-session banner', async () => {
+    // The banner is how a user who has backed out of the full-screen
+    // session view rejoins it — safety-critical, so a keyboard user
+    // has to be able to see when it is focused. The default browser
+    // outline on a green-tinted button is often weak, so a
+    // `focus-visible` green ring answers WCAG 2.4.7 without disturbing
+    // pointer input.
+    const myRequests = [{
+      id: 'r1', type: 'walk', status: 'active', message: '',
+      requester_id: 'user-a', helper_id: 'user-b',
+      pickup_lat: null, pickup_lng: null,
+      eligibility_tier: 'any_member', created_at: new Date().toISOString(),
+    }]
+    requestService.list.mockResolvedValue({ requests: myRequests })
+
+    const { getByTestId, getByText } = render(<RequestList currentUserId="user-a" />)
+    // First render takes the user straight into the (mocked) full-screen
+    // ActiveSession view — the auto-navigate branch.
+    await waitFor(() => expect(getByTestId('active-session')).toBeTruthy())
+    // Simulate backing out of it: the mock exposes an onClose button.
+    fireEvent.click(getByTestId('active-session-close'))
+
+    // Back on the list, the banner now sits at the top as the one-tap
+    // route back in. Read its focus-visible classes.
+    await waitFor(() => expect(getByText('requests.activeSession')).toBeTruthy())
+    const banner = getByText('requests.activeSession').closest('button')
+    expect(banner).toBeTruthy()
+    const cls = banner.getAttribute('class') || ''
+    expect(cls).toMatch(/focus-visible:ring-2\b/)
+    expect(cls).toMatch(/focus-visible:ring-green-600\b/)
+    expect(cls).toMatch(/focus-visible:ring-offset-2\b/)
   })
 })

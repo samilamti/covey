@@ -286,11 +286,17 @@ export function RequestList({ currentUserId }) {
       {/* Location banner */}
       <LocationBanner error={geoError} onRetry={retryGeo} />
 
-      {/* Active session banner */}
+      {/* Active session banner. This button is how a user who has backed
+          out of the full-screen session rejoins it, so it is
+          safety-critical — a keyboard user has to be able to see when it
+          is focused. The default browser outline on a tinted button is
+          often weak, so `focus-visible` paints a matching green ring;
+          offset so it reads clearly on the pale background without
+          disturbing pointer users. */}
       {activeRequest && (
         <button
           onClick={() => setActiveSession(activeRequest)}
-          class="w-full mb-4 bg-green-50 border border-green-200 rounded-lg p-4 text-left"
+          class="w-full mb-4 bg-green-50 border border-green-200 rounded-lg p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
         >
           <p class="font-semibold text-green-800">{t('requests.activeSession')}</p>
           <p class="text-sm text-green-600">{t('requests.tapToView')}</p>
