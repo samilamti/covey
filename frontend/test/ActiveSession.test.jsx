@@ -468,6 +468,31 @@ describe('ActiveSession', () => {
     expect(panel).not.toBeNull()
   })
 
+  it('reads the empty message-panel placeholder at WCAG AA contrast', async () => {
+    // Opening the chat during a session with no messages yet surfaces
+    // a one-line placeholder. The panel sits on `bg-gray-50`, where
+    // `text-gray-400` dropped to ~2.5:1 and `text-gray-500` to ~4.4:1
+    // — both below WCAG 1.4.3's 4.5:1 AA bar at text-xs. `text-gray-600`
+    // clears ~6.9:1 on the same surface. Open the panel first: the
+    // empty-state <p> only renders while the panel is visible and the
+    // message log is empty, which is the fixture default.
+    Element.prototype.scrollIntoView = vi.fn()
+    const { getByText, getAllByText } = render(
+      <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
+    )
+    fireEvent.click(getByText('messages.title'))
+    // The key "messages.placeholder" is used for both the input's
+    // aria-label AND the empty-state <p>, so there are two matches —
+    // pick the <p>.
+    const matches = getAllByText('messages.placeholder')
+    const emptyLine = matches.find((el) => el.tagName === 'P')
+    expect(emptyLine).toBeTruthy()
+    const cls = emptyLine.getAttribute('class') || ''
+    expect(cls).toMatch(/\btext-gray-600\b/)
+    expect(cls).not.toMatch(/\btext-gray-400\b/)
+    expect(cls).not.toMatch(/\btext-gray-500\b/)
+  })
+
   it('announces new messages as a polite live region', async () => {
     // A blind user can see "Messages 3" but has no reason to re-read a
     // number that never speaks for itself, so an incoming reply used to

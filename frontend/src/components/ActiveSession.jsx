@@ -532,7 +532,13 @@ export function ActiveSession({ request, currentUserId, onClose }) {
               aria-label={t('messages.title')}
             >
               {messages.length === 0 && (
-                <p class="text-xs text-gray-400 text-center py-2">{t('messages.placeholder')}</p>
+                // Empty-state line in an open chat panel. The panel sits on
+                // `bg-gray-50` (#f9fafb), where `text-gray-400` came in at
+                // ~2.5:1 and `text-gray-500` at ~4.4:1 — both below WCAG
+                // 1.4.3's 4.5:1 AA bar at text-xs / 12 px. `text-gray-600`
+                // clears ~6.9:1 on the same surface, which is what the
+                // placeholder text now reads at.
+                <p class="text-xs text-gray-600 text-center py-2">{t('messages.placeholder')}</p>
               )}
               {messages.map((msg) => (
                 <div key={msg.id} class={`flex ${msg.senderId === currentUserId ? 'justify-end' : 'justify-start'}`}>
