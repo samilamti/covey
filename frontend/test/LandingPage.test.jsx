@@ -90,6 +90,21 @@ describe('LandingPage', () => {
     expect(getByTestId('lang-selector')).toBeTruthy()
   })
 
+  it('draws a visible focus ring on the logo button when it is keyboard-focused', () => {
+    // The logo is the first step of the demo easter egg, so it is a real
+    // interactive control that a keyboard user lands on when tabbing into
+    // the login card. The previous `focus:outline-none` suppressed the
+    // browser default with no replacement — the Covey mark then took focus
+    // silently, failing WCAG 2.4.7. focus-visible keeps the gesture-driven
+    // easter-egg use calm while still answering a keyboard Tab.
+    const { getByLabelText } = render(<LandingPage onLogin={vi.fn()} />)
+    const logo = getByLabelText('Covey')
+    const cls = logo.getAttribute('class') || ''
+    expect(cls).toMatch(/focus-visible:ring-2\b/)
+    expect(cls).toMatch(/focus-visible:ring-indigo-500\b/)
+    expect(cls).toMatch(/focus-visible:ring-offset-2\b/)
+  })
+
   it('routes a failed login through the global announcer as assertive', async () => {
     // The inline role="alert" error block is mounted together with its text,
     // which VoiceOver often skips. The announcer is the reliable channel.

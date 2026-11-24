@@ -159,11 +159,20 @@ export function LandingPage({ onLogin }) {
 
       <main class="flex-grow flex flex-col items-center justify-center p-4 text-center">
         <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full transition-transform hover:scale-[1.01] duration-300">
+          {/* The logo doubles as the first step of the demo easter egg
+              (double-tap, then Login), so it has to be a real interactive
+              control — which means a keyboard user can land on it. The
+              previous `focus:outline-none` suppressed the browser's own
+              focus ring with no replacement, so a Tab onto the Covey mark
+              was completely silent to a sighted keyboard user, in
+              violation of WCAG 2.4.7. The focus-visible variant draws the
+              ring only when focus arrives via the keyboard, so the mouse
+              and touch easter-egg gestures keep their calm look. */}
           <button
             type="button"
             onClick={handleLogoTap}
             aria-label="Covey"
-            class="block mx-auto mb-4 cursor-pointer focus:outline-none"
+            class="block mx-auto mb-4 cursor-pointer rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
             style="touch-action: manipulation; -webkit-user-select: none; user-select: none;"
           >
             <CoveyMark size={76} />
