@@ -212,12 +212,15 @@ export function RequestList({ currentUserId }) {
     // landing on the Requests tab (the app's default view on sign-in)
     // hears nothing between the auth redirect and the first list paint.
     // aria-live="polite" so the text is announced without interrupting.
-    // Mirrors the ProgressDashboard loading pattern.
+    // text-gray-500 (not 400) so a sighted low-vision user can read the
+    // line too — the status text is visible, not sr-only, so WCAG 1.4.3
+    // 4.5:1 applies. Grey 400 (#9ca3af) came in at ~2.6:1 on this white
+    // card; grey 500 clears ~4.9:1 on the same surface.
     return (
       <div
         role="status"
         aria-live="polite"
-        class="text-center py-8 text-gray-400"
+        class="text-center py-8 text-gray-500"
       >
         {t('app.loading')}
       </div>

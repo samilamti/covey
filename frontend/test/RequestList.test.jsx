@@ -122,6 +122,14 @@ describe('RequestList', () => {
     expect(status).toBeTruthy()
     expect(status.getAttribute('aria-live')).toBe('polite')
     expect(status.textContent).toContain('app.loading')
+    // The loading text is visible (not sr-only), so a sighted low-vision
+    // user has to be able to read it too — WCAG 1.4.3. text-gray-400
+    // measured ~2.6:1 on this card and failed the 4.5:1 AA bar;
+    // text-gray-500 clears ~4.9:1. Guard the token so a later edit
+    // cannot put the low-contrast class back.
+    const statusCls = status.getAttribute('class') || ''
+    expect(statusCls).toMatch(/\btext-gray-500\b/)
+    expect(statusCls).not.toMatch(/\btext-gray-400\b/)
     // Let the suspended list resolve so React can tear down the loading
     // branch cleanly and we don't leak a pending promise into the next test.
     resolveList({ requests: [] })
