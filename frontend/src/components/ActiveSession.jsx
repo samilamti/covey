@@ -465,7 +465,16 @@ export function ActiveSession({ request, currentUserId, onClose }) {
             {isRequester ? t('requests.helper') : t('requests.requester')}
           </span>
           {!otherLocation && (
-            <span class="text-gray-400">{t('requests.waitingLocation')}</span>
+            // "Waiting for location" tells a user mid-session that the
+            // other party is not visible on the map yet — the one cue
+            // they have for interpreting an empty map square during a
+            // live safety walk. The explicit `text-gray-400` override
+            // dropped the node to ~2.6:1 on the white card, below
+            // WCAG 1.4.3's 4.5:1 AA bar at the 12 px (text-xs) label
+            // size; dropping the override lets the sibling legend's
+            // `text-gray-500` inherit (clears ~4.9:1) so the whole
+            // row reads at the same strength.
+            <span>{t('requests.waitingLocation')}</span>
           )}
         </div>
 

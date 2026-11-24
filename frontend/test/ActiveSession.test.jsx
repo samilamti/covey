@@ -270,7 +270,16 @@ describe('ActiveSession', () => {
     const { getByText } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
     )
-    expect(getByText('requests.waitingLocation')).toBeTruthy()
+    const line = getByText('requests.waitingLocation')
+    expect(line).toBeTruthy()
+    // The line explains why the other party's marker is not on the map
+    // yet — a live safety cue during an active walk. It used to carry
+    // an explicit `text-gray-400` override that dropped it to ~2.6:1
+    // on the white card and failed WCAG 1.4.3 at text-xs. The node
+    // must now inherit the surrounding row's `text-gray-500` (which
+    // clears ~4.9:1); guard so a later edit cannot reintroduce the
+    // low-contrast class.
+    expect(line.getAttribute('class') || '').not.toMatch(/\btext-gray-400\b/)
   })
 
   it('shows You and Helper/Requester location legend', () => {
