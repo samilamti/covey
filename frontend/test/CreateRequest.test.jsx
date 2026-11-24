@@ -273,6 +273,24 @@ describe('CreateRequest', () => {
     })
   })
 
+  it('reads the position-indicator row at WCAG AA contrast', async () => {
+    // The row tells the user whether the request they are about to
+    // submit will carry their coordinates — if they cannot read it,
+    // they are sending blind. The row carries both the MapPin glyph
+    // and the label, and used `text-xs text-gray-400` (~2.6:1 on
+    // white), below WCAG 1.4.3's 4.5:1 AA bar. `text-gray-600`
+    // clears ~7.5:1 on the same surface.
+    const { getByText } = render(<CreateRequest />)
+    const label = await waitFor(() => getByText('requests.locationAttached'))
+    // The colour class lives on the wrapper <div>, not the inner
+    // <span> — walk up to it.
+    const row = label.closest('div')
+    expect(row).toBeTruthy()
+    const cls = row.getAttribute('class') || ''
+    expect(cls).toMatch(/\btext-gray-600\b/)
+    expect(cls).not.toMatch(/\btext-gray-400\b/)
+  })
+
   it('submits pickupLat/pickupLng from geolocation on success', async () => {
     const onCreated = vi.fn()
     const { getByText } = render(<CreateRequest onCreated={onCreated} />)

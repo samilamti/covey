@@ -185,15 +185,22 @@ export function CreateRequest({ onCreated }) {
           />
         </div>
 
-        {/* Position indicator */}
+        {/* Position indicator. Both "location attached" and "requesting
+            location" tell the user whether the request they are about to
+            submit carries coordinates — if they cannot read it they do
+            not know whether the send button will attach their position
+            or not. `text-gray-400` dropped these rows to ~2.6:1 on the
+            white page, below WCAG 1.4.3's 4.5:1 AA bar at the 12 px
+            (text-xs) label size; `text-gray-600` clears ~7.5:1 on the
+            same surface. */}
         {position && (
-          <div class="flex items-center gap-2 text-xs text-gray-400">
+          <div class="flex items-center gap-2 text-xs text-gray-600">
             <MapPin size={12} />
             <span>{t('requests.locationAttached')}</span>
           </div>
         )}
         {!position && geoLoading && (
-          <div class="flex items-center gap-2 text-xs text-gray-400">
+          <div class="flex items-center gap-2 text-xs text-gray-600">
             <MapPin size={12} />
             <span>{t('location.requesting')}</span>
           </div>
