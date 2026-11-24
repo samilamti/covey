@@ -29,8 +29,14 @@ export function SafetyPartners() {
         <h3 id={titleId} class="text-sm font-medium text-gray-700">{t('safety.partnersTitle')}</h3>
         <p class="text-xs text-gray-500">{t('safety.partnersDesc')}</p>
       </div>
+      {/* The empty-state line explains that past partners show up here
+          after a session — if the user cannot read it, the whole
+          section reads as broken rather than empty. `text-gray-400`
+          at the 14px label size came in at ~2.6:1 against the white
+          card, below WCAG 1.4.3's 4.5:1 AA bar; `text-gray-500` clears
+          4.9:1 on the same surface. */}
       {partners.length === 0 && (
-        <p class="text-sm text-gray-400">{t('safety.partnersEmpty')}</p>
+        <p class="text-sm text-gray-500">{t('safety.partnersEmpty')}</p>
       )}
       {partners.length > 0 && (
         // A pile of sibling <div>s is not a list to assistive tech, so a
