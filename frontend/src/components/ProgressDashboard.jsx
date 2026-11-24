@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useState, useEffect, useId } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
 import { Trophy, Star, Award, Lock, Eye, EyeOff, HelpCircle, Heart } from 'lucide-preact'
 import { pointsService } from '../services/points'
@@ -19,6 +19,11 @@ export function ProgressDashboard() {
   const [badges, setBadges] = useState([])
   const [history, setHistory] = useState([])
   const [loading, setLoading] = useState(true)
+  // Stable per-instance ids tying each section heading to its list via
+  // aria-labelledby. useId gives the two lists distinct names so a screen
+  // reader does not announce "Recent activity" against the badges grid.
+  const badgesTitleId = useId()
+  const activityTitleId = useId()
 
   useEffect(() => {
     Promise.all([
@@ -102,7 +107,7 @@ export function ProgressDashboard() {
       {/* Badges */}
       <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-4">
         <div class="flex items-center justify-between mb-3">
-          <h3 class="font-semibold text-gray-900">{t('progress.badges')}</h3>
+          <h3 id={badgesTitleId} class="font-semibold text-gray-900">{t('progress.badges')}</h3>
           {summary && (
             <span class="text-xs text-gray-500">
               {t('progress.badgesEarned', { earned: summary.badgesEarned, total: summary.badgesTotal })}
@@ -110,11 +115,22 @@ export function ProgressDashboard() {
           )}
         </div>
 
-        <div class="grid grid-cols-3 gap-3">
+        {/* The badges are a collection of named, individually-interactive
+            items (each earned badge has its own visibility toggle), so the
+            grid is a list, not a visual stack. Without role="list" +
+            aria-labelledby a screen reader has no "7 items" count and
+            cannot jump between badges with its list shortcuts. Same
+            pattern as SafetyPartners and RequestList. list-none p-0 m-0
+            keep the grid layout identical. WCAG 1.3.1. */}
+        <ul
+          role="list"
+          aria-labelledby={badgesTitleId}
+          class="list-none p-0 m-0 grid grid-cols-3 gap-3"
+        >
           {badges.map((badge) => {
             const Icon = BADGE_ICONS[badge.key] || Award
             return (
-              <div
+              <li
                 key={badge.key}
                 class={`relative flex flex-col items-center p-3 rounded-lg ${
                   badge.earned ? 'bg-amber-50' : 'bg-gray-50'
@@ -159,22 +175,30 @@ export function ProgressDashboard() {
                     )}
                   </button>
                 )}
-              </div>
+              </li>
             )
           })}
-        </div>
+        </ul>
       </div>
 
       {/* Recent activity */}
       <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
-        <h3 class="font-semibold text-gray-900 mb-3">{t('progress.recentActivity')}</h3>
+        <h3 id={activityTitleId} class="font-semibold text-gray-900 mb-3">{t('progress.recentActivity')}</h3>
 
         {history.length === 0 ? (
           <p class="text-sm text-gray-500 text-center py-4">{t('progress.noActivity')}</p>
         ) : (
-          <div class="space-y-2">
+          // Activity entries are a chronological list of past sessions, not
+          // a visual stack, so a screen reader needs the "N items" count
+          // and list shortcuts here too. Same list-none p-0 m-0 reset so
+          // the spacing stays intact. WCAG 1.3.1.
+          <ul
+            role="list"
+            aria-labelledby={activityTitleId}
+            class="list-none p-0 m-0 space-y-2"
+          >
             {history.map((entry) => (
-              <div key={entry.id} class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+              <li key={entry.id} class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
                 <div class="flex items-center gap-2">
                   <div
                     class={`w-6 h-6 rounded-full flex items-center justify-center ${
@@ -199,9 +223,9 @@ export function ProgressDashboard() {
                     {new Date(entry.created_at).toLocaleDateString()}
                   </span>
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </div>
     </div>

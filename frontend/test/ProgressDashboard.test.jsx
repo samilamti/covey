@@ -168,4 +168,65 @@ describe('ProgressDashboard', () => {
     expect(toggle.tagName).toBe('BUTTON')
     expect(toggle.hasAttribute('aria-pressed')).toBe(false)
   })
+
+  it('wraps the badges grid in a named list tied to the badges heading', async () => {
+    // Each earned badge carries its own visibility toggle, so the grid is a
+    // collection of individually-interactive items, not a visual stack.
+    // Without role="list" + aria-labelledby a screen reader has no "7
+    // items" count on the Progress tab and cannot jump between badges with
+    // the list shortcuts their screen reader provides. WCAG 1.3.1.
+    const { container } = render(<ProgressDashboard />)
+    const heading = await waitFor(() => {
+      const h = Array.from(container.querySelectorAll('h3'))
+        .find((n) => n.textContent === 'progress.badges')
+      expect(h, 'expected a visible "Badges" heading').toBeTruthy()
+      return h
+    })
+    const list = container.querySelector(`ul[aria-labelledby="${heading.id}"]`)
+    expect(list, 'expected a <ul> tied to the badges heading via aria-labelledby').toBeTruthy()
+    expect(list.getAttribute('role')).toBe('list')
+    // Fixture has 7 badges, each must be an <li> directly inside the list.
+    const items = list.querySelectorAll(':scope > li')
+    expect(items.length).toBe(7)
+  })
+
+  it('wraps the recent-activity entries in a named list tied to their heading', async () => {
+    // Activity entries are a chronological collection of past sessions, so
+    // the same list semantics apply: a screen reader needs the "N items"
+    // count and list shortcuts here too, with a distinct heading from the
+    // badges list so the announcement is unambiguous. WCAG 1.3.1.
+    const { container } = render(<ProgressDashboard />)
+    const heading = await waitFor(() => {
+      const h = Array.from(container.querySelectorAll('h3'))
+        .find((n) => n.textContent === 'progress.recentActivity')
+      expect(h, 'expected a visible "Recent activity" heading').toBeTruthy()
+      return h
+    })
+    const list = container.querySelector(`ul[aria-labelledby="${heading.id}"]`)
+    expect(list, 'expected a <ul> tied to the activity heading').toBeTruthy()
+    expect(list.getAttribute('role')).toBe('list')
+    // Fixture has 2 activity entries.
+    const items = list.querySelectorAll(':scope > li')
+    expect(items.length).toBe(2)
+  })
+
+  it('gives the badges list and the activity list distinct names', async () => {
+    // Without useId per section the two <ul>s would share the same
+    // aria-labelledby target (if any) and a screen reader would announce
+    // one of them wrong. Guard that the two headings land on different ids
+    // so they are reachable as two separately-named lists.
+    const { container } = render(<ProgressDashboard />)
+    await waitFor(() => {
+      const h = Array.from(container.querySelectorAll('h3'))
+        .find((n) => n.textContent === 'progress.recentActivity')
+      expect(h).toBeTruthy()
+    })
+    const badgesHeading = Array.from(container.querySelectorAll('h3'))
+      .find((n) => n.textContent === 'progress.badges')
+    const activityHeading = Array.from(container.querySelectorAll('h3'))
+      .find((n) => n.textContent === 'progress.recentActivity')
+    expect(badgesHeading.id).toBeTruthy()
+    expect(activityHeading.id).toBeTruthy()
+    expect(badgesHeading.id).not.toBe(activityHeading.id)
+  })
 })
