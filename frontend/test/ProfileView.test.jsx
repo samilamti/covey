@@ -178,6 +178,61 @@ describe('ProfileView', () => {
     expect(inLiveRegion(container, 'profile.saved')).toBe(false)
   })
 
+  it('exposes visible badges as a labelled list, not a stack of divs', async () => {
+    // The badges row on the Identity & standing card used to be a plain
+    // <div> of pill <div>s, so a screen reader stepping past it heard a
+    // sequence of unnamed items with no count and no list shortcuts.
+    // Give it the same list semantics SafetyPartners, RequestList and
+    // ProgressDashboard already carry. The list takes its name from the
+    // already-translated "badges" heading rather than an invented id,
+    // since the Identity & standing card has no visible heading above
+    // this row.
+    profileService.get.mockResolvedValueOnce({
+      user: {
+        safetyScore: 3,
+        isGuardian: false,
+        badges: [
+          { badge_key: 'first_session', visible: true },
+          { badge_key: 'helper_5', visible: true },
+        ],
+      },
+    })
+    const { container, findByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    await findByText('progress.badge.first_session')
+    const lists = container.querySelectorAll('ul[aria-label="progress.badges"]')
+    expect(lists).toHaveLength(1)
+    const items = lists[0].querySelectorAll('li')
+    expect(items).toHaveLength(2)
+    // role="list" is explicit so Tailwind's list-none reset in some
+    // browsers does not strip the semantics (same guard the other lists
+    // in the app carry).
+    expect(lists[0].getAttribute('role')).toBe('list')
+  })
+
+  it('does not render hidden badges in the public row', async () => {
+    // Only badges whose visibility flag is true belong in the profile's
+    // honour-roll list; the toggle on ProgressDashboard controls that.
+    // Guard against the list semantics silently sweeping hidden entries
+    // into the public view — that would be a worse regression than the
+    // missing semantics they are fixing.
+    profileService.get.mockResolvedValueOnce({
+      user: {
+        safetyScore: 3,
+        isGuardian: false,
+        badges: [
+          { badge_key: 'first_session', visible: true },
+          { badge_key: 'helper_5', visible: false },
+        ],
+      },
+    })
+    const { container, findByText, queryByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
+    await findByText('progress.badge.first_session')
+    const list = container.querySelector('ul[aria-label="progress.badges"]')
+    expect(list).toBeTruthy()
+    expect(list.querySelectorAll('li')).toHaveLength(1)
+    expect(queryByText('progress.badge.helper_5')).toBeNull()
+  })
+
   it('routes save failure through the global announcer as assertive', async () => {
     const { fireEvent } = await import('@testing-library/preact')
     profileService.update.mockRejectedValueOnce(new Error('nope'))

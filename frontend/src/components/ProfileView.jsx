@@ -110,14 +110,28 @@ export function ProfileView({ user, onLogout }) {
               </div>
             )}
             {profile.badges?.length > 0 && (
-              <div class="flex flex-wrap gap-2">
+              // The visible pills are a collection of named, discrete items
+              // (a short honour-roll of this user's public badges), so give
+              // them list semantics: a screen reader then announces a count
+              // and lets the user step between entries with its list
+              // shortcuts, the same affordance SafetyPartners, RequestList
+              // and ProgressDashboard already carry. No visible heading sits
+              // directly above this row, so the list takes its name from an
+              // aria-label pointing at the already-translated "badges"
+              // string instead of an invented id-tied element. list-none
+              // p-0 m-0 keep the wrap layout identical. WCAG 1.3.1.
+              <ul
+                role="list"
+                aria-label={t('progress.badges')}
+                class="list-none p-0 m-0 flex flex-wrap gap-2"
+              >
                 {profile.badges.filter(b => b.visible).map(b => (
-                  <div key={b.badge_key} class="flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-1 rounded-full text-xs">
+                  <li key={b.badge_key} class="flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-1 rounded-full text-xs">
                     <Award size={12} />
                     <span>{t(`progress.badge.${b.badge_key}`)}</span>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
           </>
         )}
