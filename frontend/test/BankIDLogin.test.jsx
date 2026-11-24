@@ -148,6 +148,33 @@ describe('BankIDLogin (Secure Start)', () => {
     await waitFor(() => expect(getByText('landing.bankidCancel')).toBeTruthy())
   })
 
+  it('reads the pending-flow cancel button at WCAG AA contrast', async () => {
+    // The cancel button is the only escape from a pending BankID
+    // order — a user who meant to sign in later, or opened the wrong
+    // app, has no other way out of the QR-polling loop. It had been
+    // rendered in `text-gray-400` (~2.6:1 on white), below WCAG
+    // 1.4.3's 4.5:1 AA bar for a visible 14 px button label.
+    // `text-gray-600` clears ~7.5:1 on the same surface.
+    authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
+    authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
+
+    const { getByText } = render(<BankIDLogin onLogin={vi.fn()} pollMs={30} qrMs={30} />)
+    fireEvent.click(getByText('landing.loginButton'))
+
+    // Cancel only renders while the flow is pending, so wait for it.
+    const cancelBtn = await waitFor(() => {
+      const btn = getByText('requests.cancel')
+      // The visible "Cancel" label sits on a <button>; the parent
+      // ancestor chain also contains the login button, so pin to the
+      // nearest button to be sure.
+      return btn.closest('button')
+    })
+    expect(cancelBtn).toBeTruthy()
+    const cls = cancelBtn.getAttribute('class') || ''
+    expect(cls).toMatch(/\btext-gray-600\b/)
+    expect(cls).not.toMatch(/\btext-gray-400\b/)
+  })
+
   it('routes a failed BankID flow through the global announcer as assertive', async () => {
     // The inline role="alert" error block is mounted together with its text,
     // which VoiceOver often skips. The announcer is the reliable channel.
