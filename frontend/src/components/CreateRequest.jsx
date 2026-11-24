@@ -172,7 +172,15 @@ export function CreateRequest({ onCreated }) {
         {/* Message */}
         <div>
           <label for={messageId} class="block text-sm font-medium text-gray-700 mb-1">
-            {t('requests.message')} <span class="text-gray-400 font-normal">({t('requests.optional')})</span>
+            {/* "(optional)" tells the user they can skip the message
+                field — if they cannot read it, they may assume the
+                field is required and bail. `text-gray-400` dropped
+                the hint to ~2.6:1 on the white card, below WCAG
+                1.4.3's 4.5:1 AA bar at the 14 px (text-sm) label
+                size; `text-gray-500` clears ~4.9:1 on the same
+                surface while still reading as subdued next to the
+                field label itself. */}
+            {t('requests.message')} <span class="text-gray-500 font-normal">({t('requests.optional')})</span>
           </label>
           <textarea
             id={messageId}
