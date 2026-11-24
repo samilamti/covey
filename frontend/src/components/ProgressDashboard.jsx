@@ -219,7 +219,15 @@ export function ProgressDashboard() {
                   <span class="text-sm font-medium text-amber-600">
                     {t('progress.pointsEarned', { points: entry.points })}
                   </span>
-                  <span class="text-xs text-gray-400">
+                  {/* Date the entry was earned. `text-xs text-gray-400`
+                      was ~2.6:1 on the white card, below WCAG 1.4.3's
+                      4.5:1 AA bar at 12 px — a sighted low-vision user
+                      could not tell WHEN they earned the points, which
+                      is the whole point of a history row. `text-gray-500`
+                      clears ~4.9:1 on the same surface while still
+                      reading as subdued metadata next to the amber
+                      points figure. */}
+                  <span class="text-xs text-gray-500">
                     {new Date(entry.created_at).toLocaleDateString()}
                   </span>
                 </div>

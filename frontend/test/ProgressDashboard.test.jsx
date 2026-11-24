@@ -130,6 +130,29 @@ describe('ProgressDashboard', () => {
     })
   })
 
+  it('reads the activity-row date at WCAG AA contrast', async () => {
+    // Each row's right-hand cell carries the date the user earned the
+    // points — the metadata that answers "when did this happen".
+    // `text-xs text-gray-400` dropped it to ~2.6:1 on the white card,
+    // below WCAG 1.4.3's 4.5:1 AA bar at 12 px. `text-gray-500`
+    // clears ~4.9:1 on the same surface and still reads as subdued
+    // next to the amber points figure. Guard the token so a later
+    // edit cannot regress it.
+    const { container } = render(<ProgressDashboard />)
+    // Format the fixture date exactly as the component does so the
+    // test survives moving between runners with different locales.
+    const expected = new Date('2026-03-20T10:00:00Z').toLocaleDateString()
+    await waitFor(() => {
+      expect(container.textContent).toContain(expected)
+    })
+    const dateSpan = Array.from(container.querySelectorAll('span'))
+      .find((el) => el.textContent === expected)
+    expect(dateSpan, 'expected a <span> with just the date text').toBeTruthy()
+    const cls = dateSpan.getAttribute('class') || ''
+    expect(cls).toMatch(/\btext-gray-500\b/)
+    expect(cls).not.toMatch(/\btext-gray-400\b/)
+  })
+
   it('renders loading spinner initially', () => {
     const { container } = render(<ProgressDashboard />)
     const spinner = container.querySelector('.animate-spin')
