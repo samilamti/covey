@@ -60,7 +60,17 @@ export function SafetyPartners() {
                   {p.display_name || t('safety.someone')}
                   {p.blocked && <span class="ml-2 text-xs text-red-600">{t('safety.blocked')}</span>}
                 </span>
-                <span class="text-xs text-gray-400">
+                {/* Date the session was shared. Same fix as the
+                    activity-history row in ProgressDashboard:
+                    `text-gray-400` sat at ~2.6:1 on the white card,
+                    below WCAG 1.4.3's 4.5:1 AA bar at text-xs, so
+                    a sighted low-vision user could not tell WHEN
+                    they last sat in a session with this person —
+                    the piece of metadata that makes "who is this"
+                    answerable. `text-gray-500` clears ~4.9:1 while
+                    still reading as subdued next to the display
+                    name. */}
+                <span class="text-xs text-gray-500">
                   {new Date(p.met_at).toLocaleDateString(i18n?.language || 'sv')}
                 </span>
               </div>
