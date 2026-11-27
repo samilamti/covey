@@ -27,11 +27,6 @@ export function RequestList({ currentUserId }) {
   const [createdPosition, setCreatedPosition] = useState(null)
   const [pendingRatings, setPendingRatings] = useState([])
   const initialViewDecided = useRef(false)
-  // Stable per-instance ids so each list can point at its own visible
-  // heading via aria-labelledby. Each ul below is a pile of discrete
-  // items with per-item actions (Accept, Done, Cancel), the same shape
-  // SafetyPartners already addresses — without list semantics a screen
-  // reader user hears no count and cannot jump between entries. WCAG 1.3.1.
   const requestsHeadingId = useId()
   const openRequestsHeadingId = useId()
 
@@ -212,10 +207,7 @@ export function RequestList({ currentUserId }) {
     // landing on the Requests tab (the app's default view on sign-in)
     // hears nothing between the auth redirect and the first list paint.
     // aria-live="polite" so the text is announced without interrupting.
-    // text-gray-500 (not 400) so a sighted low-vision user can read the
-    // line too — the status text is visible, not sr-only, so WCAG 1.4.3
-    // 4.5:1 applies. Grey 400 (#9ca3af) came in at ~2.6:1 on this white
-    // card; grey 500 clears ~4.9:1 on the same surface.
+    // Mirrors the ProgressDashboard loading pattern.
     return (
       <div
         role="status"
@@ -246,10 +238,7 @@ export function RequestList({ currentUserId }) {
           // the layout for sighted users. aria-current="page" on the final
           // crumb matches the ARIA Breadcrumb pattern, so the heading
           // announces as "Requests, Create, current page" rather than two
-          // identical-sounding spans. The back-button carries text-gray-500
-          // so even a sighted low-vision user can read the way back (WCAG
-          // 1.4.3 — text-gray-400 came in at ~2.6:1 on this card, below
-          // the 3:1 large-text bar).
+          // identical-sounding spans.
           <h2 class="text-xl font-bold flex items-center gap-1.5">
             <button
               onClick={() => setShowCreate(false)}
@@ -292,13 +281,7 @@ export function RequestList({ currentUserId }) {
       {/* Location banner */}
       <LocationBanner error={geoError} onRetry={retryGeo} />
 
-      {/* Active session banner. This button is how a user who has backed
-          out of the full-screen session rejoins it, so it is
-          safety-critical — a keyboard user has to be able to see when it
-          is focused. The default browser outline on a tinted button is
-          often weak, so `focus-visible` paints a matching green ring;
-          offset so it reads clearly on the pale background without
-          disturbing pointer users. */}
+      {/* Active session banner */}
       {activeRequest && (
         <button
           onClick={() => setActiveSession(activeRequest)}
@@ -313,12 +296,6 @@ export function RequestList({ currentUserId }) {
       {showCreate === false && (
         <>
           {requests.length > 0 && (
-            // role="list" is explicit because Tailwind's reset strips the
-            // default list semantics in some browsers, and aria-labelledby
-            // ties the list to the visible h2 so it announces as
-            // "Requests, list, N items" instead of unnamed. Same shape
-            // SafetyPartners already carries. list-none + p-0 + m-0 keep
-            // the layout identical.
             <ul
               role="list"
               aria-labelledby={requestsHeadingId}
@@ -363,11 +340,6 @@ export function RequestList({ currentUserId }) {
             </div>
           )}
 
-          {/* Empty state. This is the first thing a new user sees on
-              the Requests tab, so it has to be readable — it tells
-              them WHY there is nothing to interact with. `text-gray-400`
-              on a white background sat at ~2.6:1 and failed WCAG 1.4.3;
-              `text-gray-500` clears the 4.5:1 AA bar. */}
           {requests.length === 0 && openRequests.length === 0 && (
             <div class="text-center py-8 text-gray-500">
               {t('requests.empty')}

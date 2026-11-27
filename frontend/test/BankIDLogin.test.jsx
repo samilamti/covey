@@ -149,12 +149,6 @@ describe('BankIDLogin (Secure Start)', () => {
   })
 
   it('reads the pending-flow cancel button at WCAG AA contrast', async () => {
-    // The cancel button is the only escape from a pending BankID
-    // order — a user who meant to sign in later, or opened the wrong
-    // app, has no other way out of the QR-polling loop. It had been
-    // rendered in `text-gray-400` (~2.6:1 on white), below WCAG
-    // 1.4.3's 4.5:1 AA bar for a visible 14 px button label.
-    // `text-gray-600` clears ~7.5:1 on the same surface.
     authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
     authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
 
@@ -164,9 +158,6 @@ describe('BankIDLogin (Secure Start)', () => {
     // Cancel only renders while the flow is pending, so wait for it.
     const cancelBtn = await waitFor(() => {
       const btn = getByText('requests.cancel')
-      // The visible "Cancel" label sits on a <button>; the parent
-      // ancestor chain also contains the login button, so pin to the
-      // nearest button to be sure.
       return btn.closest('button')
     })
     expect(cancelBtn).toBeTruthy()

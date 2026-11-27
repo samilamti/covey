@@ -229,11 +229,6 @@ describe('RequestCard', () => {
   })
 
   it('reads the meta-info row at WCAG AA contrast on the white card', () => {
-    // Time since created, distance and the helper marker are genuine
-    // information. `text-gray-400` (#9ca3af) on white is ~2.6:1 and
-    // fails WCAG 1.4.3 Contrast (Minimum) for normal text at the 12px
-    // label size; `text-gray-500` (#6b7280) clears the 4.5:1 bar at
-    // ~4.9:1 while still reading as secondary against the body copy.
     const { container } = render(
       <RequestCard
         request={makeRequest({ pickup_lat: '59.34', pickup_lng: '18.08' })}

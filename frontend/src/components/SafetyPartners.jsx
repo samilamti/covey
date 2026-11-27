@@ -29,12 +29,6 @@ export function SafetyPartners() {
         <h3 id={titleId} class="text-sm font-medium text-gray-700">{t('safety.partnersTitle')}</h3>
         <p class="text-xs text-gray-500">{t('safety.partnersDesc')}</p>
       </div>
-      {/* The empty-state line explains that past partners show up here
-          after a session — if the user cannot read it, the whole
-          section reads as broken rather than empty. `text-gray-400`
-          at the 14px label size came in at ~2.6:1 against the white
-          card, below WCAG 1.4.3's 4.5:1 AA bar; `text-gray-500` clears
-          4.9:1 on the same surface. */}
       {partners.length === 0 && (
         <p class="text-sm text-gray-500">{t('safety.partnersEmpty')}</p>
       )}
@@ -60,16 +54,6 @@ export function SafetyPartners() {
                   {p.display_name || t('safety.someone')}
                   {p.blocked && <span class="ml-2 text-xs text-red-600">{t('safety.blocked')}</span>}
                 </span>
-                {/* Date the session was shared. Same fix as the
-                    activity-history row in ProgressDashboard:
-                    `text-gray-400` sat at ~2.6:1 on the white card,
-                    below WCAG 1.4.3's 4.5:1 AA bar at text-xs, so
-                    a sighted low-vision user could not tell WHEN
-                    they last sat in a session with this person —
-                    the piece of metadata that makes "who is this"
-                    answerable. `text-gray-500` clears ~4.9:1 while
-                    still reading as subdued next to the display
-                    name. */}
                 <span class="text-xs text-gray-500">
                   {new Date(p.met_at).toLocaleDateString(i18n?.language || 'sv')}
                 </span>

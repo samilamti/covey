@@ -131,13 +131,6 @@ describe('ProgressDashboard', () => {
   })
 
   it('reads the activity-row date at WCAG AA contrast', async () => {
-    // Each row's right-hand cell carries the date the user earned the
-    // points — the metadata that answers "when did this happen".
-    // `text-xs text-gray-400` dropped it to ~2.6:1 on the white card,
-    // below WCAG 1.4.3's 4.5:1 AA bar at 12 px. `text-gray-500`
-    // clears ~4.9:1 on the same surface and still reads as subdued
-    // next to the amber points figure. Guard the token so a later
-    // edit cannot regress it.
     const { container } = render(<ProgressDashboard />)
     // Format the fixture date exactly as the component does so the
     // test survives moving between runners with different locales.
@@ -193,11 +186,6 @@ describe('ProgressDashboard', () => {
   })
 
   it('wraps the badges grid in a named list tied to the badges heading', async () => {
-    // Each earned badge carries its own visibility toggle, so the grid is a
-    // collection of individually-interactive items, not a visual stack.
-    // Without role="list" + aria-labelledby a screen reader has no "7
-    // items" count on the Progress tab and cannot jump between badges with
-    // the list shortcuts their screen reader provides. WCAG 1.3.1.
     const { container } = render(<ProgressDashboard />)
     const heading = await waitFor(() => {
       const h = Array.from(container.querySelectorAll('h3'))
@@ -214,10 +202,6 @@ describe('ProgressDashboard', () => {
   })
 
   it('wraps the recent-activity entries in a named list tied to their heading', async () => {
-    // Activity entries are a chronological collection of past sessions, so
-    // the same list semantics apply: a screen reader needs the "N items"
-    // count and list shortcuts here too, with a distinct heading from the
-    // badges list so the announcement is unambiguous. WCAG 1.3.1.
     const { container } = render(<ProgressDashboard />)
     const heading = await waitFor(() => {
       const h = Array.from(container.querySelectorAll('h3'))
@@ -234,10 +218,6 @@ describe('ProgressDashboard', () => {
   })
 
   it('gives the badges list and the activity list distinct names', async () => {
-    // Without useId per section the two <ul>s would share the same
-    // aria-labelledby target (if any) and a screen reader would announce
-    // one of them wrong. Guard that the two headings land on different ids
-    // so they are reachable as two separately-named lists.
     const { container } = render(<ProgressDashboard />)
     await waitFor(() => {
       const h = Array.from(container.querySelectorAll('h3'))

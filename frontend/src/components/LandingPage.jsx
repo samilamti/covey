@@ -159,15 +159,6 @@ export function LandingPage({ onLogin }) {
 
       <main class="flex-grow flex flex-col items-center justify-center p-4 text-center">
         <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full transition-transform hover:scale-[1.01] duration-300">
-          {/* The logo doubles as the first step of the demo easter egg
-              (double-tap, then Login), so it has to be a real interactive
-              control — which means a keyboard user can land on it. The
-              previous `focus:outline-none` suppressed the browser's own
-              focus ring with no replacement, so a Tab onto the Covey mark
-              was completely silent to a sighted keyboard user, in
-              violation of WCAG 2.4.7. The focus-visible variant draws the
-              ring only when focus arrives via the keyboard, so the mouse
-              and touch easter-egg gestures keep their calm look. */}
           <button
             type="button"
             onClick={handleLogoTap}
@@ -270,14 +261,6 @@ export function LandingPage({ onLogin }) {
         </div>
       </main>
 
-      {/* Footer sits on the page's blue-to-indigo gradient (not the
-          white card). `text-gray-400` came in at ~2.5:1 against
-          `bg-blue-50` and failed WCAG 1.4.3's 4.5:1 AA bar at 14 px
-          — on the unauthenticated landing page the copyright line
-          is the only cue a legal-minded visitor has about who runs
-          the service. `text-gray-500` only reaches ~4.4:1 on the
-          blue side and still fails; `text-gray-600` clears ~6.7:1
-          on the same gradient. */}
       <footer class="p-4 text-center text-gray-600 text-sm">
         &copy; {new Date().getFullYear()} Covey
       </footer>

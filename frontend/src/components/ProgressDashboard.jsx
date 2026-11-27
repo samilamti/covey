@@ -19,9 +19,6 @@ export function ProgressDashboard() {
   const [badges, setBadges] = useState([])
   const [history, setHistory] = useState([])
   const [loading, setLoading] = useState(true)
-  // Stable per-instance ids tying each section heading to its list via
-  // aria-labelledby. useId gives the two lists distinct names so a screen
-  // reader does not announce "Recent activity" against the badges grid.
   const badgesTitleId = useId()
   const activityTitleId = useId()
 
@@ -115,13 +112,6 @@ export function ProgressDashboard() {
           )}
         </div>
 
-        {/* The badges are a collection of named, individually-interactive
-            items (each earned badge has its own visibility toggle), so the
-            grid is a list, not a visual stack. Without role="list" +
-            aria-labelledby a screen reader has no "7 items" count and
-            cannot jump between badges with its list shortcuts. Same
-            pattern as SafetyPartners and RequestList. list-none p-0 m-0
-            keep the grid layout identical. WCAG 1.3.1. */}
         <ul
           role="list"
           aria-labelledby={badgesTitleId}
@@ -188,10 +178,6 @@ export function ProgressDashboard() {
         {history.length === 0 ? (
           <p class="text-sm text-gray-500 text-center py-4">{t('progress.noActivity')}</p>
         ) : (
-          // Activity entries are a chronological list of past sessions, not
-          // a visual stack, so a screen reader needs the "N items" count
-          // and list shortcuts here too. Same list-none p-0 m-0 reset so
-          // the spacing stays intact. WCAG 1.3.1.
           <ul
             role="list"
             aria-labelledby={activityTitleId}
@@ -219,14 +205,6 @@ export function ProgressDashboard() {
                   <span class="text-sm font-medium text-amber-600">
                     {t('progress.pointsEarned', { points: entry.points })}
                   </span>
-                  {/* Date the entry was earned. `text-xs text-gray-400`
-                      was ~2.6:1 on the white card, below WCAG 1.4.3's
-                      4.5:1 AA bar at 12 px — a sighted low-vision user
-                      could not tell WHEN they earned the points, which
-                      is the whole point of a history row. `text-gray-500`
-                      clears ~4.9:1 on the same surface while still
-                      reading as subdued metadata next to the amber
-                      points figure. */}
                   <span class="text-xs text-gray-500">
                     {new Date(entry.created_at).toLocaleDateString()}
                   </span>

@@ -274,18 +274,8 @@ describe('CreateRequest', () => {
   })
 
   it('reads the "(optional)" hint next to the message label at WCAG AA contrast', async () => {
-    // The "(optional)" hint tells the user they can skip the free-text
-    // message field — if they cannot read it they may assume the
-    // field is required and abandon the request. It was styled with
-    // `text-gray-400` at 14 px (text-sm inherited from the <label>),
-    // ~2.6:1 on the white card, below WCAG 1.4.3's 4.5:1 AA bar.
-    // `text-gray-500` clears ~4.9:1 on the same surface while
-    // reading as subdued next to the field label itself.
     const { container } = render(<CreateRequest />)
     const hint = await waitFor(() => {
-      // The hint lives in a <span> inside the label; grab the <span>
-      // carrying the colour class rather than the inner t() keys so
-      // the assertion is resilient to copy changes.
       const match = Array.from(container.querySelectorAll('span'))
         .find((el) => el.textContent.includes('requests.optional'))
       if (!match) throw new Error('no match yet')
@@ -297,12 +287,6 @@ describe('CreateRequest', () => {
   })
 
   it('reads the position-indicator row at WCAG AA contrast', async () => {
-    // The row tells the user whether the request they are about to
-    // submit will carry their coordinates — if they cannot read it,
-    // they are sending blind. The row carries both the MapPin glyph
-    // and the label, and used `text-xs text-gray-400` (~2.6:1 on
-    // white), below WCAG 1.4.3's 4.5:1 AA bar. `text-gray-600`
-    // clears ~7.5:1 on the same surface.
     const { getByText } = render(<CreateRequest />)
     const label = await waitFor(() => getByText('requests.locationAttached'))
     // The colour class lives on the wrapper <div>, not the inner

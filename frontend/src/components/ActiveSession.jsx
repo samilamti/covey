@@ -465,15 +465,6 @@ export function ActiveSession({ request, currentUserId, onClose }) {
             {isRequester ? t('requests.helper') : t('requests.requester')}
           </span>
           {!otherLocation && (
-            // "Waiting for location" tells a user mid-session that the
-            // other party is not visible on the map yet — the one cue
-            // they have for interpreting an empty map square during a
-            // live safety walk. The explicit `text-gray-400` override
-            // dropped the node to ~2.6:1 on the white card, below
-            // WCAG 1.4.3's 4.5:1 AA bar at the 12 px (text-xs) label
-            // size; dropping the override lets the sibling legend's
-            // `text-gray-500` inherit (clears ~4.9:1) so the whole
-            // row reads at the same strength.
             <span>{t('requests.waitingLocation')}</span>
           )}
         </div>
@@ -532,12 +523,6 @@ export function ActiveSession({ request, currentUserId, onClose }) {
               aria-label={t('messages.title')}
             >
               {messages.length === 0 && (
-                // Empty-state line in an open chat panel. The panel sits on
-                // `bg-gray-50` (#f9fafb), where `text-gray-400` came in at
-                // ~2.5:1 and `text-gray-500` at ~4.4:1 — both below WCAG
-                // 1.4.3's 4.5:1 AA bar at text-xs / 12 px. `text-gray-600`
-                // clears ~6.9:1 on the same surface, which is what the
-                // placeholder text now reads at.
                 <p class="text-xs text-gray-600 text-center py-2">{t('messages.placeholder')}</p>
               )}
               {messages.map((msg) => (

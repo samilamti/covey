@@ -28,28 +28,12 @@ export function BottomNav({ currentPath, onNavigate }) {
           const isActive = currentPath === tab.path || currentPath.startsWith(tab.path + '/')
           const Icon = tab.Icon
           return (
-            // The tab buttons had no focus styling of their own, so a
-            // keyboard user on the main screen was left with only the
-            // browser's default outline — often a thin line on the white
-            // bar that is easy to miss, especially on mobile Chromium
-            // where the default is suppressed. An inset indigo ring on
-            // focus-visible answers WCAG 2.4.7 without disturbing the
-            // calm look under pointer input. Inset keeps the ring inside
-            // the fixed-height bar instead of bleeding into the content
-            // above it.
             <button
               key={tab.path}
               onClick={() => onNavigate(tab.path)}
               aria-current={isActive ? 'page' : undefined}
               class="group flex flex-col items-center justify-center flex-1 h-full gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-inset"
             >
-              {/* Inactive tab chrome was `text-gray-400` (#9ca3af) on a
-                  white bar, which is ~2.6:1 against the background and
-                  fails WCAG 1.4.3 Contrast (Minimum) at the 4.5:1 bar
-                  for normal text. `text-gray-500` (#6b7280) clears the
-                  threshold at ~4.9:1 while staying visibly dimmer than
-                  the active indigo — the "this is the other tab" signal
-                  the design relies on is still there, just readable. */}
               <span
                 class={`flex items-center justify-center rounded-full px-5 py-1.5 transition-colors ${
                   isActive ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 group-hover:text-gray-700'

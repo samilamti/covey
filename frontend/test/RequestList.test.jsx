@@ -54,9 +54,6 @@ vi.mock('../src/socket', () => ({
 }))
 
 vi.mock('../src/components/ActiveSession', () => ({
-  // Expose an onClose hook so a test can simulate the user backing out
-  // of the full-screen session view, which is the only path that
-  // mounts the "resume active session" banner in RequestList.
   ActiveSession: ({ request, onClose }) => h(
     'div',
     { 'data-testid': 'active-session' },
@@ -122,11 +119,6 @@ describe('RequestList', () => {
     expect(status).toBeTruthy()
     expect(status.getAttribute('aria-live')).toBe('polite')
     expect(status.textContent).toContain('app.loading')
-    // The loading text is visible (not sr-only), so a sighted low-vision
-    // user has to be able to read it too — WCAG 1.4.3. text-gray-400
-    // measured ~2.6:1 on this card and failed the 4.5:1 AA bar;
-    // text-gray-500 clears ~4.9:1. Guard the token so a later edit
-    // cannot put the low-contrast class back.
     const statusCls = status.getAttribute('class') || ''
     expect(statusCls).toMatch(/\btext-gray-500\b/)
     expect(statusCls).not.toMatch(/\btext-gray-400\b/)
@@ -153,12 +145,6 @@ describe('RequestList', () => {
   })
 
   it('reads the empty-state line at WCAG AA contrast', async () => {
-    // When the user has no requests and nothing is open, this empty
-    // line is the first thing they see on the Requests tab. It was
-    // drawn in `text-gray-400` (~2.6:1 on white), below WCAG 1.4.3's
-    // 4.5:1 AA bar for normal text — a low-vision user could see
-    // nothing where the empty state was supposed to explain the
-    // blank screen. `text-gray-500` clears ~4.9:1 on the same card.
     const { getByText, container } = render(<RequestList currentUserId="user-a" />)
     // The empty state only renders in list view (showCreate===false).
     await waitFor(() => expect(getByText('requests.all')).toBeTruthy())
@@ -172,14 +158,6 @@ describe('RequestList', () => {
   })
 
   it('reads the breadcrumb back-button at WCAG AA contrast', async () => {
-    // The breadcrumb's "Requests" crumb is an interactive back-button
-    // to the list view. It had been rendered in `text-gray-400`
-    // (#9ca3af) on a white card: ~2.6:1 against the background.
-    // Even as 20px bold text (which WCAG counts as large), that
-    // sits under the 3:1 large-text bar, so a low-vision user could
-    // not tell the crumb was the way back. `text-gray-500` (#6b7280)
-    // measures ~4.9:1 on the same surface and keeps it a crumb — the
-    // current-page span beside it still reads as the active crumb.
     const { getByText } = render(<RequestList currentUserId="user-a" />)
     await waitFor(() => expect(getByText('requests.createShort')).toBeTruthy())
     const back = getByText('requests.title').closest('button')
@@ -373,15 +351,7 @@ describe('RequestList', () => {
   /* ── Semantic list wrapping ── */
 
   it('wraps the user\'s requests in a semantic list tied to its heading', async () => {
-    // Each RequestCard carries its own actions (Accept, Done, Cancel), so the
-    // collection is a true list — not a visual stack. Without role="list" +
-    // aria-labelledby a screen reader has no "N items" count on the Requests
-    // tab (the app's default view after sign-in) and no quick list-jump
-    // between entries. Same shape SafetyPartners already carries.
     const myRequests = [
-      // Both 'open' so the auto-navigate-to-ActiveSession branch
-      // (active/accepted/done_pending) stays out of the way; the list
-      // semantics are what the test is here to verify.
       {
         id: 'r1', type: 'walk', status: 'open', message: '',
         requester_id: 'user-a', helper_id: null,
@@ -417,17 +387,11 @@ describe('RequestList', () => {
       expect(items.length).toBe(2)
     })
 
-    // The default-item-marker rule (Tailwind strips list-style on <ul>
-    // explicitly; we belt-and-braces with list-none) keeps the visible
-    // layout identical, so no stray bullets appear.
     const list = container.querySelector('ul[aria-labelledby]')
     expect(list.className).toContain('list-none')
   })
 
   it('wraps open requests from others in a semantic list tied to its heading', async () => {
-    // Same reason as the user's own list above — a screen reader user
-    // listing open requests from others needs an item count and the list
-    // shortcut their reader provides.
     requestService.listOpen.mockResolvedValue({ requests: [
       {
         id: 'r-open-1', type: 'walk', status: 'open', message: '',
@@ -474,12 +438,6 @@ describe('RequestList', () => {
   })
 
   it('draws a visible keyboard focus ring on the resume-active-session banner', async () => {
-    // The banner is how a user who has backed out of the full-screen
-    // session view rejoins it — safety-critical, so a keyboard user
-    // has to be able to see when it is focused. The default browser
-    // outline on a green-tinted button is often weak, so a
-    // `focus-visible` green ring answers WCAG 2.4.7 without disturbing
-    // pointer input.
     const myRequests = [{
       id: 'r1', type: 'walk', status: 'active', message: '',
       requester_id: 'user-a', helper_id: 'user-b',

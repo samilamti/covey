@@ -194,14 +194,6 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
           {pendingText}
         </div>
 
-        {/* Cancel is the only escape from a pending BankID order — a
-            user who meant to sign in later, or who opened the wrong
-            app, has no other way out of the QR-polling loop. The text
-            had been rendered in `text-gray-400` (~2.6:1 on white),
-            below WCAG 1.4.3's 4.5:1 AA bar for a visible button
-            label at the 14 px (text-sm) size. `text-gray-600` clears
-            ~7.5:1 on the same surface and matches the strong-signal
-            treatment an auth-flow escape calls for. */}
         <button onClick={cancel} class="text-gray-600 text-sm hover:text-gray-800">
           {t('requests.cancel')}
         </button>

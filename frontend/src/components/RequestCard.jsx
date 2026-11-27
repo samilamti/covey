@@ -67,13 +67,7 @@ export function RequestCard({ request, currentUserId, viewerPosition, onAccept, 
         <p class="text-sm text-gray-600 mb-3">{request.message}</p>
       )}
 
-      {/* Meta info — time since created, distance, and the helper
-          marker are all genuine information the user acts on, so they
-          need to be readable. `text-gray-400` (#9ca3af) on a white
-          card is ~2.6:1 and fails WCAG 1.4.3 Contrast (Minimum) for
-          normal text at the 12px label size; `text-gray-500`
-          (#6b7280) clears the 4.5:1 bar at ~4.9:1 while still reading
-          as secondary against the near-black body copy above. */}
+      {/* Meta info */}
       <div class="flex items-center gap-4 text-xs text-gray-500 mb-3">
         <span class="flex items-center gap-1">
           <Clock size={12} />

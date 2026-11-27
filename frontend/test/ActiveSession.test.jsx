@@ -272,13 +272,6 @@ describe('ActiveSession', () => {
     )
     const line = getByText('requests.waitingLocation')
     expect(line).toBeTruthy()
-    // The line explains why the other party's marker is not on the map
-    // yet — a live safety cue during an active walk. It used to carry
-    // an explicit `text-gray-400` override that dropped it to ~2.6:1
-    // on the white card and failed WCAG 1.4.3 at text-xs. The node
-    // must now inherit the surrounding row's `text-gray-500` (which
-    // clears ~4.9:1); guard so a later edit cannot reintroduce the
-    // low-contrast class.
     expect(line.getAttribute('class') || '').not.toMatch(/\btext-gray-400\b/)
   })
 
@@ -469,21 +462,11 @@ describe('ActiveSession', () => {
   })
 
   it('reads the empty message-panel placeholder at WCAG AA contrast', async () => {
-    // Opening the chat during a session with no messages yet surfaces
-    // a one-line placeholder. The panel sits on `bg-gray-50`, where
-    // `text-gray-400` dropped to ~2.5:1 and `text-gray-500` to ~4.4:1
-    // — both below WCAG 1.4.3's 4.5:1 AA bar at text-xs. `text-gray-600`
-    // clears ~6.9:1 on the same surface. Open the panel first: the
-    // empty-state <p> only renders while the panel is visible and the
-    // message log is empty, which is the fixture default.
     Element.prototype.scrollIntoView = vi.fn()
     const { getByText, getAllByText } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
     )
     fireEvent.click(getByText('messages.title'))
-    // The key "messages.placeholder" is used for both the input's
-    // aria-label AND the empty-state <p>, so there are two matches —
-    // pick the <p>.
     const matches = getAllByText('messages.placeholder')
     const emptyLine = matches.find((el) => el.tagName === 'P')
     expect(emptyLine).toBeTruthy()
