@@ -163,9 +163,6 @@ describe('rateLimit middleware', () => {
     assert.equal(res._headers['x-ratelimit-limit'], '3')
     // First call counts, so 2 of 3 remain.
     assert.equal(res._headers['x-ratelimit-remaining'], '2')
-    // Reset == 0 while the window is empty before this call; the oldest
-    // timestamp is read before the current request is pushed, so a brand new
-    // key reports 0 seconds (nothing to wait for).
     assert.equal(res._headers['x-ratelimit-reset'], '0')
   })
 

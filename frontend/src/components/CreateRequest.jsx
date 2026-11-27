@@ -64,14 +64,7 @@ export function CreateRequest({ onCreated }) {
   useEffect(() => {
     if (error) announce(error, { assertive: true })
   }, [error])
-  // Stable per-instance id — the label sits next to the textarea, not around
-  // it, so without an explicit htmlFor/id pair a screen reader reads the
-  // textarea as unnamed. useId is safe with two CreateRequest instances on
-  // screen; a hardcoded id would duplicate.
   const messageId = useId()
-  // The eligibility group has a visible section label; tie it to the
-  // radiogroup via aria-labelledby so the group announces as "Who can
-  // help you? radiogroup" instead of an unnamed group.
   const eligibilityLabelId = useId()
 
   const handleSubmit = async (e) => {
@@ -99,13 +92,7 @@ export function CreateRequest({ onCreated }) {
 
   return (
     <form onSubmit={handleSubmit} class="space-y-4">
-        {/* Request type — a two-option choice with no visible header. The
-            buttons styled as cards communicate "pick one" visually; mark
-            them as a radiogroup with aria-checked so a screen reader
-            announces the current selection too (WCAG 4.1.2 Name, Role,
-            Value). The group gets an aria-label from the already-translated
-            section name rather than an invisible <h3>, which avoids adding
-            a heading the visual design deliberately omits. */}
+        {/* Cards that act as radios, named by aria-label because the design has no visible heading. */}
         <div class="flex gap-3" role="radiogroup" aria-label={t('requests.type')}>
           {TYPE_OPTIONS.map(({ key, Icon }) => (
             <button
@@ -129,12 +116,7 @@ export function CreateRequest({ onCreated }) {
           ))}
         </div>
 
-        {/* Eligibility tier — same shape as the type group above: cards
-            that read visually as "pick one". The visible section label is
-            an id-pointed <div> instead of a bare <label> (a <label> is
-            only semantically valid with an associated form control, and
-            the group is three buttons, not an input), and it is tied to
-            the radiogroup via aria-labelledby. */}
+        {/* Label is a <div>, not <label>: the group is buttons, not a form control. */}
         <div>
           <div id={eligibilityLabelId} class="block text-sm font-medium text-gray-700 mb-1">
             {t('requests.eligibility')}

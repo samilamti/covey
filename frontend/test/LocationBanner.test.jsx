@@ -103,18 +103,11 @@ describe('LocationBanner', () => {
   })
 
   it('announces the informational variant through the polite channel', () => {
-    // Inline role="status" blocks mounted TOGETHER with their text are often
-    // skipped by VoiceOver (region + text land in the a11y tree at the same
-    // tick, so there is no CHANGE event). The global announcer already exists
-    // in the tree, so this is where the reliable spoken update lives.
     render(<LocationBanner error="denied" />)
     expect(announceSpy).toHaveBeenCalledWith('location.denied', { assertive: false })
   })
 
   it('announces the safety-critical ("warning") variant through the assertive channel', () => {
-    // ActiveSession passes severity="warning" because losing location relay
-    // during an escort is a safety concern — a screen-reader user must be
-    // interrupted to hear it, not told politely between other announcements.
     render(<LocationBanner error="denied" severity="warning" />)
     expect(announceSpy).toHaveBeenCalledWith('location.denied', { assertive: true })
   })

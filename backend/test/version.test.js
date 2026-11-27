@@ -30,10 +30,7 @@ describe('versionHandler', () => {
   })
 
   it('rounds uptime_s DOWN to a whole second from the injected clock', () => {
-    // A real `process.uptime()` returns a float like 12.734. We expose it
-    // as a whole second so operators comparing "did it just restart" don't
-    // have to think about sub-second noise. floor() rather than round() so
-    // the number can only go up as the process ages — monotonic.
+    // floor(), not round(): uptime must only go up.
     const req = mockReq({ method: 'GET', path: '/api/version' })
     const res = mockRes()
     versionHandler({ uptimeFn: () => 12.9 })(req, res)

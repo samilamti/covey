@@ -1,27 +1,10 @@
-/**
- * Minimal structured logger.
- *
- * `LOG_FORMAT=json` emits one JSON object per line (12-factor friendly for
- * the hosting platform's log collector). Any other value — the default —
- * stays human-readable, which keeps `docker compose logs` and local `node
- * src/index.js` runs legible.
- *
- * Also peeks at the per-request AsyncLocalStorage store so every line
- * emitted during an HTTP request carries the same `request_id` without
- * every call site having to thread the id in. An explicit `meta.request_id`
- * still wins, which lets a background job set its own correlation id.
- *
- * Why not pino: ~zero extra bytes shipped, zero deps, and this is already
- * everything the roadmap item needs. We can swap it later without touching
- * call sites.
- */
+// Minimal structured logger: LOG_FORMAT=json emits one JSON object per line, anything
+// else stays human-readable. Adds the current request_id from request-context.js.
 
 import { currentContext } from './request-context.js'
 
 function emit(level, msg, meta) {
-  // Read the env every call so a middleware mounted via a cached import
-  // still respects a test's local LOG_FORMAT override. Cost is one string
-  // compare per log line, which is noise next to the JSON.stringify.
+  // Read per call so a test's LOG_FORMAT override applies to cached imports.
   const jsonMode = process.env.LOG_FORMAT === 'json'
   const ctx = currentContext()
   const ctxMeta = ctx?.requestId ? { request_id: ctx.requestId } : null

@@ -1,27 +1,8 @@
 /**
- * Screen-reader announcer, mounted once at the app root.
+ * Screen-reader announcer, mounted once at the app root: the ONLY channel for status
+ * messages. Don't also give the same visible text a live role, or it is read twice.
  *
- * Why this exists: a role="status" / role="alert" region rendered TOGETHER
- * with the text it is meant to announce is often skipped by assistive tech
- * (VoiceOver especially) — the region appears in the accessibility tree and
- * its text at the same tick, so there is no "change" event for the live
- * region observer to fire on. An always-mounted live region whose content we
- * then CHANGE is the pattern WAI-ARIA Authoring Practices recommends.
- *
- * This is the ONLY channel that speaks a routed message. A component that
- * calls announce() must not also wrap the same visible text in its own
- * role="status"/"alert"/aria-live block: a screen reader that does pick up
- * the inline region would then read the message twice. Keep the visible
- * text, drop the inline live role (test/live-regions.test.jsx guards this).
- *
- * Usage:
- *   // Wrap the app
- *   <AnnouncerProvider><App /></AnnouncerProvider>
- *
- *   // In any component
- *   const { announce } = useAnnouncer()
- *   announce(t('requests.waitingForHelp'))           // polite, default
- *   announce(t('errors.connectionLost'), { assertive: true })
+ * Usage: const { announce } = useAnnouncer(); announce(text, { assertive: true })
  */
 
 import { createContext } from 'preact'

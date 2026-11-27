@@ -21,8 +21,6 @@ apiRouter.get('/features', (_req, res) => {
 })
 
 // --- Build info (public, no auth required) ---
-// Mirrors the `backend_build` line emitted at startup so clients and operators
-// can read which version/commit is live without shell access to the box.
 apiRouter.get('/version', versionHandler())
 
 // --- Auth routes (login, verify, etc.) ---

@@ -1,28 +1,5 @@
-/**
- * Graceful shutdown handler.
- *
- * Docker sends SIGTERM when it stops a container and waits 10 s (compose's
- * default stop_grace_period) before SIGKILL. Without a handler, in-flight HTTP
- * requests are dropped mid-response and open Socket.io connections just die,
- * so a browser mid-request after a deploy sees a 502. This hooks SIGTERM +
- * SIGINT, disconnects Socket.io clients, lets in-flight HTTP requests finish,
- * and only then exits.
- *
- * One call does all of it: `io.close()` disconnects every Socket.io client and
- * then closes the underlying http server itself, handing that close's error to
- * its callback. Do not close `httpServer` first. Its callback waits for every
- * open connection to end, and an upgraded WebSocket only ends when `io.close()`
- * runs, so with any app connected the drain sat until the force-exit timer.
- *
- * A hard timer forces exit if cleanup hangs (an unresponsive upstream dependency
- * or a request that never finishes). It fires at 8 s so our own exit lands
- * before Docker's SIGKILL at 10 s.
- *
- * Exposed as a factory so a test can pass a fake `io` / `exit` and assert the
- * shutdown sequence without actually killing the process. The real wiring in
- * `index.js` just calls `createShutdown()` and registers the returned function
- * against both signals.
- */
+// SIGTERM/SIGINT: io.close() disconnects sockets, then closes the http server. Never close
+// httpServer first (open WebSockets stall it). Force-exit at 8 s, before Docker's SIGKILL at 10 s.
 
 const DEFAULT_FORCE_EXIT_MS = 8_000
 

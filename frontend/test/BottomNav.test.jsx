@@ -40,11 +40,6 @@ describe('BottomNav', () => {
   })
 
   it('names the nav landmark so a screen reader can identify it', () => {
-    // Without aria-label the <nav> announces as a bare "navigation", which is
-    // fine until a second landmark joins the shell and the two become
-    // indistinguishable. The label makes it "primary navigation" today and
-    // keeps that distinction once sibling landmarks (a drawer, breadcrumbs)
-    // arrive.
     const { getByRole } = render(
       <BottomNav currentPath="/requests" onNavigate={vi.fn()} />
     )

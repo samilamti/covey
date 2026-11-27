@@ -43,10 +43,6 @@ export function ProfileView({ user, onLogout }) {
     setMessage(null)
     try {
       await profileService.update({ displayName })
-      // The original success text was a bare "✓" glyph — visible to sighted
-      // users and silent for assistive tech, which reads it as a decorative
-      // check mark (or nothing at all, depending on the voice). A translated
-      // word is spoken through the announcer.
       showMessage('success', t('profile.saved'))
     } catch {
       showMessage('error', t('app.error'))
@@ -165,12 +161,7 @@ export function ProfileView({ user, onLogout }) {
         )}
       </div>
 
-      {/* Language — the visible section heading was a bare <label> without
-          a `for` attribute, i.e. a dangling label that no screen reader
-          attaches to the LanguageSelector button. Render it as a <div>
-          with the same visual class: the picker component now carries its
-          own accessible name ("Choose language …"), so we keep the visible
-          heading as a styling element rather than a broken form semantic. */}
+      {/* A <div>, not a <label>: LanguageSelector names itself. */}
       <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
         <div class="block text-sm font-medium text-gray-700 mb-2">{t('profile.language')}</div>
         <LanguageSelector />

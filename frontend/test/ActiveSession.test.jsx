@@ -160,10 +160,6 @@ describe('ActiveSession', () => {
   })
 
   it('names the map container as a region so screen readers can find or skip it', () => {
-    // Leaflet makes the map div focusable once it initialises, so a
-    // keyboard user tabs onto an unnamed widget and a screen-reader
-    // user has nothing to find or skip by landmark. The legend and ETA
-    // carry what the map shows visually; the label just names the pane.
     const { getByRole } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
     )
@@ -172,9 +168,6 @@ describe('ActiveSession', () => {
   })
 
   it('names the header as an h2 so heading navigation lands on this view', () => {
-    // ActiveSession takes over the whole screen and replaces the
-    // RequestList h2. Shipping the header as h3 would leave a screen
-    // reader jumping headings with nothing at this level to land on.
     const { getByRole } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
     )
@@ -307,9 +300,6 @@ describe('ActiveSession', () => {
   })
 
   it('exposes an accessible name for the header close button', () => {
-    // The header X button has no visible text — screen readers need the
-    // aria-label to announce it. requests.close is translated in all 12
-    // locales so this works for every language.
     const { getByLabelText } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
     )
@@ -358,10 +348,6 @@ describe('ActiveSession', () => {
   })
 
   it('routes the other party\'s done proposal through the global announcer', () => {
-    // A done proposal appears from a socket event while the user is walking
-    // and almost certainly not looking at the screen. The inline role="status"
-    // below gets mounted together with its text and is often skipped by
-    // VoiceOver; the always-mounted announcer is the reliable channel.
     render(
       <ActiveSession
         request={makeRequest({ status: 'done_pending', done_initiated_by: 'user-b' })}
@@ -373,9 +359,6 @@ describe('ActiveSession', () => {
   })
 
   it('does not announce the user\'s own done tap as a proposal', () => {
-    // When the current user initiates done, they know — they just tapped the
-    // button — so re-announcing it would be noise. Only the OTHER party's
-    // proposal goes to the announcer.
     render(
       <ActiveSession
         request={makeRequest({ status: 'done_pending', done_initiated_by: 'user-a' })}
@@ -440,10 +423,6 @@ describe('ActiveSession', () => {
   })
 
   it('exposes the message toggle as a disclosure with aria-expanded and aria-controls', async () => {
-    // The message toggle opens and closes the chat panel; a screen
-    // reader needs aria-expanded to know the state and aria-controls to
-    // point at the panel the button toggles. Without them the button
-    // announces as a generic push with no hint that it reveals content.
     Element.prototype.scrollIntoView = vi.fn()
     const { getByText } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
@@ -477,11 +456,6 @@ describe('ActiveSession', () => {
   })
 
   it('announces new messages as a polite live region', async () => {
-    // A blind user can see "Messages 3" but has no reason to re-read a
-    // number that never speaks for itself, so an incoming reply used to
-    // land silently. role="log" with aria-live="polite" tells a screen
-    // reader to announce each appended message without stealing focus
-    // from whatever the user is doing.
     Element.prototype.scrollIntoView = vi.fn()
     const { getByText, getByRole } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
@@ -495,10 +469,6 @@ describe('ActiveSession', () => {
   })
 
   it('pairs the unread badge with a hidden accessible description', async () => {
-    // The visible badge is just "3", which announces as "Messages 3" and
-    // leaves the user guessing whether that is an id, a time, or a count.
-    // The raw digit is hidden from AT and paired with a sr-only
-    // count-aware string that stands on its own.
     const { container } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />
     )
@@ -514,9 +484,7 @@ describe('ActiveSession', () => {
       requestId: 'r1',
       message: { id: 'm1', senderId: 'user-b', content: 'hi', createdAt: new Date().toISOString() },
     })
-    // sr-only span carries the resolved key — the mocked t() echoes the
-    // key, so we assert the hidden description is PRESENT and the digit
-    // is marked aria-hidden.
+    // The mocked t() echoes keys, so assert the sr-only key and the aria-hidden digit.
     await waitFor(() => {
       const srOnly = container.querySelector('.sr-only')
       expect(srOnly).toBeTruthy()
@@ -525,12 +493,7 @@ describe('ActiveSession', () => {
   })
 
   it('gives the chat input and send button accessible names', async () => {
-    // The chat input relied on `placeholder` as its label, which assistive
-    // tech does not treat as an accessible name — a placeholder disappears
-    // when the user types, so the input would announce as "edit text, blank"
-    // mid-message. The icon-only send button had no name at all.
-    // jsdom has no scrollIntoView; opening the message panel runs an effect
-    // that would call it, so stub it before firing the toggle.
+    // jsdom has no scrollIntoView; opening the panel calls it.
     Element.prototype.scrollIntoView = vi.fn()
     const { getByText, getByLabelText } = render(
       <ActiveSession request={makeRequest()} currentUserId="user-a" onClose={vi.fn()} />

@@ -30,17 +30,9 @@ export function LanguageSelector() {
   const { t, i18n } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef(null)
-  // The trigger button is where focus has to land when the menu closes via
-  // Escape (ARIA APG Menu Button pattern) — a dangling focus on the dismissed
-  // dropdown would strand a keyboard user on a hidden control.
   const triggerRef = useRef(null)
-  // The menu container is where the arrow-key handler looks up menuitems and
-  // where "focus into the menu on open" starts from; scoping the queries to
-  // this ref keeps us safe if another menu ever appears on the same page.
   const menuRef = useRef(null)
-  // dialogWasOpenRef-equivalent guard: without it the "closed → focus the
-  // trigger" branch fires on initial mount and steals focus from whatever
-  // element the browser gave focus to on page load.
+  // Stops the close branch of the focus effect from stealing focus on first mount.
   const wasOpenRef = useRef(false)
 
   const changeLanguage = (lng) => {
@@ -60,9 +52,6 @@ export function LanguageSelector() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [isOpen])
 
-  // Escape closes the dropdown — WCAG 2.1.1 Keyboard. Without this a keyboard
-  // user has to Tab through all 12 languages or click outside to dismiss the
-  // open menu.
   useEffect(() => {
     if (!isOpen) return
     const onKey = (e) => {
@@ -75,18 +64,8 @@ export function LanguageSelector() {
     return () => document.removeEventListener('keydown', onKey)
   }, [isOpen])
 
-  // Menu focus flow (ARIA APG Menu Button pattern + WCAG 2.4.3 Focus Order):
-  //   • On open, move focus INTO the menu so the caret lands on the current
-  //     language — arrow-key navigation then works from the user's actual
-  //     starting point, not from some arbitrary first item. Without this,
-  //     the caret stays on the trigger and Tab walks past 12 items before
-  //     leaving; the point of a menu is to collapse that choice.
-  //   • On close via Escape or a selection, return focus to the trigger so a
-  //     keyboard user picks up where they were. Those closes leave focus in
-  //     the dropdown, or on <body> once the focused item unmounts. A close
-  //     caused by clicking or tabbing elsewhere has already put focus where
-  //     the user wanted it, so leave it there. The wasOpenRef guard keeps
-  //     this branch from firing on initial mount.
+  // Focus flow: on open, focus the current language; on close by Escape or selection,
+  // return focus to the trigger. A click or Tab elsewhere already placed focus, so leave it.
   useEffect(() => {
     if (isOpen) {
       const menu = menuRef.current
@@ -105,13 +84,8 @@ export function LanguageSelector() {
     }
   }, [isOpen])
 
-  // Arrow keys move focus between menuitems; Home/End jump to the ends. The
-  // ARIA APG menu pattern makes these mandatory — a `role="menu"` that only
-  // responds to Tab reads as a menu to assistive tech but behaves like a
-  // normal list, which is worse than no role at all. Enter and Space are
-  // native <button> activators, so there's no need to intercept them; wrap
-  // behaviour matches CreateRequest's radio navigation (`onRadioKeyDown`)
-  // so the two patterns stay consistent.
+  // Arrow keys (wrapping) and Home/End move between items, as the APG menu pattern requires;
+  // same wrap as CreateRequest's onRadioKeyDown.
   const onMenuKeyDown = (e) => {
     // Tab leaves the menu (ARIA APG Menu Button). Close it only after the
     // browser has moved focus to the next control: closing at once unmounts
@@ -149,20 +123,8 @@ export function LanguageSelector() {
         aria-expanded={isOpen}
       >
         <Globe size={16} />
-        {/* Without this hidden prefix the trigger reads as just "Svenska"
-            (or "English", …), so a screen reader user has no idea they've
-            landed on a language picker vs. a disclosure named after that
-            word. A visually-hidden span pulls the picker's purpose into
-            the accessible name, and the visible label stays unchanged.
-            Preferable to an aria-label override because that would strip
-            the native language of the visible label — losing the SR's
-            ability to pronounce it (e.g. a Swedish voice saying "English"
-            vs. "English" wrapped in lang="en"). */}
+        {/* Hidden prefix names the picker; an aria-label would drop the label's own lang attribute. */}
         <span class="sr-only">{t('language.select')} </span>
-        {/* Wrap the current language's label in its own lang attribute for
-            the same reason as the menu items below (WCAG 3.1.2 Language of
-            Parts): "English" inside a Swedish UI should read with English
-            phonetics, and "العربية" should not be voiced as Latin. */}
         {currentLang
           ? <span lang={currentLang.code}>{currentLang.label}</span>
           : 'Språk'}
@@ -192,22 +154,13 @@ export function LanguageSelector() {
                   } w-full text-left px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 flex items-center focus:outline-none focus:bg-indigo-50 focus:text-indigo-900`}
                   role="menuitem"
                   aria-current={isCurrent ? 'true' : undefined}
-                  // Roving tabindex (ARIA APG): only the current item is in
-                  // the Tab sequence, so a Tab from the trigger reaches the
-                  // menu's "anchor point" (the current language) and one more
-                  // Tab leaves the menu entirely, rather than walking all
-                  // twelve items. Arrow keys drive navigation within.
+                  // Roving tabindex: only the current item is a Tab stop; arrows move within.
                   tabIndex={isCurrent ? 0 : -1}
                 >
                   <span class="mr-3 inline-flex items-center" style={{ minWidth: '1.5rem' }}>
                     <FlagComponent size={20} />
                   </span>
-                  {/* Each label is written in its own language, so mark it as
-                      such — WCAG 3.1.2 Language of Parts. A screen reader
-                      otherwise reads "العربية" and "Українська" with the
-                      current UI language's phonetics. All our codes (sv, nb,
-                      da, fi, ar, is, pl, fo, kl, se, uk, en) are valid BCP 47
-                      primary language subtags. */}
+                  {/* Each name is in its own language (WCAG 3.1.2). */}
                   <span lang={lng.code}>{lng.label}</span>
                 </button>
               )

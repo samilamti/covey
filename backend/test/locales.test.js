@@ -1,12 +1,3 @@
-/**
- * Supported-locale list and validator.
- *
- * The canonical list in `src/locales.js` is what the profile route checks
- * `preferredLang` against, and what the push notification body maps are
- * keyed by. Drift between those two consumers would silently downgrade
- * users to the Swedish fallback, so both are asserted here.
- */
-
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
 
@@ -33,9 +24,6 @@ describe('isSupportedLocale()', () => {
   })
 
   it('rejects locale subtags (ar-SA, en-US) — the short form is canonical', () => {
-    // This is the regression the validator exists for: an "ar-SA" stored in
-    // preferred_lang would not match the notification body maps and the
-    // user would silently get Swedish instead of Arabic.
     for (const subtag of ['ar-SA', 'en-US', 'sv-SE', 'AR']) {
       assert.equal(isSupportedLocale(subtag), false, `expected ${subtag} to be rejected`)
     }
@@ -57,11 +45,8 @@ describe('isSupportedLocale()', () => {
 })
 
 describe('notification body maps cover every supported locale', () => {
-  // The push body maps aren't exported (they're private module state in
-  // services/notifications.js), and importing that module pulls the whole
-  // repositories graph plus the pool's boot-time DB connect. So instead we
-  // parse the source file directly — a drift between SUPPORTED_LOCALES
-  // and either body map fails this test with an actionable message.
+  // The body maps are private, and importing notifications.js opens a DB connection,
+  // so read the source file instead.
   it('NOTIFY_BODY and ACCEPTED_BODY each carry one entry per supported locale', async () => {
     const fs = await import('node:fs')
     const src = await fs.promises.readFile(

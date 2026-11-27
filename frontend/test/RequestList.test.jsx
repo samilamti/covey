@@ -104,12 +104,7 @@ describe('RequestList', () => {
   /* ── Basic rendering ── */
 
   it('announces the initial loading state in a polite live region', async () => {
-    // RequestList is the app's default view on sign-in, so between the auth
-    // redirect and the first list paint there is a bare "loading…" line.
-    // Without role="status" + aria-live a screen reader user has no idea
-    // whether the page is working, empty, or broken — WCAG 4.1.3 Status
-    // Messages. Hold list() unresolved so the loading branch stays mounted
-    // long enough to inspect.
+    // Hold list() unresolved so the loading branch stays mounted.
     let resolveList
     requestService.list.mockImplementationOnce(
       () => new Promise((resolve) => { resolveList = resolve })
@@ -167,12 +162,6 @@ describe('RequestList', () => {
   })
 
   it('hides the decorative breadcrumb arrow from assistive tech', async () => {
-    // The visual "→" between the two breadcrumb crumbs is a separator, not
-    // a word; without aria-hidden a screen reader reads it as "rightwards
-    // arrow" every time it visits the heading. The final crumb carries
-    // aria-current="page" so it announces as the current page rather than
-    // as a second identical-sounding span. Guards the ARIA Breadcrumb
-    // pattern on RequestList's create-mode header.
     const { container, getByText } = render(<RequestList currentUserId="user-a" />)
     await waitFor(() => expect(getByText('requests.createShort')).toBeTruthy())
 

@@ -114,11 +114,6 @@ describe('CreateRequest', () => {
   })
 
   it('exposes the type choice as a named radiogroup with the current pick', async () => {
-    // The visual cue for the selected card is Tailwind's indigo background,
-    // which assistive tech cannot see. Marking each card role="radio"
-    // + aria-checked turns the group into something a screen reader can
-    // announce as "Type of help, radio group, Walk, selected" and keeps
-    // the semantics honest when the user swaps selection.
     const { getByRole, getAllByRole } = render(<CreateRequest />)
     const group = getByRole('radiogroup', { name: 'requests.type' })
     expect(group).toBeDefined()
@@ -135,9 +130,6 @@ describe('CreateRequest', () => {
   })
 
   it('exposes the eligibility tier as a labelled radiogroup', async () => {
-    // The group has a visible section label — tie it to the group via
-    // aria-labelledby so a screen reader announces the group with its
-    // real name ("Who can help you?") instead of an unnamed group.
     const { getByRole, getAllByRole } = render(<CreateRequest />)
     const group = getByRole('radiogroup', { name: 'requests.eligibility' })
     expect(group).toBeDefined()
@@ -205,10 +197,6 @@ describe('CreateRequest', () => {
   })
 
   it('wires the message textarea to its own label', () => {
-    // A <label> sitting next to a <textarea> is only an accessible name
-    // when `for=id` ties them together — a sibling label is ignored. Without
-    // this, screen readers announce an unnamed textarea, so the user has
-    // no idea what to type.
     const { getByLabelText } = render(<CreateRequest />)
     // The matched node is the textarea, not the label — if the association
     // is missing the query throws and the test fails.
@@ -360,10 +348,6 @@ describe('CreateRequest', () => {
   })
 
   it('routes a failed submit through the global announcer as assertive', async () => {
-    // The inline role="alert" paragraph is mounted together with its text,
-    // which VoiceOver often skips. The announcer is the reliable channel.
-    // Assertive — the user just tried to send; a quiet polite update would
-    // leave them staring at a form that didn't submit with no idea why.
     requestService.create.mockRejectedValueOnce(new Error('no network'))
     const { getByText } = render(<CreateRequest />)
     await fireEvent.click(getByText('requests.send'))

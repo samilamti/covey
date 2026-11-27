@@ -51,10 +51,6 @@ describe('RequestCard', () => {
   })
 
   it('hides the type emoji from assistive tech', () => {
-    // The emoji is decorative — the localized type label right beside it is
-    // the real name. Without aria-hidden a screen reader announces the
-    // Unicode name and the label, which is both redundant and confusing
-    // in non-English locales whose voice is tuned to another language.
     const { container } = render(
       <RequestCard request={makeRequest({ type: 'walk' })} currentUserId="user-b" />
     )

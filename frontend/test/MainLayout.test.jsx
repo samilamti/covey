@@ -217,9 +217,7 @@ describe('MainLayout', () => {
     const { container } = render(<MainLayout user={user} onLogout={vi.fn()} />)
     const link = container.querySelector('a[href="#main-content"]')
     expect(link).toBeTruthy()
-    // Carries the translated label, and because the test mock resolves keys
-    // verbatim, we also assert the exact locale key so a rename there is
-    // caught here rather than shipping an untranslated skip link.
+    // The mocked t() returns keys, so this also pins the locale key.
     expect(link.textContent).toBe('nav.skipToContent')
   })
 
@@ -227,10 +225,6 @@ describe('MainLayout', () => {
     const { container } = render(<MainLayout user={user} onLogout={vi.fn()} />)
     const main = container.querySelector('main#main-content')
     expect(main).toBeTruthy()
-    // tabindex=-1 makes the <main> programmatically focusable without
-    // dropping it into the normal tab sequence. Without this, .focus()
-    // silently no-ops on an <h2> / <main> / <div>, and the skip link
-    // appears to work while leaving the caret on the anchor.
     expect(main.getAttribute('tabindex')).toBe('-1')
   })
 
@@ -238,9 +232,7 @@ describe('MainLayout', () => {
     const { container } = render(<MainLayout user={user} onLogout={vi.fn()} />)
     const link = container.querySelector('a[href="#main-content"]')
     const main = container.querySelector('main#main-content')
-    // Stub scrollIntoView — jsdom does not implement it, and without
-    // this the click handler throws before focus() is reached. We care
-    // about focus; the scroll is a nicety for mobile layouts.
+    // jsdom has no scrollIntoView.
     main.scrollIntoView = vi.fn()
     await fireEvent.click(link)
     expect(document.activeElement).toBe(main)
@@ -248,12 +240,7 @@ describe('MainLayout', () => {
   })
 
   it('places the skip link before the InstallPrompt so it is the very first tab stop', () => {
-    // Order matters: a Tab from the address bar should land on the skip
-    // link, not on whatever button the InstallPrompt mounts. Assert by DOM
-    // position rather than visual order, because the anchor is sr-only until
-    // focused and getBoundingClientRect() in jsdom returns zeroes for both.
-    // The install prompt is mocked to null in this suite, so look at the
-    // skip link's position in the outer wrapper instead.
+    // Checked by DOM order: the link is sr-only, and jsdom rects are all zero.
     const { container } = render(<MainLayout user={user} onLogout={vi.fn()} />)
     const link = container.querySelector('a[href="#main-content"]')
     const main = container.querySelector('main#main-content')

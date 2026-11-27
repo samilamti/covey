@@ -1,22 +1,5 @@
-/**
- * HTTP access + error logging middleware.
- *
- * `httpLogger` emits one structured line per completed response (method, path,
- * status, duration_ms, user id when authenticated) via the shared logger, so
- * `LOG_FORMAT=json` runs produce one JSON event per request — the shape a log
- * aggregator can group on without regex.
- *
- * `errorLogger` is a safety net: a route that throws (sync or async) lands
- * here with its stack logged as `event: http_error`, and the client gets a
- * JSON 500 instead of Express's default HTML. Routes still catch their own
- * errors with specific event names; this only runs when they don't.
- *
- * Both honour `LOG_HTTP=off` for quiet local runs. The access logger skips
- * `/api/health` AND `/api/health/ready` by default because load balancers
- * poll both every few seconds; the readiness probe already logs a dedicated
- * `readiness_db_ping_failed` line on failure, so an access-log entry per
- * poll would be ~17k lines of pure noise a day without adding any signal.
- */
+// httpLogger: one structured line per response (skips both health endpoints).
+// errorLogger: last-resort JSON 500 for errors routes didn't catch. LOG_HTTP=off silences both.
 
 import { log } from '../logger.js'
 
@@ -44,18 +27,8 @@ export function httpLogger({ skip = DEFAULT_SKIP } = {}) {
 }
 
 /**
- * Express error-handling middleware (4-arg signature). Keep it last.
- *
- * The 500 body includes `request_id` when the request-id middleware ran
- * upstream, so a user who screenshots the error can quote the id and an
- * operator can grep straight to the matching `http_error` log line. The id
- * is already on the `X-Request-Id` response header, but a header is invisible
- * to a user staring at an error dialog.
- *
- * An error that carries its own 4xx status keeps it: `express.json()` raises
- * 400 on a malformed body and 413 on an oversized one, and turning those into
- * a 500 with a stack trace would blame the server for a bad client request.
- * They log as a one-line `http_client_error` warning instead.
+ * Last-resort error handler (4-arg signature, keep it last). A 4xx from express.json()
+ * keeps its status; anything else becomes a JSON 500 carrying request_id.
  */
 export function errorLogger() {
   // eslint-disable-next-line no-unused-vars

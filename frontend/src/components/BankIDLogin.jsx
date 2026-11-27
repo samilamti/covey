@@ -147,10 +147,7 @@ export function BankIDLogin({ onLogin, pollMs = 2000, qrMs = 1000 }) {
   if (status === 'pending') {
     return (
       <div class="flex flex-col items-center">
-        {/* The paragraph below names the QR in the user's language, and a
-            screen-reader user cannot point a camera at it anyway — the
-            autostart link below is the inclusive path. Empty alt marks it
-            decorative so the content isn't duplicated on each tick. */}
+        {/* Empty alt: the paragraph below describes the QR; the autostart link is the accessible path. */}
         {qrDataUrl ? (
           <img
             src={qrDataUrl}

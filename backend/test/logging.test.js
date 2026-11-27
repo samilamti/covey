@@ -24,10 +24,7 @@ after(() => {
 
 beforeEach(() => { stdout.length = 0; stderr.length = 0 })
 
-/**
- * Minimal Express-like res that is also an EventEmitter so `res.on('finish')`
- * works. Inherits status()/json() from the shared mockRes().
- */
+// mockRes() plus EventEmitter, so res.on('finish') works.
 function finishableRes() {
   const base = mockRes()
   const emitter = new EventEmitter()

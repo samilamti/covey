@@ -64,9 +64,6 @@ describe('BankIDLogin (Secure Start)', () => {
     fireEvent.click(getByText('landing.loginButton'))
 
     await waitFor(() => {
-      // client-side QR image — alt is empty so a screen reader doesn't read
-      // the untranslated "BankID QR" on every tick; the scan paragraph
-      // immediately below it carries the meaning in the user's language.
       const img = container.querySelector('img[alt=""]')
       expect(img).toBeTruthy()
       expect(img.getAttribute('src').startsWith('data:image/gif')).toBe(true)
@@ -111,11 +108,6 @@ describe('BankIDLogin (Secure Start)', () => {
   })
 
   it('names the QR placeholder while BankID has not returned the first frame', async () => {
-    // Before the first qr() call resolves, the UI shows a plain spinner in a
-    // box. Without an accessible name a screen reader user on the login
-    // screen hears nothing and cannot tell the device is waiting. The box
-    // is marked role="status" with a translated aria-label so a polite
-    // live region speaks a real sentence.
     authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
     authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
     // Hold the qr promise open so the placeholder stays on screen through
@@ -167,10 +159,6 @@ describe('BankIDLogin (Secure Start)', () => {
   })
 
   it('routes a failed BankID flow through the global announcer as assertive', async () => {
-    // The inline role="alert" error block is mounted together with its text,
-    // which VoiceOver often skips. The announcer is the reliable channel.
-    // Assertive — the user just tried to sign in and their BankID cancelled
-    // or errored; a polite update would be talked over.
     authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
     authService.collect.mockResolvedValue({ status: 'failed', hintCode: 'expiredTransaction' })
 
@@ -181,9 +169,6 @@ describe('BankIDLogin (Secure Start)', () => {
   })
 
   it('routes a failed login call through the global announcer as assertive', async () => {
-    // A thrown error from authService.login (not a BankID hint code) hits
-    // the catch branch that sets a generic error message — same announcer
-    // channel.
     authService.login.mockRejectedValueOnce(new Error('network'))
     const { getByText } = render(<BankIDLogin onLogin={vi.fn()} pollMs={30} qrMs={30} />)
     fireEvent.click(getByText('landing.loginButton'))
@@ -191,13 +176,6 @@ describe('BankIDLogin (Secure Start)', () => {
   })
 
   it('routes the initial pending instruction through the global announcer (polite)', async () => {
-    // The inline role="status" region below the QR is mounted together with
-    // its first instruction text, which VoiceOver often skips. The
-    // announcer is the reliable channel for that first message. aria-live
-    // takes over naturally for the subsequent userCancel → userSign
-    // transition, so we only need to seed the first paint. Polite — the
-    // user initiated the flow and whatever they were reading before
-    // shouldn't be interrupted.
     authService.login.mockResolvedValue({ orderRef: 'o1', autoStartToken: 'ast-xyz' })
     authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })
 
@@ -205,9 +183,7 @@ describe('BankIDLogin (Secure Start)', () => {
     fireEvent.click(getByText('landing.loginButton'))
 
     await waitFor(() => expect(announceSpy).toHaveBeenCalledWith('landing.bankidPending'))
-    // Default call shape — no second arg means polite (the useAnnouncer
-    // default). We explicitly assert that so an accidental { assertive: true }
-    // slip doesn't survive review.
+    // No second argument means polite.
     const call = announceSpy.mock.calls.find((c) => c[0] === 'landing.bankidPending')
     expect(call[1]).toBeUndefined()
   })

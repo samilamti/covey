@@ -1,34 +1,10 @@
-/**
- * Production env-var safety check.
- *
- * Every secret in this backend has a dev fallback so a fresh clone boots on
- * a laptop without a `.env` file. In production that same fallback is a
- * footgun: `JWT_SECRET` defaults to the string
- * `'dev-secret-do-not-use-in-prod'` inside `auth/jwt.js`, which would sign
- * tokens with a value anyone reading the source already knows — and nothing
- * at startup objects. This file closes that gap: when `NODE_ENV=production`,
- * refuse to boot if a required secret is absent or still carries the dev
- * default. The process dies with a readable error before `migrate()` runs,
- * so the fault lands at `docker compose up` time rather than on the first
- * forged JWT.
- *
- * Keeping it out of production (NODE_ENV !== 'production') is deliberate:
- * local, test, and CI runs legitimately boot with the dev defaults, and
- * the backend test suite already overrides JWT_SECRET for the signing tests.
- *
- * Exposed as a pure function with injected `env` so tests exercise every
- * branch without touching the real process environment, and so a future
- * caller (a provisioning script, a boot-time health check) can reuse it.
- */
+// Production boot check: refuse to start when a secret is missing or still has its
+// dev fallback, so the misconfig fails at deploy time. No-op outside production.
 
-// The literal is defined in `auth/jwt.js` as the dev fallback. Duplicated
-// here so this check does not import crypto code at module eval time; keep
-// the two in sync if the fallback is ever renamed.
+// Same literal as the fallback in auth/jwt.js (not imported, to keep crypto out of
+// module eval); keep the two in sync.
 export const JWT_SECRET_DEV_FALLBACK = 'dev-secret-do-not-use-in-prod'
 
-// Each check receives the whole env object so it can look at a single secret
-// (JWT_SECRET) or a combination (AUTH_PROVIDER + FEATURE_BANKID_AUTH). `name`
-// is what the passed-checks log line and the error message quote.
 const REQUIRED_IN_PROD = [
   {
     name: 'JWT_SECRET',
@@ -40,12 +16,8 @@ const REQUIRED_IN_PROD = [
         : 'JWT_SECRET still equals the dev fallback literal — anyone reading the source can forge a session',
   },
   {
-    // Guards a separate silent footgun: auth/router.js selects the real
-    // BankID provider only when AUTH_PROVIDER=bankid AND FEATURE_BANKID_AUTH
-    // is on; with the flag off it emits ONE warn line and quietly falls back
-    // to the stub provider, which accepts any personnummer. In production
-    // that means every login is anonymous, with nothing visible to a user.
-    // Fail the boot instead, so the misconfig lands at deploy time.
+    // auth/router.js silently falls back to the stub provider (any personnummer logs in)
+    // when FEATURE_BANKID_AUTH is off, so fail the boot instead.
     name: 'AUTH_PROVIDER',
     isUnsafe: (env) =>
       env.AUTH_PROVIDER === 'bankid' && env.FEATURE_BANKID_AUTH !== 'true',

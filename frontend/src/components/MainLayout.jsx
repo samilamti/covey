@@ -66,19 +66,8 @@ export function MainLayout({ user, onLogout }) {
     }
   }
 
-  // Skip link — WCAG 2.4.1 Bypass Blocks. Every keyboard-only user currently
-  // has to tab past the InstallPrompt banner (and any transient dismiss / Install
-  // buttons it mounts) before reaching the main content; a screen-reader user
-  // navigating by landmark can skip ahead, but a sighted keyboard user who does
-  // not know that shortcut cannot. The link stays visually hidden until it takes
-  // focus, which is the moment it matters: a Tab from the top of the page.
-  //
-  // The onClick handler is belt-and-braces: anchor jumps DO move focus in
-  // modern browsers once the target has tabindex=-1, but older Android
-  // builds still vary, and a focus() call costs nothing. z-[1300] keeps it
-  // above the safety report modal (z-1200), the ActiveSession takeover
-  // (z-1100) and the app header (z-1001) so a "where am I?" refocus during
-  // a dialog still shows.
+  // Skip link (WCAG 2.4.1). focus() covers browsers where the anchor jump doesn't move focus;
+  // z-[1300] keeps it above the report modal (1200), ActiveSession (1100) and header (1001).
   const skipToMain = (e) => {
     e.preventDefault()
     const main = document.getElementById('main-content')
@@ -100,12 +89,8 @@ export function MainLayout({ user, onLogout }) {
 
       <InstallPrompt />
 
-      {/* Main content area — capped + centred so cards don't stretch on tablets/large screens.
-          The chrome header (name + language) was removed to reclaim space; language now
-          lives in the profile/settings tab.
-          tabIndex={-1} makes the <main> programmatically focusable so the skip
-          link can land on it; the focus ring is suppressed because the landing
-          is driven by a skip link, not by a Tab onto an interactive control. */}
+      {/* Main content area, capped and centred so cards don't stretch on tablets. tabIndex={-1}
+          lets the skip link focus it; no focus ring, since it is never a Tab stop. */}
       <main
         id="main-content"
         tabIndex={-1}

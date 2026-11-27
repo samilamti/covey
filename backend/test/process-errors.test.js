@@ -77,9 +77,6 @@ describe('attachProcessErrorHandlers', () => {
     proc.emit('unhandledRejection', { code: 'ETIMEDOUT' }, Promise.resolve())
     const line = log.entries.find((e) => e.meta?.event === 'unhandled_rejection')
     assert.ok(line)
-    // The reason-type hint says "this stack is synthetic", which matters when
-    // someone rejects with a plain object: the stack points at process-errors.js
-    // and would otherwise mislead whoever is debugging.
     assert.equal(line.meta.reason_type, 'object')
     assert.deepEqual(shutdown.calls, [['unhandled_rejection', 1]])
   })

@@ -38,9 +38,6 @@ export function ActiveSession({ request, currentUserId, onClose }) {
   const messagesEndRef = useRef(null)
   const [myName, setMyName] = useState(null)
   const [otherName, setOtherName] = useState(null)
-  // Stable id per instance so the message toggle can point at the panel
-  // it controls (ARIA Disclosure pattern). useId is safe if two
-  // ActiveSessions ever coexist; a hardcoded id would duplicate.
   const messagesPanelId = useId()
 
   const isRequester = request.requester_id === currentUserId
@@ -407,13 +404,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
           isn't occluded by the app chrome. */}
       <div class="bg-indigo-600 text-white px-4 py-3 flex items-center justify-between safe-area-top">
         <div>
-          {/* ActiveSession is a full-screen takeover that replaces the
-              RequestList h2 and the app chrome, so starting at h3 would
-              leave a screen reader navigating by heading with no landing
-              point on this view (jumping from nothing to h3). Matches
-              the h2 that every sibling top-level view already uses
-              (RequestList, ProfileView, ProgressDashboard). WCAG 1.3.1
-              Info and Relationships / 2.4.6 Headings and Labels. */}
+          {/* h2, like every other top-level view: this replaces RequestList's heading. */}
           <h2 class="font-semibold">{t(`requests.types.${request.type}`)}</h2>
           <p class="text-xs text-indigo-200">
             {isRequester ? t('requests.youRequested') : t('requests.youAreHelper')}
@@ -429,12 +420,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
         </button>
       </div>
 
-      {/* Map. Leaflet makes the container focusable the moment it
-          initialises, so without role="region" + an accessible name a
-          keyboard user lands on a nameless widget and a screen-reader
-          user has nothing to find or skip by landmark. The legend and
-          ETA below carry the information the map shows visually; the
-          label here just names the pane. */}
+      {/* Leaflet makes the map focusable, so it needs a name. */}
       <div
         ref={mapRef}
         role="region"
@@ -477,11 +463,6 @@ export function ActiveSession({ request, currentUserId, onClose }) {
           </div>
         )}
 
-        {/* Message toggle — the ARIA Disclosure pattern: aria-expanded
-            tells a screen reader whether the chat panel is open, and
-            aria-controls points at the panel the button toggles. Without
-            these the button announces as a generic push, giving no clue
-            that it reveals additional content or what that content is. */}
         {!isTerminal && (
           <button
             onClick={() => { setShowMessages(!showMessages); if (!showMessages) setUnreadCount(0) }}
@@ -492,11 +473,6 @@ export function ActiveSession({ request, currentUserId, onClose }) {
             <MessageCircle size={16} />
             {t('messages.title')}
             {unreadCount > 0 && (
-              // The visible badge is just a number; a screen reader user
-              // hearing "Messages 3" cannot tell whether that is an ID, a
-              // count, or clutter. Hide the raw digit from AT and pair it
-              // with a visually hidden count-aware string that stands on
-              // its own.
               <span class="bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                 <span aria-hidden="true">{unreadCount}</span>
                 <span class="sr-only">{t('messages.unread', { count: unreadCount })}</span>
@@ -508,13 +484,7 @@ export function ActiveSession({ request, currentUserId, onClose }) {
         {/* Message panel */}
         {showMessages && !isTerminal && (
           <div id={messagesPanelId} class="bg-gray-50 rounded-lg border border-gray-200 mb-3 flex flex-col" style="max-height:16rem">
-            {/* Message list. role="log" + aria-live="polite" announce each new
-                message the moment it arrives, without stealing focus. Without
-                this, an incoming message is only reflected in a number that a
-                screen reader has no reason to re-read, so a blind user never
-                learns the other person has replied. aria-relevant="additions"
-                keeps the announcement to newly appended messages — not the
-                whole list each time. */}
+            {/* role="log" is the chat's own live region; it is not routed through the announcer. */}
             <div
               class="flex-1 overflow-y-auto p-3 space-y-2"
               role="log"
@@ -554,10 +524,6 @@ export function ActiveSession({ request, currentUserId, onClose }) {
 
             {/* Text input */}
             <div class="px-3 py-2 border-t border-gray-200 flex gap-2 flex-shrink-0">
-              {/* aria-label mirrors the placeholder — a placeholder is not an
-                  accessible name (it disappears when the user types, and some
-                  screen readers skip it entirely), so without this the chat
-                  input announces as "edit text, blank". */}
               <input
                 type="text"
                 value={messageText}

@@ -4,12 +4,7 @@ import { requestId } from '../src/middleware/request-id.js'
 import { currentContext } from '../src/request-context.js'
 import { mockReq, mockRes } from './helpers.js'
 
-/**
- * Minimal response stub carrying the setHeader surface the middleware
- * touches. The shared mockRes() only has set(); setHeader is the raw Node
- * API Express uses when the middleware runs before Express methods are
- * attached.
- */
+// Response stub with the raw Node setHeader the middleware uses (mockRes() only has set()).
 function headerRes() {
   const base = mockRes()
   return Object.assign(base, {
@@ -78,10 +73,7 @@ describe('requestId middleware', () => {
     const res = headerRes()
     const seen = await new Promise((resolve) => {
       requestId()(req, res, async () => {
-        // One microtask + one macrotask of hop, to prove the store
-        // follows us across both. AsyncLocalStorage must transparently
-        // propagate through promises and timers for the logger note on
-        // "every log.* during a request" to actually hold.
+        // Hop a microtask and a macrotask to prove the store survives both.
         await Promise.resolve()
         setImmediate(() => resolve(currentContext()?.requestId))
       })

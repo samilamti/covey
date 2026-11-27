@@ -203,11 +203,6 @@ export function RequestList({ currentUserId }) {
   }
 
   if (loading) {
-    // Without role="status" + an accessible name, a screen reader user
-    // landing on the Requests tab (the app's default view on sign-in)
-    // hears nothing between the auth redirect and the first list paint.
-    // aria-live="polite" so the text is announced without interrupting.
-    // Mirrors the ProgressDashboard loading pattern.
     return (
       <div
         role="status"
@@ -230,15 +225,7 @@ export function RequestList({ currentUserId }) {
       {/* Header — breadcrumb + toggle */}
       <div class="flex justify-between items-center mb-4">
         {showCreate ? (
-          // Breadcrumb heading. The "→" is a VISUAL separator — a screen
-          // reader otherwise reads it as "rightwards arrow" between the two
-          // crumbs, which is noise that competes with the actual labels
-          // (WCAG 1.3.1 Info and Relationships + 2.4.6 Headings and Labels).
-          // aria-hidden hides it from assistive tech while keeping it in
-          // the layout for sighted users. aria-current="page" on the final
-          // crumb matches the ARIA Breadcrumb pattern, so the heading
-          // announces as "Requests, Create, current page" rather than two
-          // identical-sounding spans.
+          // Breadcrumb heading (ARIA breadcrumb pattern).
           <h2 class="text-xl font-bold flex items-center gap-1.5">
             <button
               onClick={() => setShowCreate(false)}

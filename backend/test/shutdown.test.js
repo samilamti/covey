@@ -4,11 +4,7 @@ import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 import { createShutdown } from '../src/shutdown.js'
 
-/**
- * Minimal fake with the shape createShutdown touches: `io.close(cb)`, whose
- * callback is called optionally with an Error. Deferred so a test controls
- * WHEN the callback fires and a hang is directly testable.
- */
+// Fake io whose close(cb) fires when the test says, so a hang is testable.
 function makeDeferred() {
   const calls = []
   return {
@@ -123,10 +119,7 @@ describe('createShutdown', () => {
 })
 
 describe('createShutdown against a real server', () => {
-  // The fakes above cannot see how the real pieces interact: http.Server.close
-  // waits for every open connection, and an upgraded WebSocket only ends when
-  // Socket.io closes it. An app holds a WebSocket for as long as it is open, so
-  // this is the normal production shape, not an edge case.
+  // Real server and a live WebSocket: the fakes can't show that http close waits for open sockets.
   it('drains a server with a live WebSocket client and exits 0 long before the force timer', async () => {
     const httpServer = createServer()
     const io = new Server(httpServer)

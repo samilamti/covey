@@ -1,16 +1,5 @@
-/**
- * Readiness probe.
- *
- * `/api/health` is a bare liveness check that the deploy script byte-compares
- * against the string `{"ok":true}` — do not change its shape. This file adds
- * a sibling readiness endpoint that actually verifies the backend can still
- * reach Postgres, since a Node process can keep answering `health` long after
- * the DB has dropped away.
- *
- * The DB ping races against a short timer so a hung connection can't hang the
- * endpoint itself. Failures return 503 with `db: 'error'`; a load balancer or
- * Compose healthcheck can then route traffic away or recycle the container.
- */
+// Readiness: pings Postgres with a timeout and returns 503 when it fails. /api/health
+// stays bare liveness because the deploy script byte-compares its body.
 
 import { log } from '../logger.js'
 

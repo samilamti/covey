@@ -51,24 +51,13 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
   const [alsoBlock, setAlsoBlock] = useState(false)
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState(null)
-  // Stable, per-instance ids for aria-labelledby/aria-describedby. Two
-  // SafetyActions can be on screen at once (session view + profile list), so
-  // a hardcoded id would duplicate and break screen-reader name resolution.
   const titleId = useId()
   const introId = useId()
-  // Focus targets for the report dialog — see the dialog focus-flow effect
-  // below. reportTriggerRef marks the button that opened the modal so we
-  // can return focus to it on close (ARIA APG Dialog pattern); dialogHeadingRef
-  // is where focus lands when the modal opens so a screen reader announces
-  // the dialog's title rather than keeping the caret on the invisible
-  // trigger behind the scrim. dialogContainerRef bounds the Tab/Shift+Tab
-  // focus trap below.
+  // Report dialog focus targets: the trigger to return to, the heading to land on, the trap's container.
   const reportTriggerRef = useRef(null)
   const dialogHeadingRef = useRef(null)
   const dialogContainerRef = useRef(null)
-  // Guard for return-focus: without this, the "modal closed → focus the
-  // trigger" branch fires on initial mount and steals focus the moment the
-  // component renders.
+  // Stops the close branch from stealing focus on first mount.
   const dialogWasOpenRef = useRef(false)
 
   const who = name || t('safety.someone')
@@ -115,15 +104,8 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
     }
   }
 
-  // Escape closes the report dialog AND Tab/Shift+Tab is trapped inside it —
-  // WCAG 2.1.1 Keyboard + 2.4.3 Focus Order + the ARIA APG Dialog pattern.
-  // Without the trap, aria-modal is a label-only signal: the browser still
-  // lets Tab walk from the Send button to the trigger behind the scrim and
-  // from there into the page under the modal, so a keyboard-only user loses
-  // their place while the modal "looks" open. Shift+Tab from the heading
-  // cycles to the last control; Tab from the last control cycles back to
-  // the first. The listener is scoped to the open dialog so no other view
-  // swallows Esc/Tab.
+  // While the dialog is open, Escape closes it and Tab/Shift+Tab cycle inside it (aria-modal
+  // alone does not stop Tab). The listener only exists while it is open.
   useEffect(() => {
     if (!showReport) return
     const onKey = (e) => {
@@ -157,20 +139,10 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
     return () => document.removeEventListener('keydown', onKey)
   }, [showReport, busy])
 
-  // Dialog focus flow (ARIA APG Dialog pattern + WCAG 2.4.3 Focus Order):
-  //   • On open, move focus INTO the dialog so a keyboard/screen-reader
-  //     user can navigate it. Without this, the caret stays on the trigger
-  //     button that is now behind an inert scrim — pressing Tab walks the
-  //     page below the modal instead of the modal's own controls.
-  //   • On close, return focus to the trigger so the user picks up where
-  //     they were. A dialogWasOpenRef guard prevents this branch from
-  //     firing on initial mount (where showReport starts false and the
-  //     trigger is already the natural focus target the browser gave).
+  // On open, focus the dialog heading; on close, return focus to the Report trigger.
   useEffect(() => {
     if (showReport) {
-      // The heading needs tabIndex="-1" to be focusable programmatically
-      // without entering the tab sequence; without it, .focus() is a no-op
-      // on an <h3> in every browser.
+      // The heading has tabIndex=-1; otherwise focus() is a no-op on an <h3>.
       dialogHeadingRef.current?.focus()
       dialogWasOpenRef.current = true
     } else if (dialogWasOpenRef.current) {
@@ -261,9 +233,6 @@ export function SafetyActions({ userId, name, requestId, blocked = false, onBloc
             </h3>
             <p id={introId} class="text-sm text-gray-600">{t('safety.reportIntro')}</p>
 
-            {/* aria-labelledby on the fieldset gives the radio group a name
-                so a screen reader announces "What happened? radio button 1
-                of 5 …" rather than an unlabelled group. */}
             <fieldset class="space-y-2" aria-labelledby={introId}>
               {REPORT_REASONS.map((r) => (
                 <label key={r} class="flex items-center gap-2 text-sm">

@@ -67,9 +67,6 @@ describe('LandingPage', () => {
   })
 
   it('renders the NIN input field with a translated aria-label', () => {
-    // aria-label was previously hardcoded in Swedish — screen readers for
-    // non-Swedish users had no idea what the input was for. It now goes
-    // through t('landing.ninLabel'), which is keyed in all 12 locales.
     const { container } = render(<LandingPage onLogin={vi.fn()} />)
     const input = container.querySelector('input[aria-label="landing.ninLabel"]')
     expect(input).toBeTruthy()
@@ -110,10 +107,6 @@ describe('LandingPage', () => {
   })
 
   it('routes a failed login through the global announcer as assertive', async () => {
-    // The inline role="alert" error block is mounted together with its text,
-    // which VoiceOver often skips. The announcer is the reliable channel.
-    // Assertive — the user just tried to sign in and nothing happened; a
-    // quiet update would leave them with no feedback.
     const { fireEvent, waitFor } = await import('@testing-library/preact')
     const { authService } = await import('../src/services/auth')
     authService.login.mockRejectedValueOnce(new Error('BankID unavailable'))
@@ -138,14 +131,7 @@ describe('LandingPage', () => {
   })
 
   it('routes the initial pending instruction through the global announcer (polite)', async () => {
-    // The inline role="status" region above is mounted together with its
-    // first instruction text, which VoiceOver often skips. The announcer
-    // seeds the first paint; aria-live takes over for subsequent hint-code
-    // transitions so VoiceOver doesn't read the same line twice. Mirrors
-    // the BankIDLogin fix for the real flow — this test covers the stub
-    // path that ships in local dev (FEATURE_BANKID_AUTH off). Polite — the
-    // user initiated the sign-in, whatever they were reading shouldn't be
-    // interrupted.
+    // Covers the stub sign-in path used in local dev (FEATURE_BANKID_AUTH off).
     const { fireEvent, waitFor } = await import('@testing-library/preact')
     const { authService } = await import('../src/services/auth')
     authService.collect.mockResolvedValue({ status: 'pending', hintCode: 'outstandingTransaction' })

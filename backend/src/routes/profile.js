@@ -63,9 +63,7 @@ profileRouter.get('/', async (req, res) => {
 profileRouter.put('/', async (req, res) => {
   const { displayName, preferredLang } = req.body
 
-  // Reject unknown locales at the boundary — the notification body maps are
-  // keyed by the short form, so an "ar-SA" stored here would silently send
-  // every push in Swedish (the fallback).
+  // Exact locale match only: push body maps are keyed by the short form.
   if (preferredLang !== undefined && !isSupportedLocale(preferredLang)) {
     return res.status(400).json({ error: 'preferredLang is not a supported locale' })
   }

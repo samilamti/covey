@@ -10,9 +10,6 @@ import { SafetyActions } from './SafetyActions'
 export function SafetyPartners() {
   const { t, i18n } = useTranslation()
   const [partners, setPartners] = useState(null)
-  // Stable per-instance id tying the h3 to the list below via
-  // aria-labelledby. useId is safe if SafetyPartners is ever rendered in
-  // two places (profile + a sibling view).
   const titleId = useId()
 
   useEffect(() => {
@@ -33,15 +30,7 @@ export function SafetyPartners() {
         <p class="text-sm text-gray-500">{t('safety.partnersEmpty')}</p>
       )}
       {partners.length > 0 && (
-        // A pile of sibling <div>s is not a list to assistive tech, so a
-        // screen reader user navigating past-partner report/block actions
-        // has no "N items" count and cannot jump between entries with the
-        // list shortcuts their screen reader provides. WCAG 1.3.1.
-        // role="list" is explicit because Tailwind's reset strips the
-        // default list semantics in some browsers, and aria-labelledby
-        // ties the list to the visible heading so it announces as
-        // "Safety partners, list, 3 items" instead of unnamed.
-        // list-none + padding-0 keep the visual layout identical.
+        // role="list" because Safari drops list semantics once list-style is none.
         <ul
           role="list"
           aria-labelledby={titleId}

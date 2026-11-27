@@ -45,11 +45,7 @@ export function RequestCard({ request, currentUserId, viewerPosition, onAccept, 
       {/* Header: type + status */}
       <div class="flex items-center justify-between mb-2">
         <div class="flex items-center gap-2">
-          {/* The emoji is decorative — the localized type name is right next
-              to it. Without aria-hidden a screen reader reads the Unicode
-              name ("person walking", "bus stop", "red question mark") AND
-              the label, which is both redundant and confusing in locales
-              whose UI language the voice is tuned to, not English. */}
+          {/* Decorative: the type name is next to it. */}
           <span class="text-lg" aria-hidden="true">{typeIcons[request.type] || '❓'}</span>
           <span class="font-semibold text-gray-900">
             {t(`requests.types.${request.type}`)}

@@ -20,26 +20,16 @@ import { createShutdown } from './shutdown.js'
 import { attachProcessErrorHandlers } from './process-errors.js'
 import { assertProductionEnv } from './env-check.js'
 
-// --- Refuse to boot with an unsafe production env ---
-// Every secret has a dev fallback so a laptop boots without a .env file;
-// in production that fallback is a footgun (e.g. JWT_SECRET falling back to
-// the well-known dev literal). Fail fast here with a readable message rather
-// than silently signing forged-able tokens.
+// --- Refuse to boot with an unsafe production env (see env-check.js) ---
 const envChecked = assertProductionEnv()
 
-// --- Identify this build at startup ---
-// Operators grep the log stream to see which version/commit is running
-// after a deploy; cheaper and less racy than hitting an endpoint right after
-// `docker compose up`. Emitted before any work so it anchors the stream.
+// --- Identify this build at startup (first line of the log stream) ---
 log.info('backend_build', { event: 'backend_build', ...getBuildInfo() })
 
 // --- Refuse to run production without the personnummer HMAC key ---
 // Without it every login would store a reversible SHA-256 (auth/nin-hash.js).
 assertNinHashKey()
 
-// Record which production env checks ran, so a reader of the startup stream
-// can tell the safety net fired even though no error landed. Empty outside
-// production — intentional, no noise for dev/test runs.
 if (envChecked.length > 0) {
   log.info('env_check_passed', { event: 'env_check_passed', vars: envChecked })
 }
@@ -120,17 +110,13 @@ app.use(express.json())
 app.use('/api', apiRouter)
 
 // --- Health checks ---
-// `/api/health` is pure liveness: the deploy script byte-compares the body
-// against the literal string `{"ok":true}`, so this response must stay
-// exactly this shape.
+// The deploy script byte-compares this body with `{"ok":true}`: keep the shape.
 app.get('/api/health', (_req, res) => res.json({ ok: true }))
 // `/api/health/ready` is readiness: pings the DB with a short timeout so a
 // load balancer can tell when the backend is up but its dependency is gone.
 app.get('/api/health/ready', readyHandler({ pool: db }))
 
-// --- Safety-net error handler (routes catch their own with specific events;
-// this covers anything that still leaks through so operators see a structured
-// line instead of Express's default HTML). ---
+// --- Safety-net error handler (routes log their own; this catches the rest) ---
 app.use(errorLogger())
 
 // --- Start ---
@@ -142,18 +128,11 @@ httpServer.listen(PORT, () => {
   startGdprCleanupWorker()
 })
 
-// --- Graceful shutdown ---
-// Docker sends SIGTERM when a container stops; without a handler, in-flight
-// requests are dropped and the browser sees a 502 across a deploy. SIGINT is
-// the local Ctrl-C case. See src/shutdown.js for the sequence.
+// --- Graceful shutdown on SIGTERM/SIGINT (see src/shutdown.js) ---
 const shutdown = createShutdown({ io, log })
 process.on('SIGTERM', () => shutdown('SIGTERM'))
 process.on('SIGINT', () => shutdown('SIGINT'))
 
 // --- Fatal error handlers ---
-// A sync throw in a worker/timer/socket handler or an unhandled rejection
-// would otherwise exit with a bare Node stack trace, bypassing the structured
-// `event:` tags the rest of the backend emits. Route both through the shared
-// logger with stable tags and reuse the graceful shutdown so in-flight
-// requests still get drained.
+// Log uncaught exceptions and rejections with event tags, then drain via shutdown.
 attachProcessErrorHandlers({ log, shutdown })

@@ -90,10 +90,7 @@ describe('logger (request context propagation)', () => {
   let requestContext
   before(async () => {
     delete process.env.LOG_FORMAT
-    // Fresh module graph again, but IMPORTANT: both the logger and the
-    // context module must come from the same import so they share one
-    // AsyncLocalStorage instance. Using a query-string tag only on the
-    // logger does that — logger.js resolves `../request-context.js` once.
+    // Logger and request-context must share one AsyncLocalStorage, so re-import only the logger.
     log = (await import('../src/logger.js?mode=ctx')).log
     requestContext = (await import('../src/request-context.js')).requestContext
   })
@@ -149,19 +146,8 @@ describe('logger (request context + json mode)', () => {
   })
 })
 
-/**
- * Guards the "every log line carries an `event:` tag" convention end to end.
- *
- * A grep over `src/` is the only way to prove this at build time: a single
- * drifted call site leaves one group empty in a log aggregator without any
- * test going red, which is exactly how five calls had slipped by the time
- * this test was added (admin_report_status, user_blocked, user_report_filed,
- * report_email_failed, nin_hash_rekeyed). The regression this catches is
- * silent and operational, not functional.
- *
- * `sockMeta(event)` (socket handlers) wraps the tag internally, so a call
- * that passes it is considered compliant.
- */
+// Every log call in src/ must carry an `event:` tag (or go through sockMeta). Checked by
+// grepping the source: a missing tag leaves an empty aggregator group and no red test.
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'

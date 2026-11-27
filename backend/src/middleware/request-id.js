@@ -1,16 +1,5 @@
-/**
- * Request-ID middleware.
- *
- * Picks an inbound `X-Request-Id` header when it looks sane (so a load
- * balancer or CLI client can propagate a trace id across hops), otherwise
- * mints a UUID. The id lands on `req.requestId`, is echoed back as
- * `X-Request-Id` on the response, and seeds an AsyncLocalStorage store so
- * every `log.*` call made during this request carries it automatically.
- *
- * The inbound regex is deliberately strict — printable ASCII, 1-128 chars —
- * to keep a hostile header from injecting log control chars or blowing up
- * aggregator parsers.
- */
+// Use a sane inbound X-Request-Id (printable ASCII, 1-128 chars) or mint a UUID; echo it
+// back and open the request context so every log line in this request carries it.
 
 import crypto from 'node:crypto'
 import { requestContext } from '../request-context.js'

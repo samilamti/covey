@@ -28,9 +28,6 @@ describe('assertProductionEnv', () => {
   })
 
   it('throws when JWT_SECRET still equals the dev fallback literal', () => {
-    // This is the quiet-footgun case the check exists for: a running process
-    // with a plausible-looking JWT_SECRET that anyone with the source can
-    // forge against.
     assert.throws(
       () =>
         assertProductionEnv({
@@ -53,20 +50,11 @@ describe('assertProductionEnv', () => {
     const checked = assertProductionEnv({
       env: { NODE_ENV: 'production', JWT_SECRET: 'genuinely-random-secret' },
     })
-    // Letting the caller log what was checked makes the startup line
-    // observable without hard-coding the list in two places. AUTH_PROVIDER
-    // is a consistency check — unset (so not 'bankid') is a legitimate
-    // production shape and counts as "passed", matching today's prod box
-    // which still runs AUTH_PROVIDER=stub until the Idura RP agreement
-    // lands.
+    // AUTH_PROVIDER not set to 'bankid' is a valid production shape, so it passes.
     assert.deepEqual(checked, ['JWT_SECRET', 'AUTH_PROVIDER'])
   })
 
   it('throws when AUTH_PROVIDER=bankid but FEATURE_BANKID_AUTH is off in production', () => {
-    // The silent-footgun case this check exists for: auth/router.js emits ONE
-    // warn line and falls back to the stub provider, which accepts any
-    // personnummer — every production login would be anonymous, with nothing
-    // visible to a user clicking through. Fail the boot instead.
     assert.throws(
       () =>
         assertProductionEnv({
@@ -81,9 +69,6 @@ describe('assertProductionEnv', () => {
       (err) => {
         assert.match(err.message, /AUTH_PROVIDER/)
         assert.match(err.message, /FEATURE_BANKID_AUTH=true/)
-        // Name the fallback behaviour so a reader of the error does not
-        // have to open auth/router.js to understand what "unsafe" means
-        // here.
         assert.match(err.message, /stub provider/)
         return true
       },
@@ -91,9 +76,7 @@ describe('assertProductionEnv', () => {
   })
 
   it('throws when AUTH_PROVIDER=bankid and FEATURE_BANKID_AUTH is literally "false"', () => {
-    // Explicitly setting the flag to the string "false" is the same shape as
-    // leaving it unset — features.js reads env vars as strings and only
-    // "true" turns the flag on. The check must treat both the same.
+    // features.js only treats the string "true" as on, so "false" equals unset.
     assert.throws(
       () =>
         assertProductionEnv({
@@ -135,9 +118,6 @@ describe('assertProductionEnv', () => {
   })
 
   it('collects every failing var into one Error', () => {
-    // A production boot with multiple broken configs should surface all of
-    // them in one restart cycle, not force the operator to restart to find
-    // the next failure.
     try {
       assertProductionEnv({
         env: { NODE_ENV: 'production', AUTH_PROVIDER: 'bankid' },

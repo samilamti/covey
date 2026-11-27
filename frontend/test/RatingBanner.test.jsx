@@ -135,12 +135,6 @@ describe('RatingBanner', () => {
   })
 
   it('routes the rating prompt through the global announcer on mount', () => {
-    // RatingBanner appears after a session completes and asks the user to
-    // rate what just happened. For a screen-reader user the banner IS the
-    // post-session feedback: if it doesn't announce, they finish an escort
-    // and hear nothing about the ask. VoiceOver skips inline live regions
-    // that mount together with their text, so the always-mounted announcer
-    // is the reliable channel.
     render(
       <RatingBanner pendingRating={pendingRating} onRated={() => {}} />
     )
@@ -161,12 +155,6 @@ describe('RatingBanner', () => {
   })
 
   it('re-announces when a new pending rating replaces the previous one', () => {
-    // RequestList may stack several pending ratings — one per completed
-    // session awaiting feedback. Keying the announce effect on the request
-    // id guards against the same component instance silently swallowing
-    // subsequent prompts if React reuses it (the banner is rendered in a
-    // .map() keyed by request_id, so a key change does normally remount,
-    // but the id-keyed effect is the real guarantee).
     const { rerender } = render(
       <RatingBanner pendingRating={pendingRating} onRated={() => {}} />
     )
@@ -182,10 +170,6 @@ describe('RatingBanner', () => {
   })
 
   it('does not re-announce when the parent re-renders with the same pending rating', () => {
-    // The inverse of the above: a parent re-render (e.g. RequestList reloading
-    // the list after a socket event) must NOT re-announce the same prompt, or
-    // a screen-reader user sits through "How did it feel?" on every refresh
-    // while they are still deciding.
     const { rerender } = render(
       <RatingBanner pendingRating={pendingRating} onRated={() => {}} />
     )

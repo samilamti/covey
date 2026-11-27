@@ -110,9 +110,6 @@ describe('SafetyActions', () => {
   })
 
   it('routes block success through the global announcer so VoiceOver speaks it', async () => {
-    // The inline role="status" notice is mounted together with its text,
-    // which VoiceOver tends to skip. The global announcer is the reliable
-    // channel. Polite because success is a confirmation, not an alarm.
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     const { container, getByText } = render(<SafetyActions userId="u2" name="Kim" />)
     fireEvent.click(getByText('safety.block'))
@@ -123,9 +120,6 @@ describe('SafetyActions', () => {
   })
 
   it('routes block failure through the global announcer as assertive', async () => {
-    // The user just tried to act and the action failed. Assertive — a quiet
-    // polite announcement would be talked over by anything else happening
-    // on the page and the user would not realise their block did not land.
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     safetyService.block.mockRejectedValueOnce(new Error('nope'))
     const { container, getByText } = render(<SafetyActions userId="u2" name="Kim" />)
@@ -151,11 +145,6 @@ describe('SafetyActions', () => {
   })
 
   it('labels the report dialog and its radio group for screen readers', () => {
-    // A dialog with role="dialog" + aria-modal="true" needs an accessible
-    // name, or screen readers announce it as an unnamed dialog on open.
-    // Similarly, the fieldset of reasons needs a group label so the radios
-    // are announced with context ("Reason: harassment, 1 of 5") rather than
-    // in isolation.
     const { getByText, getByRole } = render(<SafetyActions userId="u2" name="Kim" />)
     fireEvent.click(getByText('safety.report'))
 
@@ -166,10 +155,7 @@ describe('SafetyActions', () => {
     expect(introId).toBeTruthy()
     expect(titleId).not.toBe(introId)
 
-    // The referenced elements must exist and carry the expected content.
-    // getElementById handles ids containing characters CSS selectors treat
-    // specially (useId returns ids like ":r0:"), which querySelector would
-    // need escaped.
+    // getElementById, since useId ids like ":r0:" would need escaping in querySelector.
     const titleEl = document.getElementById(titleId)
     const introEl = document.getElementById(introId)
     expect(titleEl?.textContent).toBe('safety.reportTitle')
@@ -181,12 +167,6 @@ describe('SafetyActions', () => {
   })
 
   it('moves focus into the dialog on open and returns it to the trigger on close', async () => {
-    // ARIA APG Dialog pattern + WCAG 2.4.3 Focus Order. Without moving
-    // focus into the dialog, the caret stays on the Report button that
-    // is now behind an inert scrim — Tab then walks the page under the
-    // modal instead of the modal's controls. Returning focus on close
-    // keeps keyboard navigation coherent so the user picks up where they
-    // left off rather than losing their place.
     const { getByText, getByRole } = render(<SafetyActions userId="u2" name="Kim" />)
     const trigger = getByText('safety.report').closest('button')
     // Browser gives initial focus to document.body; clicking opens the
@@ -206,12 +186,6 @@ describe('SafetyActions', () => {
   })
 
   it('does not steal focus to the Report trigger on initial mount', () => {
-    // A naive useEffect that focuses the trigger whenever the dialog is
-    // closed would also fire on first render (showReport starts false),
-    // yanking focus the moment the component appears and stomping on
-    // whatever the user was tabbing through on the surrounding screen.
-    // The initial-mount guard makes this branch inert until the dialog
-    // has been opened at least once.
     const outsideButton = document.createElement('button')
     outsideButton.textContent = 'outside'
     document.body.appendChild(outsideButton)
@@ -225,9 +199,6 @@ describe('SafetyActions', () => {
   })
 
   it('closes the report dialog on Escape', () => {
-    // A modal dialog with role="dialog" + aria-modal="true" must be dismissable
-    // from the keyboard (WCAG 2.1.1 + the ARIA dialog pattern). Without this
-    // escape hatch, a keyboard-only user has to Tab to Cancel to leave.
     const { getByText, queryByRole } = render(<SafetyActions userId="u2" />)
     fireEvent.click(getByText('safety.report'))
     expect(queryByRole('dialog')).toBeTruthy()
@@ -237,9 +208,6 @@ describe('SafetyActions', () => {
   })
 
   it('only listens for Escape while the report dialog is open', () => {
-    // The handler must be scoped to the open dialog, or Escape would be
-    // swallowed for anything else on the page — the SafetyActions sitting
-    // on a profile row would eat Esc meant for an open outer dialog.
     const { getByText, queryByRole } = render(<SafetyActions userId="u2" />)
     // No dialog open yet — Escape should be a no-op.
     fireEvent.keyDown(document, { key: 'Escape' })
@@ -255,15 +223,7 @@ describe('SafetyActions', () => {
   })
 
   it('traps Tab inside the open report dialog so focus cannot leak behind the scrim', () => {
-    // WCAG 2.4.3 Focus Order + ARIA APG Dialog pattern. aria-modal is a
-    // label-only signal — the browser itself still lets Tab walk out of a
-    // role="dialog" wrapper into the page below. Without the trap, a
-    // keyboard-only user Tabbing past Send lands on the Report trigger
-    // behind the scrim, then on controls on the surrounding page, while
-    // the modal is visually still open.
-    //
-    // There is a Report trigger outside the dialog (below in the DOM); the
-    // trap must prevent focus from reaching it while the dialog is open.
+    // The Report trigger outside the dialog must not be reachable by Tab while it is open.
     const { getByText, getByRole, getAllByRole } = render(
       <SafetyActions userId="u2" name="Kim" />
     )
@@ -279,11 +239,6 @@ describe('SafetyActions', () => {
     const first = insideFocusables[0]
     const last = insideFocusables[insideFocusables.length - 1]
 
-    // Simulate "Tab from the last focusable in the dialog". The handler
-    // preventDefaults the key and moves focus back to the first — a bare
-    // Tab would otherwise step to whatever button sits right after Send
-    // in document order, which on this view is a sibling control under
-    // the modal.
     last.focus()
     const tabEvent = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true })
     const defaultPrevented = !document.dispatchEvent(tabEvent)
@@ -298,10 +253,6 @@ describe('SafetyActions', () => {
     expect(shiftPrevented).toBe(true)
     expect(document.activeElement).toBe(last)
 
-    // The Report trigger must remain outside the dialog AND outside the
-    // reach of a trapped Tab. Two SafetyActions-authored buttons exist on
-    // the page (Report, Block); neither should be reachable by continuing
-    // to Tab while the dialog is open.
     const allButtons = getAllByRole('button')
     const outsideButtons = allButtons.filter((b) => !dialog.contains(b))
     expect(outsideButtons.length).toBeGreaterThan(0)
@@ -355,11 +306,6 @@ describe('SafetyActions', () => {
   })
 
   it('does not swallow Tab when the dialog is closed', () => {
-    // The trap handler is scoped to showReport === true so Tab on the
-    // surrounding page keeps its native behaviour. A trap that leaked
-    // when the modal was closed would silently break Tab across the
-    // whole app for anyone with a SafetyActions on screen (which is
-    // every profile view).
     const { getByText } = render(<SafetyActions userId="u2" name="Kim" />)
     const trigger = getByText('safety.report').closest('button')
     trigger.focus()
@@ -410,9 +356,6 @@ describe('SafetyPartners', () => {
   })
 
   it('exposes the partners as a named list with one item per person', async () => {
-    // A pile of <div>s is invisible to assistive tech as a collection — the
-    // screen reader cannot announce "3 items" and the user cannot jump
-    // between entries with the list shortcut. WCAG 1.3.1.
     safetyService.getPartners.mockResolvedValueOnce({ partners: [
       { user_id: 'u2', display_name: 'Kim', request_id: null, met_at: '2026-11-01T20:00:00Z', blocked: false },
       { user_id: 'u3', display_name: 'Pat', request_id: null, met_at: '2026-10-30T20:00:00Z', blocked: true },
@@ -434,9 +377,6 @@ describe('SafetyPartners', () => {
   })
 
   it('does not render an empty list when there are no partners', async () => {
-    // An empty <ul> is announced as "list, 0 items" by some screen readers,
-    // which is noise next to the dedicated empty-state message. Collapse
-    // the shell entirely on the no-partners branch.
     const { findByText, queryByRole } = render(<SafetyPartners />)
     await findByText('safety.partnersEmpty')
     expect(queryByRole('list')).toBeNull()

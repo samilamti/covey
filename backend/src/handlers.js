@@ -46,11 +46,7 @@ export function registerSocketHandlers(io) {
   io.on('connection', (socket) => {
     log.info('socket_connected', { event: 'socket_connected', socket: socket.id, user: socket.user.userId })
 
-    // Shared meta for every error line emitted during this socket's lifetime.
-    // The connect log line already carries both fields, so threading them
-    // through here lets an operator grep `socket:<id>` to find one socket's
-    // whole conversation across unrelated events (request:create, location
-    // update, message send, etc.) without touching every call site.
+    // Shared meta for every error line from this socket, so one grep finds its history.
     const sockMeta = (event) => ({
       event,
       socket: socket.id,

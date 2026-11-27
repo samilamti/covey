@@ -14,11 +14,6 @@ export function BottomNav({ currentPath, onNavigate }) {
   ]
 
   return (
-    // aria-label names the landmark so a screen reader announces it as the
-    // primary navigation rather than a generic "navigation". WCAG 2.4.1 +
-    // the APG landmark pattern. The app has only one <nav> today, but the
-    // label is cheap insurance against ambiguity once a sibling landmark
-    // appears (e.g. a drawer or breadcrumb).
     <nav
       aria-label={t('nav.primary')}
       class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 h-20 z-50 safe-area-bottom shadow-[0_-1px_10px_rgba(0,0,0,0.05)]"

@@ -110,9 +110,6 @@ describe('ProfileView', () => {
   })
 
   it('ties the display name label to the input', () => {
-    // A <label> sitting next to an <input> only provides an accessible name
-    // when `for=id` links them together. Without this, screen readers
-    // announce an unnamed edit field on the profile screen.
     const { getByLabelText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
     const input = getByLabelText('profile.displayName')
     expect(input.tagName).toBe('INPUT')
@@ -135,17 +132,9 @@ describe('ProfileView', () => {
   })
 
   it('does not render the language section header as a dangling <label>', () => {
-    // A <label> with no `for` attribute is a malformed accessible-name
-    // relationship: a screen reader does not attach it to the picker that
-    // follows, so the visible "Language" heading claims to name a control
-    // it never reaches. Keep it as a <div> and let the LanguageSelector
-    // carry its own accessible name.
     const { container } = render(<ProfileView user={user} onLogout={vi.fn()} />)
     const labels = container.querySelectorAll('label')
     for (const el of labels) {
-      // Every surviving <label> must point at a real input/select/textarea
-      // (the display-name input in this view). A <label> without `for` is
-      // the bug we are guarding against.
       const forAttr = el.getAttribute('for')
       expect(forAttr, `expected every <label> to have a for="" target, offender: ${el.outerHTML}`).toBeTruthy()
       // Use getElementById rather than CSS.escape — jsdom's global CSS is
@@ -155,10 +144,6 @@ describe('ProfileView', () => {
   })
 
   it('announces a translated save confirmation (not a bare ✓)', async () => {
-    // Earlier the success text was a bare "✓" glyph, which is silent to
-    // assistive tech — the user got no acknowledgement that their edit
-    // landed. After this, the surrounding role="status" live region
-    // announces a real translated word that each voice reads correctly.
     const { fireEvent } = await import('@testing-library/preact')
     const { getByText, findByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
     await fireEvent.click(getByText('profile.save'))
@@ -166,9 +151,6 @@ describe('ProfileView', () => {
   })
 
   it('routes save success through the global announcer as polite', async () => {
-    // The inline role="status" message block is mounted together with its
-    // text, which VoiceOver often skips. The global announcer is always in
-    // the a11y tree so its update fires reliably.
     const { fireEvent } = await import('@testing-library/preact')
     const { container, getByText } = render(<ProfileView user={user} onLogout={vi.fn()} />)
     await fireEvent.click(getByText('profile.save'))
